@@ -86,7 +86,8 @@ public class VentanaJuego extends JFrame implements KeyListener{
 	}
 	
 	public void paint(Graphics g){
-		biImagen = ManagerImagen.cargarImagen("Bomber.jpg");
+		if(biImagen == null)
+			biImagen = ManagerImagen.getImagen("Bomber.jpg");
 		g.drawImage(biImagen, 40, 40, canPintar);
 	}
 	
