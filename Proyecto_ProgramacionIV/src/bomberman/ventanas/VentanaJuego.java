@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.*;
 
+import bomberman.managers.ManagerImagen;
 import bomberman.protagonistas.*;
 
 /**
@@ -22,8 +23,7 @@ public class VentanaJuego extends JFrame implements KeyListener{
 	private static final long serialVersionUID = -7461719037402108362L;
 	private JPanel jpPrincipal;
 	private Canvas canPintar;
-	private URL miUrl;
-	private BufferedImage imagen;
+	private BufferedImage biImagen;
 	
 	/**
 	 * Constructor principal de la ventana.
@@ -36,10 +36,7 @@ public class VentanaJuego extends JFrame implements KeyListener{
 		jpPrincipal.setPreferredSize(new Dimension(550,550));
 		jpPrincipal.setLayout(null);
 		jpPrincipal.add(canPintar);
-		miUrl = getClass().getResource("Bomber.jpg");
-		try{
-			imagen = ImageIO.read(miUrl);
-		}catch(IOException e){}
+		
 		
 		//La ventana tiene que escuchar el teclado.
 		this.addKeyListener(this);
@@ -89,7 +86,8 @@ public class VentanaJuego extends JFrame implements KeyListener{
 	}
 	
 	public void paint(Graphics g){
-		g.drawImage(imagen, 40, 40, canPintar);
+		biImagen = ManagerImagen.cargarImagen("Bomber.jpg");
+		g.drawImage(biImagen, 40, 40, canPintar);
 	}
 	
 	public static void main (String [] args)
