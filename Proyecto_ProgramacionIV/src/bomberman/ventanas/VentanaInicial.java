@@ -31,7 +31,7 @@ public class VentanaInicial extends JFrame implements ActionListener {
 	 */
 	public VentanaInicial() {
 		strPath = "bomberman.jpg";
-		jlTitulo = new JLabel(new ImageIcon(getClass().getResource("letras_bomber.png")));
+		jlTitulo = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("bomberman/resources/letras_bomber.png")));
 		jbBotonJugar = new JButton("Jugar");
 		jbBotonCargar = new JButton("Cargar");
 		jbBotonPuntu = new JButton("Puntuaciones");
