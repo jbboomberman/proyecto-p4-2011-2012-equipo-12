@@ -29,7 +29,7 @@ public class PanelFondo extends JPanel {
 	 *            la imagen en todo momento.
 	 */
 	public PanelFondo(String path, Container con) {
-		directorio = getClass().getResource(path);
+		directorio = getClass().getClassLoader().getResource("bomberman/resources/" + path);
 		imagen = new ImageIcon(directorio);
 		container = con;
 	}
