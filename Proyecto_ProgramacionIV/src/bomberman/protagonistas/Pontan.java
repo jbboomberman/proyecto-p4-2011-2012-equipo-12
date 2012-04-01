@@ -1,5 +1,10 @@
 package bomberman.protagonistas;
 
-public class Pontan {
+import bomberman.managers.Escenario;
 
+public class Pontan extends SpriteDinamico {
+
+	public Pontan(Escenario esce) {
+		super(esce);
+	}
 }

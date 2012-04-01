@@ -2,6 +2,7 @@ package bomberman.ventanas;
 
 import java.util.*;
 import java.awt.*;
+import bomberman.jugador.Jugador;
 
 /**
  * Clase que se encarga de gestionar las ventanas del programa. Muy útil y
@@ -25,8 +26,13 @@ public class GestorVentana {
 	 */
 	public static Vector<Window> iniciar() {
 		// Inicializamos el vector
+		Jugador jug = new Jugador("david", "h", "h", "h");
 		Vector<Window> vector = new Vector<Window>();
 		// Se incializan todas las ventanas.
+		vector.add(new VentanaInicial());
+		vector.add(new VentanaDatos(jug));
+		vector.add(new VentanaSeleccion());
+		vector.add(new VentanaJuego());
 		// Se devuelve el vector con las ventanas
 		return vector;
 	}
@@ -41,7 +47,7 @@ public class GestorVentana {
 	 *            - boolean, indica si es la única ventana que se deja visible o
 	 *            no. true si es la única, false si no.
 	 */
-	public static void hacerVisible(Class<Window> claseVentana,
+	public static void hacerVisible(Class claseVentana,
 			boolean unicaVisible) {
 		for (Window vent : vectorVentanas) {
 			// En caso de que la ventana sea de la clase que queremos.
@@ -66,7 +72,7 @@ public class GestorVentana {
 	 * @param claseVentana
 	 *            - Class
 	 */
-	public static void ocultarVentana(Class<Window> claseVentana) {
+	public static void ocultarVentana(Class claseVentana) {
 		for (Window vent : vectorVentanas) {
 			if (vent.getClass().isAssignableFrom(claseVentana)) {
 				vent.setVisible(false);
@@ -74,5 +80,14 @@ public class GestorVentana {
 				break;
 			}
 		}
+	}
+	
+	public static Object getVentana(Class claseVentana){
+		for(Window vent : vectorVentanas){
+			if (vent.getClass().isAssignableFrom(claseVentana)) {
+				return vent;
+			}
+		}
+		return null;
 	}
 }
