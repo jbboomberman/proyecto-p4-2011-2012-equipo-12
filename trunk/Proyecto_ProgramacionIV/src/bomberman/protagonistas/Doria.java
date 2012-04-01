@@ -1,5 +1,10 @@
 package bomberman.protagonistas;
 
-public class Doria {
+import bomberman.managers.Escenario;
 
+public class Doria extends SpriteDinamico {
+
+	public Doria(Escenario esce) {
+		super(esce);
+	}
 }

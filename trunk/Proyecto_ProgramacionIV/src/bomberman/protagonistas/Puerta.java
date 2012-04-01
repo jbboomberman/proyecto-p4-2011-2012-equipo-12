@@ -2,9 +2,9 @@ package bomberman.protagonistas;
 
 import bomberman.managers.Escenario;
 
-public class Dahl extends SpriteDinamico {
+public class Puerta extends SpriteEstatico{
 
-	public Dahl(Escenario esce) {
+	public Puerta(Escenario esce){
 		super(esce);
 	}
 }

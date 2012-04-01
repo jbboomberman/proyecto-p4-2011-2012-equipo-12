@@ -31,9 +31,10 @@ public class VentanaInicial extends JFrame implements ActionListener {
 	 */
 	public VentanaInicial() {
 		strPath = "bomberman.jpg";
-		jlTitulo = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("bomberman/resources/letras_bomber.png")));
+		jlTitulo = new JLabel(new ImageIcon(getClass().getClassLoader()
+				.getResource("bomberman/resources/letras_bomber.png")));
 		jbBotonJugar = new JButton("Jugar");
-		jbBotonCargar = new JButton("Cargar");
+		jbBotonCargar = new JButton("Cargar partida");
 		jbBotonPuntu = new JButton("Puntuaciones");
 		jbBotonConfi = new JButton("Configuración");
 		jbBotonInstruc = new JButton("Instrucciones");
@@ -68,6 +69,17 @@ public class VentanaInicial extends JFrame implements ActionListener {
 		meterComponente(jbBotonInstruc);
 		meterComponente(jbBotonInfo);
 		meterComponente(jbBotonSalir);
+
+		/*
+		 * Agrandamos todos los botones
+		 */
+		agrandarBonton(jbBotonJugar);
+		agrandarBonton(jbBotonCargar);
+		agrandarBonton(jbBotonPuntu);
+		agrandarBonton(jbBotonConfi);
+		agrandarBonton(jbBotonInstruc);
+		agrandarBonton(jbBotonInfo);
+		agrandarBonton(jbBotonSalir);
 
 		/*
 		 * A cada botón le añadimos un escuchador, al ser 'addActionListener' le
@@ -125,7 +137,23 @@ public class VentanaInicial extends JFrame implements ActionListener {
 		 * Para saber dónde se originó el evento creamos un Object con la
 		 * dirección del generador del evento.
 		 */
-		Object botonpulsado = e.getSource();
+		Object botonPulsado = e.getSource();
+		
+		if(botonPulsado == jbBotonJugar){
+			GestorVentana.hacerVisible(VentanaSeleccion.class, false);
+		}else if (botonPulsado == jbBotonCargar){
+			
+		}else if(botonPulsado == jbBotonPuntu){
+			
+		}else if(botonPulsado == jbBotonConfi){
+			
+		}else if(botonPulsado == jbBotonInstruc){
+			
+		}else if(botonPulsado == jbBotonInfo){
+			
+		}else if(botonPulsado == jbBotonSalir){
+			System.exit(0);
+		}
 	}
 
 	/**
@@ -142,6 +170,11 @@ public class VentanaInicial extends JFrame implements ActionListener {
 		pfFondo.add(tempPanel);
 	}
 
+	public void agrandarBonton(JButton boton) {
+		boton.setPreferredSize(new Dimension(150, 40));
+		boton.setFont(new Font("SansSerif", 0, 16));
+	}
+
 	/**
 	 * Este es el método main que nos sirve para comprobar que la clase funciona
 	 * correctamente.
@@ -150,11 +183,6 @@ public class VentanaInicial extends JFrame implements ActionListener {
 	 *            No utilizados
 	 */
 	public static void main(String[] args) {
-		try {
-			UIManager
-					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception e) {
-		}
 		VentanaInicial ventana = new VentanaInicial();
 		ventana.setVisible(true);
 	}

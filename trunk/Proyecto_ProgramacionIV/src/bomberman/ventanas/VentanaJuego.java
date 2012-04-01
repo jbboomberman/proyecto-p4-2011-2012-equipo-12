@@ -1,98 +1,123 @@
 package bomberman.ventanas;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import bomberman.managers.ControlPrincipal;
+import bomberman.managers.Escenario;
+import bomberman.managers.ManagerImagen;
+import bomberman.protagonistas.Bomberman;
+import bomberman.protagonistas.Sprite;
+import bomberman.protagonistas.SpriteDinamico;
+import bomberman.protagonistas.Valcom;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.*;
-
-import bomberman.managers.ManagerImagen;
-import bomberman.protagonistas.*;
+import java.util.ArrayList;
 
 /**
  * La clase VentanaJuego es donde se desarrolla lo que es el juego en sí.
- * Implementa el inteface KeyListener para poder escuchar los eventos generados por el teclado.
- * Hereda de JFrame.
+ * Implementa el inteface KeyListener para poder escuchar los eventos generados
+ * por el teclado. Hereda de JFrame.
+ * 
  * @author David
  * @version 1.0
  */
-public class VentanaJuego extends JFrame implements KeyListener{
-	
+public class VentanaJuego extends JFrame implements KeyListener, Escenario {
+
 	private static final long serialVersionUID = -7461719037402108362L;
 	private JPanel jpPrincipal;
 	private Canvas canPintar;
 	private BufferedImage biImagen;
-	
+	private Bomberman bomber;
+	private Escenario escenario;
+	private static ArrayList<Sprite> arLista;
+
 	/**
 	 * Constructor principal de la ventana.
 	 */
-	public VentanaJuego()
-	{
-		jpPrincipal = (JPanel)this.getContentPane();
+	public VentanaJuego() {
+
+		jpPrincipal = (JPanel) this.getContentPane();
+		arLista = new ArrayList<Sprite>();
 		setBounds(0, 0, 550, 550);
 		canPintar = new Canvas();
-		jpPrincipal.setPreferredSize(new Dimension(550,550));
+		jpPrincipal.setPreferredSize(new Dimension(550, 550));
 		jpPrincipal.setLayout(null);
 		jpPrincipal.add(canPintar);
 		
-		
-		//La ventana tiene que escuchar el teclado.
+		// La ventana tiene que escuchar el teclado.
 		this.addKeyListener(this);
-		
-		//Determinamos los parámetros de la ventana.
+
+		// Determinamos los parámetros de la ventana.
 		this.setResizable(false);
 		this.setTitle("BombermanAdict");
-		this.setBounds(0, 0, 550, 550);
+		this.setSize(600, 600);
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
-		
-		this.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e){
+		this.setVisible(false);
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
 	}
-	
+
 	/**
-	 * Método que se ejecuta en caso de que se pulse una tecla.
-	 * El qué hacer se lo deja al objeto de la clase Heroe.
-	 * @param e - KeyEvent
+	 * Método que se ejecuta en caso de que se pulse una tecla. El qué hacer se
+	 * lo deja al objeto de la clase Heroe.
+	 * 
+	 * @param e
+	 *            - KeyEvent
 	 */
-	public void keyPressed(KeyEvent e)
-	{
+	public void keyPressed(KeyEvent e) {
+		bomber.teclaPulsada(e);
 	}
-	
+
 	/**
-	 * Método que se ejecuta en caso de que se deje de pulsar una tecla.
-	 * El qué hacer se lo deja al objeto de la clase Heroe.
-	 * @param e - KeyEvent
+	 * Método que se ejecuta en caso de que se deje de pulsar una tecla. El qué
+	 * hacer se lo deja al objeto de la clase Heroe.
+	 * 
+	 * @param e
+	 *            - KeyEvent
 	 */
-	public void keyReleased(KeyEvent e)
-	{
+	public void keyReleased(KeyEvent e) {
+		bomber.teclaSoltada(e);
 	}
-	
+
 	/**
 	 * Este método es obligatorio crearlo cuando implementamos la interfaz
 	 * KeyListener pero realmente no hacemos nada con el.
 	 */
-	public void keyTyped(KeyEvent e)
-	{
+	public void keyTyped(KeyEvent e) {
 		/*
 		 * Lo que hace es escuchar ambos eventos cuando la tecla es pulsada y
 		 * también cuando es soltada.
 		 */
 	}
-	
-	public void paint(Graphics g){
-		if(biImagen == null)
-			biImagen = ManagerImagen.getImagen("Bomber.jpg");
-		g.drawImage(biImagen, 40, 40, canPintar);
+
+	public Bomberman getBomberman() {
+		return bomber;
 	}
 	
-	public static void main (String [] args)
-	{
+	//PRUEBA, HAY QUE MEJORAR
+	public void setBomberman(Bomberman b){
+		this.bomber = b;
+	}
+
+	public Canvas getPanel() {
+		return canPintar;
+	}
+	
+	public void añadirSprite(Sprite spr){
+		arLista.add(spr);
+	}
+	
+	public ArrayList<Sprite> getLista(){
+		return arLista;
+	}
+	public static void main(String[] args) {
 		VentanaJuego juego = new VentanaJuego();
 		juego.setVisible(true);
 	}
