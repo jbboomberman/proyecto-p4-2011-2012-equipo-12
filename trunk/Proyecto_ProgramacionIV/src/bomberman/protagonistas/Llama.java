@@ -12,8 +12,6 @@ public class Llama extends SpriteDinamico{
 	private int der = 0;
 	private int arr = 0;
 	private int abj = 0;
-	private String ultimo = "final.jpg";
-	private String intermedio = "inter.jpg";
 	private int[]max;
 	
 	public Llama(Escenario esce, int[]tempMax, float x, float y){
@@ -22,8 +20,14 @@ public class Llama extends SpriteDinamico{
 		this.max = tempMax; 
 		this.posX = x;
 		this.posY = y;
-		ManagerImagen.cargarImagen("llama.gif", "intermedio", 4, 8, 0, 2);
-		ManagerImagen.cargarImagen("llama.gif", "ultimo", 4, 8, 0, 3);
+		
+		//CUIDADO ESTAMOS CARGANDO DEMASIADO
+		ManagerImagen.cargarImagen("llama.gif", "intermedio_anc", 4, 8, 0, 2);
+		ManagerImagen.cargarImagen("llama.gif", "ultimo_izq", 4, 8, 0, 3);
+		ManagerImagen.cargarImagen("llama.gif", "ultimo_der", 4, 8, 0, 4);
+		ManagerImagen.cargarImagen("llama.gif", "ultimo_arr", 4, 8, 0, 6);
+		ManagerImagen.cargarImagen("llama.gif", "ultimo_abj", 4, 8, 0, 7);
+		ManagerImagen.cargarImagen("llama.gif", "intermedio_alt", 4, 8, 0, 5);
 	}
 	
 	public void mover(){
@@ -39,46 +43,68 @@ public class Llama extends SpriteDinamico{
 		tiempoTranscurrido = (System.currentTimeMillis() - horaUltimaPintada) / 1000.0F;
 
 		if (tiempoTranscurrido > 0.01F) {
-			for(int i = 0; i < maxValue; i++){
-				int j;
+			for(int i = 0; i < maxValue*2; i++){
 				//Centro
 				//Arriba
-				arr++;
-				for(j = 0; j < arr; j++){
-//					System.out.println(ManagerImagen.getImagen(intermedio));
-					g.drawImage(ManagerImagen.getImagen("intermedio"), (int)posX + (33*j),
-							 (int)posY, escenario);
+				if(arr < max[0]){
+					for(int j = 0; j < arr; j++){
+					g.drawImage(ManagerImagen.getImagen("intermedio_alt"), (int)posX,
+							 (int)posY - (33*j), escenario);
+					}
+					g.drawImage(ManagerImagen.getImagen("ultimo_arr"), (int)posX,
+							-33*arr, escenario);
+					arr++;
 				}
-				g.drawImage(ManagerImagen.getImagen("ultimo"), 33*arr,
-						 (int)posY, escenario);
+				else if (max[0] > 0){
+					for(int j = 0; j < arr; j++){
+						g.drawImage(ManagerImagen.getImagen("intermedio_alt"), (int)posX,
+								 (int)posY - (33*j), escenario);
+						}
+						g.drawImage(ManagerImagen.getImagen("ultimo_arr"), (int)posX,
+								-33*arr, escenario);
+						arr--;
+						max[0]--;
+				}
+				
 				
 				//Abajo
-				abj++;
-				for(j = 0; j < arr; j++){
-					g.drawImage(ManagerImagen.getImagen("intermedio"), (int)posX - (33*j),
-							 (int)posY, escenario);
+				
+				if(abj < max[1]){
+					g.drawImage(ManagerImagen.getImagen("intermedio_alt"), (int)posX ,
+							 (int)posY + (33*abj), escenario);
+					g.drawImage(ManagerImagen.getImagen("ultimo_abj"), (int)posX,
+							 33*abj, escenario);
+					abj++;
 				}
-				g.drawImage(ManagerImagen.getImagen("ultimo"), -33*arr,
-						 (int)posY, escenario);
+				
 				
 				//Derecha
-				der++;
-				for(j = 0; j < arr; j++){
-					g.drawImage(ManagerImagen.getImagen("intermedio"), (int)posX,
-							 (int)posY + (33*j), escenario);
+				
+				if(der < max[2]){
+					g.drawImage(ManagerImagen.getImagen("intermedio_anc"), (int)posX + (33*der),
+							 (int)posY, escenario);
+					g.drawImage(ManagerImagen.getImagen("ultimo_der"), 33*der,
+							 (int)posY, escenario);
+					der++;
 				}
-				g.drawImage(ManagerImagen.getImagen("ultimo"), (int)posX,
-						 33*j, escenario);
+				
 				
 				//Izquierda
 				izq++;
-				for(j = 0; j < arr; j++){
-					g.drawImage(ManagerImagen.getImagen("intermedio"), (int)posX,
-							 (int)posY - (33*j), escenario);
+				if(izq < max[3]){
+					g.drawImage(ManagerImagen.getImagen("intermedio_anc"), (int)posX - (33*izq),
+							 (int)posY, escenario);
+					g.drawImage(ManagerImagen.getImagen("ultimo_izq"), -33*izq,
+							(int)posY, escenario);
 				}
-				g.drawImage(ManagerImagen.getImagen("ultimo"), (int)posX,
-						 -33*j, escenario);	
+			
+				try{
+					Thread.sleep(50);
+				}catch(InterruptedException e){
+					e.printStackTrace();
+				}
 			}
+			
 			
 			horaUltimaPintada = System.currentTimeMillis();
 //			if(imagActual == 1){

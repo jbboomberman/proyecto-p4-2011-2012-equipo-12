@@ -97,20 +97,10 @@ public class Sprite {
 		tiempoTranscurrido = (System.currentTimeMillis() - horaUltimaPintada) / 1000.0F;
 
 		if (tiempoTranscurrido > 0.01F) {
-//			posX += 1;
-//			posY += 1;
-//			// AQUÍ TIENES QUE DAR LA INSTRUCCIÓN PINTAR
-////			g.drawImage(ManagerImagen.getImagen("bomber.jpg"), posX, posY,
-////					escenario);
 			g.drawImage(ManagerImagen.getImagen(spritesImag[imagActual]), (int)posX,
 					 (int)posY, escenario);
 					
 			horaUltimaPintada = System.currentTimeMillis();
-//			if(imagActual == 1){
-//				imagActual = 0;
-//			}else{
-//			imagActual++;
-//			}
 		}
 	}
 
@@ -145,7 +135,7 @@ public class Sprite {
 	public boolean colision(Sprite spr) {
 		Rectangle tempRect = new Rectangle((int)this.getPosX(), (int)this.getPosY(), (int)this.getAnchura(), (int)this.getAltura());
 		Rectangle tempRect2 = new Rectangle((int)spr.getPosX(), (int)spr.getPosY(), (int)spr.getAnchura(), (int)spr.getAltura());
-		if (tempRect2.getBounds().intersects(tempRect.getBounds())) {
+		if (tempRect2.intersects(tempRect)) {
 			return true;
 		} else
 			return false;

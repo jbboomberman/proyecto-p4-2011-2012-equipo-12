@@ -14,8 +14,6 @@ public class Bomba extends SpriteEstatico {
 
 	public Bomba(Escenario esce, float x, float y) {
 		super(esce);
-		// spritesImag = new String[]{"bomba_1.png", "bomba_2.png",
-		// "bomba_3.png"};
 		spritesImag = new String[] { "bombs.gif_1", "bombs.gif_2",
 				"bombs.gif_3" };
 		this.posX = x;
@@ -31,7 +29,7 @@ public class Bomba extends SpriteEstatico {
 	public void explotar() {
 		temporizador.cancel();
 		int[] maxLlama = calcularDistancias();
-		escenario.añadirSprite(new Llama(escenario, maxLlama, this.getPosX(), this.getPosY()));
+//		escenario.añadirSprite(new Llama(escenario, maxLlama, this.getPosX(), this.getPosY()));
 	}
 	
 	class LoadExplode extends TimerTask {
@@ -67,7 +65,7 @@ public class Bomba extends SpriteEstatico {
 					 * lo encontremos.
 					 */
 					//AL REVÉS!!!!!!!!!!!11
-					tempRect.y += this.getAltura();
+					tempRect.y -= this.getAltura();
 					/*
 					 * Comprobamos con los Sprites que hay en
 					 * la ventana a ver si alguno se interpone
@@ -79,7 +77,7 @@ public class Bomba extends SpriteEstatico {
 						if (tempRect.intersects(tempRect2)) {
 							encon = true;
 							//Ya sabemos el tope.
-							tempArray[i] = tempRect.y/33;
+							tempArray[i] = (int)(this.getPosY() - tempRect2.y)/33;
 							break;
 						}
 					}
@@ -89,11 +87,12 @@ public class Bomba extends SpriteEstatico {
 				boolean encon = false;
 				// CUIDADO CON MÁXIMO
 				while (!encon) {
-					tempRect.x -= this.getAltura();
+					tempRect.y += this.getAltura();
 					for (Sprite sprTemp : escenario.getLista()) {
-						if (tempRect.intersects(sprTemp.getBounds())) {
+						Rectangle tempRect2 = new Rectangle((int)sprTemp.getPosX(), (int)sprTemp.getPosY(), (int)sprTemp.getAnchura(), (int)sprTemp.getAltura());
+						if (tempRect.intersects(tempRect2)) {
 							encon = true;
-							tempArray[i] = tempRect.x/33;
+							tempArray[i] = (int)(tempRect2.y - this.getPosY())/33;
 							break;
 						}
 					}
@@ -103,11 +102,12 @@ public class Bomba extends SpriteEstatico {
 				boolean encon = false;
 				// CUIDADO CON MÁXIMO
 				while (!encon) {
-					tempRect.y += this.getAltura();
+					tempRect.x += this.getAltura();
 					for (Sprite sprTemp : escenario.getLista()) {
-						if (tempRect.intersects(sprTemp.getBounds())) {
+						Rectangle tempRect2 = new Rectangle((int)sprTemp.getPosX(), (int)sprTemp.getPosY(), (int)sprTemp.getAnchura(), (int)sprTemp.getAltura());
+						if (tempRect.intersects(tempRect2)) {
 							encon = true;
-							tempArray[i] = tempRect.y/33;
+							tempArray[i] = (int)(tempRect2.x - this.getPosX())/33;
 							break;
 						}
 					}
@@ -117,11 +117,12 @@ public class Bomba extends SpriteEstatico {
 				boolean encon = false;
 				// CUIDADO CON MÁXIMO
 				while (!encon) {
-					tempRect.y -= this.getAltura();
+					tempRect.x -= this.getAltura();
 					for (Sprite sprTemp : escenario.getLista()) {
-						if (tempRect.intersects(sprTemp.getBounds())) {
+						Rectangle tempRect2 = new Rectangle((int)sprTemp.getPosX(), (int)sprTemp.getPosY(), (int)sprTemp.getAnchura(), (int)sprTemp.getAltura());
+						if (tempRect.intersects(tempRect2)) {
 							encon = true;
-							tempArray[i] = tempRect.y/33;
+							tempArray[i] = (int)(this.getPosX() - tempRect2.x)/33;
 							break;
 						}
 					}
