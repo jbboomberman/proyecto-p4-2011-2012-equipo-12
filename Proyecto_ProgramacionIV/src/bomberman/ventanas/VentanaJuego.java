@@ -41,7 +41,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 		jpPrincipal = (JPanel) this.getContentPane();
 		arLista = new ArrayList<Sprite>();
-		setBounds(0, 0, 550, 550);
+		//setBounds(0, 0, 550, 550);
 		canPintar = new Canvas();
 		jpPrincipal.setPreferredSize(new Dimension(550, 550));
 		jpPrincipal.setLayout(null);
@@ -53,7 +53,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		// Determinamos los parámetros de la ventana.
 		this.setResizable(false);
 		this.setTitle("BombermanAdict");
-		this.setSize(600, 600);
+		this.setSize(660, 660);
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 
