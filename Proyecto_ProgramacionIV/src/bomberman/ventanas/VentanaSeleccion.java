@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class VentanaSeleccion extends JDialog  implements ActionListener{
+public class VentanaSeleccion extends JDialog implements ActionListener {
 
 	private JLabel texto;
 	private JButton jbHistoria;
@@ -20,37 +20,36 @@ public class VentanaSeleccion extends JDialog  implements ActionListener{
 	private JButton jbMaster;
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
-	
-	public VentanaSeleccion(){
-		
-		//Inicializamos las variables.
+
+	public VentanaSeleccion() {
+
+		// Inicializamos las variables.
 		texto = new JLabel("Seleccione el modo de juego: ");
 		jbHistoria = new JButton("Historia");
 		jbMultijugador = new JButton("Multijugador");
 		jbMaster = new JButton("Máster");
 		panelInferior = new JPanel();
 		panelSuperior = new JPanel();
-		
-		//Layout de los paneles
+
+		// Layout de los paneles
 		panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
 		getContentPane().setLayout(new BorderLayout());
-		//Añadir elementos a los paneles
+		// Añadir elementos a los paneles
 		panelSuperior.add(texto);
 		panelInferior.add(jbHistoria);
 		panelInferior.add(jbMultijugador);
 		panelInferior.add(jbMaster);
-		
+
 		getContentPane().add(panelInferior, BorderLayout.SOUTH);
 		getContentPane().add(panelSuperior, BorderLayout.NORTH);
-		
-		//Añadir escuchadores
+
+		// Añadir escuchadores
 		jbHistoria.addActionListener(this);
 		jbMultijugador.addActionListener(this);
 		jbMaster.addActionListener(this);
-		
-		
-		//Parámetros de la ventana.
+
+		// Parámetros de la ventana.
 		/*
 		 * Determinamos un tamaño mínimo de la ventana aunque dejamos que tenga
 		 * un tamaño máximo. De esta manera puede seguir funcionando a la
@@ -84,14 +83,14 @@ public class VentanaSeleccion extends JDialog  implements ActionListener{
 		if (botonPulsado == jbHistoria) {
 			GestorVentana.ocultarVentana(VentanaSeleccion.class);
 			GestorVentana.hacerVisible(VentanaDatos.class, false);
-		}else if (botonPulsado == jbMultijugador) {
-			
-		}else if(botonPulsado == jbMaster){
-			
+		} else if (botonPulsado == jbMultijugador) {
+
+		} else if (botonPulsado == jbMaster) {
+
 		}
 	}
-	
-	public static void main (String [] args){
+
+	public static void main(String[] args) {
 		VentanaSeleccion prueba = new VentanaSeleccion();
 		prueba.setVisible(true);
 	}

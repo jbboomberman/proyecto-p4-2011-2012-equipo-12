@@ -18,35 +18,36 @@ public class Bomba extends SpriteEstatico {
 				"bombs.gif_3" };
 		this.posX = x;
 		this.posY = y;
-		//¿Se puede automatizar?
+		// ¿Se puede automatizar?
 		this.altura = 33;
 		this.anchura = 33;
-		//////
-		temporizador = new Timer();
-		temporizador.schedule(new LoadExplode(), 3000);
+		// ////
+		//temporizador = new Timer();
+		//temporizador.schedule(new LoadExplode(), 3000);
 	}
 
 	public void explotar() {
-		temporizador.cancel();
+		//temporizador.cancel();
 		int[] maxLlama = calcularDistancias();
-//		escenario.añadirSprite(new Llama(escenario, maxLlama, this.getPosX(), this.getPosY()));
+		// escenario.añadirSprite(new Llama(escenario, maxLlama, this.getPosX(),
+		// this.getPosY()));
 	}
-	
+
 	class LoadExplode extends TimerTask {
 
-        public void run() {
-            explotar();
-        }
-    }
-	
-	private int[] calcularDistancias(){
-		
-		int[]tempArray = new int[4];
-		
+		public void run() {
+			explotar();
+		}
+	}
+
+	private int[] calcularDistancias() {
+
+		int[] tempArray = new int[4];
+
 		/*
-		 * Creamos un objeto de la clase Rectangle que nos servirá
-		 * para comprobar si hay algún muro o enemigo en el
-		 * camino que tendrá que tomar la llama.
+		 * Creamos un objeto de la clase Rectangle que nos servirá para
+		 * comprobar si hay algún muro o enemigo en el camino que tendrá que
+		 * tomar la llama.
 		 */
 		Rectangle tempRect = new Rectangle(new Dimension(33, 33));
 
@@ -59,70 +60,84 @@ public class Bomba extends SpriteEstatico {
 				boolean encon = false;
 				// CUIDADO CON MÁXIMO
 				while (!encon) {
-					
+
 					/*
-					 * Vamos añadiendo posiciones hasta que
-					 * lo encontremos.
+					 * Vamos añadiendo posiciones hasta que lo encontremos.
 					 */
-					//AL REVÉS!!!!!!!!!!!11
+					// AL REVÉS!!!!!!!!!!!11
 					tempRect.y -= this.getAltura();
 					/*
-					 * Comprobamos con los Sprites que hay en
-					 * la ventana a ver si alguno se interpone
-					 * en nuestro camino.
+					 * Comprobamos con los Sprites que hay en la ventana a ver
+					 * si alguno se interpone en nuestro camino.
 					 */
 					for (Sprite sprTemp : escenario.getLista()) {
-						Rectangle tempRect2 = new Rectangle((int)sprTemp.getPosX(), (int)sprTemp.getPosY(), (int)sprTemp.getAnchura(), (int)sprTemp.getAltura());
-						//Si alguno se interpone
+						Rectangle tempRect2 = new Rectangle(
+								(int) sprTemp.getPosX(),
+								(int) sprTemp.getPosY(),
+								(int) sprTemp.getAnchura(),
+								(int) sprTemp.getAltura());
+						// Si alguno se interpone
 						if (tempRect.intersects(tempRect2)) {
 							encon = true;
-							//Ya sabemos el tope.
-							tempArray[i] = (int)(this.getPosY() - tempRect2.y)/33;
+							// Ya sabemos el tope.
+							tempArray[i] = (int) (this.getPosY() - tempRect2.y) / 33;
 							break;
 						}
 					}
 				}
-			// Comprobamos la distancia que hay abajo
-			}else if(i == 1){
+				// Comprobamos la distancia que hay abajo
+			} else if (i == 1) {
 				boolean encon = false;
 				// CUIDADO CON MÁXIMO
 				while (!encon) {
 					tempRect.y += this.getAltura();
 					for (Sprite sprTemp : escenario.getLista()) {
-						Rectangle tempRect2 = new Rectangle((int)sprTemp.getPosX(), (int)sprTemp.getPosY(), (int)sprTemp.getAnchura(), (int)sprTemp.getAltura());
+						Rectangle tempRect2 = new Rectangle(
+								(int) sprTemp.getPosX(),
+								(int) sprTemp.getPosY(),
+								(int) sprTemp.getAnchura(),
+								(int) sprTemp.getAltura());
 						if (tempRect.intersects(tempRect2)) {
 							encon = true;
-							tempArray[i] = (int)(tempRect2.y - this.getPosY())/33;
+							tempArray[i] = (int) (tempRect2.y - this.getPosY()) / 33;
 							break;
 						}
 					}
 				}
-			// Comprobamos la distancia que hay a la derecha
-			}else if(i == 2){
+				// Comprobamos la distancia que hay a la derecha
+			} else if (i == 2) {
 				boolean encon = false;
 				// CUIDADO CON MÁXIMO
 				while (!encon) {
 					tempRect.x += this.getAltura();
 					for (Sprite sprTemp : escenario.getLista()) {
-						Rectangle tempRect2 = new Rectangle((int)sprTemp.getPosX(), (int)sprTemp.getPosY(), (int)sprTemp.getAnchura(), (int)sprTemp.getAltura());
+						Rectangle tempRect2 = new Rectangle(
+								(int) sprTemp.getPosX(),
+								(int) sprTemp.getPosY(),
+								(int) sprTemp.getAnchura(),
+								(int) sprTemp.getAltura());
 						if (tempRect.intersects(tempRect2)) {
 							encon = true;
-							tempArray[i] = (int)(tempRect2.x - this.getPosX())/33;
+							tempArray[i] = (int) (tempRect2.x - this.getPosX()) / 33;
 							break;
 						}
 					}
 				}
-			// Comprobamos la distancia que hay a la  izquierda
-			}else{
+				// Comprobamos la distancia que hay a la izquierda
+			} else {
 				boolean encon = false;
 				// CUIDADO CON MÁXIMO
 				while (!encon) {
 					tempRect.x -= this.getAltura();
 					for (Sprite sprTemp : escenario.getLista()) {
-						Rectangle tempRect2 = new Rectangle((int)sprTemp.getPosX(), (int)sprTemp.getPosY(), (int)sprTemp.getAnchura(), (int)sprTemp.getAltura());
+						Rectangle tempRect2 = new Rectangle(
+								(int) sprTemp.getPosX(),
+								(int) sprTemp.getPosY(),
+								(int) sprTemp.getAnchura(),
+								(int) sprTemp.getAltura());
 						if (tempRect.intersects(tempRect2)) {
 							encon = true;
-							tempArray[i] = (int)(this.getPosX() - tempRect2.x)/33;
+							tempArray[i] = (int) (this.getPosX() - tempRect2.x) / 33;
 							break;
 						}
 					}

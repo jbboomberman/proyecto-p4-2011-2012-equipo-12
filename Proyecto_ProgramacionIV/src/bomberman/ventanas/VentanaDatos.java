@@ -140,7 +140,7 @@ public class VentanaDatos extends JDialog implements ActionListener {
 				jug.setNick(nic.getText());
 			}
 			GestorVentana.hacerVisible(VentanaJuego.class, true);
-		}else if (botonPulsado == botonCancelar) {
+		} else if (botonPulsado == botonCancelar) {
 			GestorVentana.ocultarVentana(VentanaDatos.class);
 		}
 	}

@@ -27,47 +27,56 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class ManagerSonido {
 
 	private static URL url = null;
-	
-	private static void playClip(String nom) throws IOException, 
-	  UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
-	  class AudioListener implements LineListener {
-	    private boolean done = false;
-	    @Override public synchronized void update(LineEvent event) {
-	      Type eventType = event.getType();
-	      if (eventType == Type.STOP || eventType == Type.CLOSE) {
-	        done = true;
-	        notifyAll();
-	      }
-	    }
-	    public synchronized void waitUntilDone() throws InterruptedException {
-	      while (!done) { wait(); }
-	    }
-	  }
-	  url = ManagerSonido.class.getClassLoader().getResource(
+
+	private static void playClip(String nom) throws IOException,
+			UnsupportedAudioFileException, LineUnavailableException,
+			InterruptedException {
+		class AudioListener implements LineListener {
+			private boolean done = false;
+
+			@Override
+			public synchronized void update(LineEvent event) {
+				Type eventType = event.getType();
+				if (eventType == Type.STOP || eventType == Type.CLOSE) {
+					done = true;
+					notifyAll();
+				}
+			}
+
+			public synchronized void waitUntilDone()
+					throws InterruptedException {
+				while (!done) {
+					wait();
+				}
+			}
+		}
+		url = ManagerSonido.class.getClassLoader().getResource(
 				"bomberman/resources/" + nom);
-	  AudioListener listener = new AudioListener();
-	  AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
-	  try {
-	    Clip clip = AudioSystem.getClip();
-	    clip.addLineListener(listener);
-	    clip.open(audioInputStream);
-	    try {
-//	    	FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//			gainControl.setValue(6.0f);
-	      clip.start();
-	      listener.waitUntilDone();
-	    } finally {
-	      clip.close();
-	    }
-	  } finally {
-	    audioInputStream.close();
-	  }
+		AudioListener listener = new AudioListener();
+		AudioInputStream audioInputStream = AudioSystem
+				.getAudioInputStream(url);
+		try {
+			Clip clip = AudioSystem.getClip();
+			clip.addLineListener(listener);
+			clip.open(audioInputStream);
+			try {
+				// FloatControl gainControl = (FloatControl)
+				// clip.getControl(FloatControl.Type.MASTER_GAIN);
+				// gainControl.setValue(6.0f);
+				clip.start();
+				listener.waitUntilDone();
+			} finally {
+				clip.close();
+			}
+		} finally {
+			audioInputStream.close();
+		}
 	}
-	
-	public static void main (String [] args){
-		try{
+
+	public static void main(String[] args) {
+		try {
 			ManagerSonido.playClip("levelintrosong.wav");
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -27,11 +27,9 @@ import java.util.ArrayList;
 public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	private static final long serialVersionUID = -7461719037402108362L;
-	private JPanel jpPrincipal;
 	private Canvas canPintar;
 	private BufferedImage biImagen;
 	private Bomberman bomber;
-	private Escenario escenario;
 	private static ArrayList<Sprite> arLista;
 
 	/**
@@ -39,20 +37,24 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 */
 	public VentanaJuego() {
 
-		jpPrincipal = (JPanel) this.getContentPane();
 		arLista = new ArrayList<Sprite>();
-		//setBounds(0, 0, 550, 550);
 		canPintar = new Canvas();
-		jpPrincipal.setPreferredSize(new Dimension(550, 550));
-		jpPrincipal.setLayout(null);
-		jpPrincipal.add(canPintar);
-		
+		//canPintar.setPreferredSize(new Dimension(660, 660));
+		//canPintar.setSize(new Dimension(660, 660));
+		//jpPrincipal.setPreferredSize(new Dimension(660, 550));
+//		getContentPane().setLayout(null);
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().add(canPintar, BorderLayout.CENTER);
+//		getContentPane().add(canPintar);
+		//this.pack();
+
 		// La ventana tiene que escuchar el teclado.
 		this.addKeyListener(this);
 
 		// Determinamos los parámetros de la ventana.
 		this.setResizable(false);
 		this.setTitle("BombermanAdict");
+		//this.setUndecorated(true);
 		this.setSize(660, 660);
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
@@ -100,23 +102,24 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	public Bomberman getBomberman() {
 		return bomber;
 	}
-	
-	//PRUEBA, HAY QUE MEJORAR
-	public void setBomberman(Bomberman b){
+
+	// PRUEBA, HAY QUE MEJORAR
+	public void setBomberman(Bomberman b) {
 		this.bomber = b;
 	}
 
 	public Canvas getPanel() {
 		return canPintar;
 	}
-	
-	public void añadirSprite(Sprite spr){
+
+	public void añadirSprite(Sprite spr) {
 		arLista.add(spr);
 	}
-	
-	public ArrayList<Sprite> getLista(){
+
+	public ArrayList<Sprite> getLista() {
 		return arLista;
 	}
+
 	public static void main(String[] args) {
 		VentanaJuego juego = new VentanaJuego();
 		juego.setVisible(true);
