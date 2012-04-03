@@ -138,20 +138,20 @@ public class VentanaInicial extends JFrame implements ActionListener {
 		 * dirección del generador del evento.
 		 */
 		Object botonPulsado = e.getSource();
-		
-		if(botonPulsado == jbBotonJugar){
+
+		if (botonPulsado == jbBotonJugar) {
 			GestorVentana.hacerVisible(VentanaSeleccion.class, false);
-		}else if (botonPulsado == jbBotonCargar){
-			
-		}else if(botonPulsado == jbBotonPuntu){
-			
-		}else if(botonPulsado == jbBotonConfi){
-			
-		}else if(botonPulsado == jbBotonInstruc){
-			
-		}else if(botonPulsado == jbBotonInfo){
-			
-		}else if(botonPulsado == jbBotonSalir){
+		} else if (botonPulsado == jbBotonCargar) {
+
+		} else if (botonPulsado == jbBotonPuntu) {
+
+		} else if (botonPulsado == jbBotonConfi) {
+
+		} else if (botonPulsado == jbBotonInstruc) {
+
+		} else if (botonPulsado == jbBotonInfo) {
+
+		} else if (botonPulsado == jbBotonSalir) {
 			System.exit(0);
 		}
 	}

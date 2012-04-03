@@ -1,8 +1,10 @@
 package bomberman.protagonistas;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import bomberman.managers.Escenario;
@@ -21,7 +23,7 @@ public class Sprite {
 	protected int t;
 	protected float tiempoTranscurrido;
 	protected long horaUltimaPintada;
-	
+
 	public Sprite(Escenario esce) {
 		this.imagActual = 0;
 		this.velocidadPic = 15;
@@ -97,9 +99,13 @@ public class Sprite {
 		tiempoTranscurrido = (System.currentTimeMillis() - horaUltimaPintada) / 1000.0F;
 
 		if (tiempoTranscurrido > 0.01F) {
-			g.drawImage(ManagerImagen.getImagen(spritesImag[imagActual]), (int)posX,
-					 (int)posY, escenario);
-					
+			g.drawImage(ManagerImagen.getImagen(spritesImag[imagActual]),
+					(int) posX, (int) posY, escenario);
+			if(this instanceof Bomberman){
+				g.setPaint(Color.BLACK);
+				g.draw(new Rectangle2D.Double(this.getPosX(), this.getPosY(), this.getAnchura(), this.getAltura()));
+			}
+
 			horaUltimaPintada = System.currentTimeMillis();
 		}
 	}
@@ -110,15 +116,16 @@ public class Sprite {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle((int)posX, (int)posY, (int)anchura, (int)altura);
+		return new Rectangle((int) posX, (int) posY, (int) anchura,
+				(int) altura);
 	}
 
 	public void mover() {
-		 t++;
-		 if (t % velocidadPic == 0) {
-			 t = 0;
-			 imagActual = (imagActual + 1) % spritesImag.length;
-		 }
+		t++;
+		if (t % velocidadPic == 0) {
+			t = 0;
+			imagActual = (imagActual + 1) % spritesImag.length;
+		}
 	}
 
 	public void setSpriteNombres(String[] nom) {
@@ -133,8 +140,12 @@ public class Sprite {
 	}
 
 	public boolean colision(Sprite spr) {
-		Rectangle tempRect = new Rectangle((int)this.getPosX(), (int)this.getPosY(), (int)this.getAnchura(), (int)this.getAltura());
-		Rectangle tempRect2 = new Rectangle((int)spr.getPosX(), (int)spr.getPosY(), (int)spr.getAnchura(), (int)spr.getAltura());
+		Rectangle tempRect = new Rectangle((int) this.getPosX(),
+				(int) this.getPosY(), (int) this.getAnchura(),
+				(int) this.getAltura());
+		Rectangle tempRect2 = new Rectangle((int) spr.getPosX(),
+				(int) spr.getPosY(), (int) spr.getAnchura(),
+				(int) spr.getAltura());
 		if (tempRect2.intersects(tempRect)) {
 			return true;
 		} else

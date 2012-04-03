@@ -57,16 +57,16 @@ public class ManagerImagen {
 	 * @param anc
 	 * @param alt
 	 */
-	public static void cargarImagen(String nom, String futNom, int maxAnc, int maxAlt,
-			int anc, int alt) {
+	public static void cargarImagen(String nom, String futNom, int maxAnc,
+			int maxAlt, int anc, int alt) {
 		miUrl = ManagerImagen.class.getClassLoader().getResource(
 				"bomberman/resources/" + nom);
 		try {
 			biImagen = ImageIO.read(miUrl);
 			int parseWidth = biImagen.getWidth() / maxAnc;
 			int parseHeight = biImagen.getHeight() / maxAlt;
-			BufferedImage tempBuff = biImagen.getSubimage(anc * parseWidth, alt * parseHeight, parseWidth,
-							parseHeight);
+			BufferedImage tempBuff = biImagen.getSubimage(anc * parseWidth, alt
+					* parseHeight, parseWidth, parseHeight);
 			sprites.put(futNom, tempBuff);
 		} catch (IOException e) {
 			e.printStackTrace();

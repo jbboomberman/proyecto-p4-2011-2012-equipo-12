@@ -47,8 +47,7 @@ public class GestorVentana {
 	 *            - boolean, indica si es la única ventana que se deja visible o
 	 *            no. true si es la única, false si no.
 	 */
-	public static void hacerVisible(Class claseVentana,
-			boolean unicaVisible) {
+	public static void hacerVisible(Class claseVentana, boolean unicaVisible) {
 		for (Window vent : vectorVentanas) {
 			// En caso de que la ventana sea de la clase que queremos.
 			if (vent.getClass().isAssignableFrom(claseVentana)) {
@@ -81,9 +80,9 @@ public class GestorVentana {
 			}
 		}
 	}
-	
-	public static Object getVentana(Class claseVentana){
-		for(Window vent : vectorVentanas){
+
+	public static Object getVentana(Class claseVentana) {
+		for (Window vent : vectorVentanas) {
 			if (vent.getClass().isAssignableFrom(claseVentana)) {
 				return vent;
 			}

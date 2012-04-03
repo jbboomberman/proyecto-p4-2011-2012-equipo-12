@@ -13,24 +13,27 @@ public class SpriteDinamico extends Sprite {
 	}
 
 	protected boolean seSale() {
-		return (posX < 0 || posY < 0 || posX > (Escenario.ANCHURA - this.getAnchura()) || posY > (Escenario.ALTURA - this.getAltura()));
+		return (posX < 0 || posY < 0
+				|| posX > (Escenario.ANCHURA - this.getAnchura()) || posY > (Escenario.ALTURA - this
+				.getAltura()));
 	}
 
 	protected void rebota() {
 		if (posX < 0) {
 			this.setPosX(0);
 		} else if (posX > Escenario.ANCHURA - this.getAnchura()) {
-			this.setPosX((int)(Escenario.ANCHURA - this.getAnchura()));
+			this.setPosX((int) (Escenario.ANCHURA - this.getAnchura()));
 		}
 		if (posY < 0) {
 			this.setPosY(0);
 		} else if (posY > Escenario.ALTURA - this.getAltura()) {
-			this.setPosY((int)(Escenario.ALTURA - this.getAltura()));
+			this.setPosY((int) (Escenario.ALTURA - this.getAltura()));
 		}
 	}
-	public void mover(){
+
+	public void mover() {
 		super.mover();
-		if(seSale()){
+		if (seSale()) {
 			rebota();
 		}
 	}

@@ -25,7 +25,7 @@ public class CuentaAtras extends Observable {
 		parado = true;
 		minutos = m;
 		segundos = s;
-		
+
 		if (m < 0 || m > 59)
 			throw new RelojException("Minutos fuera de rango");
 		if (s < 0 || s > 59)
