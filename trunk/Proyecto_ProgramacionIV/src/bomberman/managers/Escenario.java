@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 import bomberman.protagonistas.Bomberman;
 import bomberman.protagonistas.Sprite;
 

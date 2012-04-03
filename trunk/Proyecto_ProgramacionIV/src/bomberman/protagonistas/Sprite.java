@@ -101,11 +101,6 @@ public class Sprite {
 		if (tiempoTranscurrido > 0.01F) {
 			g.drawImage(ManagerImagen.getImagen(spritesImag[imagActual]),
 					(int) posX, (int) posY, escenario);
-			if(this instanceof Bomberman){
-				g.setPaint(Color.BLACK);
-				g.draw(new Rectangle2D.Double(this.getPosX(), this.getPosY(), this.getAnchura(), this.getAltura()));
-			}
-
 			horaUltimaPintada = System.currentTimeMillis();
 		}
 	}
