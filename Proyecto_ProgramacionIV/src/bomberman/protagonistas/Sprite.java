@@ -43,7 +43,7 @@ public class Sprite {
 		return posX;
 	}
 
-	public void setPosX(int posX) {
+	public void setPosX(float posX) {
 		this.posX = posX;
 	}
 
@@ -51,7 +51,7 @@ public class Sprite {
 		return posY;
 	}
 
-	public void setPosY(int posY) {
+	public void setPosY(float posY) {
 		this.posY = posY;
 	}
 
@@ -133,7 +133,7 @@ public class Sprite {
 			anchura = Math.max(anchura, image.getWidth());
 		}
 	}
-
+//PUESE SER INTERESANTE
 	public boolean colision(Sprite spr) {
 		Rectangle tempRect = new Rectangle((int) this.getPosX(),
 				(int) this.getPosY(), (int) this.getAnchura(),

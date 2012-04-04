@@ -29,6 +29,10 @@ public class LeerMapa {
 			for (int i = 0; i < 20; i++) {
 				for (int j = 0; j < 20; j++) {
 					inputLine2 = (char) brF.read();
+					// No queremos leer los retornos de carro ni nuevas lineas.
+					while ((int) inputLine2 == 13 || (int) inputLine2 == 10) {
+						inputLine2 = (char) brF.read();
+					}
 					arrayChar[j][i] = (inputLine2);
 				}
 			}

@@ -22,12 +22,12 @@ public class Bomba extends SpriteEstatico {
 		this.altura = 33;
 		this.anchura = 33;
 		// ////
-		//temporizador = new Timer();
-		//temporizador.schedule(new LoadExplode(), 3000);
+		// temporizador = new Timer();
+		// temporizador.schedule(new LoadExplode(), 3000);
 	}
 
 	public void explotar() {
-		//temporizador.cancel();
+		// temporizador.cancel();
 		int[] maxLlama = calcularDistancias();
 		// escenario.añadirSprite(new Llama(escenario, maxLlama, this.getPosX(),
 		// this.getPosY()));
