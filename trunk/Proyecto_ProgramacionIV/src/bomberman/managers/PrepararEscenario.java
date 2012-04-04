@@ -3,6 +3,7 @@ package bomberman.managers;
 import java.util.ArrayList;
 
 import bomberman.protagonistas.Muro;
+import bomberman.protagonistas.Valcom;
 
 public class PrepararEscenario {
 
@@ -22,7 +23,7 @@ public class PrepararEscenario {
 							(float) j * 33, true));
 					// Valcom
 				} else if (arrayChar[i][j] == 'V') {
-
+					esce.añadirSprite(new Valcom(esce, 50, 50));
 					// Dahl
 				} else if (arrayChar[i][j] == 'A') {
 

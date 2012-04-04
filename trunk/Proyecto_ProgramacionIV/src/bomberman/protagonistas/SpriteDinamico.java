@@ -1,5 +1,7 @@
 package bomberman.protagonistas;
 
+import java.awt.Rectangle;
+
 import bomberman.managers.Escenario;
 
 public class SpriteDinamico extends Sprite {
@@ -12,29 +14,33 @@ public class SpriteDinamico extends Sprite {
 		super(esce);
 	}
 
-	protected boolean seSale() {
-		return (posX < 0 || posY < 0
-				|| posX > (Escenario.ANCHURA - this.getAnchura()) || posY > (Escenario.ALTURA - this
-				.getAltura()));
+	protected boolean seChoca(float x, float y) {
+		Rectangle tempRect = new Rectangle((int)x, (int)(y + (this.altura/2)), (int)this.anchura, (int)this.altura/2);
+		for(Sprite sprTemp : escenario.getLista()){
+			if(sprTemp != this){
+				Rectangle tempRect2 = new Rectangle((int)sprTemp.posX, (int)sprTemp.posY, 
+						(int)sprTemp.anchura, (int)sprTemp.altura);
+				if(tempRect.intersects(tempRect2)){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
-	protected void rebota() {
-		if (posX < 0) {
-			this.setPosX(0);
-		} else if (posX > Escenario.ANCHURA - this.getAnchura()) {
-			this.setPosX((int) (Escenario.ANCHURA - this.getAnchura()));
-		}
-		if (posY < 0) {
-			this.setPosY(0);
-		} else if (posY > Escenario.ALTURA - this.getAltura()) {
-			this.setPosY((int) (Escenario.ALTURA - this.getAltura()));
-		}
-	}
+//	protected void rebota(Sprite chocaCon) {
+//		if (chocaCon instanceof Muro) {
+//			this.setPosX(getPosX());
+//		}else if(chocaCon instanceof Pildora){
+//			
+//		}
+////		else if(chocaCon instanceof Enemigo){
+////			
+////		}
+//		
+//	}
 
 	public void mover() {
 		super.mover();
-		if (seSale()) {
-			rebota();
-		}
 	}
 }

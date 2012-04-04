@@ -39,9 +39,11 @@ public class Bomberman extends SpriteDinamico {
 		} else {
 			super.mover();
 		}
-		posX += deltaX * tiempoTranscurrido;
-		posY += deltaY * tiempoTranscurrido;
-		// AQUÍ TIENES QUE DAR LA INSTRUCCIÓN PINTAR
+		
+		if(!seChoca(posX + (deltaX * tiempoTranscurrido), posY + (deltaY * tiempoTranscurrido))){
+			posX += deltaX * tiempoTranscurrido;
+			posY += deltaY * tiempoTranscurrido;
+		}
 	}
 
 	public boolean isParado() {
