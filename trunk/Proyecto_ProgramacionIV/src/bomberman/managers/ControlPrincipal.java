@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+
 import javax.swing.*;
 
 import bomberman.outin.LeerMapa;
@@ -14,6 +16,7 @@ import bomberman.protagonistas.Bomberman;
 import bomberman.protagonistas.Muro;
 import bomberman.protagonistas.Sprite;
 import bomberman.protagonistas.SpriteDinamico;
+import bomberman.protagonistas.Valcom;
 import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaInicial;
 import bomberman.ventanas.VentanaJuego;
@@ -65,9 +68,10 @@ public class ControlPrincipal {
 		// Esto está antiquado
 
 		ArrayList<Sprite> tempLista = ventJuego.getLista();
-		for (Sprite spr : tempLista) {
-			spr.mover();
-			spr.paint((Graphics2D) g);
+		for(int i = 0; i < tempLista.size(); i++){
+			Sprite tempSpr = tempLista.get(i);
+			tempSpr.mover();
+			tempSpr.paint((Graphics2D) g);
 		}
 
 		ventJuego.getBomberman().mover();
@@ -92,16 +96,11 @@ public class ControlPrincipal {
 
 	// ESTE MÉTODO ES DE PRUEBA
 	private void crearEscenario() {
-		// for(int i = 0; i < 660; i += 33){
-		// ventJuego.añadirSprite(new Muro(ventJuego, i, 0, false));
-		// ventJuego.añadirSprite(new Muro(ventJuego, i, VentanaJuego.ALTURA -
-		// 33, false));
-		// ventJuego.añadirSprite(new Muro(ventJuego, 0, i, false));
-		// ventJuego.añadirSprite(new Muro(ventJuego, VentanaJuego.ANCHURA-33,
-		// i, false));
-		// }
+		ventJuego.añadirSprite(new Valcom(ventJuego, 200, 200));
+		ventJuego.añadirSprite(new Valcom(ventJuego, 200, 250));
+		ventJuego.añadirSprite(new Valcom(ventJuego, 200, 400));
+		ventJuego.añadirSprite(new Valcom(ventJuego, 200, 500));
 		Character array[][] = LeerMapa.LeerMapaJuego("mapa1.txt");
 		PrepararEscenario.ColocarMapa(ventJuego, array);
-		// ventJuego.añadirSprite(new Muro(ventJuego, 0, 0, false));
 	}
 }
