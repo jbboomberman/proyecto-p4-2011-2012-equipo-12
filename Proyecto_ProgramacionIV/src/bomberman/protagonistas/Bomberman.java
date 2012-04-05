@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
+import bomberman.managers.ManagerImagen;
 
 public class Bomberman extends SpriteDinamico {
 
@@ -31,6 +32,10 @@ public class Bomberman extends SpriteDinamico {
 		spritesImagLeft = new String[] { "bomber.gif_1", "bomber.gif_2",
 				"bomber.gif_3" };
 		setSpriteNombres(spritesImagDown);
+		this.altura = ManagerImagen.getImagen(spritesImagUp[0])
+		.getWidth();
+		this.anchura = ManagerImagen.getImagen(spritesImagUp[0])
+		.getHeight();
 	}
 
 	public void mover() {

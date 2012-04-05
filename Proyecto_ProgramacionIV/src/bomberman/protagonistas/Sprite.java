@@ -18,11 +18,13 @@ public class Sprite {
 	protected double altura;
 	protected Escenario escenario;
 	protected String[] spritesImag;
+	protected String[] spritesImagDest;
 	protected int imagActual;
 	protected int velocidadPic;
 	protected int t;
 	protected float tiempoTranscurrido;
 	protected long horaUltimaPintada;
+	protected boolean seDestruir;
 
 	public Sprite(Escenario esce) {
 		this.imagActual = 0;
@@ -117,9 +119,19 @@ public class Sprite {
 
 	public void mover() {
 		t++;
-		if (t % velocidadPic == 0) {
+		/*
+		 * En caso de que hayamos llegado al límite para
+		 * cambiar de imagen y el personaje no se tenga que
+		 * destruir.
+		 */
+		if (t % velocidadPic == 0 && !seDestruir) {
 			t = 0;
 			imagActual = (imagActual + 1) % spritesImag.length;
+		}else if (t % velocidadPic == 0 && seDestruir){
+			t = 0;
+			imagActual = (imagActual + 1) % spritesImagDest.length;
+			if(imagActual == (spritesImagDest.length - 1))
+				this.destruir();
 		}
 	}
 
@@ -145,5 +157,25 @@ public class Sprite {
 			return true;
 		} else
 			return false;
+	}
+	
+	/**
+	 * Este método se usa para cuando el Sprite tiene que
+	 * morir. Simplemente cambia las imagenes a las de
+	 * destrucción y se borra de la lista de personajes.
+	 */
+	public void procDestruccion(){
+		setSpritesImag(spritesImagDest);
+		seDestruir = true;
+		imagActual = 0;
+	}
+	private void destruir(){
+		for(Sprite sprTemp : escenario.getLista()){
+			//El mismo objeto
+			if(sprTemp == this){
+				escenario.getLista().remove(sprTemp);
+				break;
+			}
+		}
 	}
 }
