@@ -15,11 +15,9 @@ public class Llama extends SpriteDinamico {
 	private int[] max;
 
 	public Llama(Escenario esce, int[] tempMax, float x, float y) {
-		super(esce);
+		super(esce, x, y);
 		this.escenario = esce;
 		this.max = tempMax;
-		this.posX = x;
-		this.posY = y;
 
 		// CUIDADO ESTAMOS CARGANDO DEMASIADO
 		ManagerImagen.cargarImagen("llama.gif", "intermedio_anc", 4, 8, 0, 2);

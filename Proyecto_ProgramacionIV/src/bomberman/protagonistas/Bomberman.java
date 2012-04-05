@@ -15,8 +15,8 @@ public class Bomberman extends SpriteDinamico {
 	private boolean parado;
 	private final int ANCH_ALT_MURO = 33;
 
-	public Bomberman(Escenario esce) {
-		super(esce);
+	public Bomberman(Escenario esce, float x, float y) {
+		super(esce, x, y);
 		posX = 50;
 		posY = 50;
 		deltaX = 0;
@@ -90,7 +90,7 @@ public class Bomberman extends SpriteDinamico {
 		case KeyEvent.VK_SPACE:
 			int tempX = (((int) (this.getPosX() + (this.getAnchura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
 			int tempY = (((int) (this.getPosY() + (this.getAltura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
-			escenario.añadirSprite(new Bomba(escenario, tempX, tempY));
+			escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this));
 			break;
 		default:
 			break;

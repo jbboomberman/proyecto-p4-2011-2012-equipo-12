@@ -10,8 +10,10 @@ public class SpriteDinamico extends Sprite {
 	protected int deltaY;
 	protected int velocidad;
 
-	public SpriteDinamico(Escenario esce) {
+	public SpriteDinamico(Escenario esce, float x, float y) {
 		super(esce);
+		this.posX = x;
+		this.posY = y;
 	}
 
 	protected boolean seChoca(float x, float y) {
@@ -29,6 +31,11 @@ public class SpriteDinamico extends Sprite {
 						Muro tempMuro = (Muro)sprTemp;
 						if(tempMuro.isDestructible())
 							sprTemp.procDestruccion();
+					}else if(sprTemp instanceof Bomba){
+						Bomba tempBomba = (Bomba)sprTemp;
+						if(tempBomba.isPisada())
+							return false;
+						return true;
 					}else
 						sprTemp.procDestruccion();
 					return true;

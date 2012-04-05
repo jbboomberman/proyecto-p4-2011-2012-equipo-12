@@ -1,6 +1,7 @@
 package bomberman.protagonistas;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,8 +12,10 @@ import bomberman.ventanas.VentanaJuego;
 public class Bomba extends SpriteEstatico {
 
 	private Timer temporizador;
+	private boolean pisada;
+	private Bomberman bomberman;
 
-	public Bomba(Escenario esce, float x, float y) {
+	public Bomba(Escenario esce, float x, float y, Bomberman bomber) {
 		super(esce);
 		spritesImag = new String[] { "bombs.gif_1", "bombs.gif_2",
 				"bombs.gif_3" };
@@ -21,9 +24,25 @@ public class Bomba extends SpriteEstatico {
 		// ¿Se puede automatizar?
 		this.altura = 33;
 		this.anchura = 33;
+		pisada = true;
+		this.bomberman = bomber;
 		// ////
 		// temporizador = new Timer();
 		// temporizador.schedule(new LoadExplode(), 3000);
+	}
+	
+	public void paint(Graphics2D g){
+		super.paint(g);
+		if(!this.colision(bomberman) && pisada)
+			pisada = false;
+	}
+	
+	public boolean isPisada() {
+		return pisada;
+	}
+
+	public void setPisada(boolean pisada) {
+		this.pisada = pisada;
 	}
 
 	public void explotar() {
