@@ -13,6 +13,7 @@ import javax.swing.*;
 import bomberman.outin.LeerMapa;
 import bomberman.protagonistas.Bomba;
 import bomberman.protagonistas.Bomberman;
+import bomberman.protagonistas.Minvo;
 import bomberman.protagonistas.Muro;
 import bomberman.protagonistas.Sprite;
 import bomberman.protagonistas.SpriteDinamico;
@@ -30,7 +31,7 @@ public class ControlPrincipal {
 
 	public ControlPrincipal() {
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
-		prueba = new Bomberman(ventJuego);
+		prueba = new Bomberman(ventJuego, 50, 50);
 		ventJuego.setBomberman(prueba);
 		Canvas canv = ventJuego.getPanel();
 		// Hacer después de que la ventana este activa para que funcione.
@@ -96,10 +97,10 @@ public class ControlPrincipal {
 
 	// ESTE MÉTODO ES DE PRUEBA
 	private void crearEscenario() {
-		ventJuego.añadirSprite(new Valcom(ventJuego, 200, 200));
-		ventJuego.añadirSprite(new Valcom(ventJuego, 200, 250));
-		ventJuego.añadirSprite(new Valcom(ventJuego, 200, 400));
-		ventJuego.añadirSprite(new Valcom(ventJuego, 200, 500));
+		ventJuego.añadirSprite(new Minvo(ventJuego, 200, 200));
+		ventJuego.añadirSprite(new Minvo(ventJuego, 200, 250));
+		ventJuego.añadirSprite(new Minvo(ventJuego, 200, 400));
+		ventJuego.añadirSprite(new Minvo(ventJuego, 200, 500));
 		Character array[][] = LeerMapa.LeerMapaJuego("mapa1.txt");
 		PrepararEscenario.ColocarMapa(ventJuego, array);
 	}
