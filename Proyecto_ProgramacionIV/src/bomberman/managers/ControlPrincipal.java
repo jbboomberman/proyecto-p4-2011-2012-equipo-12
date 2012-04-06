@@ -13,6 +13,7 @@ import javax.swing.*;
 import bomberman.outin.LeerMapa;
 import bomberman.protagonistas.Bomba;
 import bomberman.protagonistas.Bomberman;
+import bomberman.protagonistas.Dahl;
 import bomberman.protagonistas.Minvo;
 import bomberman.protagonistas.Muro;
 import bomberman.protagonistas.Sprite;
@@ -97,10 +98,10 @@ public class ControlPrincipal {
 
 	// ESTE MÉTODO ES DE PRUEBA
 	private void crearEscenario() {
-		ventJuego.añadirSprite(new Minvo(ventJuego, 200, 200));
-		ventJuego.añadirSprite(new Minvo(ventJuego, 200, 250));
-		ventJuego.añadirSprite(new Minvo(ventJuego, 200, 400));
-		ventJuego.añadirSprite(new Minvo(ventJuego, 200, 500));
+		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 200));
+		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 250));
+		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 400));
+		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500));
 		Character array[][] = LeerMapa.LeerMapaJuego("mapa1.txt");
 		PrepararEscenario.ColocarMapa(ventJuego, array);
 	}

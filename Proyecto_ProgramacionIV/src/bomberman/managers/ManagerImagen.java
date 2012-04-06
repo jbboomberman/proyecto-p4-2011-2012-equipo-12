@@ -19,10 +19,10 @@ public class ManagerImagen {
 		HashMap<String, BufferedImage> tempHash = new HashMap<String, BufferedImage>();
 		String[] array = { "bombs.gif", "bomber.gif", "muro.jpg",
 				"indestructible.jpg", "valcom.png", "valcom_dest.png", "minvo.gif", "fase_dest.png",
-				"minvo_dest.gif" };
+				"minvo_dest.gif", "dahl.gif", "dahl_dest.png" };
 		int cont;
-		int[] array2 = { 3, 4, 8, 1, 6, 5, 3, 4, 1};
-		int[] array3 = { 5, 6, 1, 1, 1, 1, 1, 1, 1};
+		int[] array2 = { 3, 4, 8, 1, 6, 5, 3, 4, 1, 3, 2};
+		int[] array3 = { 5, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 		for (int i = 0; i < array.length; i++) {
 			cont = 0;
 			miUrl = ManagerImagen.class.getClassLoader().getResource(
