@@ -15,6 +15,7 @@ public class Jugador {
 	private String nick = null;
 	private String email = null;
 	private int puntuacion;
+	private int puntuNivel;
 	private int vidas;
 
 	/**
@@ -122,6 +123,14 @@ public class Jugador {
 
 	public void setVidas(int vidas) {
 		this.vidas = vidas;
+	}
+
+	public int getPuntuNivel() {
+		return puntuNivel;
+	}
+
+	public void setPuntuNivel(int puntuNivel) {
+		this.puntuNivel = puntuNivel;
 	}
 
 	/**

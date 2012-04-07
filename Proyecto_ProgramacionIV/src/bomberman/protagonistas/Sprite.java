@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
 
@@ -25,12 +26,15 @@ public class Sprite {
 	protected float tiempoTranscurrido;
 	protected long horaUltimaPintada;
 	protected boolean seDestruir;
+	protected Jugador jugador;
 
-	public Sprite(Escenario esce) {
+	public Sprite(Escenario esce, Jugador jug) {
 		this.imagActual = 0;
 		this.velocidadPic = 15;
 		this.t = 0;
 		this.escenario = esce;
+		this.horaUltimaPintada = 0;
+		this.jugador = jug;
 	}
 
 	public int getVelocidadPic() {
@@ -98,7 +102,11 @@ public class Sprite {
 	}
 
 	public void paint(Graphics2D g) {
-		tiempoTranscurrido = (System.currentTimeMillis() - horaUltimaPintada) / 1000.0F;
+		if(horaUltimaPintada == 0){
+			tiempoTranscurrido = 0.02F;
+		}
+		else
+			tiempoTranscurrido = (System.currentTimeMillis() - horaUltimaPintada) / 1000.0F;
 
 		if (tiempoTranscurrido > 0.01F) {
 			g.drawImage(ManagerImagen.getImagen(spritesImag[imagActual]),

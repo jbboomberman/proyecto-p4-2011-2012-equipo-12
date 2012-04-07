@@ -2,6 +2,7 @@ package bomberman.protagonistas;
 
 import java.awt.event.KeyEvent;
 
+import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
@@ -14,15 +15,19 @@ public class Bomberman extends SpriteDinamico {
 	private String[] spritesImagLeft;
 	private boolean parado;
 	private final int ANCH_ALT_MURO = 33;
+	private int numBomba;
+	private int maxBomba;
 
-	public Bomberman(Escenario esce, float x, float y) {
-		super(esce, x, y);
-		posX = 50;
-		posY = 50;
+	public Bomberman(Escenario esce, float x, float y, Jugador jug) {
+		super(esce, x, y, jug);
+		posX = 100;
+		posY = 100;
 		deltaX = 0;
 		deltaY = 0;
 		velocidad = 150;
 		parado = false;
+		numBomba = 0;
+		maxBomba = 1;
 		spritesImagUp = new String[] { "bomber.gif_9", "bomber.gif_10",
 				"bomber.gif_11" };
 		spritesImagDown = new String[] { "bomber.gif_13", "bomber.gif_14",
@@ -59,6 +64,22 @@ public class Bomberman extends SpriteDinamico {
 		this.parado = parado;
 	}
 
+	public int getNumBomba() {
+		return numBomba;
+	}
+
+	public void setNumBomba(int numBomba) {
+		this.numBomba = numBomba;
+	}
+
+	public int getMaxBomba() {
+		return maxBomba;
+	}
+
+	public void setMaxBomba(int maxBomba) {
+		this.maxBomba = maxBomba;
+	}
+
 	public void teclaPulsada(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP
 				|| e.getKeyCode() == KeyEvent.VK_DOWN
@@ -88,9 +109,12 @@ public class Bomberman extends SpriteDinamico {
 			setSpriteNombres(spritesImagRight);
 			break;
 		case KeyEvent.VK_SPACE:
-			int tempX = (((int) (this.getPosX() + (this.getAnchura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
-			int tempY = (((int) (this.getPosY() + (this.getAltura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
-			escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this));
+			if(!(this.getNumBomba() >= this.getMaxBomba())){
+				int tempX = (((int) (this.getPosX() + (this.getAnchura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
+				int tempY = (((int) (this.getPosY() + (this.getAltura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
+				escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this, jugador));
+				this.setNumBomba(this.getNumBomba() + 1);
+			}
 			break;
 		default:
 			break;

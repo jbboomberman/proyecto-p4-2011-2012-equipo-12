@@ -10,12 +10,14 @@ import java.util.ConcurrentModificationException;
 
 import javax.swing.*;
 
+import bomberman.jugador.Jugador;
 import bomberman.outin.LeerMapa;
 import bomberman.protagonistas.Bomba;
 import bomberman.protagonistas.Bomberman;
 import bomberman.protagonistas.Dahl;
 import bomberman.protagonistas.Minvo;
 import bomberman.protagonistas.Muro;
+import bomberman.protagonistas.Pildora;
 import bomberman.protagonistas.Sprite;
 import bomberman.protagonistas.SpriteDinamico;
 import bomberman.protagonistas.Valcom;
@@ -29,10 +31,12 @@ public class ControlPrincipal {
 	private long usedTime;
 	private BufferStrategy image;
 	private VentanaJuego ventJuego;
+	private Jugador jugador;
 
 	public ControlPrincipal() {
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
-		prueba = new Bomberman(ventJuego, 50, 50);
+		jugador = new Jugador();
+		prueba = new Bomberman(ventJuego, 50, 50, jugador);
 		ventJuego.setBomberman(prueba);
 		Canvas canv = ventJuego.getPanel();
 		// Hacer después de que la ventana este activa para que funcione.
@@ -98,11 +102,13 @@ public class ControlPrincipal {
 
 	// ESTE MÉTODO ES DE PRUEBA
 	private void crearEscenario() {
-		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 200));
-		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 250));
-		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 400));
-		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500));
+		//ventJuego.añadirSprite(new Dahl(ventJuego, 200, 250));
+//		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 400));
+		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500, jugador));
+		ventJuego.añadirSprite(new Pildora(ventJuego, 200-43, 500, 1, prueba, jugador));
+		ventJuego.añadirSprite(new Muro(ventJuego, 200+43, 500, false, jugador));
+		
 		Character array[][] = LeerMapa.LeerMapaJuego("mapa1.txt");
-		PrepararEscenario.ColocarMapa(ventJuego, array);
+		PrepararEscenario.ColocarMapa(ventJuego, array, jugador);
 	}
 }
