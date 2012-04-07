@@ -52,7 +52,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 		// Determinamos los parámetros de la ventana.
 		this.setResizable(true);
-		this.setTitle("BombermanAdict");
+		this.setTitle("BombermanAddict");
 		// this.setUndecorated(true);
 		this.setSize(677, 697);
 		this.setLocationRelativeTo(null);

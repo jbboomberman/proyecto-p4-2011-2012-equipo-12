@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 import bomberman.ventanas.VentanaJuego;
 
@@ -15,8 +16,8 @@ public class Bomba extends SpriteEstatico {
 	private boolean pisada;
 	private Bomberman bomberman;
 
-	public Bomba(Escenario esce, float x, float y, Bomberman bomber) {
-		super(esce);
+	public Bomba(Escenario esce, float x, float y, Bomberman bomber, Jugador jug) {
+		super(esce, jug);
 		spritesImag = new String[] { "bombs.gif_1", "bombs.gif_2",
 				"bombs.gif_3" };
 		this.posX = x;

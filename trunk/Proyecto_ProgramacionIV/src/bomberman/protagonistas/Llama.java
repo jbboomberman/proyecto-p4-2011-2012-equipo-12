@@ -2,6 +2,7 @@ package bomberman.protagonistas;
 
 import java.awt.Graphics2D;
 
+import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
 
@@ -14,8 +15,8 @@ public class Llama extends SpriteDinamico {
 	private int abj = 0;
 	private int[] max;
 
-	public Llama(Escenario esce, int[] tempMax, float x, float y) {
-		super(esce, x, y);
+	public Llama(Escenario esce, int[] tempMax, float x, float y, Jugador jug) {
+		super(esce, x, y, jug);
 		this.escenario = esce;
 		this.max = tempMax;
 
