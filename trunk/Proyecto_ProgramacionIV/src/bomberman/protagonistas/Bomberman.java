@@ -20,8 +20,6 @@ public class Bomberman extends SpriteDinamico {
 
 	public Bomberman(Escenario esce, float x, float y, Jugador jug) {
 		super(esce, x, y, jug);
-		posX = 100;
-		posY = 100;
 		deltaX = 0;
 		deltaY = 0;
 		velocidad = 150;
