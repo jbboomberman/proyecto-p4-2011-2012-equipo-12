@@ -11,8 +11,13 @@ public class Enemigo extends SpriteDinamico{
 		super(esce, x, y, jug);
 	}
 	
+	public void procDestruccion(){
+		this.serEliminado();
+		super.procDestruccion();
+	}
 	public void serEliminado(){
 		jugador.setPuntuacion(jugador.getPuntuacion() + puntos);
 		jugador.setPuntuNivel(jugador.getPuntuNivel() + puntos);
+		escenario.setPuntuacion();
 	}
 }

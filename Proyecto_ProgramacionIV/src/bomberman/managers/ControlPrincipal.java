@@ -35,9 +35,10 @@ public class ControlPrincipal {
 
 	public ControlPrincipal() {
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
-		jugador = new Jugador();
-		prueba = new Bomberman(ventJuego, 50, 50, jugador);
+		jugador = new Jugador("David", "O", "nose", "no");
+		prueba = new Bomberman(ventJuego, 33, 33, jugador);
 		ventJuego.setBomberman(prueba);
+		ventJuego.setJugador(jugador);
 		Canvas canv = ventJuego.getPanel();
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
@@ -105,8 +106,8 @@ public class ControlPrincipal {
 		//ventJuego.añadirSprite(new Dahl(ventJuego, 200, 250));
 //		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 400));
 		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500, jugador));
-		ventJuego.añadirSprite(new Pildora(ventJuego, 200-43, 500, 1, prueba, jugador));
-		ventJuego.añadirSprite(new Muro(ventJuego, 200+43, 500, false, jugador));
+//		ventJuego.añadirSprite(new Pildora(ventJuego, 200-43, 500, 1, prueba, jugador));
+//		ventJuego.añadirSprite(new Muro(ventJuego, 200+43, 500, false, jugador));
 		
 		Character array[][] = LeerMapa.LeerMapaJuego("mapa1.txt");
 		PrepararEscenario.ColocarMapa(ventJuego, array, jugador);
