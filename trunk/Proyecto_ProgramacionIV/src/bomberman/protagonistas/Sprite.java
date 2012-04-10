@@ -111,7 +111,7 @@ public class Sprite {
 		if (tiempoTranscurrido > 0.01F) {
 			g.drawImage(ManagerImagen.getImagen(spritesImag[imagActual]),
 					(int) posX, (int) posY, escenario);
-			horaUltimaPintada = System.currentTimeMillis();
+				horaUltimaPintada = System.currentTimeMillis();
 		}
 	}
 
@@ -177,7 +177,7 @@ public class Sprite {
 		seDestruir = true;
 		imagActual = 0;
 	}
-	private void destruir(){
+	public void destruir(){
 		for(Sprite sprTemp : escenario.getLista()){
 			//El mismo objeto
 			if(sprTemp == this){
@@ -185,5 +185,25 @@ public class Sprite {
 				break;
 			}
 		}
+	}
+	
+	public Rectangle getRectangle(Sprite spr){
+		Rectangle tempRect;
+		if(spr instanceof Bomberman)
+			tempRect = new Rectangle((int)spr.getPosX(), (int)(spr.getPosY() + (spr.getAltura()/2)), (int)spr.getAnchura(), (int)spr.getAltura()/2);
+		else
+			tempRect = new Rectangle((int)spr.getPosX(), (int)spr.getPosY(), (int)spr.getAnchura(), (int)spr.getAltura());
+		return tempRect;
+
+	}
+	
+	public Rectangle getRectangle(Sprite spr, float x, float y){
+		Rectangle tempRect;
+		if(spr instanceof Bomberman)
+			tempRect = new Rectangle((int)x, (int)(y + (spr.getAltura()/2)), (int)spr.getAnchura(), (int)spr.getAltura()/2);
+		else
+			tempRect = new Rectangle((int)x, (int)y, (int)spr.getAnchura(), (int)spr.getAltura());
+		return tempRect;
+
 	}
 }

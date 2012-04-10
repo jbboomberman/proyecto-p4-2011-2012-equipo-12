@@ -27,8 +27,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class ManagerSonido {
 
 	private static URL url = null;
+	private static boolean parar = false;
 
-	private static void playClip(String nom) throws IOException,
+	private static void playClip(String nom, boolean loop) throws IOException,
 			UnsupportedAudioFileException, LineUnavailableException,
 			InterruptedException {
 		class AudioListener implements LineListener {
@@ -63,7 +64,15 @@ public class ManagerSonido {
 				// FloatControl gainControl = (FloatControl)
 				// clip.getControl(FloatControl.Type.MASTER_GAIN);
 				// gainControl.setValue(6.0f);
-				clip.start();
+				if(loop){
+					clip.loop(1);
+					if(parar)
+						//Parar loop
+						System.out.println("Parar loop");
+				}
+					
+				else
+					clip.start();
 				listener.waitUntilDone();
 			} finally {
 				clip.close();
@@ -73,9 +82,12 @@ public class ManagerSonido {
 		}
 	}
 
+	public void pararLoop(){
+		parar = true;
+	}
 	public static void main(String[] args) {
 		try {
-			ManagerSonido.playClip("levelintrosong.wav");
+			ManagerSonido.playClip("levelintrosong.wav", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

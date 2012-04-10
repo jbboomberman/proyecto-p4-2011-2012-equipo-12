@@ -26,12 +26,12 @@ public class Bomberman extends SpriteDinamico {
 		parado = false;
 		numBomba = 0;
 		maxBomba = 1;
-		spritesImagUp = new String[] { "bomber.gif_9", "bomber.gif_10",
-				"bomber.gif_11" };
-		spritesImagDown = new String[] { "bomber.gif_13", "bomber.gif_14",
-				"bomber.gif_15" };
-		spritesImagRight = new String[] { "bomber.gif_5", "bomber.gif_6",
-				"bomber.gif_7" };
+		spritesImagUp = new String[] { "bomber.gif_7", "bomber.gif_8",
+				"bomber.gif_9" };
+		spritesImagDown = new String[] { "bomber.gif_10", "bomber.gif_11",
+				"bomber.gif_12" };
+		spritesImagRight = new String[] { "bomber.gif_4", "bomber.gif_5",
+				"bomber.gif_6" };
 		spritesImagLeft = new String[] { "bomber.gif_1", "bomber.gif_2",
 				"bomber.gif_3" };
 		setSpriteNombres(spritesImagDown);
@@ -107,7 +107,7 @@ public class Bomberman extends SpriteDinamico {
 			setSpriteNombres(spritesImagRight);
 			break;
 		case KeyEvent.VK_SPACE:
-			if(!(this.getNumBomba() >= this.getMaxBomba())){
+			if(this.getNumBomba() < this.getMaxBomba()){
 				int tempX = (((int) (this.getPosX() + (this.getAnchura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
 				int tempY = (((int) (this.getPosY() + (this.getAltura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
 				escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this, jugador));
