@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
+import bomberman.managers.ManagerImagen;
 import bomberman.ventanas.VentanaJuego;
 
 public class Bomba extends SpriteEstatico {
@@ -15,6 +16,8 @@ public class Bomba extends SpriteEstatico {
 	private Timer temporizador;
 	private boolean pisada;
 	private Bomberman bomberman;
+	private final int ANCHURA_LLAMA = 32;
+	private final int ALTURA_LLAMA = 32;
 
 	public Bomba(Escenario esce, float x, float y, Bomberman bomber, Jugador jug) {
 		super(esce, jug);
@@ -23,21 +26,22 @@ public class Bomba extends SpriteEstatico {
 		this.posX = x;
 		this.posY = y;
 		// ¿Se puede automatizar?
-		this.altura = 33;
-		this.anchura = 33;
+		this.altura = ManagerImagen.getImagen(spritesImag[0]).getHeight();
+		this.anchura = ManagerImagen.getImagen(spritesImag[0]).getWidth();
 		pisada = true;
 		this.bomberman = bomber;
+		this.jugador = jug;
 		// ////
-		// temporizador = new Timer();
-		// temporizador.schedule(new LoadExplode(), 3000);
+		temporizador = new Timer();
+		temporizador.schedule(new LoadExplode(), 3000);
 	}
-	
-	public void paint(Graphics2D g){
+
+	public void paint(Graphics2D g) {
 		super.paint(g);
-		if(!this.colision(bomberman) && pisada)
+		if (!this.colision(bomberman) && pisada)
 			pisada = false;
 	}
-	
+
 	public boolean isPisada() {
 		return pisada;
 	}
@@ -47,10 +51,11 @@ public class Bomba extends SpriteEstatico {
 	}
 
 	public void explotar() {
-		// temporizador.cancel();
+		temporizador.cancel();
 		int[] maxLlama = calcularDistancias();
-		// escenario.añadirSprite(new Llama(escenario, maxLlama, this.getPosX(),
-		// this.getPosY()));
+		colocarLlamas(maxLlama);
+		bomberman.setNumBomba(bomberman.getNumBomba() - 1);
+		this.destruir();
 	}
 
 	class LoadExplode extends TimerTask {
@@ -69,101 +74,148 @@ public class Bomba extends SpriteEstatico {
 		 * comprobar si hay algún muro o enemigo en el camino que tendrá que
 		 * tomar la llama.
 		 */
-		Rectangle tempRect = new Rectangle(new Dimension(33, 33));
+		Rectangle tempRect = new Rectangle(new Dimension(32, 32));
 
-		for (int i = 0; i < tempArray.length; i++) {
-			tempRect.x = (int) this.posX;
-			tempRect.y = (int) this.posY;
+		tempRect.x = (int) this.getPosX();
+		tempRect.y = (int) this.getPosY();
 
-			// Comprobamos la distancia que hay arriba
-			if (i == 0) {
-				boolean encon = false;
-				// CUIDADO CON MÁXIMO
-				while (!encon) {
+		// Comprobamos la distancia que hay arriba
+		boolean[] encon = { false, false, false, false };
+		// CUIDADO CON MÁXIMO
+		while (!encon[0]) {
 
-					/*
-					 * Vamos añadiendo posiciones hasta que lo encontremos.
-					 */
-					// AL REVÉS!!!!!!!!!!!11
-					tempRect.y -= this.getAltura();
-					/*
-					 * Comprobamos con los Sprites que hay en la ventana a ver
-					 * si alguno se interpone en nuestro camino.
-					 */
-					for (Sprite sprTemp : escenario.getLista()) {
-						Rectangle tempRect2 = new Rectangle(
-								(int) sprTemp.getPosX(),
-								(int) sprTemp.getPosY(),
-								(int) sprTemp.getAnchura(),
-								(int) sprTemp.getAltura());
-						// Si alguno se interpone
-						if (tempRect.intersects(tempRect2)) {
-							encon = true;
-							// Ya sabemos el tope.
-							tempArray[i] = (int) (this.getPosY() - tempRect2.y) / 33;
-							break;
-						}
+			/*
+			 * Vamos añadiendo posiciones hasta que lo encontremos.
+			 */
+			tempRect.y -= this.getAltura();
+			/*
+			 * Comprobamos con los Sprites que hay en la ventana a ver si alguno
+			 * se interpone en nuestro camino.
+			 */
+			for (Sprite sprTemp : escenario.getLista()) {
+				Rectangle tempRect2 = getRectangle(sprTemp);
+				// Si alguno se interpone
+				if (tempRect.intersects(tempRect2) && sprTemp instanceof Muro) {
+					if (!((Muro) sprTemp).isDestructible()) {
+						encon[0] = true;
+						// Ya sabemos el tope.
+						tempArray[0] = (int) (this.getPosY() - tempRect2.y - ALTURA_LLAMA)
+								/ ALTURA_LLAMA;
+						break;
 					}
 				}
-				// Comprobamos la distancia que hay abajo
-			} else if (i == 1) {
-				boolean encon = false;
-				// CUIDADO CON MÁXIMO
-				while (!encon) {
-					tempRect.y += this.getAltura();
-					for (Sprite sprTemp : escenario.getLista()) {
-						Rectangle tempRect2 = new Rectangle(
-								(int) sprTemp.getPosX(),
-								(int) sprTemp.getPosY(),
-								(int) sprTemp.getAnchura(),
-								(int) sprTemp.getAltura());
-						if (tempRect.intersects(tempRect2)) {
-							encon = true;
-							tempArray[i] = (int) (tempRect2.y - this.getPosY()) / 33;
-							break;
-						}
+			}
+		}
+
+		tempRect.x = (int) this.getPosX();
+		tempRect.y = (int) this.getPosY();
+		while (!encon[1]) {
+			// Comprobamos la distancia que hay abajo
+			tempRect.y += this.getAltura();
+			for (Sprite sprTemp : escenario.getLista()) {
+				Rectangle tempRect2 = getRectangle(sprTemp);
+				if (tempRect.intersects(tempRect2) && sprTemp instanceof Muro) {
+					if (!((Muro) sprTemp).isDestructible()) {
+						encon[1] = true;
+						tempArray[1] = (int) (tempRect2.y - this.getPosY() - ALTURA_LLAMA)
+								/ ALTURA_LLAMA;
+						break;
 					}
 				}
-				// Comprobamos la distancia que hay a la derecha
-			} else if (i == 2) {
-				boolean encon = false;
-				// CUIDADO CON MÁXIMO
-				while (!encon) {
-					tempRect.x += this.getAltura();
-					for (Sprite sprTemp : escenario.getLista()) {
-						Rectangle tempRect2 = new Rectangle(
-								(int) sprTemp.getPosX(),
-								(int) sprTemp.getPosY(),
-								(int) sprTemp.getAnchura(),
-								(int) sprTemp.getAltura());
-						if (tempRect.intersects(tempRect2)) {
-							encon = true;
-							tempArray[i] = (int) (tempRect2.x - this.getPosX()) / 33;
-							break;
-						}
+			}
+		}
+
+		tempRect.x = (int) this.getPosX();
+		tempRect.y = (int) this.getPosY();
+
+		while (!encon[2]) {
+			// Comprobamos la distancia que hay a la derecha
+			tempRect.x += this.getAltura();
+			for (Sprite sprTemp : escenario.getLista()) {
+				Rectangle tempRect2 = getRectangle(sprTemp);
+				if (tempRect.intersects(tempRect2) && sprTemp instanceof Muro) {
+					if (!((Muro) sprTemp).isDestructible()) {
+						encon[2] = true;
+						tempArray[2] = (int) (tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
+								/ ANCHURA_LLAMA;
+						break;
 					}
 				}
-				// Comprobamos la distancia que hay a la izquierda
-			} else {
-				boolean encon = false;
-				// CUIDADO CON MÁXIMO
-				while (!encon) {
-					tempRect.x -= this.getAltura();
-					for (Sprite sprTemp : escenario.getLista()) {
-						Rectangle tempRect2 = new Rectangle(
-								(int) sprTemp.getPosX(),
-								(int) sprTemp.getPosY(),
-								(int) sprTemp.getAnchura(),
-								(int) sprTemp.getAltura());
-						if (tempRect.intersects(tempRect2)) {
-							encon = true;
-							tempArray[i] = (int) (this.getPosX() - tempRect2.x) / 33;
-							break;
-						}
+			}
+		}
+
+		tempRect.x = (int) this.getPosX();
+		tempRect.y = (int) this.getPosY();
+
+		while (!encon[3]) {
+			// Comprobamos la distancia que hay a la izquierda
+			tempRect.x -= this.getAltura();
+			for (Sprite sprTemp : escenario.getLista()) {
+				Rectangle tempRect2 = getRectangle(sprTemp);
+				if (tempRect.intersects(tempRect2) && sprTemp instanceof Muro) {
+					if (!((Muro) sprTemp).isDestructible()) {
+						encon[3] = true;
+						tempArray[3] = (int) (this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
+								/ ANCHURA_LLAMA;
+						break;
 					}
 				}
 			}
 		}
 		return tempArray;
+	}
+
+	public void colocarLlamas(int[] distancias) {
+		Llama tempLlama = new Llama(escenario, this.getPosX(), this.getPosY(),
+				jugador, 1);
+		escenario.añadirSprite(tempLlama);
+
+		// Arriba
+		for (int i = 0; i < distancias[0] - 1; i++) {
+			escenario.añadirSprite(new Llama(escenario, this.getPosX(), this
+					.getPosY() - (((int) tempLlama.getAltura()) * (i + 1)),
+					jugador, 2));
+		}
+
+		// Abajo
+		for (int i = 0; i < distancias[1] - 1; i++) {
+			escenario.añadirSprite(new Llama(escenario, this.getPosX(), this
+					.getPosY() + (((int) tempLlama.getAltura()) * (i + 1)),
+					jugador, 2));
+		}
+
+		// Derecha
+		for (int i = 0; i < distancias[2] - 1; i++) {
+			escenario.añadirSprite(new Llama(escenario, this.getPosX()
+					+ (((int) tempLlama.getAnchura()) * (i + 1)), this
+					.getPosY(), jugador, 3));
+		}
+
+		// Izquierda
+		for (int i = 0; i < distancias[3] - 1; i++) {
+			escenario.añadirSprite(new Llama(escenario, this.getPosX()
+					- (((int) tempLlama.getAnchura()) * (i + 1)), this
+					.getPosY(), jugador, 3));
+		}
+
+		// Punta-arriba
+		escenario.añadirSprite(new Llama(escenario, this.getPosX(), this
+				.getPosY() - (((int) tempLlama.getAltura()) * distancias[0]),
+				jugador, 6));
+
+		// Punta-abajo
+		escenario.añadirSprite(new Llama(escenario, this.getPosX(), this
+				.getPosY() + (((int) tempLlama.getAltura()) * distancias[1]),
+				jugador, 7));
+
+		// Punta derecha
+		escenario.añadirSprite(new Llama(escenario, this.getPosX()
+				+ (((int) tempLlama.getAnchura()) * distancias[2]), this
+				.getPosY(), jugador, 4));
+
+		// Punta izquierda
+		escenario.añadirSprite(new Llama(escenario, this.getPosX()
+				- (((int) tempLlama.getAnchura()) * distancias[3]), this
+				.getPosY(), jugador, 5));
 	}
 }

@@ -15,6 +15,7 @@ import bomberman.outin.LeerMapa;
 import bomberman.protagonistas.Bomba;
 import bomberman.protagonistas.Bomberman;
 import bomberman.protagonistas.Dahl;
+import bomberman.protagonistas.Llama;
 import bomberman.protagonistas.Minvo;
 import bomberman.protagonistas.Muro;
 import bomberman.protagonistas.Pildora;
@@ -39,7 +40,6 @@ public class ControlPrincipal {
 		prueba = new Bomberman(ventJuego, 33, 33, jugador);
 		ventJuego.setBomberman(prueba);
 		ventJuego.setJugador(jugador);
-		Canvas canv = ventJuego.getPanel();
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
 		GestorVentana.hacerVisible(VentanaInicial.class, true);
@@ -48,7 +48,6 @@ public class ControlPrincipal {
 
 	public void game() {
 		usedTime = 1000;
-		// DE PRUEBA
 		this.crearEscenario();
 		while (true) {
 			while (ventJuego.isVisible()) {
@@ -69,10 +68,6 @@ public class ControlPrincipal {
 		Graphics g = image.getDrawGraphics();
 		g.setColor(ventJuego.getBackground());
 		g.fillRect(0, 0, ventJuego.getWidth(), ventJuego.getHeight());
-
-		// BUCLE DONDE ACTUALIZA CADA PERSONAJE.
-
-		// Esto está antiquado
 
 		ArrayList<Sprite> tempLista = ventJuego.getLista();
 		for(int i = 0; i < tempLista.size(); i++){
@@ -104,8 +99,8 @@ public class ControlPrincipal {
 	// ESTE MÉTODO ES DE PRUEBA
 	private void crearEscenario() {
 		//ventJuego.añadirSprite(new Dahl(ventJuego, 200, 250));
-//		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 400));
-		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500, jugador));
+//		ventJuego.añadirSprite(new Llama(ventJuego, 200, 400, jugador, 2));
+//		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500, jugador));
 //		ventJuego.añadirSprite(new Pildora(ventJuego, 200-43, 500, 1, prueba, jugador));
 //		ventJuego.añadirSprite(new Muro(ventJuego, 200+43, 500, false, jugador));
 		

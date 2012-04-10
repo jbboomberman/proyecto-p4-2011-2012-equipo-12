@@ -8,104 +8,52 @@ import bomberman.managers.ManagerImagen;
 
 public class Llama extends SpriteDinamico {
 
-	private int maxValue = 0;
-	private int izq = 0;
-	private int der = 0;
-	private int arr = 0;
-	private int abj = 0;
-	private int[] max;
+	private int tipo;
 
-	public Llama(Escenario esce, int[] tempMax, float x, float y, Jugador jug) {
+	public Llama(Escenario esce, float x, float y, Jugador jug, int tip) {
 		super(esce, x, y, jug);
 		this.escenario = esce;
-		this.max = tempMax;
-
-		// CUIDADO ESTAMOS CARGANDO DEMASIADO
-		ManagerImagen.cargarImagen("llama.gif", "intermedio_anc", 4, 8, 0, 2);
-		ManagerImagen.cargarImagen("llama.gif", "ultimo_izq", 4, 8, 0, 3);
-		ManagerImagen.cargarImagen("llama.gif", "ultimo_der", 4, 8, 0, 4);
-		ManagerImagen.cargarImagen("llama.gif", "ultimo_arr", 4, 8, 0, 6);
-		ManagerImagen.cargarImagen("llama.gif", "ultimo_abj", 4, 8, 0, 7);
-		ManagerImagen.cargarImagen("llama.gif", "intermedio_alt", 4, 8, 0, 5);
-	}
-
-	public void mover() {
-		// super.mover();
-
-		for (int j = 0; j < max.length; j++) {
-			if (max[j] > maxValue)
-				maxValue = max[j];
+		this.tipo = tip;
+		
+		switch(tipo){
+		
+		//Centro
+		case 1:
+			spritesImag = new String []{"llama.gif_1", "llama.gif_2", "llama.gif_3", "llama.gif_4"};
+			break;
+		//Intermedio - vertical
+		case 2:
+			spritesImag = new String []{"llama.gif_21", "llama.gif_22", "llama.gif_23", "llama.gif_24"};
+			break;
+		//Intermedio - horizontal
+		case 3:
+			spritesImag = new String []{"llama.gif_9", "llama.gif_10", "llama.gif_11", "llama.gif_12"};
+			break;
+		//Punta - derecha
+		case 4:
+			spritesImag = new String []{"llama.gif_17", "llama.gif_18", "llama.gif_19", "llama.gif_20"};
+			break;
+		//Punta - izquierda
+		case 5:
+			spritesImag = new String []{"llama.gif_13", "llama.gif_14", "llama.gif_15", "llama.gif_16"};
+			break;
+		//Punta - arriba
+		case 6:
+			spritesImag = new String []{"llama.gif_25", "llama.gif_26", "llama.gif_27", "llama.gif_28"};
+			break;
+		//Punta - abajo
+		case 7:
+			spritesImag = new String []{"llama.gif_29", "llama.gif_30", "llama.gif_31", "llama.gif_32"};
+			break;
 		}
+		this.anchura = ManagerImagen.getImagen(spritesImag[0]).getWidth();
+		this.altura = ManagerImagen.getImagen(spritesImag[0]).getHeight();
 	}
-
-	public void paint(Graphics2D g) {
-		tiempoTranscurrido = (System.currentTimeMillis() - horaUltimaPintada) / 1000.0F;
-
-		if (tiempoTranscurrido > 0.01F) {
-			for (int i = 0; i < maxValue * 2; i++) {
-				// Centro
-				// Arriba
-				if (arr < max[0]) {
-					for (int j = 0; j < arr; j++) {
-						g.drawImage(ManagerImagen.getImagen("intermedio_alt"),
-								(int) posX, (int) posY - (33 * j), escenario);
-					}
-					g.drawImage(ManagerImagen.getImagen("ultimo_arr"),
-							(int) posX, -33 * arr, escenario);
-					arr++;
-				} else if (max[0] > 0) {
-					for (int j = 0; j < arr; j++) {
-						g.drawImage(ManagerImagen.getImagen("intermedio_alt"),
-								(int) posX, (int) posY - (33 * j), escenario);
-					}
-					g.drawImage(ManagerImagen.getImagen("ultimo_arr"),
-							(int) posX, -33 * arr, escenario);
-					arr--;
-					max[0]--;
-				}
-
-				// Abajo
-
-				if (abj < max[1]) {
-					g.drawImage(ManagerImagen.getImagen("intermedio_alt"),
-							(int) posX, (int) posY + (33 * abj), escenario);
-					g.drawImage(ManagerImagen.getImagen("ultimo_abj"),
-							(int) posX, 33 * abj, escenario);
-					abj++;
-				}
-
-				// Derecha
-
-				if (der < max[2]) {
-					g.drawImage(ManagerImagen.getImagen("intermedio_anc"),
-							(int) posX + (33 * der), (int) posY, escenario);
-					g.drawImage(ManagerImagen.getImagen("ultimo_der"),
-							33 * der, (int) posY, escenario);
-					der++;
-				}
-
-				// Izquierda
-				izq++;
-				if (izq < max[3]) {
-					g.drawImage(ManagerImagen.getImagen("intermedio_anc"),
-							(int) posX - (33 * izq), (int) posY, escenario);
-					g.drawImage(ManagerImagen.getImagen("ultimo_izq"), -33
-							* izq, (int) posY, escenario);
-				}
-
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
-			horaUltimaPintada = System.currentTimeMillis();
-			// if(imagActual == 1){
-			// imagActual = 0;
-			// }else{
-			// imagActual++;
-			// }
-		}
+	
+	public void mover(){
+		super.mover();
+		seChoca(this.getPosX(), this.getPosY());
+		if(imagActual == (spritesImag.length - 1))
+			this.destruir();
 	}
 }

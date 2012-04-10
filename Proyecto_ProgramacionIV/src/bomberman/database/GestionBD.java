@@ -9,8 +9,8 @@ public class GestionBD {
 	private static Connection conexion;
 
 	/**
-	 * Método estático que nos sirve para conectarnos a la base de datos No
-	 * tenemos que crear ningún constructor porque es estático.
+	 * Método estático que nos sirve para conectarnos a la base de datos.
+	 *  No tenemos que crear ningún constructor porque es estático.
 	 */
 	public static Connection conectar() {
 		try {
