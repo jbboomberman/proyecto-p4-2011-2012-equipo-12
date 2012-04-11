@@ -35,6 +35,7 @@ public class ControlPrincipal {
 	private Jugador jugador;
 
 	public ControlPrincipal() {
+		
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
 		jugador = new Jugador("David", "O", "nose", "no");
 		prueba = new Bomberman(ventJuego, 33, 33, jugador);
