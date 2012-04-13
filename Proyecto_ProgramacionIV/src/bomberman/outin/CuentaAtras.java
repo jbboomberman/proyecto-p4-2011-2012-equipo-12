@@ -52,11 +52,15 @@ public class CuentaAtras extends Observable {
 
 	protected void tareasRun() {
 		if (!parado) {
+			System.out.println("Estoy");
 			if (segundos != 0) {
+				System.out.println("Resto");
 				segundos--;
 			} else {
 				if (minutos != 0) {
+					System.out.println("Entro");
 					minutos--;
+					System.out.println("Minutos 59");
 					segundos = 59;
 				} else {
 					//ACABAR
@@ -127,12 +131,13 @@ public class CuentaAtras extends Observable {
 
 	public static void main(String []args){
 		try{
-			JFrame frame = new JFrame();
+//			JFrame frame = new JFrame();
 		CuentaAtras prueba = new CuentaAtras(1, 10);
+//		frame.add(prueba.getReloj());
 		prueba.start();
-		frame.add(prueba.getReloj());
-		frame.setSize(200, 200);
-		frame.setVisible(true);
+		
+//		frame.setSize(200, 200);
+//		frame.setVisible(true);
 		
 		}catch(RelojException e){
 			e.printStackTrace();
