@@ -80,11 +80,10 @@ public class ControlPrincipal {
 		ventJuego.getBomberman().mover();
 		ventJuego.getBomberman().paint((Graphics2D) g);
 
-		// if (usedTime > 0)
-		// g.drawString(String.valueOf(1000 / usedTime) + " fps", 0,
-		// this.getHeight() - 50);
-		// else
-		// g.drawString("---fps", 0, this.getHeight() - 50);
+//		 if (usedTime > 0)
+//		System.out.println(String.valueOf(1000 / usedTime) + " fps");
+		
+		
 		image.show();
 	}
 
@@ -99,12 +98,6 @@ public class ControlPrincipal {
 
 	// ESTE MÉTODO ES DE PRUEBA
 	private void crearEscenario() {
-		//ventJuego.añadirSprite(new Dahl(ventJuego, 200, 250));
-//		ventJuego.añadirSprite(new Llama(ventJuego, 200, 400, jugador, 2));
-		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500, jugador));
-//		ventJuego.añadirSprite(new Pildora(ventJuego, 200-43, 500, 1, prueba, jugador));
-//		ventJuego.añadirSprite(new Muro(ventJuego, 200+43, 500, false, jugador));
-		
 		Character array[][] = LeerMapa.LeerMapaJuego("mapa1.txt");
 		PrepararEscenario.ColocarMapa(ventJuego, array, jugador);
 	}

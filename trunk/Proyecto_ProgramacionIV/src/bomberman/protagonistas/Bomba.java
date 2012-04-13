@@ -102,23 +102,17 @@ public class Bomba extends SpriteEstatico {
 					// Si alguno se interpone
 
 					if (tempRect.intersects(tempRect2)
-							&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+							&& sprTemp instanceof Muro) {
 
 						encon[0] = true;
-						if (sprTemp instanceof Muro) {
-							if (!((Muro) sprTemp).isDestructible()) {
-								tempArray[0] = (int) (this.getPosY()
-										- tempRect2.y - ALTURA_LLAMA)
-										/ ALTURA_LLAMA;
-							} else {
-								tempArray[0] = (int) ((this.getPosY()
-										- tempRect2.y - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
-							}
+						if (!((Muro) sprTemp).isDestructible()) {
+							tempArray[0] = (int) (this.getPosY() - tempRect2.y - ALTURA_LLAMA)
+									/ ALTURA_LLAMA;
 						} else {
 							tempArray[0] = (int) ((this.getPosY() - tempRect2.y - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
 						}
-						break;
 					}
+					break;
 				}
 				contTrozos++;
 			} else {
@@ -137,23 +131,17 @@ public class Bomba extends SpriteEstatico {
 				for (Sprite sprTemp : escenario.getLista()) {
 					Rectangle tempRect2 = getRectangle(sprTemp);
 					if (tempRect.intersects(tempRect2)
-							&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+							&& sprTemp instanceof Muro) {
 
 						encon[1] = true;
-						if (sprTemp instanceof Muro) {
-							if (!((Muro) sprTemp).isDestructible()) {
-								tempArray[1] = (int) (tempRect2.y
-										- this.getPosY() - ALTURA_LLAMA)
-										/ ALTURA_LLAMA;
-							} else {
-								tempArray[1] = (int) ((tempRect2.y
-										- this.getPosY() - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
-							}
+						if (!((Muro) sprTemp).isDestructible()) {
+							tempArray[1] = (int) (tempRect2.y - this.getPosY() - ALTURA_LLAMA)
+									/ ALTURA_LLAMA;
 						} else {
 							tempArray[1] = (int) ((tempRect2.y - this.getPosY() - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
 						}
-						break;
 					}
+					break;
 				}
 				contTrozos++;
 			} else {
@@ -174,23 +162,17 @@ public class Bomba extends SpriteEstatico {
 					Rectangle tempRect2 = getRectangle(sprTemp);
 
 					if (tempRect.intersects(tempRect2)
-							&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+							&& sprTemp instanceof Muro) {
 
 						encon[2] = true;
-						if (sprTemp instanceof Muro) {
-							if (!((Muro) sprTemp).isDestructible()) {
-								tempArray[2] = (int) (tempRect2.x
-										- this.getPosX() - ANCHURA_LLAMA)
-										/ ANCHURA_LLAMA;
-							} else {
-								tempArray[2] = (int) ((tempRect2.x
-										- this.getPosX() - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
-							}
+						if (!((Muro) sprTemp).isDestructible()) {
+							tempArray[2] = (int) (tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
+									/ ANCHURA_LLAMA;
 						} else {
 							tempArray[2] = (int) ((tempRect2.x - this.getPosX() - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
 						}
-						break;
 					}
+					break;
 				}
 				contTrozos++;
 			} else {
@@ -211,24 +193,17 @@ public class Bomba extends SpriteEstatico {
 					Rectangle tempRect2 = getRectangle(sprTemp);
 
 					if (tempRect.intersects(tempRect2)
-							&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+							&& sprTemp instanceof Muro) {
 
 						encon[3] = true;
-						if (sprTemp instanceof Muro) {
-							if (!((Muro) sprTemp).isDestructible()) {
-								tempArray[3] = (int) (this.getPosX()
-										- tempRect2.x - ANCHURA_LLAMA)
-										/ ANCHURA_LLAMA;
-							} else {
-								tempArray[3] = (int) ((this.getPosX()
-										- tempRect2.x - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
-							}
+						if (!((Muro) sprTemp).isDestructible()) {
+							tempArray[3] = (int) (this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
+									/ ANCHURA_LLAMA;
 						} else {
 							tempArray[3] = (int) ((this.getPosX() - tempRect2.x - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
 						}
-						break;
 					}
-
+					break;
 				}
 				contTrozos++;
 			} else {

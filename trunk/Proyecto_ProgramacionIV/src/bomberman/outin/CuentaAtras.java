@@ -66,7 +66,7 @@ public class CuentaAtras extends Observable {
 					parado = true;
 				}
 			}
-			reloj.setText(minutos + " : " + segundos);
+			reloj.setText("<html><b>Tiempo:</b> " + minutos + " : " + segundos + "</html>");
 		}
 
 		// Notifica que se han producido cambios en el reloj.
