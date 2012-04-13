@@ -35,6 +35,7 @@ public class Sprite {
 		this.escenario = esce;
 		this.horaUltimaPintada = 0;
 		this.jugador = jug;
+		seDestruir = false;
 	}
 
 	public int getVelocidadPic() {

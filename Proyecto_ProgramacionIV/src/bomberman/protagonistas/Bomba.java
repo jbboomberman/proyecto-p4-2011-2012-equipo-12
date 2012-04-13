@@ -95,14 +95,24 @@ public class Bomba extends SpriteEstatico {
 			for (Sprite sprTemp : escenario.getLista()) {
 				Rectangle tempRect2 = getRectangle(sprTemp);
 				// Si alguno se interpone
-				if (tempRect.intersects(tempRect2) && sprTemp instanceof Muro) {
-					if (!((Muro) sprTemp).isDestructible()) {
-						encon[0] = true;
-						// Ya sabemos el tope.
-						tempArray[0] = (int) (this.getPosY() - tempRect2.y - ALTURA_LLAMA)
-								/ ALTURA_LLAMA;
-						break;
+				
+				if (tempRect.intersects(tempRect2)
+						&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+
+					encon[0] = true;
+					if (sprTemp instanceof Muro) {
+						if (!((Muro) sprTemp).isDestructible()) {
+							tempArray[0] = (int) (this.getPosY() - tempRect2.y - ALTURA_LLAMA)
+							/ ALTURA_LLAMA;
+						} else {
+							tempArray[0] = (int) ((this.getPosY() - tempRect2.y - ALTURA_LLAMA)
+							/ ALTURA_LLAMA) + 1;
+						}
+					} else {
+						tempArray[0] = (int) ((this.getPosY() - tempRect2.y - ALTURA_LLAMA)
+								/ ALTURA_LLAMA) + 1;
 					}
+					break;
 				}
 			}
 		}
@@ -114,13 +124,21 @@ public class Bomba extends SpriteEstatico {
 			tempRect.y += this.getAltura();
 			for (Sprite sprTemp : escenario.getLista()) {
 				Rectangle tempRect2 = getRectangle(sprTemp);
-				if (tempRect.intersects(tempRect2) && sprTemp instanceof Muro) {
-					if (!((Muro) sprTemp).isDestructible()) {
-						encon[1] = true;
-						tempArray[1] = (int) (tempRect2.y - this.getPosY() - ALTURA_LLAMA)
-								/ ALTURA_LLAMA;
-						break;
+				if (tempRect.intersects(tempRect2)
+						&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+
+					encon[1] = true;
+					if (sprTemp instanceof Muro) {
+						if (!((Muro) sprTemp).isDestructible()) {
+							tempArray[1] = (int) (tempRect2.y - this.getPosY() - ALTURA_LLAMA)
+									/ ALTURA_LLAMA;
+						} else {
+							tempArray[1] = (int) ((tempRect2.y - this.getPosY() - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
+						}
+					} else {
+						tempArray[1] = (int) ((tempRect2.y - this.getPosY() - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
 					}
+					break;
 				}
 			}
 		}
@@ -133,13 +151,24 @@ public class Bomba extends SpriteEstatico {
 			tempRect.x += this.getAltura();
 			for (Sprite sprTemp : escenario.getLista()) {
 				Rectangle tempRect2 = getRectangle(sprTemp);
-				if (tempRect.intersects(tempRect2) && sprTemp instanceof Muro) {
-					if (!((Muro) sprTemp).isDestructible()) {
-						encon[2] = true;
-						tempArray[2] = (int) (tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
-								/ ANCHURA_LLAMA;
-						break;
+
+				if (tempRect.intersects(tempRect2)
+						&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+
+					encon[2] = true;
+					if (sprTemp instanceof Muro) {
+						if (!((Muro) sprTemp).isDestructible()) {
+							tempArray[2] = (int) (tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
+							/ ANCHURA_LLAMA;
+						} else {
+							tempArray[2] = (int) ((tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
+							/ ANCHURA_LLAMA) + 1;
+						}
+					} else {
+						tempArray[2] = (int) ((tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
+								/ ANCHURA_LLAMA) + 1;
 					}
+					break;
 				}
 			}
 		}
@@ -152,14 +181,26 @@ public class Bomba extends SpriteEstatico {
 			tempRect.x -= this.getAltura();
 			for (Sprite sprTemp : escenario.getLista()) {
 				Rectangle tempRect2 = getRectangle(sprTemp);
-				if (tempRect.intersects(tempRect2) && sprTemp instanceof Muro) {
-					if (!((Muro) sprTemp).isDestructible()) {
-						encon[3] = true;
-						tempArray[3] = (int) (this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
-								/ ANCHURA_LLAMA;
-						break;
+				
+				if (tempRect.intersects(tempRect2)
+						&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+
+					encon[3] = true;
+					if (sprTemp instanceof Muro) {
+						if (!((Muro) sprTemp).isDestructible()) {
+							tempArray[3] = (int) (this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
+							/ ANCHURA_LLAMA;
+						} else {
+							tempArray[3] = (int) ((this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
+							/ ANCHURA_LLAMA) + 1;
+						}
+					} else {
+						tempArray[3] = (int) ((this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
+								/ ANCHURA_LLAMA) + 1;
 					}
+					break;
 				}
+				
 			}
 		}
 		return tempArray;

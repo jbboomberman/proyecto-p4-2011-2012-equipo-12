@@ -35,9 +35,9 @@ public class SpriteDinamico extends Sprite {
 							if (((Muro) sprTemp).isDestructible())
 									sprTemp.procDestruccion();
 						}
-						else if(sprTemp instanceof Enemigo)
+						else if(sprTemp instanceof Enemigo || sprTemp instanceof Bomberman)
 							sprTemp.procDestruccion();
-							
+														
 					} else if (sprTemp instanceof Bomba) {
 						if (((Bomba) sprTemp).isPisada())
 							return false;
