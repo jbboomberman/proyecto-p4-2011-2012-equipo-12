@@ -101,7 +101,7 @@ public class ControlPrincipal {
 	private void crearEscenario() {
 		//ventJuego.añadirSprite(new Dahl(ventJuego, 200, 250));
 //		ventJuego.añadirSprite(new Llama(ventJuego, 200, 400, jugador, 2));
-//		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500, jugador));
+		ventJuego.añadirSprite(new Dahl(ventJuego, 200, 500, jugador));
 //		ventJuego.añadirSprite(new Pildora(ventJuego, 200-43, 500, 1, prueba, jugador));
 //		ventJuego.añadirSprite(new Muro(ventJuego, 200+43, 500, false, jugador));
 		

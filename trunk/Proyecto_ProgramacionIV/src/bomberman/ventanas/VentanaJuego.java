@@ -9,7 +9,7 @@ import bomberman.managers.ManagerImagen;
 import bomberman.protagonistas.Bomberman;
 import bomberman.protagonistas.Sprite;
 import bomberman.protagonistas.SpriteDinamico;
-import bomberman.protagonistas.Valcom;
+import bomberman.protagonistas.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -118,6 +118,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	// PRUEBA, HAY QUE MEJORAR
 	public void setBomberman(Bomberman b) {
 		this.bomber = b;
+		añadirSprite(bomber);
 	}
 
 	public Jugador getJugador() {
@@ -134,7 +135,11 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	public void añadirSprite(Sprite spr) {
-		arLista.add(spr);
+		if(spr instanceof Llama || spr instanceof Bomba){
+			arLista.add(0, spr);
+		}
+		else
+			arLista.add(spr);
 	}
 
 	public ArrayList<Sprite> getLista() {
