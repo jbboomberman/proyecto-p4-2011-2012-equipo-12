@@ -6,9 +6,8 @@ import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
-import bomberman.protagonistas.Bomberman;
-import bomberman.protagonistas.Sprite;
-import bomberman.protagonistas.SpriteDinamico;
+import bomberman.outin.CuentaAtras;
+import bomberman.outin.RelojException;
 import bomberman.protagonistas.*;
 
 import java.awt.*;
@@ -34,9 +33,9 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	private static ArrayList<Sprite> arLista;
 	private JPanel panelMarcador;
 	private Jugador jugador;
-	
+	private CuentaAtras tiempo;
 	private JLabel jlText;
-	private Font textFont;
+	private boolean parado;
 
 	/**
 	 * Constructor principal de la ventana.
@@ -47,15 +46,30 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		canPintar = new Canvas();
 		canPintar.setSize(660, 660);
 		panelMarcador = new JPanel();
-		
+		try{
+		tiempo = new CuentaAtras(5, 0);
+		parado = true;
+		}catch(RelojException e){
+			e.printStackTrace();
+		}
 		jlText = new JLabel();
-//		textFont = new Font("TIMESROMAN", Font.PLAIN, 20);
-//		jlText.setFont(textFont);
+		jlText.setFont(new Font("SansSerif", 0, 16));
+		
+		//Layout
+		panelMarcador.setLayout(new BorderLayout());
+		
+		//Alineamientos
 		
 		panelMarcador.setSize(660, 50);
-		panelMarcador.add(jlText);
+		panelMarcador.add(jlText, BorderLayout.NORTH);
+		panelMarcador.add(tiempo.getReloj(), BorderLayout.SOUTH);
+		tiempo.getReloj().setFont(new Font("SansSerif", Font.PLAIN, 16));
 		//Layout
 		getContentPane().setLayout(new BorderLayout());
+		
+		jlText.setHorizontalAlignment(SwingConstants.CENTER);
+		tiempo.getReloj().setHorizontalAlignment(SwingConstants.CENTER);
+		
 		
 		getContentPane().add(canPintar, BorderLayout.SOUTH);
 		getContentPane().add(panelMarcador, BorderLayout.NORTH);
@@ -66,7 +80,6 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		// Determinamos los parámetros de la ventana.
 		this.setResizable(true);
 		this.setTitle("BombermanAddict");
-		// this.setUndecorated(true);
 		this.setSize(677, 747);
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
@@ -135,11 +148,13 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	public void añadirSprite(Sprite spr) {
-		if(spr instanceof Llama || spr instanceof Bomba){
+		if(spr instanceof Llama){
 			arLista.add(0, spr);
+		}else if(spr instanceof Bomberman){
+			arLista.add(arLista.size(), spr);
 		}
 		else
-			arLista.add(spr);
+			arLista.add(arLista.size()-1, spr);
 	}
 
 	public ArrayList<Sprite> getLista() {
@@ -147,13 +162,22 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 	
 	public void setPuntuacion(){
-		jlText.setText("Vidas: " + jugador.getVidas()
-				+ " " + jugador.getPuntuNivel()
-				+ " " + jugador.getPuntuacion()
-				+ " " + "Tiempo"
-				+ " " + "Enemigos");
+		jlText.setText("<html><b>Vidas</b>: " + jugador.getVidas()
+				+ "&emsp;<b>Puntuación nivel:</b> " + jugador.getPuntuNivel()
+				+ "&emsp;<b>Puntuación total:</b> " + jugador.getPuntuacion()
+				+ "&emsp;<b>Enemigos restantes:</b> </html>");
 	}
 	
+	public void empezarReloj(){
+		if(parado)
+			tiempo.start();
+	}
+	
+	public void setVisible(boolean visible){
+		super.setVisible(visible);
+		if(visible)
+			this.empezarReloj();
+	}
 	public static void main(String[] args) {
 		VentanaJuego juego = new VentanaJuego();
 		juego.setVisible(true);
