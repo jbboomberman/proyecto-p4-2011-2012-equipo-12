@@ -18,10 +18,10 @@ public class ManagerImagen {
 		HashMap<String, BufferedImage> tempHash = new HashMap<String, BufferedImage>();
 		String[] nomImagenes = { "bombs.gif", "bomber.gif", "muro.jpg",
 				"indestructible.jpg",  "valcom.png", "valcom_dest.gif", "destruccion.png", "minvo.gif", 
-				"minvo_dest.gif", "dahl.gif", "pildora_bomba.png", "nada.png", "llama.gif"};
+				"minvo_dest.gif", "dahl.gif", "pildora_bomba.png", "nada.png", "llama.gif", "bomber_dest.gif"};
 		int cont;
-		int[] columnas = { 3, 3, 8, 1, 6, 1, 5, 3, 1, 5, 1, 1, 4};
-		int[] filas = { 5, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8};
+		int[] columnas = { 3, 3, 8, 1, 6, 1, 5, 3, 1, 5, 1, 1, 4, 4};
+		int[] filas = { 5, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1};
 		
 		for (int i = 0; i < nomImagenes.length; i++) {
 			cont = 0;

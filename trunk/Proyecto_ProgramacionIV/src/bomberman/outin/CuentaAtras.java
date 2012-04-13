@@ -4,6 +4,9 @@ import java.util.Observable;
 import java.util.TimerTask;
 import java.util.Timer;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 //Mirar esta dirección: http://unpocodejava.wordpress.com/2010/02/03/patron-observer/
 /**
  * Esta clase implementará e reloj de cuenta atrás que aparece cuando estás
@@ -15,13 +18,15 @@ import java.util.Timer;
  */
 public class CuentaAtras extends Observable {
 
-	protected int minutos, segundos;
-	protected int recarga;
-	protected boolean parado;
-	protected static Timer tiempo = null;
+	private int minutos, segundos;
+	private int recarga;
+	private boolean parado;
+	private static Timer tiempo = null;
+	private JLabel reloj;
 
 	public CuentaAtras(int m, int s) throws RelojException {
 
+		reloj = new JLabel();
 		parado = true;
 		minutos = m;
 		segundos = s;
@@ -42,7 +47,7 @@ public class CuentaAtras extends Observable {
 			public void run() {
 				tareasRun();
 			}
-		}, 0, 100);
+		}, 0, 1000);
 	}
 
 	protected void tareasRun() {
@@ -52,11 +57,15 @@ public class CuentaAtras extends Observable {
 			} else {
 				if (minutos != 0) {
 					minutos--;
+					segundos = 59;
 				} else {
-					minutos = 59;
+					//ACABAR
+					minutos = 0;
+					segundos = 0;
+					parado = true;
 				}
-				segundos = 59;
 			}
+			reloj.setText(minutos + " : " + segundos);
 		}
 
 		// Notifica que se han producido cambios en el reloj.
@@ -106,5 +115,27 @@ public class CuentaAtras extends Observable {
 
 	public int getSeconds() {
 		return segundos;
+	}
+	
+	public JLabel getReloj() {
+		return reloj;
+	}
+
+	public void setReloj(JLabel reloj) {
+		this.reloj = reloj;
+	}
+
+	public static void main(String []args){
+		try{
+			JFrame frame = new JFrame();
+		CuentaAtras prueba = new CuentaAtras(1, 10);
+		prueba.start();
+		frame.add(prueba.getReloj());
+		frame.setSize(200, 200);
+		frame.setVisible(true);
+		
+		}catch(RelojException e){
+			e.printStackTrace();
+		}
 	}
 }
