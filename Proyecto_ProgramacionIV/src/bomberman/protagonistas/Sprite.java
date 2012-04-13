@@ -153,6 +153,10 @@ public class Sprite {
 			anchura = Math.max(anchura, image.getWidth());
 		}
 	}
+	
+	public void setSpriteDestruccion(String[]nom){
+		spritesImagDest = nom;
+	}
 //PUESE SER INTERESANTE
 	public boolean colision(Sprite spr) {
 		Rectangle tempRect = new Rectangle((int) this.getPosX(),

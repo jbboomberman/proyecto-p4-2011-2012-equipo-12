@@ -13,6 +13,10 @@ public class Bomberman extends SpriteDinamico {
 	private String[] spritesImagDown;
 	private String[] spritesImagRight;
 	private String[] spritesImagLeft;
+	private String[] spritesDestUp;
+	private String[] spritesDestDown;
+	private String[] spritesDestRight;
+	private String[] spritesDestLeft;
 	private boolean parado;
 	private final int ANCH_ALT_MURO = 33;
 	private int numBomba;
@@ -34,7 +38,12 @@ public class Bomberman extends SpriteDinamico {
 				"bomber.gif_6" };
 		spritesImagLeft = new String[] { "bomber.gif_1", "bomber.gif_2",
 				"bomber.gif_3" };
+		spritesDestUp = new String[]{"bomber_dest.gif_3"};
+		spritesDestDown = new String[]{"bomber_dest.gif_1"};
+		spritesDestRight = new String[]{"bomber_dest.gif_4"};
+		spritesDestLeft = new String[]{"bomber_dest.gif_2"};
 		setSpriteNombres(spritesImagDown);
+		setSpriteDestruccion(spritesDestDown);
 		this.altura = ManagerImagen.getImagen(spritesImagUp[0])
 		.getWidth();
 		this.anchura = ManagerImagen.getImagen(spritesImagUp[0])
@@ -90,21 +99,25 @@ public class Bomberman extends SpriteDinamico {
 			// Tenemos que restar posición en el eje Y.
 			deltaY = -Math.abs(velocidad);
 			setSpriteNombres(spritesImagUp);
+			setSpriteDestruccion(spritesDestUp);
 			break;
 		case KeyEvent.VK_DOWN:
 			// Tenemos que aumentar posición en el eje Y.
 			deltaY = Math.abs(velocidad);
 			setSpriteNombres(spritesImagDown);
+			setSpriteDestruccion(spritesDestDown);
 			break;
 		case KeyEvent.VK_LEFT:
 			// Tenemos que restar posición en el eje X.
 			deltaX = -Math.abs(velocidad);
 			setSpriteNombres(spritesImagLeft);
+			setSpriteDestruccion(spritesDestLeft);
 			break;
 		case KeyEvent.VK_RIGHT:
 			// Tenemos que aumentar posición en el eje X.
 			deltaX = Math.abs(velocidad);
 			setSpriteNombres(spritesImagRight);
+			setSpriteDestruccion(spritesDestRight);
 			break;
 		case KeyEvent.VK_SPACE:
 			if(this.getNumBomba() < this.getMaxBomba()){
