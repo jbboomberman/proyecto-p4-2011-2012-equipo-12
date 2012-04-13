@@ -18,13 +18,16 @@ public class Bomba extends SpriteEstatico {
 	private Bomberman bomberman;
 	private final int ANCHURA_LLAMA = 32;
 	private final int ALTURA_LLAMA = 32;
+	private int alcanceExpansion;
 
-	public Bomba(Escenario esce, float x, float y, Bomberman bomber, Jugador jug) {
+	public Bomba(Escenario esce, float x, float y, Bomberman bomber,
+			Jugador jug, int alcance) {
 		super(esce, jug);
 		spritesImag = new String[] { "bombs.gif_1", "bombs.gif_2",
 				"bombs.gif_3" };
 		this.posX = x;
 		this.posY = y;
+		this.alcanceExpansion = alcance;
 		// ¿Se puede automatizar?
 		this.altura = ManagerImagen.getImagen(spritesImag[0]).getHeight();
 		this.anchura = ManagerImagen.getImagen(spritesImag[0]).getWidth();
@@ -68,6 +71,7 @@ public class Bomba extends SpriteEstatico {
 	private int[] calcularDistancias() {
 
 		int[] tempArray = new int[4];
+		int contTrozos = 0;
 
 		/*
 		 * Creamos un objeto de la clase Rectangle que nos servirá para
@@ -88,119 +92,148 @@ public class Bomba extends SpriteEstatico {
 			 * Vamos añadiendo posiciones hasta que lo encontremos.
 			 */
 			tempRect.y -= this.getAltura();
-			/*
-			 * Comprobamos con los Sprites que hay en la ventana a ver si alguno
-			 * se interpone en nuestro camino.
-			 */
-			for (Sprite sprTemp : escenario.getLista()) {
-				Rectangle tempRect2 = getRectangle(sprTemp);
-				// Si alguno se interpone
-				
-				if (tempRect.intersects(tempRect2)
-						&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+			if (contTrozos < alcanceExpansion) {
+				/*
+				 * Comprobamos con los Sprites que hay en la ventana a ver si
+				 * alguno se interpone en nuestro camino.
+				 */
+				for (Sprite sprTemp : escenario.getLista()) {
+					Rectangle tempRect2 = getRectangle(sprTemp);
+					// Si alguno se interpone
 
-					encon[0] = true;
-					if (sprTemp instanceof Muro) {
-						if (!((Muro) sprTemp).isDestructible()) {
-							tempArray[0] = (int) (this.getPosY() - tempRect2.y - ALTURA_LLAMA)
-							/ ALTURA_LLAMA;
+					if (tempRect.intersects(tempRect2)
+							&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+
+						encon[0] = true;
+						if (sprTemp instanceof Muro) {
+							if (!((Muro) sprTemp).isDestructible()) {
+								tempArray[0] = (int) (this.getPosY()
+										- tempRect2.y - ALTURA_LLAMA)
+										/ ALTURA_LLAMA;
+							} else {
+								tempArray[0] = (int) ((this.getPosY()
+										- tempRect2.y - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
+							}
 						} else {
-							tempArray[0] = (int) ((this.getPosY() - tempRect2.y - ALTURA_LLAMA)
-							/ ALTURA_LLAMA) + 1;
+							tempArray[0] = (int) ((this.getPosY() - tempRect2.y - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
 						}
-					} else {
-						tempArray[0] = (int) ((this.getPosY() - tempRect2.y - ALTURA_LLAMA)
-								/ ALTURA_LLAMA) + 1;
+						break;
 					}
-					break;
 				}
+				contTrozos++;
+			} else {
+				encon[0] = true;
+				tempArray[0] = alcanceExpansion;
 			}
 		}
 
 		tempRect.x = (int) this.getPosX();
 		tempRect.y = (int) this.getPosY();
+		contTrozos = 0;
 		while (!encon[1]) {
 			// Comprobamos la distancia que hay abajo
 			tempRect.y += this.getAltura();
-			for (Sprite sprTemp : escenario.getLista()) {
-				Rectangle tempRect2 = getRectangle(sprTemp);
-				if (tempRect.intersects(tempRect2)
-						&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+			if (contTrozos < alcanceExpansion) {
+				for (Sprite sprTemp : escenario.getLista()) {
+					Rectangle tempRect2 = getRectangle(sprTemp);
+					if (tempRect.intersects(tempRect2)
+							&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
 
-					encon[1] = true;
-					if (sprTemp instanceof Muro) {
-						if (!((Muro) sprTemp).isDestructible()) {
-							tempArray[1] = (int) (tempRect2.y - this.getPosY() - ALTURA_LLAMA)
-									/ ALTURA_LLAMA;
+						encon[1] = true;
+						if (sprTemp instanceof Muro) {
+							if (!((Muro) sprTemp).isDestructible()) {
+								tempArray[1] = (int) (tempRect2.y
+										- this.getPosY() - ALTURA_LLAMA)
+										/ ALTURA_LLAMA;
+							} else {
+								tempArray[1] = (int) ((tempRect2.y
+										- this.getPosY() - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
+							}
 						} else {
 							tempArray[1] = (int) ((tempRect2.y - this.getPosY() - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
 						}
-					} else {
-						tempArray[1] = (int) ((tempRect2.y - this.getPosY() - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
+						break;
 					}
-					break;
 				}
+				contTrozos++;
+			} else {
+				encon[1] = true;
+				tempArray[1] = alcanceExpansion;
 			}
 		}
 
 		tempRect.x = (int) this.getPosX();
 		tempRect.y = (int) this.getPosY();
+		contTrozos = 0;
 
 		while (!encon[2]) {
 			// Comprobamos la distancia que hay a la derecha
 			tempRect.x += this.getAltura();
-			for (Sprite sprTemp : escenario.getLista()) {
-				Rectangle tempRect2 = getRectangle(sprTemp);
+			if (contTrozos < alcanceExpansion) {
+				for (Sprite sprTemp : escenario.getLista()) {
+					Rectangle tempRect2 = getRectangle(sprTemp);
 
-				if (tempRect.intersects(tempRect2)
-						&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+					if (tempRect.intersects(tempRect2)
+							&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
 
-					encon[2] = true;
-					if (sprTemp instanceof Muro) {
-						if (!((Muro) sprTemp).isDestructible()) {
-							tempArray[2] = (int) (tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
-							/ ANCHURA_LLAMA;
+						encon[2] = true;
+						if (sprTemp instanceof Muro) {
+							if (!((Muro) sprTemp).isDestructible()) {
+								tempArray[2] = (int) (tempRect2.x
+										- this.getPosX() - ANCHURA_LLAMA)
+										/ ANCHURA_LLAMA;
+							} else {
+								tempArray[2] = (int) ((tempRect2.x
+										- this.getPosX() - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
+							}
 						} else {
-							tempArray[2] = (int) ((tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
-							/ ANCHURA_LLAMA) + 1;
+							tempArray[2] = (int) ((tempRect2.x - this.getPosX() - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
 						}
-					} else {
-						tempArray[2] = (int) ((tempRect2.x - this.getPosX() - ANCHURA_LLAMA)
-								/ ANCHURA_LLAMA) + 1;
+						break;
 					}
-					break;
 				}
+				contTrozos++;
+			} else {
+				encon[2] = true;
+				tempArray[2] = alcanceExpansion;
 			}
 		}
 
 		tempRect.x = (int) this.getPosX();
 		tempRect.y = (int) this.getPosY();
+		contTrozos = 0;
 
 		while (!encon[3]) {
 			// Comprobamos la distancia que hay a la izquierda
 			tempRect.x -= this.getAltura();
-			for (Sprite sprTemp : escenario.getLista()) {
-				Rectangle tempRect2 = getRectangle(sprTemp);
-				
-				if (tempRect.intersects(tempRect2)
-						&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+			if (contTrozos < alcanceExpansion) {
+				for (Sprite sprTemp : escenario.getLista()) {
+					Rectangle tempRect2 = getRectangle(sprTemp);
 
-					encon[3] = true;
-					if (sprTemp instanceof Muro) {
-						if (!((Muro) sprTemp).isDestructible()) {
-							tempArray[3] = (int) (this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
-							/ ANCHURA_LLAMA;
+					if (tempRect.intersects(tempRect2)
+							&& (sprTemp instanceof Muro || sprTemp instanceof Enemigo)) {
+
+						encon[3] = true;
+						if (sprTemp instanceof Muro) {
+							if (!((Muro) sprTemp).isDestructible()) {
+								tempArray[3] = (int) (this.getPosX()
+										- tempRect2.x - ANCHURA_LLAMA)
+										/ ANCHURA_LLAMA;
+							} else {
+								tempArray[3] = (int) ((this.getPosX()
+										- tempRect2.x - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
+							}
 						} else {
-							tempArray[3] = (int) ((this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
-							/ ANCHURA_LLAMA) + 1;
+							tempArray[3] = (int) ((this.getPosX() - tempRect2.x - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
 						}
-					} else {
-						tempArray[3] = (int) ((this.getPosX() - tempRect2.x - ANCHURA_LLAMA)
-								/ ANCHURA_LLAMA) + 1;
+						break;
 					}
-					break;
+
 				}
-				
+				contTrozos++;
+			} else {
+				encon[3] = true;
+				tempArray[3] = alcanceExpansion;
 			}
 		}
 		return tempArray;

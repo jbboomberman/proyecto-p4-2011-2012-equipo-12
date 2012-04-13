@@ -21,6 +21,7 @@ public class Bomberman extends SpriteDinamico {
 	private final int ANCH_ALT_MURO = 33;
 	private int numBomba;
 	private int maxBomba;
+	private int alcanceMax;
 
 	public Bomberman(Escenario esce, float x, float y, Jugador jug) {
 		super(esce, x, y, jug);
@@ -30,6 +31,7 @@ public class Bomberman extends SpriteDinamico {
 		parado = false;
 		numBomba = 0;
 		maxBomba = 1;
+		alcanceMax = 4;
 		spritesImagUp = new String[] { "bomber.gif_7", "bomber.gif_8",
 				"bomber.gif_9" };
 		spritesImagDown = new String[] { "bomber.gif_10", "bomber.gif_11",
@@ -123,7 +125,7 @@ public class Bomberman extends SpriteDinamico {
 			if(this.getNumBomba() < this.getMaxBomba()){
 				int tempX = (((int) (this.getPosX() + (this.getAnchura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
 				int tempY = (((int) (this.getPosY() + (this.getAltura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
-				escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this, jugador));
+				escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this, jugador, alcanceMax));
 				this.setNumBomba(this.getNumBomba() + 1);
 			}
 			break;
