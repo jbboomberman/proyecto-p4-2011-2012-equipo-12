@@ -46,7 +46,7 @@ public class ControlPrincipal {
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
 		try {
-			ManagerSonido.playClip("levelintrosong.wav", true);
+			ManagerSonido.playClip("levelintrosong.wav", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,7 +115,7 @@ public class ControlPrincipal {
 
 	// ESTE MÉTODO ES DE PRUEBA
 	private void crearEscenario() {
-		Character array[][] = LeerMapa.LeerMapaJuego("mapa1.txt");
+		Character array[][] = LeerMapa.LeerMapaJuego("mapaMultijugador.txt");
 		PrepararEscenario.ColocarMapa(ventJuego, array, jugador);
 	}
 }
