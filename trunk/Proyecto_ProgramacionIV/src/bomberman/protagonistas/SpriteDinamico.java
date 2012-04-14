@@ -26,7 +26,9 @@ public class SpriteDinamico extends Sprite {
 		Rectangle tempRect = getRectangle(this, x, y);
 		Rectangle tempRect2;
 		
-		for (Sprite sprTemp : escenario.getLista()) {
+//		for (Sprite sprTemp : escenario.getLista()) {
+		for(int i = 0; i < escenario.getLista().size(); i++){
+			Sprite sprTemp = escenario.getLista().get(i);
 			if (sprTemp != this && !sprTemp.seDestruir) {
 				tempRect2 = getRectangle(sprTemp);
 				if (tempRect.intersects(tempRect2)) {

@@ -6,6 +6,7 @@ import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
+import bomberman.managers.ManagerSonido;
 
 public class Bomberman extends SpriteDinamico {
 
@@ -128,6 +129,11 @@ public class Bomberman extends SpriteDinamico {
 				int tempY = (((int) (this.getPosY() + (this.getAltura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
 				if(tempY == 0)
 					tempY = 33;
+				try {
+					ManagerSonido.playClip("dejar.wav", false);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this, jugador, alcanceMax));
 				this.setNumBomba(this.getNumBomba() + 1);
 			}

@@ -37,7 +37,7 @@ public class ControlPrincipal {
 	private Jugador jugador;
 
 	public ControlPrincipal() {
-		
+
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
 		jugador = new Jugador("David", "O", "nose", "no");
 		prueba = new Bomberman(ventJuego, 33, 33, jugador);
@@ -45,6 +45,11 @@ public class ControlPrincipal {
 		ventJuego.setJugador(jugador);
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
+		try {
+			ManagerSonido.playClip("levelintrosong.wav", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		GestorVentana.hacerVisible(VentanaInicial.class, true);
 		this.game();
 	}
@@ -57,7 +62,7 @@ public class ControlPrincipal {
 				ventJuego.getPanel().createBufferStrategy(2);
 				image = ventJuego.getPanel().getBufferStrategy();
 				long startTime = System.currentTimeMillis();
-				if(!ventJuego.getReloj().isTimeFinished())
+				if (!ventJuego.getReloj().isTimeFinished())
 					paintWorld();
 				else
 					terminarPartida(image.getDrawGraphics(), image);
@@ -76,7 +81,7 @@ public class ControlPrincipal {
 		g.fillRect(0, 0, ventJuego.getWidth(), ventJuego.getHeight());
 
 		ArrayList<Sprite> tempLista = ventJuego.getLista();
-		for(int i = 0; i < tempLista.size(); i++){
+		for (int i = 0; i < tempLista.size(); i++) {
 			Sprite tempSpr = tempLista.get(i);
 			tempSpr.mover();
 			tempSpr.paint((Graphics2D) g);
@@ -85,20 +90,20 @@ public class ControlPrincipal {
 		ventJuego.getBomberman().mover();
 		ventJuego.getBomberman().paint((Graphics2D) g);
 
-//		 if (usedTime > 0)
-//		System.out.println(String.valueOf(1000 / usedTime) + " fps");
-		
-		
+		// if (usedTime > 0)
+		// System.out.println(String.valueOf(1000 / usedTime) + " fps");
+
 		image.show();
 	}
 
-	public void terminarPartida(Graphics g, BufferStrategy buffer){
+	public void terminarPartida(Graphics g, BufferStrategy buffer) {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Sansserif", Font.BOLD, 20));
-		g.drawString("Ha terminado la partida por el tiempo", ventJuego.getWidth()/3, ventJuego.getHeight()/3);
+		g.drawString("Ha terminado la partida por el tiempo",
+				ventJuego.getWidth() / 3, ventJuego.getHeight() / 3);
 		buffer.show();
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 			UIManager

@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
+import bomberman.managers.ManagerSonido;
 import bomberman.ventanas.VentanaJuego;
 
 public class Bomba extends SpriteEstatico {
@@ -55,6 +56,11 @@ public class Bomba extends SpriteEstatico {
 
 	public void explotar() {
 		temporizador.cancel();
+		try {
+			ManagerSonido.playClip("explosion.wav", false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		int[] maxLlama = calcularDistancias();
 		colocarLlamas(maxLlama);
 		bomberman.setNumBomba(bomberman.getNumBomba() - 1);
