@@ -117,8 +117,8 @@ public class Bomba extends SpriteEstatico {
 						} else {
 							tempArray[0] = (int) ((this.getPosY() - tempRect2.y - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
 						}
+						break;
 					}
-					break;
 				}
 				contTrozos++;
 			} else {
@@ -146,8 +146,8 @@ public class Bomba extends SpriteEstatico {
 						} else {
 							tempArray[1] = (int) ((tempRect2.y - this.getPosY() - ALTURA_LLAMA) / ALTURA_LLAMA) + 1;
 						}
+						break;
 					}
-					break;
 				}
 				contTrozos++;
 			} else {
@@ -177,8 +177,8 @@ public class Bomba extends SpriteEstatico {
 						} else {
 							tempArray[2] = (int) ((tempRect2.x - this.getPosX() - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
 						}
+						break;
 					}
-					break;
 				}
 				contTrozos++;
 			} else {
@@ -208,8 +208,8 @@ public class Bomba extends SpriteEstatico {
 						} else {
 							tempArray[3] = (int) ((this.getPosX() - tempRect2.x - ANCHURA_LLAMA) / ANCHURA_LLAMA) + 1;
 						}
+						break;
 					}
-					break;
 				}
 				contTrozos++;
 			} else {

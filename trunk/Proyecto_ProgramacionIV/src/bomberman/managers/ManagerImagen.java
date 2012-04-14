@@ -16,12 +16,13 @@ public class ManagerImagen {
 
 	private static HashMap<String, BufferedImage> cargarImagenes() {
 		HashMap<String, BufferedImage> tempHash = new HashMap<String, BufferedImage>();
-		String[] nomImagenes = { "bombs.gif", "bomber.gif", "muro.jpg",
+		String[] nomImagenes = { "bombs.gif", "muro.jpg",
 				"indestructible.jpg",  "valcom.png", "valcom_dest.gif", "destruccion.png", "minvo.gif", 
-				"minvo_dest.gif", "dahl.gif", "pildora_bomba.png", "nada.png", "llama.gif", "bomber_dest.gif"};
+				"minvo_dest.gif", "dahl.gif", "pildora_bomba.png", "nada.png", "llama.gif", "bomber_dest.gif",
+				"bomber_up_down.gif", "bomber_der.gif", "bomber_izq.gif"};
 		int cont;
-		int[] columnas = { 3, 3, 8, 1, 6, 1, 5, 3, 1, 5, 1, 1, 4, 4};
-		int[] filas = { 5, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1};
+		int[] columnas = { 3, 8, 1, 6, 1, 5, 3, 1, 5, 1, 1, 4, 4, 3, 3, 3};
+		int[] filas = { 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 2, 1, 1};
 		
 		for (int i = 0; i < nomImagenes.length; i++) {
 			cont = 0;

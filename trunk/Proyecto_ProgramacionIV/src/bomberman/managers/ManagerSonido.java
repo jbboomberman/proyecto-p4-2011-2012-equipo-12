@@ -25,7 +25,7 @@ public class ManagerSonido {
 	private static String nombre = null;
 	private static boolean bucle;
 	private static Clip clip;
-	
+
 	public static void playClip(String nom, boolean loop) throws IOException,
 			UnsupportedAudioFileException, LineUnavailableException,
 			InterruptedException {
@@ -50,9 +50,7 @@ public class ManagerSonido {
 		}
 		bucle = loop;
 		nombre = nom;
-		new Thread(new Runnable() { // the wrapper thread is unnecessary, unless
-									// it blocks on the Clip finishing, see
-									// comments
+		new Thread(new Runnable() { 
 					public void run() {
 						url = ManagerSonido.class.getClassLoader().getResource(
 								"bomberman/resources/" + nombre);

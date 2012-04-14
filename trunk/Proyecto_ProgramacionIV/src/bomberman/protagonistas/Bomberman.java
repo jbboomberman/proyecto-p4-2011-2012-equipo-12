@@ -34,14 +34,18 @@ public class Bomberman extends SpriteDinamico {
 		numBomba = 0;
 		maxBomba = 1;
 		alcanceMax = 4;
-		spritesImagUp = new String[] { "bomber.gif_7", "bomber.gif_8",
-				"bomber.gif_9" };
-		spritesImagDown = new String[] { "bomber.gif_10", "bomber.gif_11",
-				"bomber.gif_12" };
-		spritesImagRight = new String[] { "bomber.gif_4", "bomber.gif_5",
-				"bomber.gif_6" };
-		spritesImagLeft = new String[] { "bomber.gif_1", "bomber.gif_2",
-				"bomber.gif_3" };
+//		spritesImagUp = new String[] { "bomber.gif_7", "bomber.gif_8",
+//				"bomber.gif_9" };
+//		spritesImagDown = new String[] { "bomber.gif_10", "bomber.gif_11",
+//				"bomber.gif_12" };
+		spritesImagUp = new String[] { "bomber_up_down.gif_1", "bomber_up_down.gif_2", 
+				"bomber_up_down.gif_3"};
+		spritesImagDown = new String[] {"bomber_up_down.gif_4", "bomber_up_down.gif_5",
+				"bomber_up_down.gif_6"};
+		spritesImagRight = new String[] { "bomber_der.gif_1", "bomber_der.gif_2",
+				"bomber_der.gif_3" };
+		spritesImagLeft = new String[] { "bomber_izq.gif_1", "bomber_izq.gif_2",
+				"bomber_izq.gif_3" };
 		spritesDestUp = new String[]{"bomber_dest.gif_3"};
 		spritesDestDown = new String[]{"bomber_dest.gif_1"};
 		spritesDestRight = new String[]{"bomber_dest.gif_4"};
@@ -125,8 +129,8 @@ public class Bomberman extends SpriteDinamico {
 			break;
 		case KeyEvent.VK_SPACE:
 			if(this.getNumBomba() < this.getMaxBomba()){
-				int tempX = (((int) (this.getPosX() + (this.getAnchura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
-				int tempY = (((int) (this.getPosY() + (this.getAltura() / 2)) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
+				int tempX = ((((int) (this.getPosX() + (this.getAnchura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
+				int tempY = ((((int) (this.getPosY() + (this.getAltura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
 				if(tempY == 0)
 					tempY = 33;
 				try {
