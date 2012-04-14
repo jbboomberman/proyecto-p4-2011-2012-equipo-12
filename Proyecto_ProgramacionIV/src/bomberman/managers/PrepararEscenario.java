@@ -3,6 +3,8 @@ package bomberman.managers;
 import java.util.ArrayList;
 
 import bomberman.jugador.Jugador;
+import bomberman.protagonistas.Dahl;
+import bomberman.protagonistas.Minvo;
 import bomberman.protagonistas.Muro;
 import bomberman.protagonistas.Valcom;
 
@@ -28,24 +30,22 @@ public class PrepararEscenario {
 				
 				//Valcom
 				case 'V':
-					esce.añadirSprite(new Valcom(esce, 50, 50, jug));
+					esce.añadirSprite(new Valcom(esce, (float) i * 33, (float) j * 33, jug));
 					break;
 					
 				//Dahl
 				case 'A':
-					
+					esce.añadirSprite(new Dahl(esce, (float) i * 33, (float) j * 33, jug));
 					break;
 				//Minvo
 				case 'M':
-					
+					esce.añadirSprite(new Minvo(esce, (float) i * 33, (float) j * 33, jug));
 					break;
 				//Doria
 				case 'D':
 					
 					break;
 				default:
-					System.out.println("No existe un objeto del mapa");
-					System.out.println(arrayChar[i][j]);
 					break;
 				}
 			}

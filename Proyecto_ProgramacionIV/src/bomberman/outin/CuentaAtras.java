@@ -102,8 +102,7 @@ public class CuentaAtras extends Observable {
 	}
 
 	public boolean isTimeFinished() {
-		// MIRAR ESTO
-		return true;
+		return (minutos == 0 && segundos == 0);
 	}
 
 	public void setRecharge(int segs) {
