@@ -33,7 +33,7 @@ public class LeerMapa {
 					while ((int) inputLine2 == 13 || (int) inputLine2 == 10) {
 						inputLine2 = (char) brF.read();
 					}
-					arrayChar[j][i] = (inputLine2);
+					arrayChar[i][j] = (inputLine2);
 				}
 			}
 		} catch (FileNotFoundException e) {

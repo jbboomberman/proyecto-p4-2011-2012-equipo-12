@@ -1,6 +1,8 @@
 package bomberman.managers;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -55,7 +57,10 @@ public class ControlPrincipal {
 				ventJuego.getPanel().createBufferStrategy(2);
 				image = ventJuego.getPanel().getBufferStrategy();
 				long startTime = System.currentTimeMillis();
-				paintWorld();
+				if(!ventJuego.getReloj().isTimeFinished())
+					paintWorld();
+				else
+					terminarPartida(image.getDrawGraphics(), image);
 				usedTime = System.currentTimeMillis() - startTime;
 				try {
 					Thread.sleep(10);
@@ -87,6 +92,13 @@ public class ControlPrincipal {
 		image.show();
 	}
 
+	public void terminarPartida(Graphics g, BufferStrategy buffer){
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Sansserif", Font.BOLD, 20));
+		g.drawString("Ha terminado la partida por el tiempo", ventJuego.getWidth()/3, ventJuego.getHeight()/3);
+		buffer.show();
+	}
+	
 	public static void main(String[] args) {
 		try {
 			UIManager

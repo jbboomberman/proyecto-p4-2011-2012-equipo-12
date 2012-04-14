@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.UIManager;
 
+import bomberman.managers.ManagerSonido;
+
 /**
  * Ventana inicial del juego que nos ofrece varias opciones. Extiende de JFrame.
  * Implementa el interfaz ActionListener.
@@ -140,6 +142,11 @@ public class VentanaInicial extends JFrame implements ActionListener {
 		Object botonPulsado = e.getSource();
 
 		if (botonPulsado == jbBotonJugar) {
+			try{
+				ManagerSonido.playClip("click.wav", false);
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
 			//GestorVentana.hacerVisible(VentanaSeleccion.class, false);
 			GestorVentana.hacerVisible(VentanaJuego.class, false);
 		} else if (botonPulsado == jbBotonCargar) {
