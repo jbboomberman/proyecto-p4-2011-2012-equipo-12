@@ -47,7 +47,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		canPintar.setSize(660, 660);
 		panelMarcador = new JPanel();
 		try{
-		tiempo = new CuentaAtras(0, 5);
+		tiempo = new CuentaAtras(5, 0);
 		parado = true;
 		}catch(RelojException e){
 			e.printStackTrace();
