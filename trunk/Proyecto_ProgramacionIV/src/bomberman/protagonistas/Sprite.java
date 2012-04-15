@@ -112,6 +112,10 @@ public class Sprite {
 		if (tiempoTranscurrido > 0.01F) {
 			g.drawImage(ManagerImagen.getImagen(spritesImag[imagActual]),
 					(int) posX, (int) posY, escenario);
+//			if(this instanceof Valcom){
+//				g.setColor(Color.BLACK);
+//				g.drawRect((int)this.getPosX(), (int)this.getPosY(), (int)this.getAnchura(), (int)this.getAltura());
+//			}
 				horaUltimaPintada = System.currentTimeMillis();
 		}
 	}
@@ -178,9 +182,11 @@ public class Sprite {
 	 * destrucción y se borra de la lista de personajes.
 	 */
 	public void procDestruccion(){
+		if(!seDestruir){
 		setSpritesImag(spritesImagDest);
 		seDestruir = true;
 		imagActual = 0;
+		}
 	}
 	public void destruir(){
 		for(Sprite sprTemp : escenario.getLista()){

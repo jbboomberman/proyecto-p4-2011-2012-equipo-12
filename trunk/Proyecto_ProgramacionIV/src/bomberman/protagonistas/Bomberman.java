@@ -133,11 +133,11 @@ public class Bomberman extends SpriteDinamico {
 				int tempY = ((((int) (this.getPosY() + (this.getAltura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
 				if(tempY == 0)
 					tempY = 33;
-				try {
-					ManagerSonido.playClip("dejar.wav", false);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+//				try {
+//					ManagerSonido.playClip("dejar.wav", false);
+//				} catch (Exception ex) {
+//					ex.printStackTrace();
+//				}
 				escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this, jugador, alcanceMax));
 				this.setNumBomba(this.getNumBomba() + 1);
 			}
@@ -182,6 +182,18 @@ public class Bomberman extends SpriteDinamico {
 		default:
 			break;
 		}
+	}
+	
+	public boolean determinarChoque(Sprite spr){
+		if(spr instanceof Pildora)
+			spr.procDestruccion();
+		else if(spr instanceof Enemigo)
+			this.procDestruccion();
+		else if(spr instanceof Bomba){
+				if(((Bomba) spr).isPisada())
+					return false;
+		}
+		return true;
 	}
 
 }

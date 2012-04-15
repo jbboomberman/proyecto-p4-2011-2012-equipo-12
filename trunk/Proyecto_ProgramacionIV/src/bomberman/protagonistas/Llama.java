@@ -56,4 +56,14 @@ public class Llama extends SpriteDinamico {
 		if(imagActual == (spritesImag.length - 1))
 			this.destruir();
 	}
+	
+	public boolean determinarChoque(Sprite spr){
+		if(spr instanceof Muro){
+			if (((Muro) spr).isDestructible())
+					spr.procDestruccion();
+		}
+		else if(spr instanceof Enemigo || spr instanceof Bomberman)
+			spr.procDestruccion();
+		return true;
+	}
 }
