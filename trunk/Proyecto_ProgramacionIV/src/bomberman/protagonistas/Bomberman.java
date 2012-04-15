@@ -50,7 +50,7 @@ public class Bomberman extends SpriteDinamico {
 		spritesDestDown = new String[]{"bomber_dest.gif_1"};
 		spritesDestRight = new String[]{"bomber_dest.gif_4"};
 		spritesDestLeft = new String[]{"bomber_dest.gif_2"};
-		setSpriteNombres(spritesImagDown);
+		setSpritesImag(spritesImagDown);
 		setSpriteDestruccion(spritesDestDown);
 		this.altura = ManagerImagen.getImagen(spritesImagUp[0])
 		.getWidth();
@@ -106,25 +106,25 @@ public class Bomberman extends SpriteDinamico {
 		case KeyEvent.VK_UP:
 			// Tenemos que restar posición en el eje Y.
 			deltaY = -Math.abs(velocidad);
-			setSpriteNombres(spritesImagUp);
+			setSpritesImag(spritesImagUp);
 			setSpriteDestruccion(spritesDestUp);
 			break;
 		case KeyEvent.VK_DOWN:
 			// Tenemos que aumentar posición en el eje Y.
 			deltaY = Math.abs(velocidad);
-			setSpriteNombres(spritesImagDown);
+			setSpritesImag(spritesImagDown);
 			setSpriteDestruccion(spritesDestDown);
 			break;
 		case KeyEvent.VK_LEFT:
 			// Tenemos que restar posición en el eje X.
 			deltaX = -Math.abs(velocidad);
-			setSpriteNombres(spritesImagLeft);
+			setSpritesImag(spritesImagLeft);
 			setSpriteDestruccion(spritesDestLeft);
 			break;
 		case KeyEvent.VK_RIGHT:
 			// Tenemos que aumentar posición en el eje X.
 			deltaX = Math.abs(velocidad);
-			setSpriteNombres(spritesImagRight);
+			setSpritesImag(spritesImagRight);
 			setSpriteDestruccion(spritesDestRight);
 			break;
 		case KeyEvent.VK_SPACE:
