@@ -45,11 +45,11 @@ public class ControlPrincipal {
 		ventJuego.setJugador(jugador);
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
-		try {
-			ManagerSonido.playClip("levelintrosong.wav", false);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			ManagerSonido.playClip("levelintrosong.wav", false);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		GestorVentana.hacerVisible(VentanaInicial.class, true);
 		this.game();
 	}
@@ -90,8 +90,8 @@ public class ControlPrincipal {
 		ventJuego.getBomberman().mover();
 		ventJuego.getBomberman().paint((Graphics2D) g);
 
-		// if (usedTime > 0)
-		// System.out.println(String.valueOf(1000 / usedTime) + " fps");
+//		 if (usedTime > 0)
+//		 System.out.println(String.valueOf(1000 / usedTime) + " fps");
 
 		image.show();
 	}

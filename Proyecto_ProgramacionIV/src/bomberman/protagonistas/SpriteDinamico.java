@@ -6,7 +6,7 @@ import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 
 //MUCHA GUARRERIA INTENTAR LIMPIAR
-public class SpriteDinamico extends Sprite {
+public abstract class SpriteDinamico extends Sprite {
 
 	protected int deltaX;
 	protected int deltaY;
@@ -23,36 +23,32 @@ public class SpriteDinamico extends Sprite {
 	}
 
 	protected boolean seChoca(float x, float y) {
+		/*
+		 * Obtenemos un objeto de la clase Rectangulo donde está
+		 * ahora mismo el objeto Sprite.
+		 */
 		Rectangle tempRect = getRectangle(this, x, y);
 		Rectangle tempRect2;
 		
+		/*
+		 * Notese que hacemos el 'for' de la forma clásica
+		 * porque con el Iterator nos da error si mientras
+		 * estamos en el 'for' modificamos la lista.
+		 */
 //		for (Sprite sprTemp : escenario.getLista()) {
 		for(int i = 0; i < escenario.getLista().size(); i++){
 			Sprite sprTemp = escenario.getLista().get(i);
+			
+			/*
+			 * Si el otro objeto no es él mismo y no está en
+			 * proceso de destrucción.
+			 */
 			if (sprTemp != this && !sprTemp.seDestruir) {
 				tempRect2 = getRectangle(sprTemp);
+				
+				//En caso de que los dos se choquen
 				if (tempRect.intersects(tempRect2)) {
-					if (this instanceof Llama) {
-						if(sprTemp instanceof Muro){
-							if (((Muro) sprTemp).isDestructible())
-									sprTemp.procDestruccion();
-						}
-						else if(sprTemp instanceof Enemigo || sprTemp instanceof Bomberman)
-							sprTemp.procDestruccion();
-														
-					} else if (sprTemp instanceof Bomba) {
-						if (((Bomba) sprTemp).isPisada())
-							return false;
-					}else if(this instanceof Bomberman){
-						if(sprTemp instanceof Pildora)
-							sprTemp.procDestruccion();
-						else if(sprTemp instanceof Enemigo)
-							this.procDestruccion();
-					}else if(this instanceof Enemigo){
-						if(sprTemp instanceof Llama)
-							this.procDestruccion();
-					}
-					return true;
+					return determinarChoque(sprTemp);
 				}
 			}
 		}
@@ -111,4 +107,6 @@ public class SpriteDinamico extends Sprite {
 		}
 		return detectLados;
 	}
+	
+	public abstract boolean determinarChoque(Sprite spr);
 }

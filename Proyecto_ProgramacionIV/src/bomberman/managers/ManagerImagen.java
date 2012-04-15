@@ -21,7 +21,7 @@ public class ManagerImagen {
 				"minvo_dest.gif", "dahl.gif", "pildora_bomba.png", "nada.png", "llama.gif", "bomber_dest.gif",
 				"bomber_up_down.gif", "bomber_der.gif", "bomber_izq.gif"};
 		int cont;
-		int[] columnas = { 3, 8, 1, 6, 1, 5, 3, 1, 5, 1, 1, 4, 4, 3, 3, 3};
+		int[] columnas = { 3, 8, 1, 3, 1, 5, 3, 1, 5, 1, 1, 4, 4, 3, 3, 3};
 		int[] filas = { 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 2, 1, 1};
 		
 		for (int i = 0; i < nomImagenes.length; i++) {
