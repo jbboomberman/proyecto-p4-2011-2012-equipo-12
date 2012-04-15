@@ -30,7 +30,7 @@ import bomberman.ventanas.VentanaJuego;
 
 public class ControlPrincipal {
 
-	private static Bomberman prueba;
+	private static Bomberman bomber;
 	private long usedTime;
 	private BufferStrategy image;
 	private VentanaJuego ventJuego;
@@ -40,8 +40,8 @@ public class ControlPrincipal {
 
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
 		jugador = new Jugador("David", "O", "nose", "no");
-		prueba = new Bomberman(ventJuego, 33, 33, jugador);
-		ventJuego.setBomberman(prueba);
+		bomber = new Bomberman(ventJuego, 33, 33, jugador);
+		ventJuego.setBomberman(bomber);
 		ventJuego.setJugador(jugador);
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
@@ -62,7 +62,7 @@ public class ControlPrincipal {
 				ventJuego.getPanel().createBufferStrategy(2);
 				image = ventJuego.getPanel().getBufferStrategy();
 				long startTime = System.currentTimeMillis();
-				if (!ventJuego.getReloj().isTimeFinished())
+				if (!ventJuego.getReloj().isTimeFinished() && !(bomber.isSeDestruir()))
 					paintWorld();
 				else
 					terminarPartida(image.getDrawGraphics(), image);
@@ -99,7 +99,7 @@ public class ControlPrincipal {
 	public void terminarPartida(Graphics g, BufferStrategy buffer) {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Sansserif", Font.BOLD, 20));
-		g.drawString("Ha terminado la partida por el tiempo",
+		g.drawString("Has perdido",
 				ventJuego.getWidth() / 3, ventJuego.getHeight() / 3);
 		buffer.show();
 	}
