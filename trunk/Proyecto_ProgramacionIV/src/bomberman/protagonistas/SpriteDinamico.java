@@ -56,7 +56,7 @@ public abstract class SpriteDinamico extends Sprite {
 	}
 
 	public boolean estaInterseccion() {
-		if (this.getPosX() % CASILLA == 0 && this.getPosY() % CASILLA == 0)
+		if (((int)this.getPosX()) % CASILLA == 0 && ((int)this.getPosY()) % CASILLA == 0)
 			return true;
 		else
 			return false;

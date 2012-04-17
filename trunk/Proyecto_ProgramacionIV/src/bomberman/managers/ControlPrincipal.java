@@ -90,8 +90,8 @@ public class ControlPrincipal {
 		ventJuego.getBomberman().mover();
 		ventJuego.getBomberman().paint((Graphics2D) g);
 
-//		 if (usedTime > 0)
-//		 System.out.println(String.valueOf(1000 / usedTime) + " fps");
+		 if (usedTime > 0)
+		 System.out.println(String.valueOf(1000 / usedTime) + " fps");
 
 		image.show();
 	}
