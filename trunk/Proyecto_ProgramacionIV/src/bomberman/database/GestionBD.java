@@ -35,4 +35,7 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 	}
+public static void main (String[]args){
+	conectar();
+}
 }
