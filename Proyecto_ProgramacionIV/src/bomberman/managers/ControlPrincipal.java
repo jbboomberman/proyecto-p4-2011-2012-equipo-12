@@ -35,9 +35,12 @@ public class ControlPrincipal {
 	private BufferStrategy image;
 	private VentanaJuego ventJuego;
 	private Jugador jugador;
+	private boolean pararJuego;
+	private int period = 20;
 
 	public ControlPrincipal() {
 
+		pararJuego = false;
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
 		jugador = new Jugador("David", "O", "nose", "no");
 		bomber = new Bomberman(ventJuego, 33, 33, jugador);
@@ -57,8 +60,11 @@ public class ControlPrincipal {
 	public void game() {
 		usedTime = 1000;
 		this.crearEscenario();
-		while (true) {
-			while (ventJuego.isVisible()) {
+		long beforeTime, timeDiff, sleepTime;
+		beforeTime = System.currentTimeMillis();
+		
+		while (!pararJuego) {
+			if (ventJuego.isVisible()) {
 				ventJuego.getPanel().createBufferStrategy(2);
 				image = ventJuego.getPanel().getBufferStrategy();
 				long startTime = System.currentTimeMillis();
@@ -66,11 +72,32 @@ public class ControlPrincipal {
 					paintWorld();
 				else
 					terminarPartida(image.getDrawGraphics(), image);
+				
+				
+				//Una opción de game loop
+//				usedTime = System.currentTimeMillis()-startTime;
+//				do {
+//	  			Thread.yield();
+//				} while (System.currentTimeMillis()-startTime< 17);
+				
+				//Segunda opción de game loop
 				usedTime = System.currentTimeMillis() - startTime;
+				timeDiff = System.currentTimeMillis() - beforeTime;
+				sleepTime = period - timeDiff; // time left in this loop
+				if (sleepTime <= 0) // update/render took longer than period
+				sleepTime = 5; // sleep a bit anyway
 				try {
-					Thread.sleep(10);
-				} catch (Exception e) {
+				Thread.sleep(sleepTime); // in ms
 				}
+				catch(InterruptedException ex){}
+				beforeTime = System.currentTimeMillis();
+				
+				//Tercera opción de game loop
+//				try {
+//                    Thread.sleep(10);
+//            } catch (Exception e) {
+//            }
+
 			}
 		}
 	}
@@ -90,8 +117,8 @@ public class ControlPrincipal {
 		ventJuego.getBomberman().mover();
 		ventJuego.getBomberman().paint((Graphics2D) g);
 
-		 if (usedTime > 0)
-		 System.out.println(String.valueOf(1000 / usedTime) + " fps");
+//		 if (usedTime > 0)
+//		 System.out.println(String.valueOf(1000 / usedTime) + " fps");
 
 		image.show();
 	}

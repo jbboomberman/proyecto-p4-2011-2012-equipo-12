@@ -14,6 +14,7 @@ public class Llama extends SpriteDinamico {
 		super(esce, x, y, jug);
 		this.escenario = esce;
 		this.tipo = tip;
+		this.velocidadPic = 10;
 		
 		switch(tipo){
 		
