@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class GestionBD {
 
-	private static Connection conexion;
+	public static Connection conexion;
 
 	/**
 	 * Método estático que nos sirve para conectarnos a la base de datos.
