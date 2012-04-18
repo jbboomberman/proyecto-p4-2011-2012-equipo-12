@@ -50,4 +50,7 @@ public class Conexion {
 		//}
 		public static void insertar(String linea){
 		}
+		public static void main (String []args){
+			Conexion.conectar();
+		}
 }

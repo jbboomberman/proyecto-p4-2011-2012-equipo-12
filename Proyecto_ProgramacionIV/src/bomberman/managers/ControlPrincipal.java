@@ -73,6 +73,7 @@ public class ControlPrincipal {
 
 				timeDiff = System.currentTimeMillis() - beforeTime;
 				sleepTime = PERIODO - timeDiff; // time left in this loop
+				System.out.println(sleepTime);
 				if (sleepTime <= 0) // update/render took longer than period
 					sleepTime = 5; // sleep a bit anyway
 				try {
