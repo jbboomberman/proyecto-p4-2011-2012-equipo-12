@@ -13,11 +13,11 @@ eliminarControl(Control cont) que eliminará un controlde la tabla y listaControl
 listará todos los controles de la tabla. */
 	
 	
-	public static void InsertarControl(String cod_accion,String nom_accion,String ascii,String tipo){
+	public static void InsertarControl(int cod_accion,String nom_accion,int ascii,int tipo){
 		Statement stat;
 		try {
 			stat = GestionBD.conexion.createStatement();
-			ResultSet rs = stat.executeQuery("insert into CONTROLES values(" + "'" + cod_accion + "','" + nom_accion + "'," + ascii + "','"+tipo+"');");
+			ResultSet rs = stat.executeQuery("insert into CONTROLES values("  + cod_accion + ",'" + nom_accion + "'," + ascii + ","+tipo+");");
 		
 		  } catch (SQLException e) {
 			
@@ -27,11 +27,11 @@ listará todos los controles de la tabla. */
 		
 	}
 
-public static void EliminarControl(String cod_accion,String nom_accion,String ascii,String tipo){
+public static void EliminarControl(int cod_accion){
 	Statement stat;
 	try {
 		stat = GestionBD.conexion.createStatement();
-		ResultSet rs = stat.executeQuery("delete from CONTROLES where COD_ACCION='"+ cod_accion + "'");
+		ResultSet rs = stat.executeQuery("delete from CONTROLES where COD_ACCION="+ cod_accion );
 	  } catch (SQLException e) {
 		
 		e.printStackTrace();
@@ -43,11 +43,15 @@ public static void EliminarControl(String cod_accion,String nom_accion,String as
 public static ArrayList<String> ListarControles(){
 	Statement stat;
 	ArrayList<String> Ac = new ArrayList<String>();
+	String control;
 	try {
 		stat = GestionBD.conexion.createStatement();
 		ResultSet rs = stat.executeQuery("select * from CONTROLES;");
 		
 		while(rs.next()){
+			control=Integer.toString(rs.getInt("COD_ASCII_TECLA"));
+			
+			Ac.add(control);
 			
 			
 			
