@@ -24,5 +24,10 @@ public class BusquedaCompleja {
 //
 //	}
 //
-//	private static ArrayList<String> getNombreTablas(){
+	private static ArrayList<String> getNombreTablas(String[][] arrayDatos){
+		ArrayList<String> tempTablas = new ArrayList<String>();
+		
+		return tempTablas;
+		
+	}
 }
