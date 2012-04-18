@@ -26,9 +26,9 @@ public class VentanaInformacion extends JDialog {
 	 */
 	public VentanaInformacion() {
 		// Hay que crear un PanelFondo con cada imagen.
-		pfHistoria = new PanelFondo("bomberman.jpg", this);
-		pfDesarrolladores = new PanelFondo("bomberman.jpg", this);
-		pfProposito = new PanelFondo("bomberman.jpg", this);
+		pfHistoria = new PanelFondo("fondoBomber.gif", this);
+		pfDesarrolladores = new PanelFondo("fondoBomber2.jpg", this);
+		pfProposito = new PanelFondo("fondoBomber.gif", this);
 
 		// Las petañas que tendrá la ventana.
 		jtPestaña = new JTabbedPane();

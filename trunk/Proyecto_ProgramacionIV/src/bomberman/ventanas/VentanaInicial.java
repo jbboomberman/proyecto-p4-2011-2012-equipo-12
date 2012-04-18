@@ -158,8 +158,9 @@ public class VentanaInicial extends JFrame implements ActionListener {
 
 		} else if (botonPulsado == jbBotonInstruc) {
 
+			GestorVentana.hacerVisible(VentanaInstrucciones.class, false);
 		} else if (botonPulsado == jbBotonInfo) {
-
+			GestorVentana.hacerVisible(VentanaInformacion.class, false);
 		} else if (botonPulsado == jbBotonSalir) {
 			System.exit(0);
 		}

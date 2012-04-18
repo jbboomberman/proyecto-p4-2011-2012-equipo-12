@@ -33,6 +33,8 @@ public class GestorVentana {
 		vector.add(new VentanaDatos(jug));
 		vector.add(new VentanaSeleccion());
 		vector.add(new VentanaJuego());
+		vector.add(new VentanaInstrucciones());
+		vector.add(new VentanaInformacion());
 		// Se devuelve el vector con las ventanas
 		return vector;
 	}

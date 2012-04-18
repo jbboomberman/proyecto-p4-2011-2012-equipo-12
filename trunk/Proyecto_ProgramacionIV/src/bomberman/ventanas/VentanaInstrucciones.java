@@ -32,7 +32,6 @@ public class VentanaInstrucciones extends JFrame{
 		this.setSize(600,500);
 		this.setTitle("Instrucciones");
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
 		
 		//TextAreas
 		JTextArea tValcom=new JTextArea("– Valcom: Es el enemigo más simple. Se moverá despacio, fácil de matar y tiene una puntuación de 100 puntos. Simplemente rebotará en los muros y nunca cambiará de dirección.");
@@ -118,6 +117,7 @@ public class VentanaInstrucciones extends JFrame{
 		tP.addTab("Objetivos", objetivos);
 		
 		getContentPane().add(tP);
+		this.setVisible(false);
 		
 	}
 	
