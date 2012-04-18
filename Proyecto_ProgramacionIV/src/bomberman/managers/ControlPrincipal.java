@@ -101,8 +101,8 @@ public class ControlPrincipal {
 
 //		if (usedTime > 0)
 //			System.out.println(String.valueOf(1000 / usedTime) + " fps");
-		if (timeDiff > 0)
-			System.out.println(String.valueOf(1000 / timeDiff) + " fps");
+//		if (timeDiff > 0)
+//			System.out.println(String.valueOf(1000 / timeDiff) + " fps");
 
 
 		image.show();

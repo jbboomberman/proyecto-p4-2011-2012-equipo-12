@@ -25,6 +25,7 @@ public class Muro extends SpriteEstatico {
                     .getWidth();
 		this.altura = ManagerImagen.getImagen("indestructible.jpg_1")
                     .getHeight();
+		velocidadPic = 5;
 	}
 
 	public boolean isDestructible() {

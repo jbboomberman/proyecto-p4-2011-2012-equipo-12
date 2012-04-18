@@ -64,7 +64,7 @@ public class Sprite {
 	 */
 	public Sprite(Escenario esce, Jugador jug) {
 		this.imagActual = 0;
-		this.velocidadPic = 15;
+		this.velocidadPic = 10;
 		this.t = 0;
 		this.escenario = esce;
 		this.horaUltimaPintada = 0;
