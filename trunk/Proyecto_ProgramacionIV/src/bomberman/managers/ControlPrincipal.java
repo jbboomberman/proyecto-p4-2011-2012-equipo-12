@@ -31,12 +31,12 @@ import bomberman.ventanas.VentanaJuego;
 public class ControlPrincipal {
 
 	private static Bomberman bomber;
-	private long usedTime;
 	private BufferStrategy image;
 	private VentanaJuego ventJuego;
 	private Jugador jugador;
 	private boolean pararJuego;
-	private int period = 20;
+	private final int PERIODO = 18;
+	long beforeTime, timeDiff, sleepTime;
 
 	public ControlPrincipal() {
 
@@ -48,56 +48,38 @@ public class ControlPrincipal {
 		ventJuego.setJugador(jugador);
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
-//		try {
-//			ManagerSonido.playClip("levelintrosong.wav", false);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// ManagerSonido.playClip("levelintrosong.wav", false);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 		GestorVentana.hacerVisible(VentanaInicial.class, true);
 		this.game();
 	}
 
 	public void game() {
-		usedTime = 1000;
 		this.crearEscenario();
-		long beforeTime, timeDiff, sleepTime;
-		beforeTime = System.currentTimeMillis();
 		
 		while (!pararJuego) {
 			if (ventJuego.isVisible()) {
 				ventJuego.getPanel().createBufferStrategy(2);
 				image = ventJuego.getPanel().getBufferStrategy();
-				long startTime = System.currentTimeMillis();
-				if (!ventJuego.getReloj().isTimeFinished() && !(bomber.isSeDestruir()))
+				beforeTime = System.currentTimeMillis();
+				if (!ventJuego.getReloj().isTimeFinished()
+						&& !(bomber.isSeDestruir()))
 					paintWorld();
 				else
 					terminarPartida(image.getDrawGraphics(), image);
-				
-				
-				//Una opción de game loop
-//				usedTime = System.currentTimeMillis()-startTime;
-//				do {
-//	  			Thread.yield();
-//				} while (System.currentTimeMillis()-startTime< 17);
-				
-				//Segunda opción de game loop
-				usedTime = System.currentTimeMillis() - startTime;
-				timeDiff = System.currentTimeMillis() - beforeTime;
-				sleepTime = period - timeDiff; // time left in this loop
-				if (sleepTime <= 0) // update/render took longer than period
-				sleepTime = 5; // sleep a bit anyway
-				try {
-				Thread.sleep(sleepTime); // in ms
-				}
-				catch(InterruptedException ex){}
-				beforeTime = System.currentTimeMillis();
-				
-				//Tercera opción de game loop
-//				try {
-//                    Thread.sleep(10);
-//            } catch (Exception e) {
-//            }
 
+				timeDiff = System.currentTimeMillis() - beforeTime;
+				sleepTime = PERIODO - timeDiff; // time left in this loop
+				if (sleepTime <= 0) // update/render took longer than period
+					sleepTime = 5; // sleep a bit anyway
+				try {
+					Thread.sleep(sleepTime); // in ms
+				} catch (InterruptedException ex) {
+					ex.printStackTrace();
+				}
 			}
 		}
 	}
@@ -117,8 +99,11 @@ public class ControlPrincipal {
 		ventJuego.getBomberman().mover();
 		ventJuego.getBomberman().paint((Graphics2D) g);
 
-//		 if (usedTime > 0)
-//		 System.out.println(String.valueOf(1000 / usedTime) + " fps");
+//		if (usedTime > 0)
+//			System.out.println(String.valueOf(1000 / usedTime) + " fps");
+		if (timeDiff > 0)
+			System.out.println(String.valueOf(1000 / timeDiff) + " fps");
+
 
 		image.show();
 	}
@@ -126,8 +111,8 @@ public class ControlPrincipal {
 	public void terminarPartida(Graphics g, BufferStrategy buffer) {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Sansserif", Font.BOLD, 20));
-		g.drawString("Has perdido",
-				ventJuego.getWidth() / 3, ventJuego.getHeight() / 3);
+		g.drawString("Has perdido", ventJuego.getWidth() / 3,
+				ventJuego.getHeight() / 3);
 		buffer.show();
 	}
 

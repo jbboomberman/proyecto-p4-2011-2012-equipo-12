@@ -14,7 +14,7 @@ public class VentanaInstrucciones extends JFrame{
 	private JPanel objetos;
 	private JPanel reglas;
 	private JPanel objetivos;
-	private Color c;
+//	private Color c;
 	
 	
 	
@@ -25,7 +25,7 @@ public class VentanaInstrucciones extends JFrame{
 		objetos=new JPanel();
 		reglas=new JPanel();
 		objetivos=new JPanel();
-		c=new Color(0, 0, 0, 0);
+//		c=new Color(0, 0, 0, 0);
 		
 		
 		
@@ -36,27 +36,27 @@ public class VentanaInstrucciones extends JFrame{
 		
 		//TextAreas
 		JTextArea tValcom=new JTextArea("– Valcom: Es el enemigo más simple. Se moverá despacio, fácil de matar y tiene una puntuación de 100 puntos. Simplemente rebotará en los muros y nunca cambiará de dirección.");
-		tValcom.setBackground(c);
+//		tValcom.setBackground(c);
 		tValcom.setLineWrap(true);
 		tValcom.setWrapStyleWord(true);
 		tValcom.setEditable(false);
 		JTextArea tDahl=new JTextArea("– Dahl: Algo más rápido que los del tipo ‘Valcom’ pero este sí cambiará de vez en cuando de dirección. Valdrá 200 puntos.");
-		tDahl.setBackground(c);
+//		tDahl.setBackground(c);
 		tDahl.setLineWrap(true);
 		tDahl.setWrapStyleWord(true);
 		tDahl.setEditable(false);
 		JTextArea tMinvo=new JTextArea("– Minvo: Este se moverá como los ‘Valcom’s pero será bastante más rápido que todos los demás. Valdrá 400 puntos.");
-		tMinvo.setBackground(c);
+//		tMinvo.setBackground(c);
 		tMinvo.setLineWrap(true);
 		tMinvo.setWrapStyleWord(true);
 		tMinvo.setEditable(false);
 		JTextArea tPontan=new JTextArea("– Pontan: Se moverá a la misma velocidad que los ‘Valcom’ pero será capaz de traspasar los destructibles. Valdrá 1000 puntos.");
-		tPontan.setBackground(c);
+//		tPontan.setBackground(c);
 		tPontan.setLineWrap(true);
 		tPontan.setWrapStyleWord(true);
 		tPontan.setEditable(false);
 		JTextArea tDoria=new JTextArea("– Doria: Se moverá más rápido que los ‘Pontan’ y podrá traspasar los muros destructibles. Valdrá 2000 puntos.");
-		tDoria.setBackground(c);
+//		tDoria.setBackground(c);
 		tDoria.setLineWrap(true);
 		tDoria.setWrapStyleWord(true);
 		tDoria.setEditable(false);
