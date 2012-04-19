@@ -4,14 +4,16 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 import bomberman.managers.ManagerImagen;
 
 public class LeerMapa {
 
-	private static FileInputStream fichero;
+	private static InputStream fichero;
 	private static BufferedReader brF;
 	private static Character inputLine2;
 	private static Character arrayChar[][] = iniciar();
@@ -23,8 +25,8 @@ public class LeerMapa {
 
 	public static Character[][] LeerMapaJuego(String nom) {
 		try {
-			fichero = new FileInputStream(ManagerImagen.class.getClassLoader()
-					.getResource("bomberman/resources/" + nom).getPath());
+			fichero = (LeerMapa.class.getClassLoader().getResourceAsStream(
+					"bomberman/resources/" + nom));
 			brF = new BufferedReader(new InputStreamReader(fichero));
 			for (int i = 0; i < 20; i++) {
 				for (int j = 0; j < 20; j++) {
