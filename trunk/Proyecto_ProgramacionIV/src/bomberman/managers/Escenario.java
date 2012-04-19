@@ -21,6 +21,6 @@ public interface Escenario extends ImageObserver {
 	public void añadirSprite(Sprite spr);
 
 	public ArrayList<Sprite> getLista();
-	
+
 	public void setPuntuacion();
 }

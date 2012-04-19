@@ -60,13 +60,14 @@ public class CuentaAtras extends Observable {
 					minutos--;
 					segundos = 59;
 				} else {
-					//ACABAR
+					// ACABAR
 					minutos = 0;
 					segundos = 0;
 					parado = true;
 				}
 			}
-			reloj.setText("<html><b>Tiempo:</b> " + minutos + " : " + segundos + "</html>");
+			reloj.setText("<html><b>Tiempo:</b> " + minutos + " : " + segundos
+					+ "</html>");
 		}
 
 		// Notifica que se han producido cambios en el reloj.
@@ -116,7 +117,7 @@ public class CuentaAtras extends Observable {
 	public int getSeconds() {
 		return segundos;
 	}
-	
+
 	public JLabel getReloj() {
 		return reloj;
 	}
@@ -125,18 +126,18 @@ public class CuentaAtras extends Observable {
 		this.reloj = reloj;
 	}
 
-	public static void main(String []args){
-		try{
+	public static void main(String[] args) {
+		try {
 			JFrame frame = new JFrame();
-		CuentaAtras prueba = new CuentaAtras(1, 10);
-		frame.add(prueba.getReloj());
-		prueba.start();
-		
-		frame.setSize(200, 200);
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.setVisible(true);
-		
-		}catch(RelojException e){
+			CuentaAtras prueba = new CuentaAtras(1, 10);
+			frame.add(prueba.getReloj());
+			prueba.start();
+
+			frame.setSize(200, 200);
+			frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			frame.setVisible(true);
+
+		} catch (RelojException e) {
 			e.printStackTrace();
 		}
 	}

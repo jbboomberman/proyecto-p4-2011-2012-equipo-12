@@ -27,13 +27,13 @@ import bomberman.protagonistas.Valcom;
 import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaInicial;
 import bomberman.ventanas.VentanaJuego;
+import bomberman.ventanas.VentanaSeleccion;
 
 public class ControlPrincipal {
 
-	private static Bomberman bomber;
 	private BufferStrategy image;
 	private VentanaJuego ventJuego;
-	private Jugador jugador;
+	private static Jugador jugador;
 	private boolean pararJuego;
 	private final int PERIODO = 18;
 	long beforeTime, timeDiff, sleepTime;
@@ -43,8 +43,6 @@ public class ControlPrincipal {
 		pararJuego = false;
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
 		jugador = new Jugador("David", "O", "nose", "no");
-		bomber = new Bomberman(ventJuego, 33, 33, jugador);
-		ventJuego.setBomberman(bomber);
 		ventJuego.setJugador(jugador);
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
@@ -58,22 +56,20 @@ public class ControlPrincipal {
 	}
 
 	public void game() {
-		this.crearEscenario();
-		
 		while (!pararJuego) {
 			if (ventJuego.isVisible()) {
 				ventJuego.getPanel().createBufferStrategy(2);
 				image = ventJuego.getPanel().getBufferStrategy();
 				beforeTime = System.currentTimeMillis();
 				if (!ventJuego.getReloj().isTimeFinished()
-						&& !(bomber.isSeDestruir()))
+						&& !(ventJuego.getBomberman().isSeDestruir()) && !(ventJuego.getBomberman2().isSeDestruir()))
 					paintWorld();
 				else
 					terminarPartida(image.getDrawGraphics(), image);
 
 				timeDiff = System.currentTimeMillis() - beforeTime;
 				sleepTime = PERIODO - timeDiff; // time left in this loop
-//				System.out.println(sleepTime);
+				// System.out.println(sleepTime);
 				if (sleepTime <= 0) // update/render took longer than period
 					sleepTime = 5; // sleep a bit anyway
 				try {
@@ -100,11 +96,10 @@ public class ControlPrincipal {
 		ventJuego.getBomberman().mover();
 		ventJuego.getBomberman().paint((Graphics2D) g);
 
-//		if (usedTime > 0)
-//			System.out.println(String.valueOf(1000 / usedTime) + " fps");
-//		if (timeDiff > 0)
-//			System.out.println(String.valueOf(1000 / timeDiff) + " fps");
-
+		// if (usedTime > 0)
+		// System.out.println(String.valueOf(1000 / usedTime) + " fps");
+		// if (timeDiff > 0)
+		// System.out.println(String.valueOf(1000 / timeDiff) + " fps");
 
 		image.show();
 	}
@@ -126,9 +121,8 @@ public class ControlPrincipal {
 		ControlPrincipal prueba = new ControlPrincipal();
 	}
 
-	// ESTE MÉTODO ES DE PRUEBA
-	private void crearEscenario() {
-		Character array[][] = LeerMapa.LeerMapaJuego("mapa1.txt");
-		PrepararEscenario.ColocarMapa(ventJuego, array, jugador);
+	public static void crearEscenario(String nomEsce) {
+		Character array[][] = LeerMapa.LeerMapaJuego(nomEsce);
+		PrepararEscenario.ColocarMapa((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class), array, jugador);
 	}
 }

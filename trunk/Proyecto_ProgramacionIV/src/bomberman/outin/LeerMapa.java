@@ -25,8 +25,8 @@ public class LeerMapa {
 
 	public static Character[][] LeerMapaJuego(String nom) {
 		try {
-			fichero = (LeerMapa.class.getClassLoader().getResourceAsStream(
-					"bomberman/resources/" + nom));
+			fichero = (LeerMapa.class.getClassLoader()
+					.getResourceAsStream("bomberman/resources/" + nom));
 			brF = new BufferedReader(new InputStreamReader(fichero));
 			for (int i = 0; i < 20; i++) {
 				for (int j = 0; j < 20; j++) {

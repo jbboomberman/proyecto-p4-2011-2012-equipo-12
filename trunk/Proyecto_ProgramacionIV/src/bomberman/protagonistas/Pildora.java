@@ -10,15 +10,16 @@ public class Pildora extends SpriteEstatico {
 	private final int ALTURA_PILDORA = 33;
 	private Bomberman bomberman;
 
-	public Pildora(Escenario esce, float x, float y, int tip, Bomberman bomber, Jugador jug) {
+	public Pildora(Escenario esce, float x, float y, int tip, Bomberman bomber,
+			Jugador jug) {
 		super(esce, jug);
 		this.tipo = tip;
 		this.bomberman = bomber;
 		switch (tipo) {
 		// Multibomba
 		case 1:
-			spritesImag = new String[]{"pildora_bomba.png_1"};
-			spritesImagDest = new String[]{"nada.png_1"};
+			spritesImag = new String[] { "pildora_bomba.png_1" };
+			spritesImagDest = new String[] { "nada.png_1" };
 			break;
 		// Detonador
 		case 2:
@@ -44,8 +45,8 @@ public class Pildora extends SpriteEstatico {
 		this.altura = ALTURA_PILDORA;
 		this.anchura = ANCHURA_PILDORA;
 	}
-	
-	public void procDestruccion(){
+
+	public void procDestruccion() {
 		super.procDestruccion();
 		this.bomberman.setMaxBomba(this.bomberman.getMaxBomba() + 1);
 	}

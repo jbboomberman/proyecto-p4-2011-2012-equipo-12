@@ -24,29 +24,29 @@ public abstract class SpriteDinamico extends Sprite {
 
 	protected boolean seChoca(float x, float y) {
 		/*
-		 * Obtenemos un objeto de la clase Rectangulo donde está
-		 * ahora mismo el objeto Sprite.
+		 * Obtenemos un objeto de la clase Rectangulo donde está ahora mismo el
+		 * objeto Sprite.
 		 */
 		Rectangle tempRect = getRectangle(this, x, y);
 		Rectangle tempRect2;
-		
+
 		/*
-		 * Notese que hacemos el 'for' de la forma clásica
-		 * porque con el Iterator nos da error si mientras
-		 * estamos en el 'for' modificamos la lista.
+		 * Notese que hacemos el 'for' de la forma clásica porque con el
+		 * Iterator nos da error si mientras estamos en el 'for' modificamos la
+		 * lista.
 		 */
-//		for (Sprite sprTemp : escenario.getLista()) {
-		for(int i = 0; i < escenario.getLista().size(); i++){
+		// for (Sprite sprTemp : escenario.getLista()) {
+		for (int i = 0; i < escenario.getLista().size(); i++) {
 			Sprite sprTemp = escenario.getLista().get(i);
-			
+
 			/*
-			 * Si el otro objeto no es él mismo y no está en
-			 * proceso de destrucción.
+			 * Si el otro objeto no es él mismo y no está en proceso de
+			 * destrucción.
 			 */
 			if (sprTemp != this && !sprTemp.seDestruir) {
 				tempRect2 = getRectangle(sprTemp);
-				
-				//En caso de que los dos se choquen
+
+				// En caso de que los dos se choquen
 				if (tempRect.intersects(tempRect2)) {
 					return determinarChoque(sprTemp);
 				}
@@ -56,7 +56,8 @@ public abstract class SpriteDinamico extends Sprite {
 	}
 
 	public boolean estaInterseccion() {
-		if (((int)this.getPosX()) % CASILLA == 0 && ((int)this.getPosY()) % CASILLA == 0)
+		if (((int) this.getPosX()) % CASILLA == 0
+				&& ((int) this.getPosY()) % CASILLA == 0)
 			return true;
 		else
 			return false;
@@ -107,6 +108,6 @@ public abstract class SpriteDinamico extends Sprite {
 		}
 		return detectLados;
 	}
-	
+
 	public abstract boolean determinarChoque(Sprite spr);
 }

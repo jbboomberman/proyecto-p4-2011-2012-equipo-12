@@ -9,13 +9,14 @@ public class GestionBD {
 	public static Connection conexion;
 
 	/**
-	 * Método estático que nos sirve para conectarnos a la base de datos.
-	 *  No tenemos que crear ningún constructor porque es estático.
+	 * Método estático que nos sirve para conectarnos a la base de datos. No
+	 * tenemos que crear ningún constructor porque es estático.
 	 */
 	public static Connection conectar() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conexion = DriverManager.getConnection("jdbc:sqlite:database/bombermanSQL.s3db");
+			conexion = DriverManager
+					.getConnection("jdbc:sqlite:database/bombermanSQL.s3db");
 			System.out.println("conecta a la base de datos");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -35,13 +36,14 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 	}
-	
-//	public static ResulSet consulta(String sentencia){
-		//	return ResultSet;
-//	}
-		public static void insertar(String linea){
-		}
-public static void main (String[]args){
-	conectar();
-}
+
+	// public static ResulSet consulta(String sentencia){
+	// return ResultSet;
+	// }
+	public static void insertar(String linea) {
+	}
+
+	public static void main(String[] args) {
+		conectar();
+	}
 }
