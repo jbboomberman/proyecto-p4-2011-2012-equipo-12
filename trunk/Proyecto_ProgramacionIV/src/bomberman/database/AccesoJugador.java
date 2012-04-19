@@ -8,12 +8,12 @@ import bomberman.jugador.*;
 public class AccesoJugador {
 
 	public static void insertarJugador(Jugador jug) {
-		// Statement stat = conn.createStatement();
-		// stat.executeUpdate("INSERT INTO JUGADOR VALUES ('" + jug.getNombre()
-		// + "', '" + jug.getApellidos() + "', '" + jug.getNick() + "', '"+
-		// jug.getEmail() + "');");
-		// rs.close();
-		// stat.close();
+//		 Statement stat = conn.createStatement();
+//		 stat.executeUpdate("INSERT INTO JUGADOR VALUES ('" + jug.getNombre()
+//		 + "', '" + jug.getApellidos() + "', '" + jug.getNick() + "', '"+
+//		 jug.getEmail() + "');");
+//		 rs.close();
+//		 stat.close();
 	}
 
 	public static void getJugador(String nombre) {
