@@ -56,11 +56,11 @@ public class Bomba extends SpriteEstatico {
 
 	public void explotar() {
 		temporizador.cancel();
-//		try {
-//			ManagerSonido.playClip("explosion.wav", false);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// ManagerSonido.playClip("explosion.wav", false);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 		int[] maxLlama = calcularDistancias();
 		colocarLlamas(maxLlama);
 		bomberman.setNumBomba(bomberman.getNumBomba() - 1);

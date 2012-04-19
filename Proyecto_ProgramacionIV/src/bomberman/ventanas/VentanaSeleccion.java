@@ -12,6 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import bomberman.managers.ControlPrincipal;
+import bomberman.managers.PrepararEscenario;
+import bomberman.outin.LeerMapa;
+
 public class VentanaSeleccion extends JDialog implements ActionListener {
 
 	private JLabel texto;
@@ -84,9 +88,10 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			GestorVentana.ocultarVentana(VentanaSeleccion.class);
 			GestorVentana.hacerVisible(VentanaDatos.class, false);
 		} else if (botonPulsado == jbMultijugador) {
-
+			ControlPrincipal.crearEscenario("mapaMultijugador.txt");
+			GestorVentana.hacerVisible(VentanaJuego.class, true);
 		} else if (botonPulsado == jbMaster) {
-
+			
 		}
 	}
 

@@ -50,49 +50,48 @@ public class ManagerSonido {
 		}
 		bucle = loop;
 		nombre = nom;
-		new Thread(new Runnable() { 
-					public void run() {
-						url = ManagerSonido.class.getClassLoader().getResource(
-								"bomberman/resources/" + nombre);
-						AudioListener listener = new AudioListener();
-						AudioInputStream audioInputStream = null;
-						try {
-							audioInputStream = AudioSystem
-									.getAudioInputStream(url);
-						} catch (UnsupportedAudioFileException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						try {
-							clip = AudioSystem.getClip();
-							clip.addLineListener(listener);
-							clip.open(audioInputStream);
-							try {
-								// FloatControl gainControl = (FloatControl)
-								// clip.getControl(FloatControl.Type.MASTER_GAIN);
-								// gainControl.setValue(6.0f);
-								if (bucle)
-									clip.loop(Clip.LOOP_CONTINUOUSLY);
-								else
-									clip.start();
-								listener.waitUntilDone();
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							} finally {
-								clip.close();
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							try {
-								audioInputStream.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
+		new Thread(new Runnable() {
+			public void run() {
+				url = ManagerSonido.class.getClassLoader().getResource(
+						"bomberman/resources/" + nombre);
+				AudioListener listener = new AudioListener();
+				AudioInputStream audioInputStream = null;
+				try {
+					audioInputStream = AudioSystem.getAudioInputStream(url);
+				} catch (UnsupportedAudioFileException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					clip = AudioSystem.getClip();
+					clip.addLineListener(listener);
+					clip.open(audioInputStream);
+					try {
+						// FloatControl gainControl = (FloatControl)
+						// clip.getControl(FloatControl.Type.MASTER_GAIN);
+						// gainControl.setValue(6.0f);
+						if (bucle)
+							clip.loop(Clip.LOOP_CONTINUOUSLY);
+						else
+							clip.start();
+						listener.waitUntilDone();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} finally {
+						clip.close();
 					}
-				}).start();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						audioInputStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 	}
 
 	public static void pararLoop() {

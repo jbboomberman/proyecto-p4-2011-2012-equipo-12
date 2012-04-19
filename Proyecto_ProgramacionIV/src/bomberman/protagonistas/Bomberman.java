@@ -8,21 +8,21 @@ import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
 import bomberman.managers.ManagerSonido;
 
-public class Bomberman extends SpriteDinamico {
+public abstract class Bomberman extends SpriteDinamico {
 
-	private String[] spritesImagUp;
-	private String[] spritesImagDown;
-	private String[] spritesImagRight;
-	private String[] spritesImagLeft;
-	private String[] spritesDestUp;
-	private String[] spritesDestDown;
-	private String[] spritesDestRight;
-	private String[] spritesDestLeft;
-	private boolean parado;
-	private final int ANCH_ALT_MURO = 33;
-	private int numBomba;
-	private int maxBomba;
-	private int alcanceMax;
+	protected String[] spritesImagUp;
+	protected String[] spritesImagDown;
+	protected String[] spritesImagRight;
+	protected String[] spritesImagLeft;
+	protected String[] spritesDestUp;
+	protected String[] spritesDestDown;
+	protected String[] spritesDestRight;
+	protected String[] spritesDestLeft;
+	protected boolean parado;
+	protected final int ANCH_ALT_MURO = 33;
+	protected int numBomba;
+	protected int maxBomba;
+	protected int alcanceMax;
 
 	public Bomberman(Escenario esce, float x, float y, Jugador jug) {
 		super(esce, x, y, jug);
@@ -34,28 +34,6 @@ public class Bomberman extends SpriteDinamico {
 		numBomba = 0;
 		maxBomba = 1;
 		alcanceMax = 4;
-//		spritesImagUp = new String[] { "bomber.gif_7", "bomber.gif_8",
-//				"bomber.gif_9" };
-//		spritesImagDown = new String[] { "bomber.gif_10", "bomber.gif_11",
-//				"bomber.gif_12" };
-		spritesImagUp = new String[] { "bomber_up_down.gif_1", "bomber_up_down.gif_2", 
-				"bomber_up_down.gif_3"};
-		spritesImagDown = new String[] {"bomber_up_down.gif_4", "bomber_up_down.gif_5",
-				"bomber_up_down.gif_6"};
-		spritesImagRight = new String[] { "bomber_der.gif_1", "bomber_der.gif_2",
-				"bomber_der.gif_3" };
-		spritesImagLeft = new String[] { "bomber_izq.gif_1", "bomber_izq.gif_2",
-				"bomber_izq.gif_3" };
-		spritesDestUp = new String[]{"bomber_dest.gif_3"};
-		spritesDestDown = new String[]{"bomber_dest.gif_1"};
-		spritesDestRight = new String[]{"bomber_dest.gif_4"};
-		spritesDestLeft = new String[]{"bomber_dest.gif_2"};
-		setSpritesImag(spritesImagDown);
-		setSpriteDestruccion(spritesDestDown);
-		this.altura = ManagerImagen.getImagen(spritesImagUp[0])
-		.getWidth();
-		this.anchura = ManagerImagen.getImagen(spritesImagUp[0])
-		.getHeight();
 	}
 
 	public void mover() {
@@ -64,8 +42,9 @@ public class Bomberman extends SpriteDinamico {
 		} else {
 			super.mover();
 		}
-		
-		if(!seChoca(posX + (deltaX * tiempoTranscurrido), posY + (deltaY * tiempoTranscurrido))){
+
+		if (!seChoca(posX + (deltaX * tiempoTranscurrido), posY
+				+ (deltaY * tiempoTranscurrido))) {
 			posX += deltaX * tiempoTranscurrido;
 			posY += deltaY * tiempoTranscurrido;
 		}
@@ -95,57 +74,7 @@ public class Bomberman extends SpriteDinamico {
 		this.maxBomba = maxBomba;
 	}
 
-	public void teclaPulsada(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP
-				|| e.getKeyCode() == KeyEvent.VK_DOWN
-				|| e.getKeyCode() == KeyEvent.VK_LEFT
-				|| e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			parado = false;
-		}
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-			// Tenemos que restar posición en el eje Y.
-			deltaY = -Math.abs(velocidad);
-			setSpritesImag(spritesImagUp);
-			setSpriteDestruccion(spritesDestUp);
-			break;
-		case KeyEvent.VK_DOWN:
-			// Tenemos que aumentar posición en el eje Y.
-			deltaY = Math.abs(velocidad);
-			setSpritesImag(spritesImagDown);
-			setSpriteDestruccion(spritesDestDown);
-			break;
-		case KeyEvent.VK_LEFT:
-			// Tenemos que restar posición en el eje X.
-			deltaX = -Math.abs(velocidad);
-			setSpritesImag(spritesImagLeft);
-			setSpriteDestruccion(spritesDestLeft);
-			break;
-		case KeyEvent.VK_RIGHT:
-			// Tenemos que aumentar posición en el eje X.
-			deltaX = Math.abs(velocidad);
-			setSpritesImag(spritesImagRight);
-			setSpriteDestruccion(spritesDestRight);
-			break;
-		case KeyEvent.VK_SPACE:
-			if(this.getNumBomba() < this.getMaxBomba()){
-				int tempX = ((((int) (this.getPosX() + (this.getAnchura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
-				int tempY = ((((int) (this.getPosY() + (this.getAltura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
-				if(tempY == 0)
-					tempY = 33;
-//				try {
-//					ManagerSonido.playClip("dejar.wav", false);
-//				} catch (Exception ex) {
-//					ex.printStackTrace();
-//				}
-				escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this, jugador, alcanceMax));
-				this.setNumBomba(this.getNumBomba() + 1);
-			}
-			break;
-		default:
-			break;
-		}
-	}
+	public abstract void teclaPulsada(KeyEvent e);
 
 	/**
 	 * Este método recibe el KeyEvent que ha recogido la ventana 'VentanaJuego'
@@ -154,46 +83,17 @@ public class Bomberman extends SpriteDinamico {
 	 * @param e
 	 *            - KeyEvent
 	 */
-	public void teclaSoltada(KeyEvent e) {
+	public abstract void teclaSoltada(KeyEvent e);
 
-		if (e.getKeyCode() == KeyEvent.VK_UP
-				|| e.getKeyCode() == KeyEvent.VK_DOWN
-				|| e.getKeyCode() == KeyEvent.VK_LEFT
-				|| e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			parado = true;
-		}
-		switch (e.getKeyCode()) {
-		/*
-		 * Como es lógico en caso de que se suelte una tecla se deja de sumar o
-		 * restar posiciones.
-		 */
-		case KeyEvent.VK_UP:
-			deltaY = 0;
-			break;
-		case KeyEvent.VK_DOWN:
-			deltaY = 0;
-			break;
-		case KeyEvent.VK_LEFT:
-			deltaX = 0;
-			break;
-		case KeyEvent.VK_RIGHT:
-			deltaX = 0;
-			break;
-		default:
-			break;
-		}
-	}
-	
-	public boolean determinarChoque(Sprite spr){
-		if(spr instanceof Pildora)
+	public boolean determinarChoque(Sprite spr) {
+		if (spr instanceof Pildora)
 			spr.procDestruccion();
-		else if(spr instanceof Enemigo)
+		else if (spr instanceof Enemigo)
 			this.procDestruccion();
-		else if(spr instanceof Bomba){
-				if(((Bomba) spr).isPisada())
-					return false;
+		else if (spr instanceof Bomba) {
+			if (((Bomba) spr).isPisada())
+				return false;
 		}
 		return true;
 	}
-
 }

@@ -28,49 +28,50 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	private static final long serialVersionUID = -7461719037402108362L;
 	private Canvas canPintar;
-	private BufferedImage biImagen;
-	private Bomberman bomber;
+	private Bomberman bomber1;
+	private Bomberman bomber2;
 	private static ArrayList<Sprite> arLista;
 	private JPanel panelMarcador;
 	private Jugador jugador;
 	private CuentaAtras tiempo;
 	private JLabel jlText;
 	private boolean parado;
+	private boolean finalizar;
 
 	/**
 	 * Constructor principal de la ventana.
 	 */
 	public VentanaJuego() {
 
+		finalizar = false;
 		arLista = new ArrayList<Sprite>();
 		canPintar = new Canvas();
 		canPintar.setSize(660, 660);
 		panelMarcador = new JPanel();
-		try{
-		tiempo = new CuentaAtras(5, 0);
-		parado = true;
-		}catch(RelojException e){
+		try {
+			tiempo = new CuentaAtras(5, 0);
+			parado = true;
+		} catch (RelojException e) {
 			e.printStackTrace();
 		}
 		jlText = new JLabel();
 		jlText.setFont(new Font("SansSerif", 0, 16));
-		
-		//Layout
+
+		// Layout
 		panelMarcador.setLayout(new BorderLayout());
-		
-		//Alineamientos
-		
+
+		// Alineamientos
+
 		panelMarcador.setSize(660, 50);
 		panelMarcador.add(jlText, BorderLayout.NORTH);
 		panelMarcador.add(tiempo.getReloj(), BorderLayout.SOUTH);
 		tiempo.getReloj().setFont(new Font("SansSerif", Font.PLAIN, 16));
-		//Layout
+		// Layout
 		getContentPane().setLayout(new BorderLayout());
-		
+
 		jlText.setHorizontalAlignment(SwingConstants.CENTER);
 		tiempo.getReloj().setHorizontalAlignment(SwingConstants.CENTER);
-		
-		
+
 		getContentPane().add(canPintar, BorderLayout.SOUTH);
 		getContentPane().add(panelMarcador, BorderLayout.NORTH);
 
@@ -99,7 +100,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 *            - KeyEvent
 	 */
 	public void keyPressed(KeyEvent e) {
-		bomber.teclaPulsada(e);
+		bomber1.teclaPulsada(e);
+		bomber2.teclaPulsada(e);
 	}
 
 	/**
@@ -110,7 +112,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 *            - KeyEvent
 	 */
 	public void keyReleased(KeyEvent e) {
-		bomber.teclaSoltada(e);
+		bomber1.teclaSoltada(e);
+		bomber2.teclaSoltada(e);
 	}
 
 	/**
@@ -125,13 +128,22 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	public Bomberman getBomberman() {
-		return bomber;
+		return bomber1;
+	}
+	
+	public Bomberman getBomberman2(){
+		return bomber2;
 	}
 
 	// PRUEBA, HAY QUE MEJORAR
 	public void setBomberman(Bomberman b) {
-		this.bomber = b;
-		añadirSprite(bomber);
+		this.bomber1 = b;
+		añadirSprite(bomber1);
+	}
+	
+	public void setBomberman2(Bomberman b){
+		this.bomber2 = b;
+		añadirSprite(bomber2);
 	}
 
 	public Jugador getJugador() {
@@ -148,41 +160,51 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	public void añadirSprite(Sprite spr) {
-		if(spr instanceof Llama){
+		if (spr instanceof Llama) {
 			arLista.add(0, spr);
-		}else if(spr instanceof Bomberman){
+		} else if (spr instanceof Bomberman) {
 			arLista.add(arLista.size(), spr);
+		} else{
+			if(arLista.size() != 0 && bomber2 != null)
+				arLista.add(arLista.size() - 2, spr);
+			else if(arLista.size() != 0 && bomber2 == null)
+				arLista.add(arLista.size() - 1, spr);
+			else
+				arLista.add(spr);
 		}
-		else
-			arLista.add(arLista.size()-1, spr);
+		if(spr instanceof Bomba){
+		for(Sprite sprt: arLista){
+			System.out.println(sprt);
+		}
+		}
 	}
 
 	public ArrayList<Sprite> getLista() {
 		return arLista;
 	}
-	
-	public void setPuntuacion(){
+
+	public void setPuntuacion() {
 		jlText.setText("<html><b>Vidas</b>: " + jugador.getVidas()
 				+ "&emsp;<b>Puntuación nivel:</b> " + jugador.getPuntuNivel()
 				+ "&emsp;<b>Puntuación total:</b> " + jugador.getPuntuacion()
 				+ "&emsp;<b>Enemigos restantes:</b> </html>");
 	}
-	
-	public void empezarReloj(){
-		if(parado)
+
+	public void empezarReloj() {
+		if (parado)
 			tiempo.start();
 	}
-	
-	public void setVisible(boolean visible){
+
+	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if(visible)
+		if (visible)
 			this.empezarReloj();
 	}
-	
-	public CuentaAtras getReloj(){
+
+	public CuentaAtras getReloj() {
 		return tiempo;
 	}
-	
+
 	public static void main(String[] args) {
 		VentanaJuego juego = new VentanaJuego();
 		juego.setVisible(true);

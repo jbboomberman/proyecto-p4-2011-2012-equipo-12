@@ -6,8 +6,8 @@ import javax.swing.JTable;
 public class VentanaCargar {
 
 	private JTable jtPuntu;
-	
-	public VentanaCargar(){
+
+	public VentanaCargar() {
 		jtPuntu = new JTable(new TableModelPuntuaciones(5, 5));
 	}
 }

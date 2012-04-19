@@ -3,29 +3,32 @@ package bomberman.protagonistas;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 
-public class Enemigo extends SpriteDinamico{
+public class Enemigo extends SpriteDinamico {
 
 	protected int puntos;
-	
-	public Enemigo(Escenario esce, float x, float y, Jugador jug){
+
+	public Enemigo(Escenario esce, float x, float y, Jugador jug) {
 		super(esce, x, y, jug);
 	}
-	
-	public void procDestruccion(){
-		if(!seDestruir){
-		this.serEliminado();
-		super.procDestruccion();
+
+	public void procDestruccion() {
+		if (!seDestruir) {
+			this.serEliminado();
+			super.procDestruccion();
 		}
 	}
-	public void serEliminado(){
+
+	public void serEliminado() {
 		jugador.setPuntuacion(jugador.getPuntuacion() + puntos);
 		jugador.setPuntuNivel(jugador.getPuntuNivel() + puntos);
 		escenario.setPuntuacion();
 	}
-	
-	public boolean determinarChoque(Sprite spr){
-		if(spr instanceof Llama)
+
+	public boolean determinarChoque(Sprite spr) {
+		if (spr instanceof Llama)
 			this.procDestruccion();
+		else if(spr instanceof Bomberman)
+			spr.setSeDestruir(true);
 		return true;
 	}
 }

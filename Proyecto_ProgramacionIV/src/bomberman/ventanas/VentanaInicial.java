@@ -142,14 +142,14 @@ public class VentanaInicial extends JFrame implements ActionListener {
 		Object botonPulsado = e.getSource();
 
 		if (botonPulsado == jbBotonJugar) {
-//			try {
-//				ManagerSonido.pararLoop();
-//				ManagerSonido.playClip("click.wav", false);
-//			} catch (Exception ex) {
-//				ex.printStackTrace();
-//			}
-			// GestorVentana.hacerVisible(VentanaSeleccion.class, false);
-			GestorVentana.hacerVisible(VentanaJuego.class, false);
+			// try {
+			// ManagerSonido.pararLoop();
+			// ManagerSonido.playClip("click.wav", false);
+			// } catch (Exception ex) {
+			// ex.printStackTrace();
+			// }
+			GestorVentana.hacerVisible(VentanaSeleccion.class, false);
+//			GestorVentana.hacerVisible(VentanaJuego.class, false);
 		} else if (botonPulsado == jbBotonCargar) {
 
 		} else if (botonPulsado == jbBotonPuntu) {
