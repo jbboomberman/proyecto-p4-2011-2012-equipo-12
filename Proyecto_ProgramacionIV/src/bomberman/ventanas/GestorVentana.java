@@ -40,6 +40,8 @@ public class GestorVentana {
 		vector.add(new VentanaVidaMenos(jug));
 		vector.add(new VentanaDirecto(jug));
 		vector.add(new VentanaCargar());
+		vector.add(new VentanaPuntuaciones());
+		vector.add(new VentanaControles());
 		// Se devuelve el vector con las ventanas
 		return vector;
 	}
