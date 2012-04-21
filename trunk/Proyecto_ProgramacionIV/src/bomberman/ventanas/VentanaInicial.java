@@ -151,13 +151,12 @@ public class VentanaInicial extends JFrame implements ActionListener {
 			GestorVentana.hacerVisible(VentanaSeleccion.class, false);
 //			GestorVentana.hacerVisible(VentanaJuego.class, false);
 		} else if (botonPulsado == jbBotonCargar) {
-
+			GestorVentana.hacerVisible(VentanaCargar.class, false);
 		} else if (botonPulsado == jbBotonPuntu) {
-
+			GestorVentana.hacerVisible(VentanaPuntuaciones.class, false);
 		} else if (botonPulsado == jbBotonConfi) {
-
+			GestorVentana.hacerVisible(VentanaControles.class, false);
 		} else if (botonPulsado == jbBotonInstruc) {
-
 			GestorVentana.hacerVisible(VentanaInstrucciones.class, false);
 		} else if (botonPulsado == jbBotonInfo) {
 			GestorVentana.hacerVisible(VentanaInformacion.class, false);
