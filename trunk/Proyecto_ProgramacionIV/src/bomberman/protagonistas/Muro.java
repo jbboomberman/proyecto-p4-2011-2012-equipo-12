@@ -9,7 +9,7 @@ public class Muro extends SpriteEstatico {
 	private boolean destructible;
 
 	public Muro(Escenario esce, float x, float y, boolean destruc, Jugador jug) {
-		super(esce, jug);
+		super(esce, jug, x, y);
 		this.posX = x;
 		this.posY = y;
 		this.destructible = destruc;

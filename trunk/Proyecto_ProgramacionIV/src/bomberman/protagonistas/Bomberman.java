@@ -7,6 +7,9 @@ import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
 import bomberman.managers.ManagerSonido;
+import bomberman.ventanas.GestorVentana;
+import bomberman.ventanas.VentanaJuego;
+import bomberman.ventanas.VentanaVidaMenos;
 
 public abstract class Bomberman extends SpriteDinamico {
 
@@ -93,7 +96,14 @@ public abstract class Bomberman extends SpriteDinamico {
 		else if (spr instanceof Bomba) {
 			if (((Bomba) spr).isPisada())
 				return false;
+		}else if(spr instanceof Puerta){
+			escenario.acabarPartida();
 		}
 		return true;
+	}
+	
+	public void procDestruccion(){
+		seDestruir = true;
+		GestorVentana.hacerVisible(VentanaVidaMenos.class, false);
 	}
 }

@@ -8,18 +8,22 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import bomberman.jugador.Jugador;
+
 public class EnvioEmail {
 
 	private Properties props;
 	private Session session;
 	private MimeMessage message;
 	private Transport trans;
+	private Jugador jugador;
 
-	public EnvioEmail() {
+	public EnvioEmail(Jugador jug) {
 
-		props = new Properties();
-		session = Session.getDefaultInstance(props);
-		message = new MimeMessage(session);
+		this.props = new Properties();
+		this.session = Session.getDefaultInstance(props);
+		this.message = new MimeMessage(session);
+		this.jugador = jug;
 
 		try {
 			trans = session.getTransport("smtp");
@@ -37,23 +41,25 @@ public class EnvioEmail {
 		props.setProperty("mail.smtp.port", "587");
 
 		// Nombre del usuario
-		props.setProperty("mail.smtp.user", "ejemplo@gmail.com");
+		props.setProperty("mail.smtp.user", jugador.getNick());
 
 		// Si requiere o no usuario y password para conectarse.
 		props.setProperty("mail.smtp.auth", "true");
 
 		session.setDebug(true);
+	}
+
+	public void enviarMensaje() {
+
 		try {
 			// Quien envia el correo
-			message.setFrom(new InternetAddress("ejemplo@gmail.com"));
+			message.setFrom(new InternetAddress("equipo12Bomberman@gmail.com"));
 			// A quien va dirigido
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-					"destinatario@dominio.com"));
+					jugador.getEmail()));
 
-			message.setSubject("Hola");
-			message.setText("Mensajito con Java Mail<br>"
-					+ "<b>de</b> los <i>buenos</i>." + "poque si",
-					"ISO-8859-1", "html");
+			message.setSubject("Puntuación Bomberman");
+			message.setText(EstructuraCorreo.getEstructura(jugador.getNombre()));
 			trans.connect("ejemplo@gmail.com", "la password");
 			trans.sendMessage(message, message.getAllRecipients());
 			trans.close();

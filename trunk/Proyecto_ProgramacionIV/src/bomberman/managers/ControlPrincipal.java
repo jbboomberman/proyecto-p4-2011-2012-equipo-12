@@ -12,6 +12,7 @@ import java.util.ConcurrentModificationException;
 
 import javax.swing.*;
 
+import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.outin.LeerMapa;
 import bomberman.protagonistas.Bomba;
@@ -28,6 +29,8 @@ import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaInicial;
 import bomberman.ventanas.VentanaJuego;
 import bomberman.ventanas.VentanaSeleccion;
+import bomberman.ventanas.VentanaSuperado;
+import bomberman.ventanas.VentanaVidaMenos;
 
 public class ControlPrincipal {
 
@@ -42,7 +45,7 @@ public class ControlPrincipal {
 
 		pararJuego = false;
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
-		jugador = new Jugador("David", "O", "nose", "no");
+		jugador = new Jugador("David", "O", "nose", "no", 3, 0, 1, ModoJuego.Historia);
 		ventJuego.setJugador(jugador);
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
@@ -55,6 +58,7 @@ public class ControlPrincipal {
 		this.game();
 	}
 
+	//ERROR VALCOM CHOCAR NO SE POR QUÉ
 	public void game() {
 		while (!pararJuego) {
 			if (ventJuego.isVisible()) {
@@ -62,11 +66,22 @@ public class ControlPrincipal {
 				image = ventJuego.getPanel().getBufferStrategy();
 				beforeTime = System.currentTimeMillis();
 				if (!ventJuego.getReloj().isTimeFinished()
-						&& !(ventJuego.getBomberman().isSeDestruir()) && !(ventJuego.getBomberman2().isSeDestruir()))
+						&& !(ventJuego.getAcabarPartida()))
 					paintWorld();
-				else
-					terminarPartida(image.getDrawGraphics(), image);
-
+				else if(ventJuego.getSuperadoNivel()){
+					GestorVentana.ocultarVentana(VentanaJuego.class);
+					GestorVentana.hacerVisible(VentanaSuperado.class, false);
+				}
+				else{
+					jugador.setVidas(jugador.getVidas() - 1);
+					if(jugador.getVidas() > 0){
+						GestorVentana.ocultarVentana(VentanaJuego.class);
+						GestorVentana.hacerVisible(VentanaVidaMenos.class, false);
+					}
+					else
+						terminarPartida(image.getDrawGraphics(), image);
+				}
+					
 				timeDiff = System.currentTimeMillis() - beforeTime;
 				sleepTime = PERIODO - timeDiff; // time left in this loop
 				// System.out.println(sleepTime);
@@ -123,6 +138,8 @@ public class ControlPrincipal {
 
 	public static void crearEscenario(String nomEsce) {
 		Character array[][] = LeerMapa.LeerMapaJuego(nomEsce);
-		PrepararEscenario.ColocarMapa((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class), array, jugador);
+		PrepararEscenario.ColocarMapa(
+				(VentanaJuego) GestorVentana.getVentana(VentanaJuego.class),
+				array, jugador);
 	}
 }

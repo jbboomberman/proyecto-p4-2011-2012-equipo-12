@@ -9,6 +9,8 @@ import bomberman.protagonistas.BombermanNegro;
 import bomberman.protagonistas.Dahl;
 import bomberman.protagonistas.Minvo;
 import bomberman.protagonistas.Muro;
+import bomberman.protagonistas.Pildora;
+import bomberman.protagonistas.Puerta;
 import bomberman.protagonistas.Valcom;
 import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaJuego;
@@ -54,11 +56,29 @@ public class PrepararEscenario {
 				case 'D':
 
 					break;
+				// BombermanBlanco
 				case 'B':
-					((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).setBomberman(new BombermanBlanco(esce, (float)i * 33, (float)j * 33, jug));
+					((VentanaJuego) GestorVentana
+							.getVentana(VentanaJuego.class))
+							.setBomberman(new BombermanBlanco(esce,
+									(float) i * 33, (float) j * 33, jug));
 					break;
+				// BombermanNegro
 				case 'N':
-					((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).setBomberman2(new BombermanNegro(esce, (float)i * 33, (float)j * 33, jug));
+					((VentanaJuego) GestorVentana
+							.getVentana(VentanaJuego.class))
+							.setBomberman2(new BombermanNegro(esce,
+									(float) i * 33, (float) j * 33, jug));
+					break;
+				// Puerta
+				case 'P':
+					esce.añadirSprite(new Puerta(esce, jug,
+							(float) (i - 1) * 33, (float) j * 33));
+					break;
+				// Pildora bomba extra
+				case 'E':
+					esce.añadirSprite(new Pildora(esce, (float) (i - 1) * 33,
+							(float) j  * 33, 1, esce.getBomberman(), jug));
 					break;
 				default:
 					break;

@@ -1,5 +1,7 @@
 package bomberman.database;
 
+import java.util.Date;
+
 public class PuntuGeneral {
 	/*
 	 * Esta clase representa la fila de la tabla PUNTUACION_GENERAL y por ese
@@ -14,10 +16,10 @@ public class PuntuGeneral {
 	private int cod_jug;
 	private boolean guardado;
 	private int puntu;
-	private String fecha_ulti_nivel;
+	private Date fecha_ulti_nivel;
 
 	public PuntuGeneral(int cod_punt, int cod_jug, boolean guardado, int puntu,
-			String fecha_ulti_nivel) {
+			Date fecha_ulti_nivel) {
 		super();
 		this.cod_punt = cod_punt;
 		this.cod_jug = cod_jug;
@@ -58,11 +60,11 @@ public class PuntuGeneral {
 		this.puntu = puntu;
 	}
 
-	public String getFecha_ulti_nivel() {
+	public Date getFecha_ulti_nivel() {
 		return fecha_ulti_nivel;
 	}
 
-	public void setFecha_ulti_nivel(String fecha_ulti_nivel) {
+	public void setFecha_ulti_nivel(Date fecha_ulti_nivel) {
 		this.fecha_ulti_nivel = fecha_ulti_nivel;
 	}
 
