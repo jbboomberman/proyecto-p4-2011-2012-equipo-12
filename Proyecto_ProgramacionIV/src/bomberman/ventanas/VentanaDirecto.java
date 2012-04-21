@@ -6,6 +6,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -18,33 +20,50 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class VentanaDirecto extends JDialog {
+import bomberman.enumeraciones.ModoJuego;
+import bomberman.jugador.Jugador;
+import bomberman.managers.ControlPrincipal;
+
+public class VentanaDirecto extends JDialog implements ActionListener {
 
 	private JComboBox jcbNivel;
 	private JPasswordField jtPass;
 	private JLabel jlTexto;
 	private JButton btAceptar;
+	private JButton btCancelar;
 	private JPanel jpMedio;
+	private Jugador jugador;
+	private JPanel jpInferior;
 
-	public VentanaDirecto() {
+	public VentanaDirecto(Jugador jug) {
 		String[] arrayCombo = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
 				"10" };
 		jcbNivel = new JComboBox(arrayCombo);
 		jtPass = new JPasswordField(12);
 		jlTexto = new JLabel("Seleccione el nivel y escriba la contraseña:");
 		btAceptar = new JButton("Aceptar");
+		btCancelar = new JButton("Cancelar");
 		jpMedio = new JPanel();
+		jpInferior = new JPanel();
+		this.jugador = jug;
 
 		// Layout
 		getContentPane().setLayout(new BorderLayout());
 		jpMedio.setLayout(new BoxLayout(jpMedio, BoxLayout.Y_AXIS));
+		jpInferior.setLayout(new FlowLayout());
 
 		// Añadimos componentes
+		jpInferior.add(btAceptar);
+		jpInferior.add(btCancelar);
 		posicionaComp(jlTexto, "North");
-		posicionaComp(btAceptar, "South");
+		posicionaComp(jpInferior, "South");
 		jpMedio.add(posicionaLinea("Nivel: ", jcbNivel));
 		jpMedio.add(posicionaLinea("Contraseña: ", jtPass));
 		getContentPane().add(jpMedio);
+		
+		//Añadir escuchador
+		btAceptar.addActionListener(this);
+		btCancelar.addActionListener(this);
 
 		// btAceptar.setBorder( BorderFactory.createEmptyBorder( 3, 3, 3, 3 ) );
 
@@ -102,8 +121,40 @@ public class VentanaDirecto extends JDialog {
 		return tempPanel;
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		/*
+		 * Para saber dónde se originó el evento creamos un Object con la
+		 * dirección del generador del evento.
+		 */
+		Object botonPulsado = e.getSource();
+
+		if (botonPulsado == btAceptar) {
+			new Thread(
+            		new Runnable() {
+            			public void run() {
+            				jugador.setModo(ModoJuego.Master);
+            				ControlPrincipal.crearEscenario("mapa"
+            						+ Integer.parseInt((String) jcbNivel.getSelectedItem())
+            						+ ".txt");
+            				//Falta la contraseña
+            				GestorVentana.hacerVisible(VentanaJuego.class, true);
+            			}
+            		}
+            ).start();
+		}else if(botonPulsado == btCancelar){
+			new Thread(
+            		new Runnable() {
+            			public void run() {
+            				GestorVentana.ocultarVentana(VentanaDirecto.class);
+            				GestorVentana.hacerVisible(VentanaInicial.class, true);
+            			}
+            		}
+            ).start();
+		}
+	}
+
 	public static void main(String[] args) {
-		VentanaDirecto prueba = new VentanaDirecto();
+		VentanaDirecto prueba = new VentanaDirecto(null);
 		prueba.setVisible(true);
 	}
 }

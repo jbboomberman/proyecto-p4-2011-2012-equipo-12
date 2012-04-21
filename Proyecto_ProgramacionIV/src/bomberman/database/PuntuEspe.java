@@ -1,54 +1,73 @@
 package bomberman.database;
 
+import java.util.Date;
+
 public class PuntuEspe {
 	/*
 	 * Esta clase representa la fila de la tabla PUNTU_NIV_ESPECI y por eso
 	 * tiene estos atributos: COD_PUNTU_ESPE, COD_PUNTU, PUNTU_ESPE y FECHA
 	 */
-	private int COD_PUNTU_ESPE;
-	private int COD_PUNTU;
-	private int PUNTU_ESPE;
-	private String FECHA;
+	private int cod_puntu_espe;
+	private int cod_puntu;
+	private int puntu_espe;
+	private Date fecha;
+	private int nivel;
 
-	public PuntuEspe(int cOD_PUNTU_ESPE, int cOD_PUNTU, int pUNTU_ESPE,
-			String fECHA) {
+	public PuntuEspe(int codPuntuEspe, int codPuntu, int puntuEspe,
+			Date date, int niv) {
 		super();
-		COD_PUNTU_ESPE = cOD_PUNTU_ESPE;
-		COD_PUNTU = cOD_PUNTU;
-		PUNTU_ESPE = pUNTU_ESPE;
-		FECHA = fECHA;
+		this.cod_puntu_espe = codPuntuEspe;
+		this.cod_puntu = codPuntu;
+		this.puntu_espe = puntuEspe;
+		this.fecha = date;
+		this.nivel = niv;
 	}
 
-	public int getCOD_PUNTU_ESPE() {
-		return COD_PUNTU_ESPE;
+	public int getCodPuntuEspe() {
+		return cod_puntu_espe;
 	}
 
-	public void setCOD_PUNTU_ESPE(int cOD_PUNTU_ESPE) {
-		COD_PUNTU_ESPE = cOD_PUNTU_ESPE;
+	public void setCodPuntuEspe(int codPuntuEs) {
+		this.cod_puntu_espe = codPuntuEs;
 	}
 
-	public int getCOD_PUNTU() {
-		return COD_PUNTU;
+	public int getCod_puntu_espe() {
+		return cod_puntu_espe;
 	}
 
-	public void setCOD_PUNTU(int cOD_PUNTU) {
-		COD_PUNTU = cOD_PUNTU;
+	public void setCod_puntu_espe(int cod_puntu_espe) {
+		this.cod_puntu_espe = cod_puntu_espe;
 	}
 
-	public int getPUNTU_ESPE() {
-		return PUNTU_ESPE;
+	public int getCod_puntu() {
+		return cod_puntu;
 	}
 
-	public void setPUNTU_ESPE(int pUNTU_ESPE) {
-		PUNTU_ESPE = pUNTU_ESPE;
+	public void setCod_puntu(int cod_puntu) {
+		this.cod_puntu = cod_puntu;
 	}
 
-	public String getFECHA() {
-		return FECHA;
+	public int getPuntu_espe() {
+		return puntu_espe;
 	}
 
-	public void setFECHA(String fECHA) {
-		FECHA = fECHA;
+	public void setPuntu_espe(int puntu_espe) {
+		this.puntu_espe = puntu_espe;
 	}
 
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public int getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(int nivel) {
+		this.nivel = nivel;
+	}
 }

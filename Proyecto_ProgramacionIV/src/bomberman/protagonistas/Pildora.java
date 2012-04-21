@@ -12,7 +12,7 @@ public class Pildora extends SpriteEstatico {
 
 	public Pildora(Escenario esce, float x, float y, int tip, Bomberman bomber,
 			Jugador jug) {
-		super(esce, jug);
+		super(esce, jug, x, y);
 		this.tipo = tip;
 		this.bomberman = bomber;
 		switch (tipo) {

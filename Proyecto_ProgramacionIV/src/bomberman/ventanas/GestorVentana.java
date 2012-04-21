@@ -2,6 +2,8 @@ package bomberman.ventanas;
 
 import java.util.*;
 import java.awt.*;
+
+import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 
 /**
@@ -26,15 +28,18 @@ public class GestorVentana {
 	 */
 	public static Vector<Window> iniciar() {
 		// Inicializamos el vector
-		Jugador jug = new Jugador("david", "h", "h", "h");
+		Jugador jug = new Jugador("david", "h", "h", "h", 3, 0, 1, ModoJuego.Historia);
 		Vector<Window> vector = new Vector<Window>();
 		// Se incializan todas las ventanas.
 		vector.add(new VentanaInicial());
 		vector.add(new VentanaDatos(jug));
-		vector.add(new VentanaSeleccion());
+		vector.add(new VentanaSeleccion(jug));
 		vector.add(new VentanaJuego());
 		vector.add(new VentanaInstrucciones());
 		vector.add(new VentanaInformacion());
+		vector.add(new VentanaVidaMenos(jug));
+		vector.add(new VentanaDirecto(jug));
+		vector.add(new VentanaCargar());
 		// Se devuelve el vector con las ventanas
 		return vector;
 	}

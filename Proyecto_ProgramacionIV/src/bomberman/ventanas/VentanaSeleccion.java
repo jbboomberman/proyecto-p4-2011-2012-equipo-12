@@ -11,7 +11,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
+import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.PrepararEscenario;
 import bomberman.outin.LeerMapa;
@@ -24,10 +26,12 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 	private JButton jbMaster;
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
+	private Jugador jugador;
 
-	public VentanaSeleccion() {
+	public VentanaSeleccion(Jugador jug) {
 
 		// Inicializamos las variables.
+		this.jugador = jug;
 		texto = new JLabel("Seleccione el modo de juego: ");
 		jbHistoria = new JButton("Historia");
 		jbMultijugador = new JButton("Multijugador");
@@ -85,18 +89,43 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 
 		// Si el boton pulsado erá botonAceptar
 		if (botonPulsado == jbHistoria) {
-			GestorVentana.ocultarVentana(VentanaSeleccion.class);
-			GestorVentana.hacerVisible(VentanaDatos.class, false);
+			 new Thread(
+	            		new Runnable() {
+	            			public void run() {
+	            				ControlPrincipal.crearEscenario("mapa" + jugador.getNivel()
+	        							+ ".txt");
+	        					GestorVentana.ocultarVentana(VentanaSeleccion.class);
+	        					GestorVentana.hacerVisible(VentanaJuego.class, true);
+	        					// GestorVentana.hacerVisible(VentanaDatos.class, false);
+	            			}
+	            		}
+	            ).start();
+
 		} else if (botonPulsado == jbMultijugador) {
-			ControlPrincipal.crearEscenario("mapaMultijugador.txt");
-			GestorVentana.hacerVisible(VentanaJuego.class, true);
+			new Thread(
+            		new Runnable() {
+            			public void run() {
+            				ControlPrincipal.crearEscenario("mapaMultijugador.txt");
+        					GestorVentana.ocultarVentana(VentanaSeleccion.class);
+        					GestorVentana.hacerVisible(VentanaJuego.class, true);
+            			}
+            		}
+            ).start();
+
 		} else if (botonPulsado == jbMaster) {
-			
+			new Thread(
+            		new Runnable() {
+            			public void run() {
+            				GestorVentana.ocultarVentana(VentanaSeleccion.class);
+            				GestorVentana.hacerVisible(VentanaDirecto.class, false);
+            			}
+            		}
+            ).start();
 		}
 	}
 
 	public static void main(String[] args) {
-		VentanaSeleccion prueba = new VentanaSeleccion();
+		VentanaSeleccion prueba = new VentanaSeleccion(null);
 		prueba.setVisible(true);
 	}
 }

@@ -37,6 +37,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	private JLabel jlText;
 	private boolean parado;
 	private boolean finalizar;
+	private boolean superadoNivel;
 
 	/**
 	 * Constructor principal de la ventana.
@@ -44,6 +45,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	public VentanaJuego() {
 
 		finalizar = false;
+		superadoNivel = false;
 		arLista = new ArrayList<Sprite>();
 		canPintar = new Canvas();
 		canPintar.setSize(660, 660);
@@ -100,8 +102,10 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 *            - KeyEvent
 	 */
 	public void keyPressed(KeyEvent e) {
-		bomber1.teclaPulsada(e);
-		bomber2.teclaPulsada(e);
+		if(bomber1 != null)
+			bomber1.teclaPulsada(e);
+		if(bomber2 != null)
+			bomber2.teclaPulsada(e);
 	}
 
 	/**
@@ -112,8 +116,10 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 *            - KeyEvent
 	 */
 	public void keyReleased(KeyEvent e) {
-		bomber1.teclaSoltada(e);
-		bomber2.teclaSoltada(e);
+		if(bomber1 != null)
+			bomber1.teclaSoltada(e);
+		if(bomber2 != null)
+			bomber2.teclaSoltada(e);
 	}
 
 	/**
@@ -160,7 +166,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	public void añadirSprite(Sprite spr) {
-		if (spr instanceof Llama) {
+		if (spr instanceof Llama || spr instanceof Pildora || spr instanceof Puerta) {
 			arLista.add(0, spr);
 		} else if (spr instanceof Bomberman) {
 			arLista.add(arLista.size(), spr);
@@ -173,9 +179,6 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 				arLista.add(spr);
 		}
 		if(spr instanceof Bomba){
-		for(Sprite sprt: arLista){
-			System.out.println(sprt);
-		}
 		}
 	}
 
@@ -203,6 +206,35 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	public CuentaAtras getReloj() {
 		return tiempo;
+	}
+	
+	public void acabarPartida(){
+		finalizar = true;
+	}
+	
+	public boolean getAcabarPartida(){
+		return finalizar;
+	}
+	
+	public void superadoNivel(){
+		superadoNivel = true;
+	}
+	
+	public boolean getSuperadoNivel(){
+		return superadoNivel;
+	}
+		
+	
+	/**
+	 * Borra todo menos los Bomberman
+	 */
+	public void borrarSprites(){
+		for(int i = arLista.size() - 1; i > 0; i--){
+			if(!(arLista.get(i) instanceof Bomberman)){
+				arLista.remove(i);
+			}
+				
+		}
 	}
 
 	public static void main(String[] args) {

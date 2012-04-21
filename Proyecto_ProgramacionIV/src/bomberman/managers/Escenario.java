@@ -23,4 +23,6 @@ public interface Escenario extends ImageObserver {
 	public ArrayList<Sprite> getLista();
 
 	public void setPuntuacion();
+	
+	public void acabarPartida();
 }

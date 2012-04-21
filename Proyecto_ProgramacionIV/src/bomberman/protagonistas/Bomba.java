@@ -23,7 +23,7 @@ public class Bomba extends SpriteEstatico {
 
 	public Bomba(Escenario esce, float x, float y, Bomberman bomber,
 			Jugador jug, int alcance) {
-		super(esce, jug);
+		super(esce, jug, x, y);
 		spritesImag = new String[] { "bombs.gif_1", "bombs.gif_2",
 				"bombs.gif_3" };
 		this.posX = x;

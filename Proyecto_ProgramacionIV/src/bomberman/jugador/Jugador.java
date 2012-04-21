@@ -1,5 +1,6 @@
 package bomberman.jugador;
 
+import bomberman.enumeraciones.ModoJuego;
 import bomberman.managers.*;
 
 /**
@@ -17,20 +18,34 @@ public class Jugador {
 	private int puntuacion;
 	private int puntuNivel;
 	private int vidas;
+	private int nivel;
+	private ModoJuego modo;
 
 	/**
 	 * Constructor simple de la clase Jugador.
 	 */
 	public Jugador() {
-		puntuacion = 0;
-		vidas = 3;
+		this.puntuacion = 0;
+		this.vidas = 3;
+		this.nivel = 1;
 	}
-
-	public Jugador(String nom, String ape, String ni, String mail) {
+	
+	public Jugador(String nom, String ape, String ni, String mail){
 		this.nombre = nom;
 		this.apellidos = ape;
 		this.nick = ni;
 		this.email = mail;
+	}
+
+	public Jugador(String nom, String ape, String ni, String mail, int vid, int punt, int niv, ModoJuego mode) {
+		this.nombre = nom;
+		this.apellidos = ape;
+		this.nick = ni;
+		this.email = mail;
+		this.vidas = vid;
+		this.puntuacion = punt;
+		this.nivel = niv;
+		this.modo = mode;
 	}
 
 	/**
@@ -131,6 +146,23 @@ public class Jugador {
 
 	public void setPuntuNivel(int puntuNivel) {
 		this.puntuNivel = puntuNivel;
+	}
+
+	public int getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(int nivel) {
+		this.nivel = nivel;
+	}
+
+	
+	public ModoJuego getModo() {
+		return modo;
+	}
+
+	public void setModo(ModoJuego modo) {
+		this.modo = modo;
 	}
 
 	/**
