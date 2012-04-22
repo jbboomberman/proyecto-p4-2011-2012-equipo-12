@@ -20,8 +20,8 @@ public class TableModelPuntuaciones extends DefaultTableModel {
 	public void añadirFila(PuntuGeneral punt) {
 
 		this.addRow(new Object[] {
-				AccesoJugador.getJugador(punt.getCod_jug()).getNombre(),
-				AccesoJugador.getJugador(punt.getCod_jug()).getNick(),
+				AccesoJugador.getJugador(punt.getCod_jug()).getNomJugador(),
+				AccesoJugador.getJugador(punt.getCod_jug()).getNickJugador(),
 				punt.getFecha_ulti_nivel().toString(),
 				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()), 
 				punt.getPuntu() });

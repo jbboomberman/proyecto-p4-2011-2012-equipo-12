@@ -1,5 +1,6 @@
 package bomberman.database;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,34 +16,33 @@ public class AccesoNivel {
 
 	// COD_NIVEL, NOM_NIVEL, TIEMPO, PASS)
 
-	public static void InsertarNivel(int cod_nivel, String nom_nivel,
-			int tiempo, String pass) {
-		Statement stat;
+	public static void InsertarNivel(Nivel nivel) {
 		try {
-			stat = GestionBD.conexion.createStatement();
-			ResultSet rs = stat.executeQuery("insert into CONTROLES values("
-					+ cod_nivel + ",'" + nom_nivel + "'," + tiempo + ",'"
-					+ pass + "');");
-
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"INSERT INTO NIVEL VALUES ( ?, ?, ?, ?);");
+			stat.setInt(1, nivel.getCod_nivel());
+			stat.setString(2, nivel.getNom_nivel());
+			stat.setInt(3, nivel.getTiempo());
+			stat.setString(4, nivel.getPass());
+			stat.executeUpdate();
+			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void EliminaNivel(int cod_Nivel) {
-		Statement stat;
 		try {
-			stat = GestionBD.conexion.createStatement();
-			ResultSet rs = stat
-					.executeQuery("delete from CONTROLES where COD_NIVEL="
-							+ cod_Nivel + ");");
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"DELETE FROM NIVEL WHERE COD_NIVEL = ?");
+			stat.setInt(1, cod_Nivel);
+			stat.executeUpdate();
+			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-
 	}
 
 	public static ArrayList<String> ListarNiveles() {

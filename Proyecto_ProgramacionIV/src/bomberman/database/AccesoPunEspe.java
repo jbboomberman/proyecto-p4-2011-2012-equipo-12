@@ -19,34 +19,32 @@ public class AccesoPunEspe {
 	 */
 
 	public static void insertarPunt(PuntuEspe punt) {
-		Statement stat;
 		try {
-			stat = GestionBD.conexion.createStatement();
-			String s = "insert into PUNTU_NIV_ESPECI VALUES ("
-					+ punt.getCod_puntu() + " " + punt.getCod_puntu_espe()
-					+ " " + punt.getPuntu_espe() + " '" + punt.getFecha()
-					+ "');";
-			System.out.println("s");
-			ResultSet rs = stat.executeQuery(s);
-
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"INSERT INTO PUNTU_NIV_ESPECI VALUES( ?, ?, ?, ?);");
+			stat.setInt(1, punt.getCod_puntu_espe());
+			stat.setInt(2, punt.getCod_puntu());
+			stat.setInt(3, punt.getPuntu_espe());
+			stat.setDate(4, punt.getFecha());
+			stat.executeUpdate();
+			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
 	}
 
-	public static void eliminarPunt(PuntuEspe punt) {
-		Statement stat;
+	public static void eliminarPunt(int cod_punt_espe) {
 		try {
-			stat = GestionBD.conexion.createStatement();
-			ResultSet rs = stat
-					.executeQuery("delete from PUNTU_NIV_ESPECI VALUES where COD_PUNTU_ESPE='"
-							+ punt.getCod_puntu_espe() + "'");
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"DELETE FROM PUNTU_NIV_ESPECI WHERE COD_PUNTU_ESPE = ?");
+			stat.setInt(1, cod_punt_espe);
+			stat.executeUpdate();
+			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-
 	}
 
 	// public static ArrayList<PuntuEspe> listaPunt() {
