@@ -59,6 +59,7 @@ public class ControlPrincipal {
 	}
 
 	//ERROR VALCOM CHOCAR NO SE POR QUÉ
+	
 	public void game() {
 		while (!pararJuego) {
 			if (ventJuego.isVisible()) {

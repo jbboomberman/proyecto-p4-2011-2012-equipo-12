@@ -1,5 +1,6 @@
 package bomberman.database;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,32 +14,31 @@ public class AccesoMapa {
 	 * que listará todos los mapas de la tabla.
 	 */
 
-	public static void InsertarMapa(int cod_Mapa, int cod_Nivel) {
-		Statement stat;
+	public static void InsertarMapa(Mapa mapa) {
 		try {
-			stat = GestionBD.conexion.createStatement();
-			ResultSet rs = stat.executeQuery("insert into MAPA values("
-					+ cod_Mapa + "," + cod_Nivel + ");");
-
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"INSERT INTO MAPA VALUES( ?, ?);");
+			stat.setInt(1, mapa.getCod_mapa());
+			stat.setInt(2, mapa.getCod_nivel());
+			stat.executeUpdate();
+			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void EliminarMapa(int cod_Mapa) {
-		Statement stat;
 		try {
-			stat = GestionBD.conexion.createStatement();
-			ResultSet rs = stat
-					.executeQuery("delete from CONTROLES where COD_MAPA="
-							+ cod_Mapa + ");");
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"DELETE FROM MAPA WHERE COD_MAPA = ?;");
+			stat.setInt(1, cod_Mapa);
+			stat.executeUpdate();
+			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-
 	}
 
 	public static ArrayList<String> ListarMapas() {
@@ -60,7 +60,5 @@ public class AccesoMapa {
 			e.printStackTrace();
 		}
 		return Ac;
-
 	}
-
 }

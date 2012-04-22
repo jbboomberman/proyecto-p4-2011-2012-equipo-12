@@ -10,14 +10,35 @@ import bomberman.jugador.*;
 public class AccesoJugador {
 
 	public static void insertarJugador(Jugador jug) {
-		// Statement stat = conn.createStatement();
-		// stat.executeUpdate("INSERT INTO JUGADOR VALUES ('" + jug.getNombre()
-		// + "', '" + jug.getApellidos() + "', '" + jug.getNick() + "', '"+
-		// jug.getEmail() + "');");
-		// rs.close();
-		// stat.close();
+		try{
+		PreparedStatement stat = GestionBD.conectar().prepareStatement(
+		"INSERT INTO JUGADOR VALUES(?, ?, ?, ?, ?);");
+		stat.setInt(1, jug.getCod_jugador());
+		stat.setString(2, jug.getNomJugador());
+		stat.setString(3, jug.getApellJugador());
+		stat.setString(4, jug.getNickJugador());
+		stat.setString(5, jug.getEmail());
+		stat.executeUpdate();
+		stat.close();
+		GestionBD.desconectar();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 
+	public static void eliminarJugador(int cod_jug) {
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"DELETE FROM JUGADOR WHERE COD_JUGADOR = ?");
+			stat.setInt(1, cod_jug);
+			stat.executeUpdate();
+			stat.close();
+			GestionBD.desconectar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static Jugador getJugador(int codJugador) {
 		Jugador tempJug = null;
 		try{
@@ -25,7 +46,7 @@ public class AccesoJugador {
 				"SELECT * FROM JUGADOR WHERE COD_JUGADOR = ?");
 		stat.setInt(1, codJugador);
 		ResultSet rs = stat.executeQuery();
-		tempJug = new Jugador(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+		tempJug = new Jugador(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
 		 rs.close();
 		 stat.close();
 		}catch(SQLException e){
