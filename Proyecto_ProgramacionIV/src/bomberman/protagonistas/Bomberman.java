@@ -97,13 +97,13 @@ public abstract class Bomberman extends SpriteDinamico {
 			if (((Bomba) spr).isPisada())
 				return false;
 		}else if(spr instanceof Puerta){
-			escenario.acabarPartida();
+			escenario.setAcabarPartida(true);
 		}
 		return true;
 	}
 	
 	public void procDestruccion(){
 		seDestruir = true;
-		GestorVentana.hacerVisible(VentanaVidaMenos.class, false);
+		((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).setAcabarPartida(true);
 	}
 }

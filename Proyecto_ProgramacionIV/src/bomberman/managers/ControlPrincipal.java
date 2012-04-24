@@ -12,6 +12,9 @@ import java.util.ConcurrentModificationException;
 
 import javax.swing.*;
 
+import bomberman.database.AccesoJugador;
+import bomberman.database.AccesoPuntuGen;
+import bomberman.database.PuntuGeneral;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.outin.LeerMapa;
@@ -36,7 +39,8 @@ public class ControlPrincipal {
 
 	private BufferStrategy image;
 	private VentanaJuego ventJuego;
-	private static Jugador jugador;
+	private static Jugador jugadorUno;
+	private static Jugador jugadorDos;
 	private boolean pararJuego;
 	private final int PERIODO = 18;
 	long beforeTime, timeDiff, sleepTime;
@@ -45,8 +49,13 @@ public class ControlPrincipal {
 
 		pararJuego = false;
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
-		jugador = new Jugador("David", "O", "nose", "no", 3, 0, 1, ModoJuego.Historia);
-		ventJuego.setJugador(jugador);
+		//Pruebaaaaaaaaaaaaaaaaa
+		jugadorUno = new Jugador("David", "O", "nose", "no", 3, 0, 1, ModoJuego.Historia);
+		AccesoJugador.insertarJugador(new bomberman.database.Jugador(AccesoJugador.getNumJug(), 
+				jugadorUno.getNombre(), jugadorUno.getApellidos(), jugadorUno.getNick(),
+				jugadorUno.getEmail()));
+		
+		ventJuego.setJugador(jugadorUno);
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
 		// try {
@@ -74,9 +83,9 @@ public class ControlPrincipal {
 					GestorVentana.hacerVisible(VentanaSuperado.class, false);
 				}
 				else{
-					jugador.setVidas(jugador.getVidas() - 1);
-					if(jugador.getVidas() > 0){
-						GestorVentana.ocultarVentana(VentanaJuego.class);
+					jugadorUno.setVidas(jugadorUno.getVidas() - 1);
+					if(jugadorUno.getVidas() > 0){
+						System.out.println(jugadorUno.getVidas());
 						GestorVentana.hacerVisible(VentanaVidaMenos.class, false);
 					}
 					else
@@ -121,11 +130,18 @@ public class ControlPrincipal {
 	}
 
 	public void terminarPartida(Graphics g, BufferStrategy buffer) {
+		PuntuGeneral tempGene = new PuntuGeneral(AccesoPuntuGen.getNumPunt(), 
+				((bomberman.database.Jugador)AccesoJugador.getJugador(jugadorUno.getNombre(), jugadorUno.getApellidos(), 
+						jugadorUno.getNick(), jugadorUno.getEmail())).getCod_jugador(),
+				false, jugadorUno.getPuntuacion(), 
+				new java.sql.Date(System.currentTimeMillis()));
+		AccesoPuntuGen.insertarPunt(tempGene);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Sansserif", Font.BOLD, 20));
 		g.drawString("Has perdido", ventJuego.getWidth() / 3,
 				ventJuego.getHeight() / 3);
 		buffer.show();
+		pararJuego = true;
 	}
 
 	public static void main(String[] args) {
@@ -141,6 +157,14 @@ public class ControlPrincipal {
 		Character array[][] = LeerMapa.LeerMapaJuego(nomEsce);
 		PrepararEscenario.ColocarMapa(
 				(VentanaJuego) GestorVentana.getVentana(VentanaJuego.class),
-				array, jugador);
+				array, jugadorUno);
+	}
+	
+	public static Jugador getJugadorUno(){
+		return jugadorUno;
+	}
+	
+	public static void setJugadorUno(Jugador jug){
+		jugadorUno = jug;
 	}
 }

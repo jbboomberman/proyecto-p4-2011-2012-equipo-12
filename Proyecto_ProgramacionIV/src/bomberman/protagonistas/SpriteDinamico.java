@@ -48,7 +48,7 @@ public abstract class SpriteDinamico extends Sprite {
 
 				// En caso de que los dos se choquen
 				if (tempRect.intersects(tempRect2)) {
-					return determinarChoque(sprTemp);
+					return this.determinarChoque(sprTemp);
 				}
 			}
 		}

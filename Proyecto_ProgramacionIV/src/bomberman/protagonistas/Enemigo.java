@@ -28,7 +28,7 @@ public class Enemigo extends SpriteDinamico {
 		if (spr instanceof Llama)
 			this.procDestruccion();
 		else if(spr instanceof Bomberman)
-			spr.setSeDestruir(true);
+			spr.procDestruccion();
 		return true;
 	}
 }

@@ -2,10 +2,12 @@ package bomberman.ventanas;
 
 import java.awt.event.*;
 import javax.swing.*;
-
 import java.awt.*;
 
+import bomberman.managers.ControlPrincipal;
 import bomberman.outin.*;
+import bomberman.database.AccesoJugador;
+import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.*;
 
 /**
@@ -27,7 +29,6 @@ public class VentanaDatos extends JDialog implements ActionListener {
 	private JTextField nic;
 	private JButton botonAceptar;
 	private JButton botonCancelar;
-	private Jugador jug;
 
 	/**
 	 * Constructor principal de la clase VentanaDatos.
@@ -41,7 +42,7 @@ public class VentanaDatos extends JDialog implements ActionListener {
 	 *            - VentanaInicial. La ventana a la que volver cuando acabemos
 	 *            de jugar.
 	 */
-	public VentanaDatos(Jugador jugador) {
+	public VentanaDatos() {
 		// Inicializamos los objetos.
 		panelMedio = new JPanel();
 		panelInferior = new JPanel();
@@ -55,7 +56,6 @@ public class VentanaDatos extends JDialog implements ActionListener {
 		botonCancelar = new JButton("Cancelar");
 		// Mensaje al poner el ratón encima del botonAceptar.
 		botonAceptar.setToolTipText("¿Te atreves a jugar?");
-		jug = jugador;
 
 		/*
 		 * Layouts
@@ -134,10 +134,11 @@ public class VentanaDatos extends JDialog implements ActionListener {
 						"No ha rellenado todos los campos", "Error",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
-				jug.setNombre(nom.getText());
-				jug.setApellidos(ape.getText());
-				jug.setEmail(email.getText());
-				jug.setNick(nic.getText());
+//				if(AccesoJugador.getJugador(nom.getText(), ape.getText(),
+//						nic.getText(), email.getText()) == null){
+//					AccesoJugador.insertarJugador(new bomberman.database.Jugador(AccesoJugador.getNumJug()
+//							, nom.getText(), ape.getText(), nic.getText(), email.getText()));
+//				}
 			}
 			GestorVentana.hacerVisible(VentanaJuego.class, true);
 		} else if (botonPulsado == botonCancelar) {
@@ -196,7 +197,7 @@ public class VentanaDatos extends JDialog implements ActionListener {
 		jugador.setNick("hola");
 		// Creamos una ventana VentanaJuego que es necesariA para el constructor
 		// de VentanaDatos.
-		VentanaDatos jueg = new VentanaDatos(jugador);
+		VentanaDatos jueg = new VentanaDatos();
 		jueg.setVisible(true);
 	}
 }

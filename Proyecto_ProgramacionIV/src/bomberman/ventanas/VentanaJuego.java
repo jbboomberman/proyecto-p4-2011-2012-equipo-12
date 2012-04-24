@@ -50,6 +50,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		canPintar = new Canvas();
 		canPintar.setSize(660, 660);
 		panelMarcador = new JPanel();
+		jugador = ControlPrincipal.getJugadorUno();
 		try {
 			tiempo = new CuentaAtras(5, 0);
 			parado = true;
@@ -187,7 +188,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	public void setPuntuacion() {
-		jlText.setText("<html><b>Vidas</b>: " + jugador.getVidas()
+		jlText.setText("<html><b>Vidas</b>: " + ControlPrincipal.getJugadorUno().getVidas()
 				+ "&emsp;<b>Puntuación nivel:</b> " + jugador.getPuntuNivel()
 				+ "&emsp;<b>Puntuación total:</b> " + jugador.getPuntuacion()
 				+ "&emsp;<b>Enemigos restantes:</b> </html>");
@@ -208,8 +209,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		return tiempo;
 	}
 	
-	public void acabarPartida(){
-		finalizar = true;
+	public void setAcabarPartida(boolean acabar){
+		finalizar = acabar;
 	}
 	
 	public boolean getAcabarPartida(){
@@ -230,10 +231,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 */
 	public void borrarSprites(){
 		for(int i = arLista.size() - 1; i > 0; i--){
-			if(!(arLista.get(i) instanceof Bomberman)){
 				arLista.remove(i);
-			}
-				
 		}
 	}
 

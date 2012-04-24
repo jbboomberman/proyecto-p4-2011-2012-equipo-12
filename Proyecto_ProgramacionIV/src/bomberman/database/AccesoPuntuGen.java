@@ -17,7 +17,7 @@ public class AccesoPuntuGen {
 	public static void insertarPunt(PuntuGeneral punt) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"INSERT INTO PUNTUACION_GENERAL VALUES( ?, ?, ?, ?, ?");
+			"INSERT INTO PUNTUACION_GENERAL VALUES( ?, ?, ?, ?, ?);");
 			stat.setInt(1, punt.getCod_punt());
 			stat.setInt(2, punt.getCod_jug());
 //			stat.setBoolean(3, punt.ge);
@@ -34,7 +34,7 @@ public class AccesoPuntuGen {
 	public static void eliminarPunt(int cod_punt) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"DELETE FROM PUNTUACION_GENERAL WHERE COD_PUNT = ?");
+			"DELETE FROM PUNTUACION_GENERAL WHERE COD_PUNT = ?;");
 			stat.setInt(1, cod_punt);
 			stat.executeUpdate();
 			stat.close();
@@ -44,6 +44,24 @@ public class AccesoPuntuGen {
 		}
 	}
 
+	public static int getNumPunt() {
+		// ResulSet no tiene contador
+		int cont = 0;
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+					"SELECT * FROM PUNTUACION_GENERAL;");
+			ResultSet rs = stat.executeQuery();
+			while (rs.next()) {
+				cont++;
+			}
+			rs.close();
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cont;
+	}
+	
 	public static void listaPunt() {
 
 	}

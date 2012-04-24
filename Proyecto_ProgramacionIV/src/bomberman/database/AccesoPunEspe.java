@@ -21,11 +21,12 @@ public class AccesoPunEspe {
 	public static void insertarPunt(PuntuEspe punt) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"INSERT INTO PUNTU_NIV_ESPECI VALUES( ?, ?, ?, ?);");
+			"INSERT INTO PUNTU_NIV_ESPECI VALUES( ?, ?, ?, ?, ?);");
 			stat.setInt(1, punt.getCod_puntu_espe());
 			stat.setInt(2, punt.getCod_puntu());
 			stat.setInt(3, punt.getPuntu_espe());
 			stat.setDate(4, punt.getFecha());
+			stat.setInt(5, punt.getNivel());
 			stat.executeUpdate();
 			stat.close();
 			GestionBD.desconectar();
@@ -56,7 +57,7 @@ public class AccesoPunEspe {
 		ArrayList<PuntuEspe> tempPuntu = new ArrayList<PuntuEspe>();
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-					"SELECT * FROM PUNTU_NIV_ESPECI WHERE COD_PUNT = ?");
+					"SELECT * FROM PUNTU_NIV_ESPECI WHERE COD_PUNT = ?;");
 			stat.setInt(1, codPuntuGene);
 			ResultSet rs = stat.executeQuery();
 			while (rs.next()) {

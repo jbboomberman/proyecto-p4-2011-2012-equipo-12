@@ -24,5 +24,5 @@ public interface Escenario extends ImageObserver {
 
 	public void setPuntuacion();
 	
-	public void acabarPartida();
+	public void setAcabarPartida(boolean acabar);
 }

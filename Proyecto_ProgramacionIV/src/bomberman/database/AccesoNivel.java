@@ -35,7 +35,7 @@ public class AccesoNivel {
 	public static void EliminaNivel(int cod_Nivel) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"DELETE FROM NIVEL WHERE COD_NIVEL = ?");
+			"DELETE FROM NIVEL WHERE COD_NIVEL = ?;");
 			stat.setInt(1, cod_Nivel);
 			stat.executeUpdate();
 			stat.close();
