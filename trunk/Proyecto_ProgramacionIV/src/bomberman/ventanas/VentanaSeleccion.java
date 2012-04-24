@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.PrepararEscenario;
@@ -27,6 +28,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
 	private Jugador jugador;
+	private ModoJuego modo;
 
 	public VentanaSeleccion(Jugador jug) {
 
@@ -73,6 +75,14 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
+	
+	public ModoJuego getModo() {
+		return modo;
+	}
+
+	public void setModo(ModoJuego modo) {
+		this.modo = modo;
+	}
 
 	/**
 	 * Implementamos el método 'actionPerformed' del interface ActionListener.
@@ -94,6 +104,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 	            			public void run() {
 	            				ControlPrincipal.crearEscenario("mapa" + jugador.getNivel()
 	        							+ ".txt");
+	            				modo = ModoJuego.Historia;
 	        					GestorVentana.ocultarVentana(VentanaSeleccion.class);
 	        					GestorVentana.hacerVisible(VentanaJuego.class, true);
 	        					// GestorVentana.hacerVisible(VentanaDatos.class, false);
@@ -106,6 +117,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
             		new Runnable() {
             			public void run() {
             				ControlPrincipal.crearEscenario("mapaMultijugador.txt");
+            				modo = ModoJuego.Multijugador;
         					GestorVentana.ocultarVentana(VentanaSeleccion.class);
         					GestorVentana.hacerVisible(VentanaJuego.class, true);
             			}
@@ -116,6 +128,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			new Thread(
             		new Runnable() {
             			public void run() {
+            				modo = ModoJuego.Master;
             				GestorVentana.ocultarVentana(VentanaSeleccion.class);
             				GestorVentana.hacerVisible(VentanaDirecto.class, false);
             			}

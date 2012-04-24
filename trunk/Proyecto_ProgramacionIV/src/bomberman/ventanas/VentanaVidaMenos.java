@@ -68,12 +68,13 @@ public class VentanaVidaMenos extends JDialog implements ActionListener{
 			new Thread(
             		new Runnable() {
             			public void run() {
-            				System.out.println("Entro");
+            				GestorVentana.ocultarVentana(VentanaJuego.class);
             				VentanaJuego tempVent = (VentanaJuego)GestorVentana.getVentana(VentanaJuego.class);
             				tempVent.borrarSprites();
+            				GestorVentana.ocultarVentana(VentanaVidaMenos.class);
             				ControlPrincipal.crearEscenario("mapa" + jugador.getNivel()
         							+ ".txt");
-        					GestorVentana.ocultarVentana(VentanaVidaMenos.class);
+            				tempVent.setAcabarPartida(false);
         					GestorVentana.hacerVisible(VentanaJuego.class, true);
             			}
             		}

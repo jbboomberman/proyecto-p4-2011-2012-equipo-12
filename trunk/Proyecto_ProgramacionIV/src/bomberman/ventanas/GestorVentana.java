@@ -32,7 +32,7 @@ public class GestorVentana {
 		Vector<Window> vector = new Vector<Window>();
 		// Se incializan todas las ventanas.
 		vector.add(new VentanaInicial());
-		vector.add(new VentanaDatos(jug));
+		vector.add(new VentanaDatos());
 		vector.add(new VentanaSeleccion(jug));
 		vector.add(new VentanaJuego());
 		vector.add(new VentanaInstrucciones());
