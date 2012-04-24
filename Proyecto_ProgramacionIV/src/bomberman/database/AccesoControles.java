@@ -50,7 +50,7 @@ public class AccesoControles {
 		ArrayList<String> Ac = new ArrayList<String>();
 		String control;
 		try {
-			stat = GestionBD.conexion.createStatement();
+			stat = GestionBD.conectar().createStatement();
 			ResultSet rs = stat.executeQuery("select * from CONTROLES;");
 
 			while (rs.next()) {
@@ -66,6 +66,29 @@ public class AccesoControles {
 		}
 		return Ac;
 
+	}
+	
+	public static void main(String args[])
+	{
+		//Controles c1=new Controles(22,"arriba",11,345);
+		Controles c2= new Controles(11,"abajo",22,435);
+		//AccesoControles.InsertarControl(c1);
+		//AccesoControles.InsertarControl(c2);
+		ArrayList<String> a1 =AccesoControles.ListarControles();
+		System.out.println("Lista de todos los controles");
+		for(int i=0;i<a1.size();i++){
+			System.out.println(a1.get(i));
+		}
+		System.out.println();
+		System.out.println("Lista eliminando c2");
+		AccesoControles.EliminarControl(c2.getCod_accion());
+		ArrayList<String> a2 =AccesoControles.ListarControles();
+		for(int i=0;i<a2.size();i++){
+			System.out.println(a2.get(i));
+		}
+		
+		
+		
 	}
 
 }
