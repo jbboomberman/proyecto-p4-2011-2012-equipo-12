@@ -46,7 +46,7 @@ public class AccesoMapa {
 		ArrayList<String> Ac = new ArrayList<String>();
 		String control;
 		try {
-			stat = GestionBD.conexion.createStatement();
+			stat = GestionBD.conectar().createStatement();
 			ResultSet rs = stat.executeQuery("select * from MAPA;");
 
 			while (rs.next()) {
@@ -61,4 +61,12 @@ public class AccesoMapa {
 		}
 		return Ac;
 	}
+	public static void main (String []args){
+		Mapa m= new Mapa(78, 9);
+		InsertarMapa(m);
+		ArrayList<String> map= ListarMapas();
+		System.out.println(map.get(0));
+		
+	}
+	
 }
