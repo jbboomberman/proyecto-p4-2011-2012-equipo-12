@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import bomberman.jugador.*;
 
@@ -56,11 +57,37 @@ public class AccesoJugador {
 		//El que llame a este método tiene que comprobar que no recibe null
 	}
 
-	public static void getJugadores() {
-		// Statement stat = conn.createStatement();
-		// ResultSet rs = stat.executeQuery("SELECT * FROM JUGADOR;");
-		// rs.close();
-		// stat.close();
+	public static ArrayList<String> getJugadores() {
+				 Statement stat;
+					ArrayList<String> Ac = new ArrayList<String>();
+					String jugador;
+					try {
+						stat = GestionBD.conectar().createStatement();
+						ResultSet rs = stat.executeQuery("select * from JUGADOR;");
+
+						while (rs.next()) {
+							jugador = Integer.toString(rs.getInt("COD_JUGADOR"));
+
+							Ac.add(jugador);
+
+						}
+
+					} catch (SQLException e) {
+
+						e.printStackTrace();
+					}
+					return Ac;
 	}
 
+	public static void main (String[] args ){
+	Jugador ju=new Jugador(12331, "beñat", "bravo", "beñaaaaat", "benatb@opendeusto.es");
+	insertarJugador(ju);
+	ArrayList<String> jus=getJugadores();
+	for(int i=0;i<jus.size();i++){
+		System.out.println(jus.get(i));
+	}
+	
+	}
 }
+	
+
