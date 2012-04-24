@@ -134,11 +134,11 @@ public class VentanaDatos extends JDialog implements ActionListener {
 						"No ha rellenado todos los campos", "Error",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
-//				if(AccesoJugador.getJugador(nom.getText(), ape.getText(),
-//						nic.getText(), email.getText()) == null){
-//					AccesoJugador.insertarJugador(new bomberman.database.Jugador(AccesoJugador.getNumJug()
-//							, nom.getText(), ape.getText(), nic.getText(), email.getText()));
-//				}
+				if(AccesoJugador.getJugador(nom.getText(), ape.getText(),
+						nic.getText(), email.getText()) == null){
+					AccesoJugador.insertarJugador(new bomberman.database.Jugador(AccesoJugador.getNumJug()
+							, nom.getText(), ape.getText(), nic.getText(), email.getText()));
+				}
 			}
 			GestorVentana.hacerVisible(VentanaJuego.class, true);
 		} else if (botonPulsado == botonCancelar) {
