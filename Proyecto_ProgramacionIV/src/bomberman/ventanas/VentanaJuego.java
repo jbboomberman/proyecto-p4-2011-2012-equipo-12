@@ -209,6 +209,14 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		return tiempo;
 	}
 	
+	public void setTiempoReloj(int min, int seg){
+		try{
+			tiempo = new CuentaAtras(min, seg);
+		}catch(RelojException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public void setAcabarPartida(boolean acabar){
 		finalizar = acabar;
 	}
@@ -230,9 +238,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 * Borra todo menos los Bomberman
 	 */
 	public void borrarSprites(){
-		for(int i = arLista.size() - 1; i > 0; i--){
-				arLista.remove(i);
-		}
+		arLista.clear();
 	}
 
 	public static void main(String[] args) {

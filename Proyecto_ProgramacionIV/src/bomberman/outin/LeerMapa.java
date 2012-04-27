@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+import bomberman.database.AccesoMapa;
+import bomberman.database.Mapa;
 import bomberman.managers.ManagerImagen;
 
 public class LeerMapa {
@@ -23,38 +25,15 @@ public class LeerMapa {
 		return tempArray;
 	}
 
-	public static Character[][] LeerMapaJuego(String nom) {
-		try {
-			fichero = (LeerMapa.class.getClassLoader()
-					.getResourceAsStream("bomberman/resources/" + nom));
-			brF = new BufferedReader(new InputStreamReader(fichero));
-			for (int i = 0; i < 20; i++) {
-				for (int j = 0; j < 20; j++) {
-					inputLine2 = (char) brF.read();
-					// No queremos leer los retornos de carro ni nuevas lineas.
-					while ((int) inputLine2 == 13 || (int) inputLine2 == 10) {
-						inputLine2 = (char) brF.read();
-					}
-					arrayChar[j][i] = (inputLine2);
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				brF.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					fichero.close();
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
+	public static Character[][] LeerMapaJuego(int codMapa) {
+		Mapa mapa = AccesoMapa.getMapa(codMapa);
+		String stringMap = new String(mapa.getCharArray());
+		Character[][]tempCharArray = new Character[20][20];
+		for(int i = 0; i < 20; i++){
+			for(int j = 0; j < 20; j++){
+				tempCharArray[j][i] = stringMap.charAt((20*i) + j);
 			}
 		}
-		return arrayChar;
+		return tempCharArray;
 	}
 }

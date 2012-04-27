@@ -8,10 +8,12 @@ public class Mapa {
 	
 	private int cod_mapa;
 	private int cod_nivel;
+	private char[] charArray;
 	
-	public Mapa(int mapa, int nivel){
+	public Mapa(int mapa, int nivel, char[]array){
 		this.cod_mapa = mapa;
 		this.cod_nivel = nivel;
+		this.charArray = array;
 	}
 
 	public int getCod_mapa() {
@@ -28,5 +30,13 @@ public class Mapa {
 
 	public void setCod_nivel(int cod_nivel) {
 		this.cod_nivel = cod_nivel;
+	}
+
+	public char[]getCharArray() {
+		return charArray;
+	}
+
+	public void setCharArray(char[] charArray) {
+		this.charArray = charArray;
 	}
 }

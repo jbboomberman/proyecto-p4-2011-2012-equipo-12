@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import bomberman.database.AccesoMapa;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
@@ -102,8 +103,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			 new Thread(
 	            		new Runnable() {
 	            			public void run() {
-	            				ControlPrincipal.crearEscenario("mapa" + jugador.getNivel()
-	        							+ ".txt");
+	            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(1));
 	            				modo = ModoJuego.Historia;
 	        					GestorVentana.ocultarVentana(VentanaSeleccion.class);
 	        					GestorVentana.hacerVisible(VentanaJuego.class, true);
@@ -116,7 +116,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			new Thread(
             		new Runnable() {
             			public void run() {
-            				ControlPrincipal.crearEscenario("mapaMultijugador.txt");
+            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(11));
             				modo = ModoJuego.Multijugador;
         					GestorVentana.ocultarVentana(VentanaSeleccion.class);
         					GestorVentana.hacerVisible(VentanaJuego.class, true);

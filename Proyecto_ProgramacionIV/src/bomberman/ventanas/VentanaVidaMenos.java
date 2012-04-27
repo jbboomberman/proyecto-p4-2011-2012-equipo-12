@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import bomberman.database.AccesoMapa;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
@@ -72,8 +73,7 @@ public class VentanaVidaMenos extends JDialog implements ActionListener{
             				VentanaJuego tempVent = (VentanaJuego)GestorVentana.getVentana(VentanaJuego.class);
             				tempVent.borrarSprites();
             				GestorVentana.ocultarVentana(VentanaVidaMenos.class);
-            				ControlPrincipal.crearEscenario("mapa" + jugador.getNivel()
-        							+ ".txt");
+            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(jugador.getNivel()));
             				tempVent.setAcabarPartida(false);
         					GestorVentana.hacerVisible(VentanaJuego.class, true);
             			}

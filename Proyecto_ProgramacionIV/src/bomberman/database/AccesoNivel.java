@@ -16,7 +16,7 @@ public class AccesoNivel {
 
 	// COD_NIVEL, NOM_NIVEL, TIEMPO, PASS)
 
-	public static void InsertarNivel(Nivel nivel) {
+	public static void insertarNivel(Nivel nivel) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 			"INSERT INTO NIVEL VALUES ( ?, ?, ?, ?);");
@@ -32,7 +32,7 @@ public class AccesoNivel {
 		}
 	}
 
-	public static void EliminaNivel(int cod_Nivel) {
+	public static void eliminaNivel(int cod_Nivel) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 			"DELETE FROM NIVEL WHERE COD_NIVEL = ?;");
@@ -45,7 +45,7 @@ public class AccesoNivel {
 		}
 	}
 
-	public static ArrayList<String> ListarNiveles() {
+	public static ArrayList<String> listarNiveles() {
 		Statement stat;
 		ArrayList<String> Ac = new ArrayList<String>();
 		String control;

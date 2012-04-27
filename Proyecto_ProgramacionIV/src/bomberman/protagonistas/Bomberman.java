@@ -97,7 +97,7 @@ public abstract class Bomberman extends SpriteDinamico {
 			if (((Bomba) spr).isPisada())
 				return false;
 		}else if(spr instanceof Puerta){
-			escenario.setAcabarPartida(true);
+			escenario.superadoNivel();
 		}
 		return true;
 	}
