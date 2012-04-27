@@ -16,7 +16,7 @@ public class AccesoControles {
 	 * y listaControles() que listará todos los controles de la tabla.
 	 */
 
-	public static void InsertarControl(Controles control) {
+	public static void insertarControl(Controles control) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 			"INSERT INTO CONTROLES VALUES( ?, ?, ?, ?);");
@@ -32,7 +32,7 @@ public class AccesoControles {
 		}
 	}
 
-	public static void EliminarControl(int cod_accion) {
+	public static void eliminarControl(int cod_accion) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 			"DELETE FROM CONTROLES WHERE COD_ACCION = ?;");
@@ -45,7 +45,7 @@ public class AccesoControles {
 		}
 	}
 
-	public static ArrayList<String> ListarControles() {
+	public static ArrayList<String> listarControles() {
 		Statement stat;
 		ArrayList<String> Ac = new ArrayList<String>();
 		String control;
@@ -70,22 +70,22 @@ public class AccesoControles {
 	
 	public static void main(String args[])
 	{
-		//Controles c1=new Controles(22,"arriba",11,345);
-		Controles c2= new Controles(11,"abajo",22,435);
-		//AccesoControles.InsertarControl(c1);
-		//AccesoControles.InsertarControl(c2);
-		ArrayList<String> a1 =AccesoControles.ListarControles();
-		System.out.println("Lista de todos los controles");
-		for(int i=0;i<a1.size();i++){
-			System.out.println(a1.get(i));
-		}
-		System.out.println();
-		System.out.println("Lista eliminando c2");
-		AccesoControles.EliminarControl(c2.getCod_accion());
-		ArrayList<String> a2 =AccesoControles.ListarControles();
-		for(int i=0;i<a2.size();i++){
-			System.out.println(a2.get(i));
-		}
+//		//Controles c1=new Controles(22,"arriba",11,345);
+//		Controles c2= new Controles(11,"abajo",22,435);
+//		//AccesoControles.InsertarControl(c1);
+//		//AccesoControles.InsertarControl(c2);
+//		ArrayList<String> a1 =AccesoControles.ListarControles();
+//		System.out.println("Lista de todos los controles");
+//		for(int i=0;i<a1.size();i++){
+//			System.out.println(a1.get(i));
+//		}
+//		System.out.println();
+//		System.out.println("Lista eliminando c2");
+//		AccesoControles.EliminarControl(c2.getCod_accion());
+//		ArrayList<String> a2 =AccesoControles.ListarControles();
+//		for(int i=0;i<a2.size();i++){
+//			System.out.println(a2.get(i));
+//		}
 		
 		
 		

@@ -20,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import bomberman.database.AccesoMapa;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
@@ -133,9 +134,8 @@ public class VentanaDirecto extends JDialog implements ActionListener {
             		new Runnable() {
             			public void run() {
             				jugador.setModo(ModoJuego.Master);
-            				ControlPrincipal.crearEscenario("mapa"
-            						+ Integer.parseInt((String) jcbNivel.getSelectedItem())
-            						+ ".txt");
+            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(
+            						Integer.parseInt((String) jcbNivel.getSelectedItem())));
             				//Falta la contraseña
             				GestorVentana.hacerVisible(VentanaJuego.class, true);
             			}

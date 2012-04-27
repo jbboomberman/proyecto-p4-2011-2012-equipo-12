@@ -13,7 +13,9 @@ import java.util.ConcurrentModificationException;
 import javax.swing.*;
 
 import bomberman.database.AccesoJugador;
+import bomberman.database.AccesoMapa;
 import bomberman.database.AccesoPuntuGen;
+import bomberman.database.Mapa;
 import bomberman.database.PuntuGeneral;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
@@ -66,8 +68,6 @@ public class ControlPrincipal {
 		GestorVentana.hacerVisible(VentanaInicial.class, true);
 		this.game();
 	}
-
-	//ERROR VALCOM CHOCAR NO SE POR QUÉ
 	
 	public void game() {
 		while (!pararJuego) {
@@ -80,12 +80,18 @@ public class ControlPrincipal {
 					paintWorld();
 				else if(ventJuego.getSuperadoNivel()){
 					GestorVentana.ocultarVentana(VentanaJuego.class);
-					GestorVentana.hacerVisible(VentanaSuperado.class, false);
+					if(jugadorUno.getModo() == ModoJuego.Historia){
+						GestorVentana.hacerVisible(VentanaSuperado.class, false);
+					}else if(jugadorUno.getModo() == ModoJuego.Master){
+						
+					}else{
+						
+					}
 				}
 				else{
 					jugadorUno.setVidas(jugadorUno.getVidas() - 1);
 					if(jugadorUno.getVidas() > 0){
-						System.out.println(jugadorUno.getVidas());
+						((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).setPuntuacion();
 						GestorVentana.hacerVisible(VentanaVidaMenos.class, false);
 					}
 					else
@@ -153,11 +159,12 @@ public class ControlPrincipal {
 		ControlPrincipal prueba = new ControlPrincipal();
 	}
 
-	public static void crearEscenario(String nomEsce) {
-		Character array[][] = LeerMapa.LeerMapaJuego(nomEsce);
+	public static void crearEscenario(int numEsce) {
+		Character array[][] = LeerMapa.LeerMapaJuego(numEsce);
 		PrepararEscenario.ColocarMapa(
 				(VentanaJuego) GestorVentana.getVentana(VentanaJuego.class),
 				array, jugadorUno);
+		//AQUÍ SE CARGA RELOJ
 	}
 	
 	public static Jugador getJugadorUno(){

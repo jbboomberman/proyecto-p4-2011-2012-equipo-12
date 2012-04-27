@@ -37,12 +37,6 @@ public class GestionBD {
 		}
 	}
 
-	// public static ResulSet consulta(String sentencia){
-	// return ResultSet;
-	// }
-	public static void insertar(String linea) {
-	}
-
 	public static void main(String[] args) {
 		conectar();
 	}
