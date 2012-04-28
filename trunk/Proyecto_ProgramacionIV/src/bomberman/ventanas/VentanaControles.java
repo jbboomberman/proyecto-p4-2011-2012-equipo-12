@@ -19,8 +19,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import bomberman.database.AccesoControles;
+import bomberman.managers.ControlPrincipal;
+
 //Fig13a  Pag 18.
-public class VentanaControles extends JDialog implements ActionListener{
+public class VentanaControles extends JDialog implements ActionListener {
 
 	private JTabbedPane jtbPestañas;
 	private JPanel jpSuperior;
@@ -34,9 +37,19 @@ public class VentanaControles extends JDialog implements ActionListener{
 	private TitledBorder jug2;
 	private JPanel jpGeneral;
 	private JPanel jpGeneral2;
-	
-	public VentanaControles(){
-		//Inicializamos variables
+	private JTextField jtDerechaUno;
+	private JTextField jtIzquierdaUno;
+	private JTextField jtArribaUno;
+	private JTextField jtAbajoUno;
+	private JTextField jtBombaUno;
+	private JTextField jtDerechaDos;
+	private JTextField jtIzquierdaDos;
+	private JTextField jtArribaDos;
+	private JTextField jtAbajoDos;
+	private JTextField jtBombaDos;
+
+	public VentanaControles() {
+		// Inicializamos variables
 		jpSuperior = new JPanel();
 		jpCentro = new JPanel();
 		jpCenIzq = new JPanel();
@@ -49,8 +62,40 @@ public class VentanaControles extends JDialog implements ActionListener{
 		jbCancelar = new JButton("Cancelar");
 		jug1 = BorderFactory.createTitledBorder("Jugador 1");
 		jug2 = BorderFactory.createTitledBorder("Jugador 2");
-		
-		//Layouts
+		jtArribaUno = new JTextField(1);
+		jtAbajoUno = new JTextField(1);
+		jtDerechaUno = new JTextField(1);
+		jtIzquierdaUno = new JTextField(1);
+		jtBombaUno = new JTextField(1);
+		jtArribaDos = new JTextField(1);
+		jtAbajoDos = new JTextField(1);
+		jtDerechaDos = new JTextField(1);
+		jtIzquierdaDos = new JTextField(1);
+		jtBombaDos = new JTextField(1);
+
+		// Metemos las letras que tiene
+		jtArribaUno.setText(Character.toString((char) AccesoControles
+				.getControl("ARRIBA", 1)));
+		jtAbajoUno.setText(Character.toString((char) AccesoControles
+				.getControl("ABAJO", 1)));
+		jtDerechaUno.setText(Character.toString((char) AccesoControles
+				.getControl("DERECHA", 1)));
+		jtIzquierdaUno.setText(Character.toString((char) AccesoControles
+				.getControl("IZQUIERDA", 1)));
+		jtBombaUno.setText(Character.toString((char) AccesoControles
+				.getControl("BOMBA", 1)));
+		jtArribaDos.setText(Character.toString((char) AccesoControles
+				.getControl("ARRIBA", 2)));
+		jtAbajoDos.setText(Character.toString((char) AccesoControles
+				.getControl("ABAJO", 2)));
+		jtDerechaDos.setText(Character.toString((char) AccesoControles
+				.getControl("DERECHA", 2)));
+		jtIzquierdaDos.setText(Character.toString((char) AccesoControles
+				.getControl("IZQUIERDA", 2)));
+		jtBombaDos.setText(Character.toString((char) AccesoControles
+				.getControl("BOMBA", 2)));
+
+		// Layouts
 		jpSuperior.setLayout(new FlowLayout());
 		jpCentro.setLayout(new GridLayout(1, 2));
 		jpCenIzq.setLayout(new BoxLayout(jpCenIzq, BoxLayout.Y_AXIS));
@@ -60,18 +105,18 @@ public class VentanaControles extends JDialog implements ActionListener{
 		jpInferior.setLayout(new FlowLayout());
 		jpGeneral.setLayout(new BorderLayout());
 		jpGeneral2.setLayout(new FlowLayout());
-		
-		//Añadir componentes
-		meterTecla("Arriba", jpCenIzq);
-		meterTecla("Abajo", jpCenIzq);
-		meterTecla("Derecha", jpCenIzq);
-		meterTecla("Izquierda", jpCenIzq);
-		meterTecla("Bomba", jpCenIzq);
-		meterTecla("Arriba", jpCenDer);
-		meterTecla("Abajo", jpCenDer);
-		meterTecla("Derecha", jpCenDer);
-		meterTecla("Izquierda", jpCenDer);
-		meterTecla("Bomba", jpCenDer);
+
+		// Añadir componentes
+		meterTecla("Arriba", jpCenIzq, jtArribaUno);
+		meterTecla("Abajo", jpCenIzq, jtAbajoUno);
+		meterTecla("Derecha", jpCenIzq, jtDerechaUno);
+		meterTecla("Izquierda", jpCenIzq, jtIzquierdaUno);
+		meterTecla("Bomba", jpCenIzq, jtBombaUno);
+		meterTecla("Arriba", jpCenDer, jtArribaDos);
+		meterTecla("Abajo", jpCenDer, jtAbajoDos);
+		meterTecla("Derecha", jpCenDer, jtDerechaDos);
+		meterTecla("Izquierda", jpCenDer, jtIzquierdaDos);
+		meterTecla("Bomba", jpCenDer, jtBombaDos);
 		meterCheckBox("Activar sonido", jpGeneral2);
 		meterCheckBox("Activar envio emails", jpGeneral2);
 		jpCentro.add(jpCenIzq);
@@ -85,8 +130,12 @@ public class VentanaControles extends JDialog implements ActionListener{
 		jtbPestañas.add("Controles", jpGeneral);
 		jtbPestañas.add("Extras", jpGeneral2);
 		getContentPane().add(jtbPestañas);
-		
-		//Características de la ventana
+
+		// Escuchadores
+		jbGuardar.addActionListener(this);
+		jbCancelar.addActionListener(this);
+
+		// Características de la ventana
 		this.setSize(550, 400);
 		this.setTitle("Modificar controles");
 		/*
@@ -99,23 +148,21 @@ public class VentanaControles extends JDialog implements ActionListener{
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setVisible(false);
 	}
-	
-	private void meterTecla(String nom, Container cont){
+
+	private void meterTecla(String nom, Container cont, JTextField jtText) {
 		JLabel tempLabel = new JLabel(nom);
-		JTextField tempField = new JTextField(1);
 		/*
-		 * Para poder poner el tamaño que quiera de
-		 * JTextField porque sino GridLayout no
-		 * me deja.
+		 * Para poder poner el tamaño que quiera de JTextField porque sino
+		 * GridLayout no me deja.
 		 */
 		JPanel tempPanel = new JPanel();
-		tempField.setColumns(2);
+		jtText.setColumns(2);
 		tempPanel.add(tempLabel);
-		tempPanel.add(tempField);
+		tempPanel.add(jtText);
 		cont.add(tempPanel);
 	}
-	
-	private void meterCheckBox(String texto, Container cont){
+
+	private void meterCheckBox(String texto, Container cont) {
 		JCheckBox tempCheck = new JCheckBox();
 		JLabel tempLabel = new JLabel(texto);
 		JPanel tempPanel = new JPanel();
@@ -123,22 +170,66 @@ public class VentanaControles extends JDialog implements ActionListener{
 		tempPanel.add(tempLabel);
 		cont.add(tempPanel);
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
 		 * dirección del generador del evento.
 		 */
 		Object botonPulsado = e.getSource();
-		
-		if(botonPulsado == jbGuardar){
-			
-		}else if(botonPulsado == jbCancelar){
+
+		if (botonPulsado == jbGuardar) {
+			AccesoControles.setControl("ARRIBA", 1, jtArribaUno.getText()
+					.charAt(0));
+			AccesoControles.setControl("ABAJO", 1,
+					jtAbajoUno.getText().charAt(0));
+			AccesoControles.setControl("DERECHA", 1, jtDerechaUno.getText()
+					.charAt(0));
+			AccesoControles.setControl("IZQUIERDA", 1, jtIzquierdaUno.getText()
+					.charAt(0));
+			AccesoControles.setControl("BOMBA", 1,
+					jtBombaUno.getText().charAt(0));
+			AccesoControles.setControl("ARRIBA", 2, jtArribaDos.getText()
+					.charAt(0));
+			AccesoControles.setControl("ABAJO", 2,
+					jtAbajoDos.getText().charAt(0));
+			AccesoControles.setControl("DERECHA", 2, jtDerechaDos.getText()
+					.charAt(0));
+			AccesoControles.setControl("IZQUIERDA", 2, jtIzquierdaDos.getText()
+					.charAt(0));
+			AccesoControles.setControl("BOMBA", 2,
+					jtBombaDos.getText().charAt(0));
+
+			ControlPrincipal.getJugadorUno().setArriba(
+					jtArribaUno.getText().charAt(0));
+			ControlPrincipal.getJugadorUno().setAbajo(
+					jtAbajoUno.getText().charAt(0));
+			ControlPrincipal.getJugadorUno().setDerecha(
+					jtDerechaUno.getText().charAt(0));
+			ControlPrincipal.getJugadorUno().setIzquierda(
+					jtIzquierdaUno.getText().charAt(0));
+			ControlPrincipal.getJugadorUno().setBomba(
+					jtBombaUno.getText().charAt(0));
+			if (ControlPrincipal.getJugadorDos() != null) {
+				ControlPrincipal.getJugadorDos().setArriba(
+						jtArribaDos.getText().charAt(0));
+				ControlPrincipal.getJugadorDos().setAbajo(
+						jtAbajoDos.getText().charAt(0));
+				ControlPrincipal.getJugadorDos().setDerecha(
+						jtDerechaDos.getText().charAt(0));
+				ControlPrincipal.getJugadorDos().setIzquierda(
+						jtIzquierdaDos.getText().charAt(0));
+				ControlPrincipal.getJugadorDos().setBomba(
+						jtBombaDos.getText().charAt(0));
+			}
+			GestorVentana.ocultarVentana(VentanaControles.class);
+
+		} else if (botonPulsado == jbCancelar) {
 			GestorVentana.ocultarVentana(VentanaControles.class);
 		}
 	}
-	
-	public static void main (String [] args){
+
+	public static void main(String[] args) {
 		VentanaControles prueba = new VentanaControles();
 		prueba.setVisible(true);
 	}

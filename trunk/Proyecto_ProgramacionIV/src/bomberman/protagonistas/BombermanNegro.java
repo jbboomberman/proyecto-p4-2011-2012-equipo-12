@@ -3,6 +3,7 @@ package bomberman.protagonistas;
 import java.awt.event.KeyEvent;
 
 import bomberman.jugador.Jugador;
+import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
 
@@ -29,38 +30,34 @@ public class BombermanNegro extends Bomberman{
 	}
 
 	public void teclaPulsada(KeyEvent e){
-		if (e.getKeyCode() == KeyEvent.VK_W
-				|| e.getKeyCode() == KeyEvent.VK_S
-				|| e.getKeyCode() == KeyEvent.VK_A
-				|| e.getKeyCode() == KeyEvent.VK_D) {
+		if (e.getKeyCode() == ControlPrincipal.getJugadorDos().getArriba()
+				|| e.getKeyCode() == ControlPrincipal.getJugadorDos().getAbajo()
+				|| e.getKeyCode() == ControlPrincipal.getJugadorDos().getDerecha()
+				|| e.getKeyCode() == ControlPrincipal.getJugadorDos().getIzquierda()) {
 			parado = false;
 		}
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_W:
+		
+		if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getArriba()){
 			// Tenemos que restar posición en el eje Y.
 			deltaY = -Math.abs(velocidad);
 			setSpritesImag(spritesImagUp);
 			setSpriteDestruccion(spritesDestUp);
-			break;
-		case KeyEvent.VK_S:
+		}else if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getAbajo()){
 			// Tenemos que aumentar posición en el eje Y.
 			deltaY = Math.abs(velocidad);
 			setSpritesImag(spritesImagDown);
 			setSpriteDestruccion(spritesDestDown);
-			break;
-		case KeyEvent.VK_A:
+		}else if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getIzquierda()){
 			// Tenemos que restar posición en el eje X.
 			deltaX = -Math.abs(velocidad);
 			setSpritesImag(spritesImagLeft);
 			setSpriteDestruccion(spritesDestLeft);
-			break;
-		case KeyEvent.VK_D:
+		}else if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getDerecha()){
 			// Tenemos que aumentar posición en el eje X.
 			deltaX = Math.abs(velocidad);
 			setSpritesImag(spritesImagRight);
 			setSpriteDestruccion(spritesDestRight);
-			break;
-		case KeyEvent.VK_V:
+		}else if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getBomba()){
 			if (this.getNumBomba() < this.getMaxBomba()) {
 				int tempX = ((((int) (this.getPosX() + (this.getAnchura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
 				int tempY = ((((int) (this.getPosY() + (this.getAltura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
@@ -75,38 +72,28 @@ public class BombermanNegro extends Bomberman{
 						jugador, alcanceMax));
 				this.setNumBomba(this.getNumBomba() + 1);
 			}
-			break;
-		default:
-			break;
 		}
 	}
 	
 	public void teclaSoltada(KeyEvent e){
-		if (e.getKeyCode() == KeyEvent.VK_W
-				|| e.getKeyCode() == KeyEvent.VK_S
-				|| e.getKeyCode() == KeyEvent.VK_A
-				|| e.getKeyCode() == KeyEvent.VK_D) {
+		if (e.getKeyCode() == ControlPrincipal.getJugadorDos().getArriba()
+				|| e.getKeyCode() == ControlPrincipal.getJugadorDos().getAbajo()
+				|| e.getKeyCode() == ControlPrincipal.getJugadorDos().getDerecha()
+				|| e.getKeyCode() == ControlPrincipal.getJugadorDos().getIzquierda()) {
 			parado = true;
 		}
-		switch (e.getKeyCode()) {
+		
 		/*
 		 * Como es lógico en caso de que se suelte una tecla se deja de sumar o
 		 * restar posiciones.
 		 */
-		case KeyEvent.VK_W:
+		if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getArriba())
 			deltaY = 0;
-			break;
-		case KeyEvent.VK_S:
+		else if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getAbajo())
 			deltaY = 0;
-			break;
-		case KeyEvent.VK_A:
+		else if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getIzquierda()) 
 			deltaX = 0;
-			break;
-		case KeyEvent.VK_D:
+		else if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getDerecha())
 			deltaX = 0;
-			break;
-		default:
-			break;
-		}
 	}
 }
