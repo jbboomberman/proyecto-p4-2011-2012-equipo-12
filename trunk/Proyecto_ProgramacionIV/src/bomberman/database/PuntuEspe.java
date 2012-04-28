@@ -2,6 +2,8 @@ package bomberman.database;
 
 import java.sql.Date;
 
+import bomberman.outin.ConversorFecha;
+
 public class PuntuEspe {
 	/*
 	 * Esta clase representa la fila de la tabla PUNTU_NIV_ESPECI y por eso
@@ -10,11 +12,11 @@ public class PuntuEspe {
 	private int cod_puntu_espe;
 	private int cod_puntu;
 	private int puntu_espe;
-	private Date fecha;
+	private String fecha;
 	private int nivel;
 
 	public PuntuEspe(int codPuntuEspe, int codPuntu, int puntuEspe,
-			Date date, int niv) {
+			String date, int niv) {
 		super();
 		this.cod_puntu_espe = codPuntuEspe;
 		this.cod_puntu = codPuntu;
@@ -55,12 +57,12 @@ public class PuntuEspe {
 		this.puntu_espe = puntu_espe;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFecha(String fecha) {
+		this.fecha = ConversorFecha.parsearFecha(fecha);
 	}
 
 	public int getNivel() {

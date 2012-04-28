@@ -2,7 +2,9 @@ package bomberman.database;
 
 import java.sql.Date;
 
-public class PuntuGeneral {
+import bomberman.outin.ConversorFecha;
+
+public class PuntuGeneral implements Comparable<PuntuGeneral>{
 	/*
 	 * Esta clase representa la fila de la tabla PUNTUACION_GENERAL y por ese
 	 * motivo tendrá estos atributos: COD_PUNT (Código de la puntación), COD_JUG
@@ -16,10 +18,10 @@ public class PuntuGeneral {
 	private int cod_jug;
 	private boolean guardado;
 	private int puntu;
-	private Date fecha_ulti_nivel;
+	private String fecha_ulti_nivel;
 
 	public PuntuGeneral(int cod_punt, int cod_jug, boolean guardado, int puntu,
-			Date fecha_ulti_nivel) {
+			String fecha_ulti_nivel) {
 		super();
 		this.cod_punt = cod_punt;
 		this.cod_jug = cod_jug;
@@ -60,12 +62,21 @@ public class PuntuGeneral {
 		this.puntu = puntu;
 	}
 
-	public Date getFecha_ulti_nivel() {
+	public String getFecha_ulti_nivel() {
 		return fecha_ulti_nivel;
 	}
 
-	public void setFecha_ulti_nivel(Date fecha_ulti_nivel) {
-		this.fecha_ulti_nivel = fecha_ulti_nivel;
+	public void setFecha_ulti_nivel(String fecha_ulti_nivel) {
+		this.fecha_ulti_nivel = ConversorFecha.parsearFecha(fecha_ulti_nivel);
 	}
+	
 
+	public int compareTo(PuntuGeneral tempGeneral) { 
+		if(this.getPuntu() > tempGeneral.getPuntu())
+			return 1;
+		else if(this.getPuntu() == tempGeneral.getPuntu())
+			return 0;
+		else
+			return -1;
+	}
 }

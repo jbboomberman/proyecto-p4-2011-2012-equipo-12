@@ -1,7 +1,6 @@
 package bomberman.ventanas;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,36 +8,29 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import bomberman.database.AccesoMapa;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
-import bomberman.managers.PrepararEscenario;
-import bomberman.outin.LeerMapa;
 
-public class VentanaSeleccion extends JDialog implements ActionListener {
-
+public class VentanaSeguir extends JDialog implements ActionListener{
 	private JLabel texto;
-	private JButton jbHistoria;
-	private JButton jbMultijugador;
-	private JButton jbMaster;
+	private JButton jbSeguirNivel;
+	private JButton jbVolver;
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
 	private Jugador jugador;
 	private ModoJuego modo;
 
-	public VentanaSeleccion(Jugador jug) {
+	public VentanaSeguir(Jugador jug) {
 
 		// Inicializamos las variables.
 		this.jugador = jug;
 		texto = new JLabel("Seleccione el modo de juego: ");
-		jbHistoria = new JButton("Historia");
-		jbMultijugador = new JButton("Multijugador");
-		jbMaster = new JButton("Máster");
+		jbSeguirNivel = new JButton("Seguir nivel");
+		jbVolver = new JButton("Volver");
 		panelInferior = new JPanel();
 		panelSuperior = new JPanel();
 
@@ -48,18 +40,16 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		getContentPane().setLayout(new BorderLayout());
 		// Añadir elementos a los paneles
 		panelSuperior.add(texto);
-		panelInferior.add(jbHistoria);
-		panelInferior.add(jbMultijugador);
-		panelInferior.add(jbMaster);
+		panelInferior.add(jbSeguirNivel);
+		panelInferior.add(jbVolver);
 
 		getContentPane().add(panelInferior, BorderLayout.SOUTH);
 		getContentPane().add(panelSuperior, BorderLayout.NORTH);
 
 		// Añadir escuchadores
-		jbHistoria.addActionListener(this);
-		jbMultijugador.addActionListener(this);
-		jbMaster.addActionListener(this);
-
+		jbSeguirNivel.addActionListener(this);
+		jbVolver.addActionListener(this);
+		
 		// Parámetros de la ventana.
 		/*
 		 * Determinamos un tamaño mínimo de la ventana aunque dejamos que tenga
@@ -68,7 +58,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		 */
 		this.setSize(300, 100);
 		this.setResizable(false);
-		this.setTitle("Elija un modo");
+		this.setTitle("Elija una opción");
 		this.setModal(true);
 		// Para que el hilo de Swing acabe cuando cerremos la ventana.
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -99,39 +89,22 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		Object botonPulsado = e.getSource();
 
 		// Si el boton pulsado erá botonAceptar
-		if (botonPulsado == jbHistoria) {
+		if (botonPulsado == jbSeguirNivel) {
 			 new Thread(
 	            		new Runnable() {
 	            			public void run() {
-	            				System.out.println("Entre");
-	            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(1));
-	            				modo = ModoJuego.Historia;
-	        					GestorVentana.ocultarVentana(VentanaSeleccion.class);
-	        					GestorVentana.hacerVisible(VentanaJuego.class, true);
-	        					// GestorVentana.hacerVisible(VentanaDatos.class, false);
+	            				ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno().getNivel() + 1);
+	            				ControlPrincipal.getJugadorUno().setNivel(ControlPrincipal.getJugadorUno().getNivel());
+	            				GestorVentana.hacerVisible(VentanaJuego.class, true);
 	            			}
 	            		}
 	            ).start();
 
-		} else if (botonPulsado == jbMultijugador) {
+		} else if (botonPulsado == jbVolver) {
 			new Thread(
             		new Runnable() {
             			public void run() {
-            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(11));
-            				modo = ModoJuego.Multijugador;
-        					GestorVentana.ocultarVentana(VentanaSeleccion.class);
-        					GestorVentana.hacerVisible(VentanaJuego.class, true);
-            			}
-            		}
-            ).start();
-
-		} else if (botonPulsado == jbMaster) {
-			new Thread(
-            		new Runnable() {
-            			public void run() {
-            				modo = ModoJuego.Master;
-            				GestorVentana.ocultarVentana(VentanaSeleccion.class);
-            				GestorVentana.hacerVisible(VentanaDirecto.class, false);
+            				GestorVentana.hacerVisible(VentanaInicial.class, true);
             			}
             		}
             ).start();

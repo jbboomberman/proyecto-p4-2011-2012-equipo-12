@@ -27,4 +27,6 @@ public interface Escenario extends ImageObserver {
 	public void setAcabarPartida(boolean acabar);
 	
 	public void superadoNivel();
+	
+	public ArrayList<Sprite> buscarPersonajePos(Class clase, Sprite spr);
 }

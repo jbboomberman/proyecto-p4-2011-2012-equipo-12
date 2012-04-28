@@ -167,10 +167,26 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	public void añadirSprite(Sprite spr) {
-		if (spr instanceof Llama || spr instanceof Pildora || spr instanceof Puerta) {
+		if (spr instanceof Llama || spr instanceof Pildora) {
 			arLista.add(0, spr);
 		} else if (spr instanceof Bomberman) {
 			arLista.add(arLista.size(), spr);
+		}else if(spr instanceof Puerta){
+			if(arLista.size() == 0)
+				arLista.add(spr);
+			else{
+				int cont = 0;
+				boolean encon = false;
+				while(!encon){
+					if(arLista.get(cont) instanceof Muro || arLista.get(cont) instanceof Bomberman){
+						encon = true;
+					}else{
+						cont++;
+					}
+				}
+				arLista.add(cont, spr);
+			}
+				
 		} else{
 			if(arLista.size() != 0 && bomber2 != null)
 				arLista.add(arLista.size() - 2, spr);
@@ -178,8 +194,6 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 				arLista.add(arLista.size() - 1, spr);
 			else
 				arLista.add(spr);
-		}
-		if(spr instanceof Bomba){
 		}
 	}
 
@@ -192,6 +206,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 				+ "&emsp;<b>Puntuación nivel:</b> " + jugador.getPuntuNivel()
 				+ "&emsp;<b>Puntuación total:</b> " + jugador.getPuntuacion()
 				+ "&emsp;<b>Enemigos restantes:</b> </html>");
+		ControlPrincipal.getJugadorUno().setPuntuacion(jugador.getPuntuacion());
+		ControlPrincipal.getJugadorUno().setPuntuNivel(jugador.getPuntuNivel());
 	}
 
 	public void empezarReloj() {
@@ -239,6 +255,16 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 */
 	public void borrarSprites(){
 		arLista.clear();
+	}
+	
+	public ArrayList<Sprite> buscarPersonajePos(Class clase, Sprite spr){
+		ArrayList<Sprite>tempArray = new ArrayList<Sprite>();
+		for(Sprite sprtTemp : arLista){
+			if(sprtTemp.colision(spr) && (sprtTemp != spr) && sprtTemp.getClass().isAssignableFrom(clase)){
+				tempArray.add(sprtTemp);
+			}
+		}
+		return tempArray;
 	}
 
 	public static void main(String[] args) {

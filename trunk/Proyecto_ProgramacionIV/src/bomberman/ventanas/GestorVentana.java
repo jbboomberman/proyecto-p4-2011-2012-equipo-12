@@ -28,7 +28,7 @@ public class GestorVentana {
 	 */
 	public static Vector<Window> iniciar() {
 		// Inicializamos el vector
-		Jugador jug = new Jugador("david", "h", "h", "h", 3, 0, 1, ModoJuego.Historia);
+		Jugador jug = new Jugador("david", "h", "h", "h", 3, 0, 1, ModoJuego.Historia, 1, 1);
 		Vector<Window> vector = new Vector<Window>();
 		// Se incializan todas las ventanas.
 		vector.add(new VentanaInicial());
@@ -42,6 +42,7 @@ public class GestorVentana {
 		vector.add(new VentanaCargar());
 		vector.add(new VentanaPuntuaciones());
 		vector.add(new VentanaControles());
+		vector.add(new VentanaSuperado());
 		// Se devuelve el vector con las ventanas
 		return vector;
 	}

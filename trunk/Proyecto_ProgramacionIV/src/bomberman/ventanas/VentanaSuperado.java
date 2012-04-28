@@ -4,6 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.util.Calendar;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,8 +16,13 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class VentanaSuperado extends JDialog {
+import bomberman.database.AccesoPuntuGen;
+import bomberman.database.PuntuGeneral;
+import bomberman.managers.ControlPrincipal;
 
+public class VentanaSuperado extends JDialog implements ActionListener{
+
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JButton jbGuardarPart;
 	private JButton jbPasarNivel;
 	private JButton jbVolverMenu;
@@ -92,6 +102,38 @@ public class VentanaSuperado extends JDialog {
 		return panelCompl;
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		/*
+		 * Para saber dónde se originó el evento creamos un Object con la
+		 * dirección del generador del evento.
+		 */
+		Object botonPulsado = e.getSource();
+		
+		if(botonPulsado == jbGuardarPart){
+			Calendar tempCalendar = Calendar.getInstance();
+			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal.getJugadorUno().getCodPart(), 
+					ControlPrincipal.getJugadorUno().getCodJugador(), true, 
+					ControlPrincipal.getJugadorUno().getPuntuacion(),
+					new String(tempCalendar.get(Calendar.YEAR) + "" + tempCalendar.get(Calendar.MONTH)
+							+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH))));
+			GestorVentana.ocultarVentana(VentanaSuperado.class);
+			GestorVentana.hacerVisible(VentanaSeguir.class, true);
+		}else if (botonPulsado == jbPasarNivel){
+			ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno().getNivel() + 1);
+			ControlPrincipal.getJugadorUno().setNivel(ControlPrincipal.getJugadorUno().getNivel());
+			GestorVentana.hacerVisible(VentanaJuego.class, true);
+		}else if(botonPulsado == jbVolverMenu){
+			Calendar tempCalendar = Calendar.getInstance();
+			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal.getJugadorUno().getCodPart(), 
+					ControlPrincipal.getJugadorUno().getCodJugador(), false, 
+					ControlPrincipal.getJugadorUno().getPuntuacion(),
+					new String(tempCalendar.get(Calendar.YEAR) + "" + tempCalendar.get(Calendar.MONTH)
+							+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH))));
+			GestorVentana.ocultarVentana(VentanaSuperado.class);
+			GestorVentana.hacerVisible(VentanaInicial.class, true);
+		}
+		
+	}
 	public static void main(String[] args) {
 		VentanaSuperado prueba = new VentanaSuperado();
 		prueba.setVisible(true);
