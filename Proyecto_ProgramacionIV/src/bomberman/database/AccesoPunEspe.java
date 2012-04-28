@@ -49,10 +49,6 @@ public class AccesoPunEspe {
 		}
 	}
 
-	// public static ArrayList<PuntuEspe> listaPunt() {
-	//
-	// }
-
 	public static ArrayList<PuntuEspe> listaPuntu(int codPuntuGene) {
 		PuntuEspe tempJug = null;
 		ArrayList<PuntuEspe> tempPuntu = new ArrayList<PuntuEspe>();
@@ -137,7 +133,7 @@ public class AccesoPunEspe {
 							if (!rs.getBoolean(3))
 								tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 										.getInt(2), rs.getBoolean(3), rs
-										.getInt(4), rs.getString(5)));
+										.getInt(4), rs.getString(5), rs.getInt(6)));
 						}
 						return tempPuntu;
 				}
@@ -157,7 +153,7 @@ public class AccesoPunEspe {
 						if (!rs.getBoolean(3))
 							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-									rs.getString(5)));
+									rs.getString(5), rs.getInt(6)));
 					}
 					return tempPuntu;
 				}
@@ -178,7 +174,7 @@ public class AccesoPunEspe {
 						if (!rs.getBoolean(3))
 							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-									rs.getString(5)));
+									rs.getString(5), rs.getInt(6)));
 					}
 					return tempPuntu;
 			}

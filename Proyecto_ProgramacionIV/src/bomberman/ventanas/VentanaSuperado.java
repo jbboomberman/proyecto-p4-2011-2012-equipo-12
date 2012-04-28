@@ -115,7 +115,8 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 					ControlPrincipal.getJugadorUno().getCodJugador(), true, 
 					ControlPrincipal.getJugadorUno().getPuntuacion(),
 					new String(tempCalendar.get(Calendar.YEAR) + "" + tempCalendar.get(Calendar.MONTH)
-							+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH))));
+							+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH))
+			, ControlPrincipal.getJugadorUno().getVidas()));
 			GestorVentana.ocultarVentana(VentanaSuperado.class);
 			GestorVentana.hacerVisible(VentanaSeguir.class, true);
 		}else if (botonPulsado == jbPasarNivel){
@@ -128,7 +129,8 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 					ControlPrincipal.getJugadorUno().getCodJugador(), false, 
 					ControlPrincipal.getJugadorUno().getPuntuacion(),
 					new String(tempCalendar.get(Calendar.YEAR) + "" + tempCalendar.get(Calendar.MONTH)
-							+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH))));
+							+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH)),
+							ControlPrincipal.getJugadorUno().getVidas()));
 			GestorVentana.ocultarVentana(VentanaSuperado.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
