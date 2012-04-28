@@ -62,7 +62,7 @@ public class ControlPrincipal {
 				ModoJuego.Historia, AccesoJugador.getNumJug(),
 				AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
 				AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
-				AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1));
+				AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1), false, false);
 		AccesoJugador.insertarJugador(new bomberman.database.Jugador(
 				AccesoJugador.getNumJug(), jugadorUno.getNombre(), jugadorUno
 						.getApellidos(), jugadorUno.getNick(), jugadorUno

@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import bomberman.database.AccesoControles;
+import bomberman.database.AccesoExtras;
 import bomberman.managers.ControlPrincipal;
 
 //Fig13a  Pag 18.
@@ -47,6 +48,8 @@ public class VentanaControles extends JDialog implements ActionListener {
 	private JTextField jtArribaDos;
 	private JTextField jtAbajoDos;
 	private JTextField jtBombaDos;
+	private JCheckBox jcEmail;
+	private JCheckBox jcSonido;
 
 	public VentanaControles() {
 		// Inicializamos variables
@@ -72,6 +75,8 @@ public class VentanaControles extends JDialog implements ActionListener {
 		jtDerechaDos = new JTextField(1);
 		jtIzquierdaDos = new JTextField(1);
 		jtBombaDos = new JTextField(1);
+		jcEmail = new JCheckBox();
+		jcSonido = new JCheckBox();
 
 		// Metemos las letras que tiene
 		jtArribaUno.setText(Character.toString((char) AccesoControles
@@ -94,6 +99,8 @@ public class VentanaControles extends JDialog implements ActionListener {
 				.getControl("IZQUIERDA", 2)));
 		jtBombaDos.setText(Character.toString((char) AccesoControles
 				.getControl("BOMBA", 2)));
+		jcEmail.setSelected(false);
+		jcSonido.setSelected(false);
 
 		// Layouts
 		jpSuperior.setLayout(new FlowLayout());
@@ -117,8 +124,8 @@ public class VentanaControles extends JDialog implements ActionListener {
 		meterTecla("Derecha", jpCenDer, jtDerechaDos);
 		meterTecla("Izquierda", jpCenDer, jtIzquierdaDos);
 		meterTecla("Bomba", jpCenDer, jtBombaDos);
-		meterCheckBox("Activar sonido", jpGeneral2);
-		meterCheckBox("Activar envio emails", jpGeneral2);
+		meterCheckBox("Activar sonido", jpGeneral2, jcSonido);
+		meterCheckBox("Activar envio emails", jpGeneral2, jcEmail);
 		jpCentro.add(jpCenIzq);
 		jpCentro.add(jpCenDer);
 		jpSuperior.add(new JLabel("Modifica los controles del programa"));
@@ -162,11 +169,10 @@ public class VentanaControles extends JDialog implements ActionListener {
 		cont.add(tempPanel);
 	}
 
-	private void meterCheckBox(String texto, Container cont) {
-		JCheckBox tempCheck = new JCheckBox();
+	private void meterCheckBox(String texto, Container cont, JCheckBox jcCheck) {
 		JLabel tempLabel = new JLabel(texto);
 		JPanel tempPanel = new JPanel();
-		tempPanel.add(tempCheck);
+		tempPanel.add(jcCheck);
 		tempPanel.add(tempLabel);
 		cont.add(tempPanel);
 	}
@@ -222,6 +228,11 @@ public class VentanaControles extends JDialog implements ActionListener {
 				ControlPrincipal.getJugadorDos().setBomba(
 						jtBombaDos.getText().charAt(0));
 			}
+			
+			AccesoExtras.setExtra("email", jcEmail.isSelected());
+			AccesoExtras.setExtra("sonido", jcSonido.isSelected());
+			ControlPrincipal.getJugadorUno().setSonido(jcSonido.isSelected());
+			ControlPrincipal.getJugadorUno().setQuiereEmail(jcEmail.isSelected());
 			GestorVentana.ocultarVentana(VentanaControles.class);
 
 		} else if (botonPulsado == jbCancelar) {
