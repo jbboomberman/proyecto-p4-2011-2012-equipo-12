@@ -15,6 +15,7 @@ import java.util.ConcurrentModificationException;
 import javax.swing.*;
 
 import bomberman.database.AccesoControles;
+import bomberman.database.AccesoExtras;
 import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoMapa;
 import bomberman.database.AccesoPunEspe;
@@ -37,6 +38,7 @@ import bomberman.protagonistas.Sprite;
 import bomberman.protagonistas.SpriteDinamico;
 import bomberman.protagonistas.Valcom;
 import bomberman.ventanas.GestorVentana;
+import bomberman.ventanas.VentanaCargar;
 import bomberman.ventanas.VentanaInicial;
 import bomberman.ventanas.VentanaJuego;
 import bomberman.ventanas.VentanaSeleccion;
@@ -180,7 +182,7 @@ public class ControlPrincipal {
 						jugadorUno.getNombre(), jugadorUno.getApellidos(),
 						jugadorUno.getNick(), jugadorUno.getEmail()))
 						.getCod_jugador(), false, jugadorUno.getPuntuacion(),
-				ConversorFecha.parsearFecha(new String(tempCalendar.get(Calendar.YEAR) + mes + dia)));
+				ConversorFecha.parsearFecha(new String(tempCalendar.get(Calendar.YEAR) + mes + dia)), 0);
 		AccesoPuntuGen.insertarPunt(tempGene);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Sansserif", Font.BOLD, 20));
@@ -199,6 +201,30 @@ public class ControlPrincipal {
 		ControlPrincipal prueba = new ControlPrincipal();
 	}
 
+	public static void cargarPartida(PuntuGeneral punt){
+		bomberman.database.Jugador partJug = AccesoJugador.getJugador(punt.getCod_jug());
+		jugadorUno.setNombre(partJug.getNomJugador());
+		jugadorUno.setApellidos(partJug.getApellJugador());
+		jugadorUno.setNick(partJug.getNickJugador());
+		jugadorUno.setEmail(partJug.getEmail());
+		jugadorUno.setPuntuacion(punt.getPuntu());
+		jugadorUno.setPuntuNivel(0);
+//		jugadorUno.setVidas(vidas)
+		jugadorUno.setNivel(AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()) + 1);
+		jugadorUno.setModo(ModoJuego.Historia);
+		jugadorUno.setCodJugador(punt.getCod_jug());
+		jugadorUno.setCodPart(punt.getCod_punt());
+		jugadorUno.setArriba(AccesoControles.getControl("ARRIBA", 1));
+		jugadorUno.setAbajo(AccesoControles.getControl("ABAJO", 1));
+		jugadorUno.setDerecha(AccesoControles.getControl("DERECHA", 1));
+		jugadorUno.setIzquierda(AccesoControles.getControl("IZQUIERDA", 1));
+		jugadorUno.setBomba(AccesoControles.getControl("BOMBA", 1));
+		jugadorUno.setSonido(AccesoExtras.getExtra("sonido"));
+		jugadorUno.setQuiereEmail(AccesoExtras.getExtra("email"));
+		ControlPrincipal.crearEscenario(AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()) + 1);
+		GestorVentana.ocultarVentana(VentanaCargar.class);
+		GestorVentana.hacerVisible(VentanaJuego.class, true);
+	}
 	public static void crearEscenario(int numEsce) {
 		Character array[][] = LeerMapa.LeerMapaJuego(numEsce);
 		PrepararEscenario.ColocarMapa(

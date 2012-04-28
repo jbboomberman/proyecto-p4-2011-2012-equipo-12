@@ -138,7 +138,7 @@ public class AccesoPuntuGen {
 							if (!rs.getBoolean(3))
 								tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 										.getInt(2), rs.getBoolean(3), rs
-										.getInt(4), rs.getString(5)));
+										.getInt(4), rs.getString(5), rs.getInt(6)));
 						}
 						return tempPuntu;
 				}
@@ -157,7 +157,7 @@ public class AccesoPuntuGen {
 						if (!rs.getBoolean(3))
 							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-									rs.getString(5)));
+									rs.getString(5), rs.getInt(6)));
 					}
 					return tempPuntu;
 				}
@@ -177,7 +177,7 @@ public class AccesoPuntuGen {
 						if (!rs.getBoolean(3))
 							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-									rs.getString(5)));
+									rs.getString(5), rs.getInt(6)));
 					}
 					return tempPuntu;
 			}
@@ -196,9 +196,11 @@ public class AccesoPuntuGen {
 			ResultSet rs = stat.executeQuery();
 			while (rs.next()) {
 				tempGen = new PuntuGeneral(rs.getInt(1), rs.getInt(2),
-						rs.getBoolean(3), rs.getInt(4), rs.getString(5));
+						rs.getBoolean(3), rs.getInt(4), rs.getString(5)
+						, rs.getInt(6));
 				tempPuntu.add(tempGen);
 			}
+			
 			rs.close();
 			stat.close();
 
@@ -207,5 +209,26 @@ public class AccesoPuntuGen {
 		}
 		return tempPuntu;
 
+	}
+	
+	public static ArrayList<PuntuGeneral> getPartidasGuardadas(){
+		ArrayList<PuntuGeneral>tempArray = new ArrayList<PuntuGeneral>();
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+					"SELECT * FROM PUNTUACION_GENERAL WHERE GUARDADO = ?;");
+			stat.setBoolean(1, true);
+			ResultSet rs = stat.executeQuery();
+			while (rs.next()) {
+				tempArray.add(new PuntuGeneral(rs.getInt(1), rs.getInt(2),
+						rs.getBoolean(3), rs.getInt(4), rs.getString(5)
+						, rs.getInt(6)));
+			}
+			
+			rs.close();			
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tempArray;
 	}
 }

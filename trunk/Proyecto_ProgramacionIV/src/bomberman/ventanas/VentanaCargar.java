@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,6 +20,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import bomberman.database.AccesoPuntuGen;
+import bomberman.database.PuntuGeneral;
+import bomberman.managers.ControlPrincipal;
+
 //Fig 11  Página 15.  Tiene una JTable.
 public class VentanaCargar extends JDialog implements ActionListener{
 
@@ -27,7 +32,7 @@ public class VentanaCargar extends JDialog implements ActionListener{
 	private JButton jbCargar;
 	private JButton jbCancelar;
 	private JPanel jpInferior;
-	private TableModelPuntuaciones tmModel;
+	private TableModelCargar tmModel;
 	private TableRowSorter<TableModel> ordenarTabla;
 	private JScrollPane jsTabla;
 
@@ -37,8 +42,8 @@ public class VentanaCargar extends JDialog implements ActionListener{
 		jbCargar = new JButton("Cargar partida");
 		jbCancelar = new JButton("Cancelar");
 		jpInferior = new JPanel();
-		tmModel = new TableModelPuntuaciones(0, 5);
-		tmModel.setColumnIdentifiers(new String[]{"Nombre", "Nick", "Fecha", "Nivel", "Puntuación"});
+		tmModel = new TableModelCargar(0, 8);
+		tmModel.setColumnIdentifiers(new String[]{"Código", "Nombre", "Apellido", "Nick", "Puntu", "Nivel", "Fecha", "Vidas"});
 		jtPuntu = new JTable(tmModel);
 		jsTabla = new JScrollPane(jtPuntu);
 
@@ -60,11 +65,14 @@ public class VentanaCargar extends JDialog implements ActionListener{
 		jbCancelar.addActionListener(this);
 		
 		//Determinamos que tamaños tendrá cada columna
+		diseñarColumnas("Código", 150, 250);
 		diseñarColumnas("Nombre", 150, 250);
-		diseñarColumnas("Nick", 100, 150);
-		diseñarColumnas("Fecha", 100, 150);
+		diseñarColumnas("Apellido", 100, 150);
+		diseñarColumnas("Nick", 150, 250);
+		diseñarColumnas("Puntu", 100, 150);
 		diseñarColumnas("Nivel", 100, 150);
-		diseñarColumnas("Puntuación", 100, 150);
+		diseñarColumnas("Fecha", 100, 150);
+		diseñarColumnas("Vidas", 100, 150);
 		
 		//Parámetros
 		jlTexto.setFont(new Font("sansserif", Font.BOLD, 20));
@@ -110,11 +118,26 @@ public class VentanaCargar extends JDialog implements ActionListener{
 		Object botonPulsado = e.getSource();
 		
 		if(botonPulsado == jbCargar){
+			int fila = jtPuntu.getSelectedRow();
+			PuntuGeneral seleccionada;
+			if(fila != -1){
+				seleccionada = tmModel.getFila(fila);
+				ControlPrincipal.cargarPartida(seleccionada);
+			}else{
+				JOptionPane.showMessageDialog(new JDialog(), "No has seleccionado ninguna fila","Error",JOptionPane.ERROR_MESSAGE);
+			}
 			
 		}else if(botonPulsado == jbCancelar){
 			GestorVentana.ocultarVentana(VentanaCargar.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
+	}
+	
+	public void setVisible(boolean estado){
+		super.setVisible(estado);
+		ArrayList<PuntuGeneral>partGuardas = AccesoPuntuGen.getPartidasGuardadas();
+		for(PuntuGeneral tempPunt : partGuardas)
+			tmModel.añadirFila(tempPunt);
 	}
 	
 	public static void main (String[]args){
