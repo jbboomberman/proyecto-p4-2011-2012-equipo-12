@@ -86,9 +86,9 @@ public class VentanaVidaMenos extends JDialog implements ActionListener{
 		}
 	}
 	
-	public static void main (String []args){
-		VentanaVidaMenos prueba = new VentanaVidaMenos(new Jugador("David", "h", "h", "h", 3, 2, 1, ModoJuego.Historia, 1, 1));
-		prueba.setVisible(true);
-			
-	}
+//	public static void main (String []args){
+//		VentanaVidaMenos prueba = new VentanaVidaMenos(new Jugador("David", "h", "h", "h", 3, 2, 1, ModoJuego.Historia, 1, 1));
+//		prueba.setVisible(true);
+//			
+//	}
 }

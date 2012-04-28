@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import bomberman.managers.ControlPrincipal;
+
 public class AccesoControles {
 	/*
 	 * Representará el acceso a la tabla CONTROLES y tendrá tres métodos
@@ -66,6 +68,37 @@ public class AccesoControles {
 		}
 		return Ac;
 
+	}
+	
+	public static int getControl(String nomAccion, int tipJug){
+		int cod = -1;
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+					"SELECT * FROM CONTROLES WHERE NOM_ACCION = ? AND TIPO_JUG = ?;");
+			stat.setString(1, nomAccion);
+			stat.setInt(2, tipJug);
+			ResultSet rs = stat.executeQuery();
+			cod = rs.getInt(3);
+			rs.close();
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cod;
+	}
+	
+	public static void setControl(String nomAccion, int tipJug, int codAscii){
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+					"UPDATE CONTROLES SET COD_ASCII_TECLA = ? WHERE NOM_ACCION = ? AND TIPO_JUG = ?;");
+			stat.setInt(1, codAscii);
+			stat.setString(2, nomAccion);
+			stat.setInt(3, tipJug);
+			stat.executeUpdate();
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String args[])

@@ -3,6 +3,7 @@ package bomberman.ventanas;
 import java.util.*;
 import java.awt.*;
 
+import bomberman.database.AccesoControles;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 
@@ -28,7 +29,9 @@ public class GestorVentana {
 	 */
 	public static Vector<Window> iniciar() {
 		// Inicializamos el vector
-		Jugador jug = new Jugador("david", "h", "h", "h", 3, 0, 1, ModoJuego.Historia, 1, 1);
+		Jugador jug = new Jugador("david", "h", "h", "h", 3, 0, 1, ModoJuego.Historia, 1, 1, AccesoControles.getControl("DERECHA", 1),
+				AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
+				AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1));
 		Vector<Window> vector = new Vector<Window>();
 		// Se incializan todas las ventanas.
 		vector.add(new VentanaInicial());

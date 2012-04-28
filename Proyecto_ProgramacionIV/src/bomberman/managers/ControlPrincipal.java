@@ -14,6 +14,7 @@ import java.util.ConcurrentModificationException;
 
 import javax.swing.*;
 
+import bomberman.database.AccesoControles;
 import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoMapa;
 import bomberman.database.AccesoPunEspe;
@@ -59,7 +60,9 @@ public class ControlPrincipal {
 		// Pruebaaaaaaaaaaaaaaaaa
 		jugadorUno = new Jugador("David", "O", "nose", "no", 1, 0, 1,
 				ModoJuego.Historia, AccesoJugador.getNumJug(),
-				AccesoPuntuGen.getNumPunt());
+				AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
+				AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
+				AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1));
 		AccesoJugador.insertarJugador(new bomberman.database.Jugador(
 				AccesoJugador.getNumJug(), jugadorUno.getNombre(), jugadorUno
 						.getApellidos(), jugadorUno.getNick(), jugadorUno
@@ -210,5 +213,13 @@ public class ControlPrincipal {
 
 	public static void setJugadorUno(Jugador jug) {
 		jugadorUno = jug;
+	}
+	
+	public static Jugador getJugadorDos() {
+		return jugadorDos;
+	}
+
+	public static void setJugadorDos(Jugador jug) {
+		jugadorDos = jug;
 	}
 }
