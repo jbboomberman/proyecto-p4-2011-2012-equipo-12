@@ -26,6 +26,8 @@ public class Jugador {
 	private int derecha;
 	private int izquierda;
 	private int bomba;
+	private boolean sonido;
+	private boolean quiereEmail;
 
 	/**
 	 * Constructor simple de la clase Jugador.
@@ -45,7 +47,7 @@ public class Jugador {
 
 	public Jugador(String nom, String ape, String ni, String mail, int vid,
 			int punt, int niv, ModoJuego mode, int codJug, int codPartida,
-			int der, int izq, int arr, int abj, int bom) {
+			int der, int izq, int arr, int abj, int bom, boolean son, boolean em) {
 		this.nombre = nom;
 		this.apellidos = ape;
 		this.nick = ni;
@@ -61,6 +63,8 @@ public class Jugador {
 		this.abajo = abj;
 		this.arriba = arr;
 		this.bomba = bom;
+		this.sonido = son;
+		this.quiereEmail = em;
 	}
 
 	/**
@@ -233,6 +237,22 @@ public class Jugador {
 
 	public void setBomba(int bomba) {
 		this.bomba = bomba;
+	}
+
+	public boolean isSonido() {
+		return sonido;
+	}
+
+	public void setSonido(boolean sonido) {
+		this.sonido = sonido;
+	}
+
+	public boolean isQuiereEmail() {
+		return quiereEmail;
+	}
+
+	public void setQuiereEmail(boolean quiereEmail) {
+		this.quiereEmail = quiereEmail;
 	}
 
 	/**

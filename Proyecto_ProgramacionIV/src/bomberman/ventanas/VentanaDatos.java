@@ -7,6 +7,7 @@ import java.awt.*;
 import bomberman.managers.ControlPrincipal;
 import bomberman.outin.*;
 import bomberman.database.AccesoControles;
+import bomberman.database.AccesoExtras;
 import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.enumeraciones.ModoJuego;
@@ -143,7 +144,8 @@ public class VentanaDatos extends JDialog implements ActionListener {
 							ControlPrincipal.getJugadorUno().getModo(), AccesoJugador.getNumJug()
 							, AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
 							AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
-							AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1));
+							AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1),
+							AccesoExtras.getExtra("sonido"), AccesoExtras.getExtra("email"));
 					ControlPrincipal.setJugadorUno(tempJug);
 					AccesoJugador.insertarJugador(new bomberman.database.Jugador(AccesoJugador.getNumJug()
 							, nom.getText(), ape.getText(), nic.getText(), email.getText()));

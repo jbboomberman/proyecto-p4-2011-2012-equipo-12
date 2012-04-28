@@ -31,7 +31,7 @@ public class GestorVentana {
 		// Inicializamos el vector
 		Jugador jug = new Jugador("david", "h", "h", "h", 3, 0, 1, ModoJuego.Historia, 1, 1, AccesoControles.getControl("DERECHA", 1),
 				AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
-				AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1));
+				AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1), false, false);
 		Vector<Window> vector = new Vector<Window>();
 		// Se incializan todas las ventanas.
 		vector.add(new VentanaInicial());
