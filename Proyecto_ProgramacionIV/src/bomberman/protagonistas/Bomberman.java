@@ -1,6 +1,7 @@
 package bomberman.protagonistas;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
@@ -96,8 +97,6 @@ public abstract class Bomberman extends SpriteDinamico {
 		else if (spr instanceof Bomba) {
 			if (((Bomba) spr).isPisada())
 				return false;
-		}else if(spr instanceof Puerta){
-			escenario.superadoNivel();
 		}
 		return true;
 	}

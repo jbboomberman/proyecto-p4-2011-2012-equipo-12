@@ -21,10 +21,18 @@ public class TableModelPuntuaciones extends DefaultTableModel {
 
 		this.addRow(new Object[] {
 				AccesoJugador.getJugador(punt.getCod_jug()).getNomJugador(),
+				AccesoJugador.getJugador(punt.getCod_jug()).getApellJugador(),
 				AccesoJugador.getJugador(punt.getCod_jug()).getNickJugador(),
-				punt.getFecha_ulti_nivel().toString(),
+				punt.getPuntu(),
 				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()), 
-				punt.getPuntu() });
+				punt.getFecha_ulti_nivel()
+				 });
+	}
+	
+	public void deleteAllRows(){
+		while(this.getRowCount() > 0){
+			this.removeRow(0);
+		}
 	}
 
 	/**

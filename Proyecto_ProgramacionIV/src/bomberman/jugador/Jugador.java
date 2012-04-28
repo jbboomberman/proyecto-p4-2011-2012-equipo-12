@@ -19,6 +19,8 @@ public class Jugador {
         private int vidas;
         private int nivel;
         private ModoJuego modo;
+        private int codJugador;
+        private int codPart;
 
         /**
          * Constructor simple de la clase Jugador.
@@ -36,7 +38,7 @@ public class Jugador {
                 this.email = mail;
         }
 
-        public Jugador(String nom, String ape, String ni, String mail, int vid, int punt, int niv, ModoJuego mode) {
+        public Jugador(String nom, String ape, String ni, String mail, int vid, int punt, int niv, ModoJuego mode, int codJug, int codPartida) {
                 this.nombre = nom;
                 this.apellidos = ape;
                 this.nick = ni;
@@ -45,6 +47,8 @@ public class Jugador {
                 this.puntuacion = punt;
                 this.nivel = niv;
                 this.modo = mode;
+                this.codJugador = codJug;
+                this.codPart = codPartida;
         }
 
         /**
@@ -164,7 +168,23 @@ public class Jugador {
                 this.modo = modo;
         }
 
-        /**
+        public int getCodPart() {
+			return codPart;
+		}
+
+		public void setCodPart(int codPart) {
+			this.codPart = codPart;
+		}
+
+		public int getCodJugador() {
+			return codJugador;
+		}
+
+		public void setCodJugador(int codJugador) {
+			this.codJugador = codJugador;
+		}
+
+		/**
          * Pra comprobar si estamos muertos.
          * 
          * @return boolean, true si estamos muertos - false si no estamos muertos.

@@ -7,6 +7,7 @@ import java.awt.*;
 import bomberman.managers.ControlPrincipal;
 import bomberman.outin.*;
 import bomberman.database.AccesoJugador;
+import bomberman.database.AccesoPuntuGen;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.*;
 
@@ -136,6 +137,11 @@ public class VentanaDatos extends JDialog implements ActionListener {
 			} else {
 				if(AccesoJugador.getJugador(nom.getText(), ape.getText(),
 						nic.getText(), email.getText()) == null){
+					Jugador tempJug = new Jugador(nom.getText(), ape.getText(), nic.getText()
+							, email.getText(), 3, 0, ControlPrincipal.getJugadorUno().getNivel(),
+							ControlPrincipal.getJugadorUno().getModo(), AccesoJugador.getNumJug()
+							, AccesoPuntuGen.getNumPunt());
+					ControlPrincipal.setJugadorUno(tempJug);
 					AccesoJugador.insertarJugador(new bomberman.database.Jugador(AccesoJugador.getNumJug()
 							, nom.getText(), ape.getText(), nic.getText(), email.getText()));
 				}
