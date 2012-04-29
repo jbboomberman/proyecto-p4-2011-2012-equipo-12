@@ -17,7 +17,6 @@ public class GestionBD {
 			Class.forName("org.sqlite.JDBC");
 			conexion = DriverManager
 					.getConnection("jdbc:sqlite:database/bombermanSQL.s3db");
-			System.out.println("conecta a la base de datos");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

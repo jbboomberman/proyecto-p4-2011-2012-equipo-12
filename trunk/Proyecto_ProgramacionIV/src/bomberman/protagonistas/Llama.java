@@ -1,5 +1,7 @@
 package bomberman.protagonistas;
 
+import java.util.ArrayList;
+
 import bomberman.enumeraciones.TiposLlama;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
@@ -101,6 +103,14 @@ public class Llama extends SpriteDinamico {
 				spr.procDestruccion();
 		} else if (spr instanceof Enemigo || spr instanceof Bomberman)
 			spr.procDestruccion();
+		else if (spr instanceof Puerta){
+			ArrayList<Sprite> tempArray = escenario
+			.buscarPersonajePos(Muro.class, spr);
+			if (tempArray.size() > 0) {
+				tempArray.get(0).procDestruccion();
+				return true;
+			}
+		}
 		return true;
 	}
 }

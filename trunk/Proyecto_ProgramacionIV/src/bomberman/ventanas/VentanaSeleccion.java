@@ -132,6 +132,11 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			new Thread(
             		new Runnable() {
             			public void run() {
+            				ControlPrincipal.getJugadorUno().setArriba(AccesoControles.getControl("ARRIBA", 1));
+            				ControlPrincipal.getJugadorUno().setAbajo(AccesoControles.getControl("ABAJO", 1));
+            				ControlPrincipal.getJugadorUno().setDerecha(AccesoControles.getControl("DERECHA", 1));
+            				ControlPrincipal.getJugadorUno().setIzquierda(AccesoControles.getControl("IZQUIERDA", 1));
+            				ControlPrincipal.getJugadorUno().setBomba(AccesoControles.getControl("BOMBA", 1));
             				ControlPrincipal.getJugadorUno().setModo(ModoJuego.Master);
             				GestorVentana.ocultarVentana(VentanaSeleccion.class);
             				GestorVentana.hacerVisible(VentanaDirecto.class, false);
