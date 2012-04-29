@@ -20,8 +20,6 @@ public abstract class SpriteDinamico extends Sprite {
 	protected int deltaY;
 	//La velocidad en general
 	protected int velocidad;
-	//El tamaño generañ de ancho y largo
-	protected final int CASILLA = 32;
 	//Para saber si es la primera vez que se mueve
 	protected boolean primeraVezMover;
 	/*

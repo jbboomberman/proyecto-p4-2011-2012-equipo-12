@@ -54,16 +54,17 @@ public abstract class Bomberman extends SpriteDinamico {
 		deltaY = 0;
 		velocidad = 150;
 		velocidadPic = 25;
-		parado = false;
+		parado = true;
 		numBomba = 0;
 		maxBomba = 1;
-		alcanceMax = 4;
+		alcanceMax = 4;;
 	}
 
 	/**
 	 * Sobreescribe el método mover() de la clase Sprite.
 	 */
 	public void mover() {
+		//Si está parado la imagen no se tiene que mover.
 		if (isParado()) {
 			imagActual = 0;
 		} else {
@@ -81,46 +82,88 @@ public abstract class Bomberman extends SpriteDinamico {
 		}
 	}
 
+	/**
+	 * Nos devueleve si está parado o no
+	 * @return boolean - parado
+	 */
 	public boolean isParado() {
 		return parado;
 	}
 
+	/**
+	 * Pone la variable parado según
+	 * el atributo que reciba.
+	 * @param parado - boolean
+	 */
 	public void setParado(boolean parado) {
 		this.parado = parado;
 	}
 
+	/**
+	 * Devueleve el parámetro numBomba.
+	 * Número de bombas puestas sin explotar.
+	 * @return numBomba - int
+	 */
 	public int getNumBomba() {
 		return numBomba;
 	}
 
+	/**
+	 * Modificamos el parámetro numBomba.
+	 * @param numBomba - int
+	 */
 	public void setNumBomba(int numBomba) {
 		this.numBomba = numBomba;
 	}
 
+	/**
+	 * Devuelve el número máximo
+	 *  de bombas que puede poner.
+	 * @return maxBomba - int
+	 */
 	public int getMaxBomba() {
 		return maxBomba;
 	}
 
+	/**
+	 * Modifica el número máximo de bombas que
+	 * puede poner.
+	 * @param maxBomba - int
+	 */
 	public void setMaxBomba(int maxBomba) {
 		this.maxBomba = maxBomba;
 	}
 
+	/**
+	 * Recibe un KeyEvent y hace algo
+	 * en caso de que esa tecla active algo o no.
+	 * Es abstracto porque según el Bomberman
+	 * hace una cosa u otra.
+	 * @param e - KeyEvent
+	 */
 	public abstract void teclaPulsada(KeyEvent e);
 
 	/**
 	 * Este método recibe el KeyEvent que ha recogido la ventana 'VentanaJuego'
 	 * y decide que hacer según la tecla soltada.
-	 * 
-	 * @param e
-	 *            - KeyEvent
+	 * @param e - KeyEvent
 	 */
 	public abstract void teclaSoltada(KeyEvent e);
 
+	/**
+	 * Determina que hacer en caso de que se choque
+	 * con algún objeto.
+	 * @return boolean - Si se ha chocado o no.
+	 */
 	public boolean determinarChoque(Sprite spr) {
 		if (spr instanceof Pildora)
 			spr.procDestruccion();
 		else if (spr instanceof Enemigo)
 			this.procDestruccion();
+		/*
+		 * En caso de que vaya a pisar una bomba
+		 * que no ha sido pisada puede pasar.
+		 */
 		else if (spr instanceof Bomba) {
 			if (((Bomba) spr).isPisada())
 				return false;
@@ -128,6 +171,9 @@ public abstract class Bomberman extends SpriteDinamico {
 		return true;
 	}
 	
+	/**
+	 * Acaba la partida en caso de que tenga que morir.
+	 */
 	public void procDestruccion(){
 		seDestruir = true;
 		((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).setAcabarPartida(true);
