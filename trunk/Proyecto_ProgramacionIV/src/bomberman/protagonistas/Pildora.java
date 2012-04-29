@@ -3,13 +3,27 @@ package bomberman.protagonistas;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 
+/**
+ * Clase que representa las píldoras del juego.
+ * @author David
+ * @version 1.0
+ */
 public class Pildora extends SpriteEstatico {
 
+	//Tipo de píldora
 	private int tipo;
-	private final int ANCHURA_PILDORA = 33;
-	private final int ALTURA_PILDORA = 33;
+	//Bomberman al que afectará la píldora.
 	private Bomberman bomberman;
 
+	/**
+	 * Constructor principal de la clase Pildora.
+	 * @param esce - Escenario
+	 * @param x - float
+	 * @param y - float
+	 * @param tip - int
+	 * @param bomber - Bomberman
+	 * @param jug - Jugador
+	 */
 	public Pildora(Escenario esce, float x, float y, int tip, Bomberman bomber,
 			Jugador jug) {
 		super(esce, jug, x, y);
@@ -42,10 +56,14 @@ public class Pildora extends SpriteEstatico {
 		}
 		this.posX = x;
 		this.posY = y;
-		this.altura = ALTURA_PILDORA;
-		this.anchura = ANCHURA_PILDORA;
+		this.altura = CASILLA;
+		this.anchura = CASILLA;
 	}
-
+	
+	/**
+	 * Método que se utiliza para cuando
+	 * se tenga que destruir la píldora.
+	 */
 	public void procDestruccion() {
 		super.procDestruccion();
 		this.bomberman.setMaxBomba(this.bomberman.getMaxBomba() + 1);

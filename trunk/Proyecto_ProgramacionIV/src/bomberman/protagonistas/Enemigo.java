@@ -29,6 +29,8 @@ public class Enemigo extends SpriteDinamico {
 	public Enemigo(Escenario esce, float x, float y, Jugador jug) {
 		super(esce, x, y, jug);
 		aleatorizacion = new ArrayList<Integer>();
+		this.altura = CASILLA;
+		this.anchura = CASILLA;
 	}
 
 	/**

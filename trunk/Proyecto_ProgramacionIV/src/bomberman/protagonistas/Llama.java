@@ -1,24 +1,39 @@
 package bomberman.protagonistas;
 
-import java.awt.Graphics2D;
-
 import bomberman.enumeraciones.TiposLlama;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
-import bomberman.managers.ManagerImagen;
 
+/**
+ * Esta clase representa las llamas que generan cuando
+ * se produce una explosión de una bomba.
+ * @author David
+ * @version 1.0
+ */
 public class Llama extends SpriteDinamico {
 
+	//El tipo de llama.
 	private TiposLlama tipo;
 
+	/**
+	 * Constructor principal de la clase Llama.
+	 * @param esce - Escenario
+	 * @param x - float
+	 * @param y - float
+	 * @param jug - Jugador
+	 * @param tip - TipoLlama
+	 */
 	public Llama(Escenario esce, float x, float y, Jugador jug, TiposLlama tip) {
 		super(esce, x, y, jug);
 		this.escenario = esce;
 		this.tipo = tip;
 		this.velocidadPic = 10;
 
+		/*
+		 * Dependiendo de la clase de Llama tendrá
+		 * diferentes imágenes.
+		 */
 		switch (tipo) {
-
 		// Centro
 		case CENTRAL:
 			spritesImag = new String[] { "llama.gif_1", "llama.gif_2",
@@ -55,17 +70,31 @@ public class Llama extends SpriteDinamico {
 					"llama.gif_31", "llama.gif_32" };
 			break;
 		}
-		this.anchura = ManagerImagen.getImagen(spritesImag[0]).getWidth();
-		this.altura = ManagerImagen.getImagen(spritesImag[0]).getHeight();
+		this.anchura = CASILLA;
+		this.altura = CASILLA;
 	}
 
+	/**
+	 * Sobreescribe el método mover() y si se choca
+	 * con algo determina que tiene que hacer.
+	 */
 	public void mover() {
 		super.mover();
 		seChoca(this.getPosX(), this.getPosY());
+		/*
+		 * Si llegamos a la última imagen del
+		 * array entonces hay que acabar la llama.
+		 */
 		if (imagActual == (spritesImag.length - 1))
 			this.destruir();
 	}
 
+	/**
+	 * Determina que hacer en caso de choque.
+	 * @param spr - Sprite
+	 * @return boolean - Si se ha chocado con
+	 * algo o no.
+	 */
 	public boolean determinarChoque(Sprite spr) {
 		if (spr instanceof Muro) {
 			if (((Muro) spr).isDestructible())
