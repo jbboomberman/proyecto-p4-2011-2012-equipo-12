@@ -23,7 +23,7 @@ public abstract class Bomberman extends SpriteDinamico {
 	protected String[] spritesDestRight;
 	protected String[] spritesDestLeft;
 	protected boolean parado;
-	protected final int ANCH_ALT_MURO = 33;
+	protected final int ANCH_ALT_MURO = 32;
 	protected int numBomba;
 	protected int maxBomba;
 	protected int alcanceMax;

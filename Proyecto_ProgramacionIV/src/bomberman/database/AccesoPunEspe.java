@@ -83,6 +83,7 @@ public class AccesoPunEspe {
 		ArrayList<PuntuEspe> tempArrayPuntuEspe = AccesoPunEspe.listaPuntu(codPuntuGeneral);
 		for(PuntuEspe tempPuntuEspe : tempArrayPuntuEspe)
 			nivMax = Math.max(nivMax, tempPuntuEspe.getNivel());
+		System.out.println(nivMax);
 		return nivMax;
 	}
 	

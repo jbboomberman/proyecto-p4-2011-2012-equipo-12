@@ -12,7 +12,7 @@ public abstract class SpriteDinamico extends Sprite {
 	protected int deltaX;
 	protected int deltaY;
 	protected int velocidad;
-	protected final int CASILLA = 33;
+	protected final int CASILLA = 32;
 	protected boolean primeraVezMover;
 	protected boolean[] sitioLado;
 

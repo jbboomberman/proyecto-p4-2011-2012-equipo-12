@@ -38,7 +38,6 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	private boolean parado;
 	private boolean finalizar;
 	private boolean superadoNivel;
-	private int rivalesRestantes;
 
 	/**
 	 * Constructor principal de la ventana.
@@ -49,7 +48,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		superadoNivel = false;
 		arLista = new ArrayList<Sprite>();
 		canPintar = new Canvas();
-		canPintar.setSize(660, 660);
+		canPintar.setSize(640, 640);
 		panelMarcador = new JPanel();
 		jugador = ControlPrincipal.getJugadorUno();
 		try {
@@ -66,7 +65,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 		// Alineamientos
 
-		panelMarcador.setSize(660, 50);
+		panelMarcador.setSize(640, 50);
 		panelMarcador.add(jlText, BorderLayout.NORTH);
 		panelMarcador.add(tiempo.getReloj(), BorderLayout.SOUTH);
 		tiempo.getReloj().setFont(new Font("SansSerif", Font.PLAIN, 16));
@@ -85,7 +84,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		// Determinamos los parámetros de la ventana.
 		this.setResizable(true);
 		this.setTitle("BombermanAddict");
-		this.setSize(677, 747);
+		this.setSize(657, 727);
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 
