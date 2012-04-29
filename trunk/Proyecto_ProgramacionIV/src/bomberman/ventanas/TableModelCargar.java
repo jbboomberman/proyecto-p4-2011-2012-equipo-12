@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoPunEspe;
 import bomberman.database.PuntuGeneral;
+import bomberman.outin.ConversorFecha;
 
 public class TableModelCargar extends DefaultTableModel {
 	private static final long serialVersionUID = -7461719037402108362L;
@@ -21,7 +22,7 @@ public class TableModelCargar extends DefaultTableModel {
 				AccesoJugador.getJugador(punt.getCod_jug()).getNickJugador(),
 				punt.getPuntu(),
 				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()),
-				punt.getFecha_ulti_nivel(),
+				ConversorFecha.parsearFecha(punt.getFecha_ulti_nivel()),
 				punt.getVidas()});
 	}
 
@@ -34,6 +35,12 @@ public class TableModelCargar extends DefaultTableModel {
 		return tempPunt;
 	}
 
+	public void deleteAllRows(){
+		while(this.getRowCount() > 0){
+			this.removeRow(0);
+		}
+	}
+	
 	/**
 	 * @override Sobreescribimos el método isCellEditable para así evitar que
 	 *           las celdas del JTable se puedan editar.

@@ -26,7 +26,7 @@ public class VentanaSeguir extends JDialog implements ActionListener{
 	public VentanaSeguir() {
 
 		// Inicializamos las variables.
-		texto = new JLabel("Seleccione el modo de juego: ");
+		texto = new JLabel("¿Quiere seguir jugando?: ");
 		jbSeguirNivel = new JButton("Seguir nivel");
 		jbVolver = new JButton("Volver");
 		panelInferior = new JPanel();

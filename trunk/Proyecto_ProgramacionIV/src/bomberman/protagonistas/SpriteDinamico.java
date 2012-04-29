@@ -64,7 +64,7 @@ public abstract class SpriteDinamico extends Sprite {
 								if(escenario.rivalesQuedan() > 0)
 									return false;
 								else
-									escenario.superadoNivel();
+									escenario.setSuperadoNivel(true);
 							}
 						}
 						return false;

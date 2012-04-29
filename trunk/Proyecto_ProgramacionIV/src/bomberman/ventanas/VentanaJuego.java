@@ -2,6 +2,8 @@ package bomberman.ventanas;
 
 import javax.swing.*;
 
+import bomberman.database.AccesoPuntuGen;
+import bomberman.database.PuntuGeneral;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
@@ -202,7 +204,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	public void setPuntuacion() {
-		jlText.setText("<html><b>Vidas</b>: " + ControlPrincipal.getJugadorUno().getVidas()
+		jugador = ControlPrincipal.getJugadorUno();
+		jlText.setText("<html><b>Vidas</b>: " + jugador.getVidas()
 				+ "&emsp;<b>Puntuación nivel:</b> " + jugador.getPuntuNivel()
 				+ "&emsp;<b>Puntuación total:</b> " + jugador.getPuntuacion()
 				+ "&emsp;<b>Enemigos restantes:</b> </html>");
@@ -217,8 +220,10 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if (visible)
+		if (visible){
+			this.setPuntuacion();
 			this.empezarReloj();
+		}
 	}
 
 	public CuentaAtras getReloj() {
@@ -241,8 +246,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		return finalizar;
 	}
 	
-	public void superadoNivel(){
-		superadoNivel = true;
+	public void setSuperadoNivel(boolean estado){
+		superadoNivel = estado;
 	}
 	
 	public boolean getSuperadoNivel(){
@@ -275,7 +280,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		}
 		return tempArray;
 	}
-
+	
 	public static void main(String[] args) {
 		VentanaJuego juego = new VentanaJuego();
 		juego.setVisible(true);

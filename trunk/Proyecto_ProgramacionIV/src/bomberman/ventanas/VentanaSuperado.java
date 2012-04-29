@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.managers.ControlPrincipal;
+import bomberman.outin.ConversorFecha;
 
 public class VentanaSuperado extends JDialog implements ActionListener{
 
@@ -66,6 +67,13 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		pPrincipal.add(pInferior, BorderLayout.SOUTH);
 		getContentPane().add(pPrincipal);
 
+		
+		//Escuchadores
+		jbGuardarPart.addActionListener(this);
+		jbPasarNivel.addActionListener(this);
+		jbVolverMenu.addActionListener(this);
+		
+		
 		// Carcterísticas de la ventana
 		/*
 		 * Determinamos un tamaño mínimo de la ventana aunque dejamos que tenga
@@ -110,18 +118,16 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		Object botonPulsado = e.getSource();
 		
 		if(botonPulsado == jbGuardarPart){
-			Calendar tempCalendar = Calendar.getInstance();
 			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal.getJugadorUno().getCodPart(), 
 					ControlPrincipal.getJugadorUno().getCodJugador(), true, 
 					ControlPrincipal.getJugadorUno().getPuntuacion(),
-					new String(tempCalendar.get(Calendar.YEAR) + "" + tempCalendar.get(Calendar.MONTH)
-							+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH))
+					ConversorFecha.getFecha()
 			, ControlPrincipal.getJugadorUno().getVidas()));
 			GestorVentana.ocultarVentana(VentanaSuperado.class);
 			GestorVentana.hacerVisible(VentanaSeguir.class, true);
 		}else if (botonPulsado == jbPasarNivel){
-			ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno().getNivel() + 1);
-			ControlPrincipal.getJugadorUno().setNivel(ControlPrincipal.getJugadorUno().getNivel());
+			ControlPrincipal.getJugadorUno().setNivel(ControlPrincipal.getJugadorUno().getNivel() + 1);
+			ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno().getNivel());
 			GestorVentana.hacerVisible(VentanaJuego.class, true);
 		}else if(botonPulsado == jbVolverMenu){
 			Calendar tempCalendar = Calendar.getInstance();

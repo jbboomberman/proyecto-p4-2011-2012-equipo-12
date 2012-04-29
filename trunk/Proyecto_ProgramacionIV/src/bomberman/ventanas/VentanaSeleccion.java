@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import bomberman.database.AccesoControles;
+import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoMapa;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
@@ -30,7 +31,6 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 	private JButton jbMaster;
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
-	private ModoJuego modo;
 
 	public VentanaSeleccion() {
 
@@ -76,14 +76,6 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
-	
-	public ModoJuego getModo() {
-		return modo;
-	}
-
-	public void setModo(ModoJuego modo) {
-		this.modo = modo;
-	}
 
 	/**
 	 * Implementamos el método 'actionPerformed' del interface ActionListener.
@@ -103,9 +95,10 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			 new Thread(
 	            		new Runnable() {
 	            			public void run() {
+	            				ControlPrincipal.getJugadorUno().setNivel(1);
+	            				ControlPrincipal.getJugadorUno().setModo(ModoJuego.Historia);
 	            				GestorVentana.ocultarVentana(VentanaSeleccion.class);
 	            				GestorVentana.hacerVisible(VentanaDatos.class, false);
-	            				modo = ModoJuego.Historia;
 	            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(1));
 //	        					GestorVentana.hacerVisible(VentanaJuego.class, true);
 	            			}
@@ -116,13 +109,19 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			new Thread(
             		new Runnable() {
             			public void run() {
+            				ControlPrincipal.getJugadorUno().setArriba(AccesoControles.getControl("ARRIBA", 1));
+            				ControlPrincipal.getJugadorUno().setAbajo(AccesoControles.getControl("ABAJO", 1));
+            				ControlPrincipal.getJugadorUno().setDerecha(AccesoControles.getControl("DERECHA", 1));
+            				ControlPrincipal.getJugadorUno().setIzquierda(AccesoControles.getControl("IZQUIERDA", 1));
+            				ControlPrincipal.getJugadorUno().setBomba(AccesoControles.getControl("BOMBA", 1));
             				ControlPrincipal.setJugadorDos(new Jugador());
             				ControlPrincipal.getJugadorDos().setArriba(AccesoControles.getControl("ARRIBA", 2));
             				ControlPrincipal.getJugadorDos().setAbajo(AccesoControles.getControl("ABAJO", 2));
             				ControlPrincipal.getJugadorDos().setDerecha(AccesoControles.getControl("DERECHA", 2));
             				ControlPrincipal.getJugadorDos().setIzquierda(AccesoControles.getControl("IZQUIERDA", 2));
+            				ControlPrincipal.getJugadorDos().setBomba(AccesoControles.getControl("BOMBA", 2));
+            				ControlPrincipal.getJugadorUno().setModo(ModoJuego.Multijugador);
             				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(11));
-            				modo = ModoJuego.Multijugador;
             				GestorVentana.ocultarVentana(VentanaSeleccion.class);
             				GestorVentana.hacerVisible(VentanaJuego.class, true);
             			}
@@ -133,7 +132,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			new Thread(
             		new Runnable() {
             			public void run() {
-            				modo = ModoJuego.Master;
+            				ControlPrincipal.getJugadorUno().setModo(ModoJuego.Master);
             				GestorVentana.ocultarVentana(VentanaSeleccion.class);
             				GestorVentana.hacerVisible(VentanaDirecto.class, false);
             			}
