@@ -59,8 +59,8 @@ public class BombermanNegro extends Bomberman{
 			setSpriteDestruccion(spritesDestRight);
 		}else if(e.getKeyCode() == ControlPrincipal.getJugadorDos().getBomba()){
 			if (this.getNumBomba() < this.getMaxBomba()) {
-				int tempX = ((((int) (this.getPosX() + (this.getAnchura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
-				int tempY = ((((int) (this.getPosY() + (this.getAltura() / 2))) / ANCH_ALT_MURO) * ANCH_ALT_MURO);
+				int tempX = ((((int) (this.getPosX() + (this.getAnchura() / 2))) / CASILLA) * CASILLA);
+				int tempY = ((((int) (this.getPosY() + (this.getAltura() / 2))) / CASILLA) * CASILLA);
 				if (tempY == 0)
 					tempY = 33;
 				// try {
