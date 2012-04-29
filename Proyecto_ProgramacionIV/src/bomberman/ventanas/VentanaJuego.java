@@ -2,6 +2,7 @@ package bomberman.ventanas;
 
 import javax.swing.*;
 
+import bomberman.database.AccesoNivel;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.jugador.Jugador;
@@ -53,10 +54,10 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		canPintar.setSize(640, 640);
 		panelMarcador = new JPanel();
 		jugador = ControlPrincipal.getJugadorUno();
-		try {
-			tiempo = new CuentaAtras(5, 0);
-			parado = true;
-		} catch (RelojException e) {
+		try{
+		parado = true;
+		tiempo = new CuentaAtras(0, 5);
+		}catch(RelojException e){
 			e.printStackTrace();
 		}
 		jlText = new JLabel();
@@ -190,9 +191,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 			}
 				
 		} else{
-			if(arLista.size() != 0 && bomber2 != null)
-				arLista.add(arLista.size() - 2, spr);
-			else if(arLista.size() != 0 && bomber2 == null)
+			if(arLista.size() != 0)
 				arLista.add(arLista.size() - 1, spr);
 			else
 				arLista.add(spr);
@@ -220,8 +219,10 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if (visible){
+		if (this.isVisible()){
 			this.setPuntuacion();
+			setTiempoReloj(AccesoNivel.getNivel(ControlPrincipal.getJugadorUno().getNivel()).getTiempo() / 60
+					, AccesoNivel.getNivel(ControlPrincipal.getJugadorUno().getNivel()).getTiempo() % 60);
 			this.empezarReloj();
 		}
 	}
@@ -232,7 +233,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	
 	public void setTiempoReloj(int min, int seg){
 		try{
-			tiempo = new CuentaAtras(min, seg);
+			tiempo.setTime(min, seg);
 		}catch(RelojException e){
 			e.printStackTrace();
 		}

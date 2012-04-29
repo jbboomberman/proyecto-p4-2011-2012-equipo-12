@@ -83,5 +83,24 @@ public class AccesoNivel {
 		}
 		return correcto;
 	}
+	
+	public static Nivel getNivel (int codNivel){
+		Nivel tempNivel = null; 
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"SELECT * FROM NIVEL WHERE COD_NIVEL = ?;");
+			stat.setInt(1, codNivel);
+			ResultSet rs = stat.executeQuery();
+			if(rs.next()){
+				tempNivel = new Nivel(codNivel, rs.getString(2), rs.getInt(3), rs.getString(4));
+			}
+			rs.close();
+			stat.close();
+			GestionBD.desconectar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tempNivel;
+	}
 
 }
