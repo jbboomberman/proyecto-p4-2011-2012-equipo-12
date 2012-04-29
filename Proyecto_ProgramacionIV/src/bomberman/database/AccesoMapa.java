@@ -49,7 +49,8 @@ public class AccesoMapa {
 			"SELECT * FROM MAPA WHERE COD_MAPA = ?;");
 			stat.setInt(1, cod_Mapa);
 			ResultSet rs = stat.executeQuery();
-			temMapa = new Mapa(rs.getInt(1), rs.getInt(2), rs.getString(3).toCharArray());
+			if(rs.next())
+				temMapa = new Mapa(rs.getInt(1), rs.getInt(2), rs.getString(3).toCharArray());
 			stat.close();
 			GestionBD.desconectar();
 		} catch (SQLException e) {

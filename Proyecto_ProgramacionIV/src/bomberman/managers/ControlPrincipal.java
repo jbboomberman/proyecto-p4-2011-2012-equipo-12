@@ -59,18 +59,19 @@ public class ControlPrincipal {
 
 		pararJuego = false;
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
+		jugadorUno = new Jugador();
 		// Pruebaaaaaaaaaaaaaaaaa
-		jugadorUno = new Jugador("David", "O", "nose", "no", 1, 0, 1,
-				ModoJuego.Historia, AccesoJugador.getNumJug(),
-				AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
-				AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
-				AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1), false, false);
-		AccesoJugador.insertarJugador(new bomberman.database.Jugador(
-				AccesoJugador.getNumJug(), jugadorUno.getNombre(), jugadorUno
-						.getApellidos(), jugadorUno.getNick(), jugadorUno
-						.getEmail()));
+//		jugadorUno = new Jugador("David", "O", "nose", "no", 1, 0, 1,
+//				ModoJuego.Historia, AccesoJugador.getNumJug(),
+//				AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
+//				AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
+//				AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1), false, false);
+//		AccesoJugador.insertarJugador(new bomberman.database.Jugador(
+//				AccesoJugador.getNumJug(), jugadorUno.getNombre(), jugadorUno
+//						.getApellidos(), jugadorUno.getNick(), jugadorUno
+//						.getEmail()));
 
-		ventJuego.setJugador(jugadorUno);
+//		ventJuego.setJugador(jugadorUno);
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
 		// try {
@@ -94,24 +95,15 @@ public class ControlPrincipal {
 					paintWorld();
 				else if (ventJuego.getSuperadoNivel()) {
 					GestorVentana.ocultarVentana(VentanaJuego.class);
+					ventJuego.setSuperadoNivel(false);
+					ventJuego.borrarSprites();
 					if (jugadorUno.getModo() == ModoJuego.Historia) {
-						Calendar tempCalendar = Calendar.getInstance();
-						String mes, dia;
-						if (tempCalendar.get(Calendar.MONTH) + 1 < 10)
-							mes = "0" + (tempCalendar.get(Calendar.MONTH) + 1);
-						else
-							mes = "" + (tempCalendar.get(Calendar.MONTH) + 1);
-						if (tempCalendar.get(Calendar.DAY_OF_MONTH) < 10)
-							dia = "0" + tempCalendar.get(Calendar.DAY_OF_MONTH);
-						else
-							dia = "" + tempCalendar.get(Calendar.DAY_OF_MONTH);
 						GestorVentana
 								.hacerVisible(VentanaSuperado.class, false);
 						AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
 								.getNumPunt(), jugadorUno.getCodPart(),
-								jugadorUno.getPuntuNivel(), ConversorFecha.parsearFecha(new String(
-										tempCalendar.get(Calendar.YEAR) + mes
-												+ dia)), jugadorUno.getNivel()));
+								jugadorUno.getPuntuNivel(), ConversorFecha.getFecha()
+								, jugadorUno.getNivel()));
 					} else if (jugadorUno.getModo() == ModoJuego.Master) {
 
 					} else {
@@ -164,22 +156,12 @@ public class ControlPrincipal {
 	}
 
 	public void terminarPartida(Graphics g, BufferStrategy buffer) {
-		Calendar tempCalendar = Calendar.getInstance();
-		String mes, dia;
-		if (tempCalendar.get(Calendar.MONTH) + 1 < 10)
-			mes = "0" + (tempCalendar.get(Calendar.MONTH) + 1);
-		else
-			mes = "" + tempCalendar.get(Calendar.MONTH) + 1;
-		if (tempCalendar.get(Calendar.DAY_OF_MONTH) < 10)
-			dia = "0" + (tempCalendar.get(Calendar.DAY_OF_MONTH));
-		else
-			dia = "" + tempCalendar.get(Calendar.DAY_OF_MONTH);
 		PuntuGeneral tempGene = new PuntuGeneral(AccesoPuntuGen.getNumPunt(),
 				((bomberman.database.Jugador) AccesoJugador.getJugador(
 						jugadorUno.getNombre(), jugadorUno.getApellidos(),
 						jugadorUno.getNick(), jugadorUno.getEmail()))
 						.getCod_jugador(), false, jugadorUno.getPuntuacion(),
-				ConversorFecha.parsearFecha(new String(tempCalendar.get(Calendar.YEAR) + mes + dia)), 0);
+				ConversorFecha.getFecha(), 0);
 		AccesoPuntuGen.insertarPunt(tempGene);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Sansserif", Font.BOLD, 20));

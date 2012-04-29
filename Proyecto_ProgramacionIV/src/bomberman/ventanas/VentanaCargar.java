@@ -70,9 +70,9 @@ public class VentanaCargar extends JDialog implements ActionListener{
 		diseñarColumnas("Apellido", 100, 150);
 		diseñarColumnas("Nick", 150, 250);
 		diseñarColumnas("Puntu", 100, 150);
-		diseñarColumnas("Nivel", 100, 150);
-		diseñarColumnas("Fecha", 100, 150);
-		diseñarColumnas("Vidas", 100, 150);
+		diseñarColumnas("Nivel", 50, 75);
+		diseñarColumnas("Fecha", 150, 200);
+		diseñarColumnas("Vidas", 50, 75);
 		
 		//Parámetros
 		jlTexto.setFont(new Font("sansserif", Font.BOLD, 20));
@@ -138,6 +138,7 @@ public class VentanaCargar extends JDialog implements ActionListener{
 	
 	public void setVisible(boolean estado){
 		super.setVisible(estado);
+		tmModel.deleteAllRows();
 		ArrayList<PuntuGeneral>partGuardas = AccesoPuntuGen.getPartidasGuardadas();
 		for(PuntuGeneral tempPunt : partGuardas)
 			tmModel.añadirFila(tempPunt);

@@ -43,6 +43,7 @@ public class GestorVentana {
 		vector.add(new VentanaPuntuaciones());
 		vector.add(new VentanaControles());
 		vector.add(new VentanaSuperado());
+		vector.add(new VentanaSeguir());
 		// Se devuelve el vector con las ventanas
 		return vector;
 	}
