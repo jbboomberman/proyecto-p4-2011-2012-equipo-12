@@ -10,6 +10,7 @@ import bomberman.protagonistas.Dahl;
 import bomberman.protagonistas.Minvo;
 import bomberman.protagonistas.Muro;
 import bomberman.protagonistas.Pildora;
+import bomberman.protagonistas.Pontan;
 import bomberman.protagonistas.Puerta;
 import bomberman.protagonistas.Valcom;
 import bomberman.ventanas.GestorVentana;
@@ -51,6 +52,10 @@ public class PrepararEscenario {
 				case 'M':
 					esce.añadirSprite(new Minvo(esce, (float) i * 33,
 							(float) j * 33, jug));
+					break;
+				case 'O':
+					esce.añadirSprite(new Pontan(esce, (float) i * 33
+							, (float) j * 33, jug));
 					break;
 				// Doria
 				case 'D':

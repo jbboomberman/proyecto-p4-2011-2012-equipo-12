@@ -9,6 +9,7 @@ import bomberman.outin.*;
 import bomberman.database.AccesoControles;
 import bomberman.database.AccesoExtras;
 import bomberman.database.AccesoJugador;
+import bomberman.database.AccesoMapa;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.*;

@@ -13,12 +13,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import bomberman.database.AccesoControles;
 import bomberman.database.AccesoMapa;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.PrepararEscenario;
 import bomberman.outin.LeerMapa;
+import bomberman.protagonistas.BombermanNegro;
 
 public class VentanaSeleccion extends JDialog implements ActionListener {
 
@@ -103,12 +105,11 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			 new Thread(
 	            		new Runnable() {
 	            			public void run() {
-	            				System.out.println("Entre");
-	            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(1));
+	            				GestorVentana.ocultarVentana(VentanaSeleccion.class);
+	            				GestorVentana.hacerVisible(VentanaDatos.class, false);
 	            				modo = ModoJuego.Historia;
-	        					GestorVentana.ocultarVentana(VentanaSeleccion.class);
-	        					GestorVentana.hacerVisible(VentanaJuego.class, true);
-	        					// GestorVentana.hacerVisible(VentanaDatos.class, false);
+	            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(1));
+//	        					GestorVentana.hacerVisible(VentanaJuego.class, true);
 	            			}
 	            		}
 	            ).start();
@@ -117,10 +118,15 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			new Thread(
             		new Runnable() {
             			public void run() {
+            				ControlPrincipal.setJugadorDos(new Jugador());
+            				ControlPrincipal.getJugadorDos().setArriba(AccesoControles.getControl("ARRIBA", 2));
+            				ControlPrincipal.getJugadorDos().setAbajo(AccesoControles.getControl("ABAJO", 2));
+            				ControlPrincipal.getJugadorDos().setDerecha(AccesoControles.getControl("DERECHA", 2));
+            				ControlPrincipal.getJugadorDos().setIzquierda(AccesoControles.getControl("IZQUIERDA", 2));
             				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(11));
             				modo = ModoJuego.Multijugador;
-        					GestorVentana.ocultarVentana(VentanaSeleccion.class);
-        					GestorVentana.hacerVisible(VentanaJuego.class, true);
+            				GestorVentana.ocultarVentana(VentanaSeleccion.class);
+            				GestorVentana.hacerVisible(VentanaJuego.class, true);
             			}
             		}
             ).start();

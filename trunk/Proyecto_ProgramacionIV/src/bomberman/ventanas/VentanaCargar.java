@@ -117,11 +117,14 @@ public class VentanaCargar extends JDialog implements ActionListener{
 		 */
 		Object botonPulsado = e.getSource();
 		
+		//En caso de que queramos cargar la partida seleccionada.
 		if(botonPulsado == jbCargar){
 			int fila = jtPuntu.getSelectedRow();
 			PuntuGeneral seleccionada;
+			//Si se ha seleccionado alguna fila
 			if(fila != -1){
 				seleccionada = tmModel.getFila(fila);
+				//Cargamos la partida
 				ControlPrincipal.cargarPartida(seleccionada);
 			}else{
 				JOptionPane.showMessageDialog(new JDialog(), "No has seleccionado ninguna fila","Error",JOptionPane.ERROR_MESSAGE);

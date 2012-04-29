@@ -23,12 +23,13 @@ public class AccesoPuntuGen {
 	public static void insertarPunt(PuntuGeneral punt) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-					"INSERT INTO PUNTUACION_GENERAL VALUES( ?, ?, ?, ?, ?);");
+					"INSERT INTO PUNTUACION_GENERAL VALUES( ?, ?, ?, ?, ?, ?);");
 			stat.setInt(1, punt.getCod_punt());
 			stat.setInt(2, punt.getCod_jug());
-			// stat.setBoolean(3, punt.ge);
+			stat.setBoolean(3, punt.isGuardado());
 			stat.setInt(4, punt.getPuntu());
 			stat.setString(5, punt.getFecha_ulti_nivel());
+			stat.setInt(6, punt.getVidas());
 			stat.executeUpdate();
 			stat.close();
 			GestionBD.desconectar();

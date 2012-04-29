@@ -64,5 +64,24 @@ public class AccesoNivel {
 		return Ac;
 
 	}
+	
+	public static boolean esCorrecto(String contr, int niv){
+		boolean correcto = false;
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+			"SELECT * FROM NIVEL WHERE COD_NIVEL = ?;");
+			stat.setInt(1, niv);
+			ResultSet rs = stat.executeQuery();
+			if(rs.next()){
+				if(rs.getString(4).equals(contr))
+					correcto = true;
+			}	
+			stat.close();
+			GestionBD.desconectar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return correcto;
+	}
 
 }

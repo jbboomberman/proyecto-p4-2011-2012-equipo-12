@@ -155,9 +155,6 @@ public class ControlPrincipal {
 			tempSpr.paint((Graphics2D) g);
 		}
 
-		ventJuego.getBomberman().mover();
-		ventJuego.getBomberman().paint((Graphics2D) g);
-
 		// if (usedTime > 0)
 		// System.out.println(String.valueOf(1000 / usedTime) + " fps");
 		// if (timeDiff > 0)
@@ -201,15 +198,25 @@ public class ControlPrincipal {
 		ControlPrincipal prueba = new ControlPrincipal();
 	}
 
+	/**
+	 * Para cargar una partida que ha sido guardada.
+	 * @param punt - PuntGeneral
+	 */
 	public static void cargarPartida(PuntuGeneral punt){
+		//Cogemos al jugador que guardo la partida.
 		bomberman.database.Jugador partJug = AccesoJugador.getJugador(punt.getCod_jug());
+		
+		/*
+		 * Definimos el nuevo jugador que será el que guardó
+		 * la partida guardada.
+		 */
 		jugadorUno.setNombre(partJug.getNomJugador());
 		jugadorUno.setApellidos(partJug.getApellJugador());
 		jugadorUno.setNick(partJug.getNickJugador());
 		jugadorUno.setEmail(partJug.getEmail());
 		jugadorUno.setPuntuacion(punt.getPuntu());
 		jugadorUno.setPuntuNivel(0);
-//		jugadorUno.setVidas(vidas)
+		jugadorUno.setVidas(punt.getVidas());
 		jugadorUno.setNivel(AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()) + 1);
 		jugadorUno.setModo(ModoJuego.Historia);
 		jugadorUno.setCodJugador(punt.getCod_jug());
@@ -221,6 +228,8 @@ public class ControlPrincipal {
 		jugadorUno.setBomba(AccesoControles.getControl("BOMBA", 1));
 		jugadorUno.setSonido(AccesoExtras.getExtra("sonido"));
 		jugadorUno.setQuiereEmail(AccesoExtras.getExtra("email"));
+		
+		//Creamos el escenario.
 		ControlPrincipal.crearEscenario(AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()) + 1);
 		GestorVentana.ocultarVentana(VentanaCargar.class);
 		GestorVentana.hacerVisible(VentanaJuego.class, true);
