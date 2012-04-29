@@ -30,13 +30,11 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 	private JButton jbMaster;
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
-	private Jugador jugador;
 	private ModoJuego modo;
 
-	public VentanaSeleccion(Jugador jug) {
+	public VentanaSeleccion() {
 
 		// Inicializamos las variables.
-		this.jugador = jug;
 		texto = new JLabel("Seleccione el modo de juego: ");
 		jbHistoria = new JButton("Historia");
 		jbMultijugador = new JButton("Multijugador");
@@ -145,7 +143,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		VentanaSeleccion prueba = new VentanaSeleccion(null);
+		VentanaSeleccion prueba = new VentanaSeleccion();
 		prueba.setVisible(true);
 	}
 }

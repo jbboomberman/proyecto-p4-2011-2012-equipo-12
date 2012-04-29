@@ -35,10 +35,9 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 	private JButton btAceptar;
 	private JButton btCancelar;
 	private JPanel jpMedio;
-	private Jugador jugador;
 	private JPanel jpInferior;
 
-	public VentanaDirecto(Jugador jug) {
+	public VentanaDirecto() {
 		String[] arrayCombo = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
 				"10" };
 		jcbNivel = new JComboBox(arrayCombo);
@@ -48,7 +47,6 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 		btCancelar = new JButton("Cancelar");
 		jpMedio = new JPanel();
 		jpInferior = new JPanel();
-		this.jugador = jug;
 
 		// Layout
 		getContentPane().setLayout(new BorderLayout());
@@ -137,7 +135,7 @@ public class VentanaDirecto extends JDialog implements ActionListener {
             			public void run() {
             				if(AccesoNivel.esCorrecto(new String(jtPass.getPassword())
             						, Integer.parseInt((String)jcbNivel.getSelectedItem()))){
-            					jugador.setModo(ModoJuego.Master);
+            					ControlPrincipal.getJugadorUno().setModo(ModoJuego.Master);
                 				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(
                 						Integer.parseInt((String) jcbNivel.getSelectedItem())));
                 				//Falta la contraseña
@@ -161,7 +159,7 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		VentanaDirecto prueba = new VentanaDirecto(null);
+		VentanaDirecto prueba = new VentanaDirecto();
 		prueba.setVisible(true);
 	}
 }

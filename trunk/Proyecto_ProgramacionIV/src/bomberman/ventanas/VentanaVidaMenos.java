@@ -22,15 +22,13 @@ public class VentanaVidaMenos extends JDialog implements ActionListener{
 	private JButton jbCancelar;
 	private JLabel jlTexto;
 	private JPanel jpInferior;
-	private Jugador jugador;
 	
-	public VentanaVidaMenos(Jugador jug){
+	public VentanaVidaMenos(){
 		jbContinuar = new JButton("Continuar");
 		jbCancelar = new JButton("Cancelar");
 		jlTexto = new JLabel("Has perdido una vida, ¿quieres continuar?");
 		jlTexto.setHorizontalAlignment(SwingConstants.CENTER);
 		jpInferior = new JPanel();
-		this.jugador = jug;
 		
 		//Layout
 		jpInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -73,7 +71,7 @@ public class VentanaVidaMenos extends JDialog implements ActionListener{
             				VentanaJuego tempVent = (VentanaJuego)GestorVentana.getVentana(VentanaJuego.class);
             				tempVent.borrarSprites();
             				GestorVentana.ocultarVentana(VentanaVidaMenos.class);
-            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(jugador.getNivel()));
+            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(ControlPrincipal.getJugadorUno().getNivel()));
             				tempVent.setAcabarPartida(false);
         					GestorVentana.hacerVisible(VentanaJuego.class, true);
             			}

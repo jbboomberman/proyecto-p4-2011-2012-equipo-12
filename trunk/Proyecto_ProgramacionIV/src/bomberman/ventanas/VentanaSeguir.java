@@ -21,13 +21,11 @@ public class VentanaSeguir extends JDialog implements ActionListener{
 	private JButton jbVolver;
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
-	private Jugador jugador;
 	private ModoJuego modo;
 
-	public VentanaSeguir(Jugador jug) {
+	public VentanaSeguir() {
 
 		// Inicializamos las variables.
-		this.jugador = jug;
 		texto = new JLabel("Seleccione el modo de juego: ");
 		jbSeguirNivel = new JButton("Seguir nivel");
 		jbVolver = new JButton("Volver");
@@ -112,7 +110,7 @@ public class VentanaSeguir extends JDialog implements ActionListener{
 	}
 
 	public static void main(String[] args) {
-		VentanaSeleccion prueba = new VentanaSeleccion(null);
+		VentanaSeleccion prueba = new VentanaSeleccion();
 		prueba.setVisible(true);
 	}
 }
