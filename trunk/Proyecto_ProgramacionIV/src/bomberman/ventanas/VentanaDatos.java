@@ -6,7 +6,7 @@ import java.awt.*;
 
 import bomberman.managers.ControlPrincipal;
 import bomberman.outin.*;
-import bomberman.database.AccesoControles;
+import bomberman.database.*;
 import bomberman.database.AccesoExtras;
 import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoMapa;
@@ -140,7 +140,7 @@ public class VentanaDatos extends JDialog implements ActionListener {
 			} else {
 				if(AccesoJugador.getJugador(nom.getText(), ape.getText(),
 						nic.getText(), email.getText()) == null){
-					Jugador tempJug = new Jugador(nom.getText(), ape.getText(), nic.getText()
+					bomberman.jugador.Jugador tempJug = new bomberman.jugador.Jugador(nom.getText(), ape.getText(), nic.getText()
 							, email.getText(), 3, 0, ControlPrincipal.getJugadorUno().getNivel(),
 							ControlPrincipal.getJugadorUno().getModo(), AccesoJugador.getNumJug()
 							, AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
@@ -150,6 +150,18 @@ public class VentanaDatos extends JDialog implements ActionListener {
 					ControlPrincipal.setJugadorUno(tempJug);
 					AccesoJugador.insertarJugador(new bomberman.database.Jugador(AccesoJugador.getNumJug()
 							, nom.getText(), ape.getText(), nic.getText(), email.getText()));
+				}else{
+					bomberman.database.Jugador jugBase = AccesoJugador.getJugador(nom.getText(), ape.getText(),
+							nic.getText(), email.getText());
+					bomberman.jugador.Jugador tempJug = new bomberman.jugador.Jugador(jugBase.getNomJugador()
+							, jugBase.getApellJugador(), jugBase.getNickJugador(), jugBase.getEmail()
+							, 3, 0, ControlPrincipal.getJugadorUno().getNivel(),
+							ControlPrincipal.getJugadorUno().getModo(), jugBase.getCod_jugador()
+							, AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
+							AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
+							AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1),
+							AccesoExtras.getExtra("sonido"), AccesoExtras.getExtra("email"));
+					ControlPrincipal.setJugadorUno(tempJug);
 				}
 			}
 			GestorVentana.hacerVisible(VentanaJuego.class, true);
@@ -192,24 +204,5 @@ public class VentanaDatos extends JDialog implements ActionListener {
 		panelCompl.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panelCompl.add(componente);
 		getContentPane().add(panelCompl, sitio);
-	}
-
-	/**
-	 * Este es el método main que nos sirve para comprobar que la clase funciona
-	 * correctamente.
-	 * 
-	 * @param args
-	 *            No utilizados
-	 */
-	public static void main(String[] args) {
-		// Creamos jugador de prueba
-		Jugador jugador = new Jugador();
-		jugador.setNombre("David");
-		jugador.setApellidos("Orive");
-		jugador.setNick("hola");
-		// Creamos una ventana VentanaJuego que es necesariA para el constructor
-		// de VentanaDatos.
-		VentanaDatos jueg = new VentanaDatos();
-		jueg.setVisible(true);
 	}
 }

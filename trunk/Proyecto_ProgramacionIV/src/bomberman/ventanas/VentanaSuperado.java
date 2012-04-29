@@ -33,6 +33,9 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 	private JPanel pInfSur;
 	private JPanel pPrincipal;
 	private JLabel jlMensaje;
+	private JLabel jlNick;
+	private JLabel jlNivel;
+	private JLabel jlPuntuacion;
 
 	public VentanaSuperado() {
 		jbGuardarPart = new JButton("Guardar partida");
@@ -45,6 +48,9 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		pPrincipal = new JPanel();
 		jlMensaje = new JLabel(
 				"<html>¡Enhorabuena, has conseguido superar el nivel!<P>");
+		jlNick = new JLabel();
+		jlNivel = new JLabel();
+		jlPuntuacion = new JLabel();
 
 		// Layouts
 		pPrincipal.setLayout(new BorderLayout());
@@ -142,6 +148,17 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		}
 		
 	}
+	
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		if (this.isVisible()){
+			System.out.println("Estoy visible");
+			jlNick.setText(ControlPrincipal.getJugadorUno().getNick());
+			jlNivel.setText(String.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
+			jlPuntuacion.setText(String.valueOf(ControlPrincipal.getJugadorUno().getPuntuacion()));
+		}
+	}
+	
 	public static void main(String[] args) {
 		VentanaSuperado prueba = new VentanaSuperado();
 		prueba.setVisible(true);

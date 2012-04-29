@@ -8,6 +8,7 @@ import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoPunEspe;
 import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
+import bomberman.outin.ConversorFecha;
 
 public class TableModelPuntuaciones extends DefaultTableModel {
 
@@ -25,7 +26,7 @@ public class TableModelPuntuaciones extends DefaultTableModel {
 				AccesoJugador.getJugador(punt.getCod_jug()).getNickJugador(),
 				punt.getPuntu(),
 				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()), 
-				punt.getFecha_ulti_nivel()
+				ConversorFecha.parsearFecha(punt.getFecha_ulti_nivel())
 				 });
 	}
 	

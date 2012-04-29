@@ -14,23 +14,30 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import bomberman.database.AccesoNivel;
+import bomberman.managers.ControlPrincipal;
+
 public class VentanaNoSuperado extends JDialog {
 
-	private JButton jbOk;
 	private JButton jbVolverMenu;
 	private JPanel pSuperior;
 	private JPanel pInferior;
 	private JPanel pPrincipal;
 	private JLabel jlMensaje;
+	private JLabel jlNick;
+	private JLabel jlNivel;
+	private JLabel jlPuntuacion;
 
 	public VentanaNoSuperado() {
-		jbOk = new JButton("Pasar al siguiente nivel");
 		jbVolverMenu = new JButton("Volver al menú");
 		pSuperior = new JPanel();
 		pInferior = new JPanel();
 		pPrincipal = new JPanel();
 		jlMensaje = new JLabel(
 				"<html>¡Que pena no has podido superar el nivel! Anímate a intentarlo de nuevo<P>");
+		jlNick = new JLabel();
+		jlNivel = new JLabel();
+		jlPuntuacion = new JLabel();
 
 		// Layouts
 		pPrincipal.setLayout(new BorderLayout());
@@ -38,10 +45,9 @@ public class VentanaNoSuperado extends JDialog {
 		pInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		// Añadir componentes
-		pSuperior.add(posicionaComp("Nick: "));
-		pSuperior.add(posicionaComp("Nivel: "));
-		pSuperior.add(posicionaComp("Puntuación: "));
-		pInferior.add(jbOk);
+		pSuperior.add(posicionaComp("Nick: ", jlNick));
+		pSuperior.add(posicionaComp("Nivel: ", jlNivel));
+		pSuperior.add(posicionaComp("Puntuación: ", jlPuntuacion));
 		pInferior.add(jbVolverMenu);
 		pPrincipal.add(pSuperior, BorderLayout.NORTH);
 		pPrincipal.add(jlMensaje, BorderLayout.CENTER);
@@ -76,12 +82,22 @@ public class VentanaNoSuperado extends JDialog {
 	 * @param componente
 	 *            - Component. Container donde hay que meter los componentes.
 	 */
-	private JPanel posicionaComp(String nombre) {
+	private JPanel posicionaComp(String nombre, JLabel texto) {
 		JPanel panelCompl = new JPanel();
 		// Queremos que este en el centro.
 		panelCompl.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panelCompl.add(new JLabel(nombre));
+		panelCompl.add(texto);
 		return panelCompl;
+	}
+	
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		if (visible){
+			jlNick.setText(ControlPrincipal.getJugadorUno().getNick());
+			jlNivel.setText(String.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
+			jlPuntuacion.setText(String.valueOf(ControlPrincipal.getJugadorUno().getPuntuacion()));
+		}
 	}
 
 	public static void main(String[] args) {
