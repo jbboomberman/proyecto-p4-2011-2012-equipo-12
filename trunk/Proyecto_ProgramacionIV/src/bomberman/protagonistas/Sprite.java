@@ -50,6 +50,8 @@ public class Sprite {
 	protected boolean seDestruir;
 	// El jugador propietario del Sprite
 	protected Jugador jugador;
+	//El tamaño generañ de ancho y largo
+	protected final int CASILLA = 32;
 
 	/**
 	 * Constructor de la clase Sprite
