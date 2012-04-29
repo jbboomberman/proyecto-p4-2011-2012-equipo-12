@@ -1,7 +1,6 @@
 package bomberman.protagonistas;
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 
@@ -80,27 +79,6 @@ public abstract class SpriteDinamico extends Sprite {
 
 				// En caso de que los dos se choquen
 				if (tempRect.intersects(tempRect2)) {
-					
-					//ESTO HABRÍA QUE MEJORARLO
-					//cuidadoooooooooooooooo
-					if (sprTemp instanceof Puerta) {
-						ArrayList<Sprite> tempArray = escenario
-								.buscarPersonajePos(Muro.class, sprTemp);
-						if (tempArray.size() > 0 && (this instanceof Llama)) {
-							tempArray.get(0).procDestruccion();
-							return true;
-						}else if (tempArray.size() > 0){
-							return true;
-						}else{
-							if(this instanceof Bomberman){
-								if(escenario.rivalesQuedan() > 0)
-									return false;
-								else
-									escenario.setSuperadoNivel(true);
-							}
-						}
-						return false;
-					} else
 						return this.determinarChoque(sprTemp);
 				}
 			}

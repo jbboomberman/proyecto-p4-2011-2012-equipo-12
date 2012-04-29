@@ -28,14 +28,18 @@ public class BombermanNegro extends Bomberman{
 		 * Definimos el nombre de las imágenes de
 		 * cada lado.
 		 */
-		spritesImagUp = new String[] { "bomber2_up_down.gif_1",
-				"bomber2_up_down.gif_2", "bomber2_up_down.gif_3" };
-		spritesImagDown = new String[] { "bomber2_up_down.gif_4",
-				"bomber2_up_down.gif_5", "bomber2_up_down.gif_6" };
-		spritesImagRight = new String[] { "bomber2_der.gif_1",
-				"bomber2_der.gif_2", "bomber2_der.gif_3" };
-		spritesImagLeft = new String[] { "bomber2_izq.gif_1",
-				"bomber2_izq.gif_2", "bomber2_izq.gif_3" };
+		spritesImagUp = new String[] { "bomber2_up_down.gif_2",
+				"bomber2_up_down.gif_1", "bomber2_up_down.gif_3"
+				, "bomber2_up_down.gif_1"};
+		spritesImagDown = new String[] { "bomber2_up_down.gif_5",
+				"bomber2_up_down.gif_4", "bomber2_up_down.gif_6"
+				, "bomber2_up_down.gif_4"};
+		spritesImagRight = new String[] { "bomber2_der.gif_2",
+				"bomber2_der.gif_1", "bomber2_der.gif_3"
+				,"bomber2_der.gif_1"};
+		spritesImagLeft = new String[] { "bomber2_izq.gif_2",
+				"bomber2_izq.gif_1", "bomber2_izq.gif_3"
+				, "bomber2_izq.gif_1"};
 		spritesDestUp = new String[] { "bomber2_dest.gif_3" };
 		spritesDestDown = new String[] { "bomber2_dest.gif_1" };
 		spritesDestRight = new String[] { "bomber2_dest.gif_4" };

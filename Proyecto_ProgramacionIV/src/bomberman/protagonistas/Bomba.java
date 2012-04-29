@@ -144,7 +144,7 @@ public class Bomba extends SpriteEstatico {
 		// Comprobamos la distancia que hay arriba
 		while (!encon[0]) {
 			/*
-			 * Vamos añadiendo posiciones hasta que lo encontremos.
+			 * Vamos quitando posiciones hasta que lo encontremos.
 			 */
 			tempRect.y -= this.getAltura();
 			if (contTrozos < alcanceExpansion) {
@@ -154,7 +154,10 @@ public class Bomba extends SpriteEstatico {
 				 */
 				for (Sprite sprTemp : escenario.getLista()) {
 					Rectangle tempRect2 = getRectangle(sprTemp);
-					// Si alguno se interpone y es de tipo Muro
+					/*
+					 * Si alguno se interpone y es de tipo Muro (el único
+					 * que para la llama.
+					 */
 					if (tempRect.intersects(tempRect2)
 							&& sprTemp instanceof Muro) {
 						encon[0] = true;
@@ -163,12 +166,21 @@ public class Bomba extends SpriteEstatico {
 							tempArray[0] = (int) (this.getPosY() - tempRect2.y - CASILLA)
 									/ CASILLA;
 						} else {
+							/*
+							 * Hay que sumarle uno para que alcance el
+							 * muro destructible.
+							 */
 							tempArray[0] = (int) ((this.getPosY() - tempRect2.y - CASILLA) / CASILLA) + 1;
 						}
 						break;
 					}
 				}
 				contTrozos++;
+			/*
+			 * Si hemos llegado al límite y no hemos
+			 * encontrado nada entonces la llama
+			 * sólo llega al límite.
+			 */
 			} else {
 				encon[0] = true;
 				tempArray[0] = alcanceExpansion;
@@ -178,26 +190,48 @@ public class Bomba extends SpriteEstatico {
 		tempRect.x = (int) this.getPosX();
 		tempRect.y = (int) this.getPosY();
 		contTrozos = 0;
+		
+		//Comporbamos la distancia que hay abajo.
 		while (!encon[1]) {
-			// Comprobamos la distancia que hay abajo
+			/*
+			 * Vamos añadiendo posiciones hasta que lo encontremos.
+			 */
 			tempRect.y += this.getAltura();
 			if (contTrozos < alcanceExpansion) {
+				/*
+				 * Comprobamos con los Sprites que hay en la ventana a ver si
+				 * alguno se interpone en nuestro camino.
+				 */
 				for (Sprite sprTemp : escenario.getLista()) {
+					/*
+					 * Si alguno se interpone y es de tipo Muro (el único
+					 * que para la llama.
+					 */
 					Rectangle tempRect2 = getRectangle(sprTemp);
 					if (tempRect.intersects(tempRect2)
 							&& sprTemp instanceof Muro) {
 
 						encon[1] = true;
+						//Si es indestructible
 						if (!((Muro) sprTemp).isDestructible()) {
 							tempArray[1] = (int) (tempRect2.y - this.getPosY() - CASILLA)
 									/ CASILLA;
 						} else {
+							/*
+							 * Hay que sumarle uno para que alcance el
+							 * muro destructible.
+							 */
 							tempArray[1] = (int) ((tempRect2.y - this.getPosY() - CASILLA) / CASILLA) + 1;
 						}
 						break;
 					}
 				}
 				contTrozos++;
+				/*
+				 * Si hemos llegado al límite y no hemos
+				 * encontrado nada entonces la llama
+				 * sólo llega al límite.
+				 */
 			} else {
 				encon[1] = true;
 				tempArray[1] = alcanceExpansion;
@@ -208,27 +242,47 @@ public class Bomba extends SpriteEstatico {
 		tempRect.y = (int) this.getPosY();
 		contTrozos = 0;
 
+		// Comprobamos la distancia que hay a la derecha
 		while (!encon[2]) {
-			// Comprobamos la distancia que hay a la derecha
+			/*
+			 * Vamos añadiendo posiciones hasta que lo encontremos.
+			 */
 			tempRect.x += this.getAltura();
 			if (contTrozos < alcanceExpansion) {
+				/*
+				 * Comprobamos con los Sprites que hay en la ventana a ver si
+				 * alguno se interpone en nuestro camino.
+				 */
 				for (Sprite sprTemp : escenario.getLista()) {
 					Rectangle tempRect2 = getRectangle(sprTemp);
-
+					/*
+					 * Si alguno se interpone y es de tipo Muro (el único
+					 * que para la llama.
+					 */
 					if (tempRect.intersects(tempRect2)
 							&& sprTemp instanceof Muro) {
 
 						encon[2] = true;
+						//Si es indestructible
 						if (!((Muro) sprTemp).isDestructible()) {
 							tempArray[2] = (int) (tempRect2.x - this.getPosX() - CASILLA)
 									/ CASILLA;
 						} else {
+							/*
+							 * Hay que sumarle uno para que alcance el
+							 * muro destructible.
+							 */
 							tempArray[2] = (int) ((tempRect2.x - this.getPosX() - CASILLA) / CASILLA) + 1;
 						}
 						break;
 					}
 				}
 				contTrozos++;
+				/*
+				 * Si hemos llegado al límite y no hemos
+				 * encontrado nada entonces la llama
+				 * sólo llega al límite.
+				 */
 			} else {
 				encon[2] = true;
 				tempArray[2] = alcanceExpansion;
@@ -238,28 +292,48 @@ public class Bomba extends SpriteEstatico {
 		tempRect.x = (int) this.getPosX();
 		tempRect.y = (int) this.getPosY();
 		contTrozos = 0;
-
+		
+		// Comprobamos la distancia que hay a la izquierda
 		while (!encon[3]) {
-			// Comprobamos la distancia que hay a la izquierda
+			/*
+			 * Vamos quitando posiciones hasta que lo encontremos.
+			 */
 			tempRect.x -= this.getAltura();
 			if (contTrozos < alcanceExpansion) {
+				/*
+				 * Comprobamos con los Sprites que hay en la ventana a ver si
+				 * alguno se interpone en nuestro camino.
+				 */
 				for (Sprite sprTemp : escenario.getLista()) {
 					Rectangle tempRect2 = getRectangle(sprTemp);
-
+					/*
+					 * Si alguno se interpone y es de tipo Muro (el único
+					 * que para la llama.
+					 */
 					if (tempRect.intersects(tempRect2)
 							&& sprTemp instanceof Muro) {
 
 						encon[3] = true;
+						//Si es indestructible
 						if (!((Muro) sprTemp).isDestructible()) {
 							tempArray[3] = (int) (this.getPosX() - tempRect2.x - CASILLA)
 									/ CASILLA;
 						} else {
+							/*
+							 * Hay que sumarle uno para que alcance el
+							 * muro destructible.
+							 */
 							tempArray[3] = (int) ((this.getPosX() - tempRect2.x - CASILLA) / CASILLA) + 1;
 						}
 						break;
 					}
 				}
 				contTrozos++;
+				/*
+				 * Si hemos llegado al límite y no hemos
+				 * encontrado nada entonces la llama
+				 * sólo llega al límite.
+				 */
 			} else {
 				encon[3] = true;
 				tempArray[3] = alcanceExpansion;

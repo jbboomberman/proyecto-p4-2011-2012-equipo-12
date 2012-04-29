@@ -40,7 +40,7 @@ public class Sprite {
 	protected int imagActual;
 	// Velocidad a la que se cambiaran las imágenes
 	protected int velocidadPic;
-
+	//Para saber cuando cambiar de sprite.
 	protected int t;
 	// Tiempo transcurrido desde la última pintada
 	protected float tiempoTranscurrido;

@@ -1,6 +1,8 @@
 package bomberman.protagonistas;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 import bomberman.ventanas.GestorVentana;
@@ -53,7 +55,7 @@ public abstract class Bomberman extends SpriteDinamico {
 		deltaX = 0;
 		deltaY = 0;
 		velocidad = 150;
-		velocidadPic = 25;
+		velocidadPic = 5;
 		parado = true;
 		numBomba = 0;
 		maxBomba = 1;
@@ -79,6 +81,31 @@ public abstract class Bomberman extends SpriteDinamico {
 				+ (deltaY * tiempoTranscurrido))) {
 			posX += deltaX * tiempoTranscurrido;
 			posY += deltaY * tiempoTranscurrido;
+			
+			/*
+			 * ATENCIÓN: Redondeamos la posición porque me he encontrado
+			 * con un problema de manejabilidad. El problema era que
+			 * cuando hay muchos muros alrededor del Bomberman es
+			 * difícil manejarlo con precisión ya que te chocas con
+			 * todos los muros, aquí estamos redondeando la posición
+			 * para que se quede en la intersección.
+			 */
+			/*
+			 * Si hay menos o igual de 4 pixeles de diferencia
+			 * entonces redondear para que este en la
+			 * intersección.
+			 */
+			if(posX  % CASILLA <= 4){
+				posX -= posX % CASILLA;
+			}
+			/*
+			 * Realmente del Bomberman sólo queremos
+			 * saber la parte de abajo del cuerpo ya que
+			 * su cabeza NO toca el suelo.
+			 */
+			if((posY + this.getAltura()/2) % CASILLA <= 4){
+				posY -= (posY + this.getAltura()/2) % CASILLA;
+			}
 		}
 	}
 
@@ -167,6 +194,16 @@ public abstract class Bomberman extends SpriteDinamico {
 		else if (spr instanceof Bomba) {
 			if (((Bomba) spr).isPisada())
 				return false;
+		}else if(spr instanceof Puerta){
+			System.out.println("Entro");
+			ArrayList<Sprite> tempArray = escenario
+			.buscarPersonajePos(Muro.class, spr);
+			if(escenario.rivalesQuedan() > 0)
+				return false;
+			else if (tempArray.size() > 0)
+				return true;
+			else
+				escenario.setSuperadoNivel(true);
 		}
 		return true;
 	}
