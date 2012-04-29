@@ -30,7 +30,7 @@ public abstract class SpriteDinamico extends Sprite {
 	 * si estan libre o no: arriba, abajo,
 	 * derecha e izquierda.
 	 */
-	protected boolean[] sitioLado;
+	protected boolean[] lados;
 
 	/**
 	 * Contructor principal que recibe como parámetros

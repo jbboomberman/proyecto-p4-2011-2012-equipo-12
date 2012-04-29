@@ -26,17 +26,17 @@ public class Minvo extends Enemigo {
 	public void mover() {
 		super.mover();
 		if (primeraVezMover) {
-			sitioLado = this.alLado();
+			lados = this.alLado();
 			primeraVezMover = false;
 		}
-		if (sitioLado[0] == true || sitioLado[1] == true) {
+		if (lados[0] == true || lados[1] == true) {
 			if (!seChoca(posX + (deltaX * tiempoTranscurrido), posY)) {
 				posX += deltaX * tiempoTranscurrido;
 			} else {
 				deltaX = -(deltaX);
 				posX += deltaX * tiempoTranscurrido;
 			}
-		} else if (sitioLado[2] == true || sitioLado[3] == true) {
+		} else if (lados[2] == true || lados[3] == true) {
 			if (!seChoca(posX, posY + (deltaY * tiempoTranscurrido))) {
 				posY += deltaY * tiempoTranscurrido;
 			} else {
