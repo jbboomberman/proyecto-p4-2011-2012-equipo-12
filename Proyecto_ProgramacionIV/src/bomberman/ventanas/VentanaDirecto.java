@@ -15,12 +15,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import bomberman.database.AccesoMapa;
+import bomberman.database.AccesoNivel;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
@@ -133,11 +135,16 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 			new Thread(
             		new Runnable() {
             			public void run() {
-            				jugador.setModo(ModoJuego.Master);
-            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(
-            						Integer.parseInt((String) jcbNivel.getSelectedItem())));
-            				//Falta la contraseña
-            				GestorVentana.hacerVisible(VentanaJuego.class, true);
+            				if(AccesoNivel.esCorrecto(new String(jtPass.getPassword())
+            						, Integer.parseInt((String)jcbNivel.getSelectedItem()))){
+            					jugador.setModo(ModoJuego.Master);
+                				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(
+                						Integer.parseInt((String) jcbNivel.getSelectedItem())));
+                				//Falta la contraseña
+                				GestorVentana.hacerVisible(VentanaJuego.class, true);
+            				}else{
+            					JOptionPane.showMessageDialog(new JDialog(), "La contraseña no es correcta","Error",JOptionPane.ERROR_MESSAGE);
+            				}
             			}
             		}
             ).start();

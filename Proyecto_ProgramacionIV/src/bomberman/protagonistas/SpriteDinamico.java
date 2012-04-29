@@ -61,7 +61,10 @@ public abstract class SpriteDinamico extends Sprite {
 							return true;
 						}else{
 							if(this instanceof Bomberman){
-								escenario.superadoNivel();
+								if(escenario.rivalesQuedan() > 0)
+									return false;
+								else
+									escenario.superadoNivel();
 							}
 						}
 						return false;
@@ -91,9 +94,9 @@ public abstract class SpriteDinamico extends Sprite {
 		Rectangle tempRect = getRectangle(this);
 		Rectangle tempRect2;
 
-		for (Sprite sprTemp : escenario.getLista()) {
-			if (sprTemp != this) {
-				tempRect2 = getRectangle(sprTemp);
+		for(int i = 0; i < escenario.getLista().size(); i++){
+			if (escenario.getLista().get(i) != this) {
+				tempRect2 = getRectangle(escenario.getLista().get(i));
 
 				// Parte derecha
 				tempRect.setLocation((int) tempRect.getX() + CASILLA,

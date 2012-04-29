@@ -38,6 +38,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	private boolean parado;
 	private boolean finalizar;
 	private boolean superadoNivel;
+	private int rivalesRestantes;
 
 	/**
 	 * Constructor principal de la ventana.
@@ -255,6 +256,15 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 */
 	public void borrarSprites(){
 		arLista.clear();
+	}
+	
+	public int rivalesQuedan(){
+		int cont = 0;
+		for(Sprite spr : arLista){
+			if(spr instanceof Enemigo)
+				cont++;
+		}
+		return cont;
 	}
 	
 	public ArrayList<Sprite> buscarPersonajePos(Class clase, Sprite spr){

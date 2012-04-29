@@ -8,10 +8,7 @@ import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
 
 public class Dahl extends Enemigo {
-
-	private boolean[] lados;
-	private ArrayList<Integer> aleatorizacion;
-
+	
 	public Dahl(Escenario esce, float x, float y, Jugador jug) {
 		super(esce, x, y, jug);
 		deltaX = 10;
@@ -22,9 +19,8 @@ public class Dahl extends Enemigo {
 		spritesImagDest = new String[] { "dahl.gif_4", "dahl.gif_5",
 				"destruccion.png_1", "destruccion.png_2", "destruccion.png_3",
 				"destruccion.png_4", "destruccion.png_5" };
-		this.anchura = ManagerImagen.getImagen(spritesImag[0]).getWidth();
-		this.altura = ManagerImagen.getImagen(spritesImag[0]).getHeight();
-		aleatorizacion = new ArrayList<Integer>();
+		this.anchura = CASILLA;
+		this.altura = CASILLA;
 		aleatorizacion.add(velocidad);
 		aleatorizacion.add(-velocidad);
 	}
@@ -44,8 +40,10 @@ public class Dahl extends Enemigo {
 			if (lados[0] && lados[1]) {
 				Collections.shuffle(aleatorizacion);
 				deltaX = aleatorizacion.get(0);
+			//Derecha
 			} else if (lados[0]) {
 				deltaX = velocidad;
+			//Izquierda
 			} else if (lados[1]) {
 				deltaX = -velocidad;
 			} else {
@@ -55,8 +53,10 @@ public class Dahl extends Enemigo {
 			if (lados[2] && lados[3]) {
 				Collections.shuffle(aleatorizacion);
 				deltaY = aleatorizacion.get(0);
+			//Arriba
 			} else if (lados[2]) {
 				deltaY = -velocidad;
+			//Abajo
 			} else if (lados[3]) {
 				deltaY = velocidad;
 			} else {

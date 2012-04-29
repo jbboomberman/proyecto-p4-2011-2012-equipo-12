@@ -29,4 +29,6 @@ public interface Escenario extends ImageObserver {
 	public void superadoNivel();
 	
 	public ArrayList<Sprite> buscarPersonajePos(Class clase, Sprite spr);
+	
+	public int rivalesQuedan();
 }

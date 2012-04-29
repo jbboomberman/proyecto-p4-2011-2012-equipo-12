@@ -99,8 +99,12 @@ public class VentanaControles extends JDialog implements ActionListener {
 				.getControl("IZQUIERDA", 2)));
 		jtBombaDos.setText(Character.toString((char) AccesoControles
 				.getControl("BOMBA", 2)));
-		jcEmail.setSelected(false);
-		jcSonido.setSelected(false);
+		/*
+		 * Ponemos el sonido y el envio de emails a
+		 * gusto del usuario.
+		 */
+		jcEmail.setSelected(AccesoExtras.getExtra("email"));
+		jcSonido.setSelected(AccesoExtras.getExtra("sonido"));
 
 		// Layouts
 		jpSuperior.setLayout(new FlowLayout());
@@ -185,6 +189,7 @@ public class VentanaControles extends JDialog implements ActionListener {
 		Object botonPulsado = e.getSource();
 
 		if (botonPulsado == jbGuardar) {
+			//Actualizamos todos los parámetros
 			AccesoControles.setControl("ARRIBA", 1, jtArribaUno.getText()
 					.charAt(0));
 			AccesoControles.setControl("ABAJO", 1,
@@ -206,6 +211,7 @@ public class VentanaControles extends JDialog implements ActionListener {
 			AccesoControles.setControl("BOMBA", 2,
 					jtBombaDos.getText().charAt(0));
 
+			//También los del Jugador.
 			ControlPrincipal.getJugadorUno().setArriba(
 					jtArribaUno.getText().charAt(0));
 			ControlPrincipal.getJugadorUno().setAbajo(
@@ -216,6 +222,7 @@ public class VentanaControles extends JDialog implements ActionListener {
 					jtIzquierdaUno.getText().charAt(0));
 			ControlPrincipal.getJugadorUno().setBomba(
 					jtBombaUno.getText().charAt(0));
+			//Los del Jugador2 en caso de que exista.
 			if (ControlPrincipal.getJugadorDos() != null) {
 				ControlPrincipal.getJugadorDos().setArriba(
 						jtArribaDos.getText().charAt(0));
@@ -229,6 +236,7 @@ public class VentanaControles extends JDialog implements ActionListener {
 						jtBombaDos.getText().charAt(0));
 			}
 			
+			//Actualizamos email y sonido en la BD.
 			AccesoExtras.setExtra("email", jcEmail.isSelected());
 			AccesoExtras.setExtra("sonido", jcSonido.isSelected());
 			ControlPrincipal.getJugadorUno().setSonido(jcSonido.isSelected());

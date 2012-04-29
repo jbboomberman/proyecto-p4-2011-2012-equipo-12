@@ -22,10 +22,10 @@ public class ManagerImagen {
 				"nada.png", "llama.gif", "bomber_dest.gif",
 				"bomber_up_down.gif", "bomber_der.gif", "bomber_izq.gif",
 				"bomber2_dest.gif", "bomber2_up_down.gif", "bomber2_der.gif", 
-				"bomber2_izq.gif", "puerta.png"};
+				"bomber2_izq.gif", "puerta.png", "pontan.png", "pontan_dest.png"};
 		int cont;
-		int[] columnas = { 3, 8, 1, 3, 1, 5, 3, 1, 5, 1, 1, 4, 4, 3, 3, 3, 4, 3, 3, 3, 1 };
-		int[] filas = { 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 2, 1, 1 , 1, 2, 1, 1, 1};
+		int[] columnas = { 3, 8, 1, 3, 1, 5, 3, 1, 5, 1, 1, 4, 4, 3, 3, 3, 4, 3, 3, 3, 1, 3, 1 };
+		int[] filas = { 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, 2, 1, 1 , 1, 2, 1, 1, 1, 1, 1};
 
 		for (int i = 0; i < nomImagenes.length; i++) {
 			cont = 0;

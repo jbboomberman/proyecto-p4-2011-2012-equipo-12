@@ -14,7 +14,7 @@ public class AccesoExtras {
 					"UPDATE EXTRAS SET EMAIL = ?;");
 			else
 				stat = GestionBD.conectar().prepareStatement(
-				"UPDATE SONIDO SET EMAIL = ?;");
+				"UPDATE EXTRAS SET SONIDO = ?;");
 			stat.setBoolean(1, estado);
 			stat.executeUpdate();
 			stat.close();
