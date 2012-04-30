@@ -44,7 +44,7 @@ public class VentanaCargar extends JDialog implements ActionListener {
 		jpInferior = new JPanel();
 		tmModel = new TableModelCargar(0, 8);
 		tmModel.setColumnIdentifiers(new String[] { "Código", "Nombre",
-				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "Vidas" });
+				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "CodJugador", "Vidas" });
 		jtPuntu = new JTable(tmModel);
 		jsTabla = new JScrollPane(jtPuntu);
 
@@ -73,6 +73,7 @@ public class VentanaCargar extends JDialog implements ActionListener {
 		diseñarColumnas("Puntu", 100, 150);
 		diseñarColumnas("Nivel", 50, 75);
 		diseñarColumnas("Fecha", 150, 200);
+		diseñarColumnas("CodJugador", 50, 75);
 		diseñarColumnas("Vidas", 50, 75);
 
 		// Parámetros

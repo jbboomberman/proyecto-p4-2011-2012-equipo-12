@@ -23,15 +23,15 @@ public class TableModelCargar extends DefaultTableModel {
 				punt.getPuntu(),
 				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()),
 				ManipuladorFecha.parsearFecha(punt.getFecha_ulti_nivel()),
+				AccesoJugador.getJugador(punt.getCod_jug()),
 				punt.getVidas() });
 	}
 
 	public PuntuGeneral getFila(int row) {
 		PuntuGeneral tempPunt = new PuntuGeneral((Integer) this.getValueAt(row,
-				0), (Integer) AccesoJugador.getCodJugador((String) this
-				.getValueAt(row, 1)), true, (Integer) this.getValueAt(row, 4),
+				0), (Integer)this.getValueAt(row, 7), true, (Integer) this.getValueAt(row, 4),
 				(String) this.getValueAt(row, 6), (Integer) this.getValueAt(
-						row, 7));
+						row, 8));
 		return tempPunt;
 	}
 

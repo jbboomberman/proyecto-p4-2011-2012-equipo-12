@@ -266,6 +266,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 * Borra todo menos los Bomberman
 	 */
 	public void borrarSprites() {
+		System.out.println("Borrar");
 		arLista.clear();
 	}
 

@@ -98,7 +98,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		jpInferior.add(jbBuscar);
 		jpInferior.add(jbCancelar);
 		getContentPane().add(jpSuperior, BorderLayout.NORTH);
-		getContentPane().add(jpCentro, BorderLayout.CENTER);
+		getContentPane().add(jsScroll, BorderLayout.CENTER);
 		getContentPane().add(jpInferior, BorderLayout.SOUTH);
 
 		// Escuchadores
@@ -156,10 +156,10 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 							tempArray = AccesoPuntuGen.getPuntDatos(
 									jtJuga.getText(), jtFecha.getText());
 						} else {
-							tempArray = AccesoPunEspe.getPuntDatos(jtJuga
-									.getText(), jtFecha.getText(), Integer
-									.parseInt((String) jcNivel
-											.getSelectedItem()));
+//							tempArray = AccesoPunEspe.getPuntDatos(jtJuga
+//									.getText(), jtFecha.getText(), Integer
+//									.parseInt((String) jcNivel
+//											.getSelectedItem()));
 						}
 						/*
 						 * En caso de que haya partidas con esas características

@@ -39,7 +39,7 @@ public class VentanaNoSuperado extends JDialog implements ActionListener {
 		pInferior = new JPanel();
 		pPrincipal = new JPanel();
 		jlMensaje = new JLabel(
-				"<html>¡Que pena no has podido superar el nivel! Anímate a intentarlo de nuevo<P>");
+				"<html>¡Que pena no hayas podido superar el nivel! Anímate a intentarlo de nuevo<P>");
 		jlNick = new JLabel();
 		jlNivel = new JLabel();
 		jlPuntuacion = new JLabel();

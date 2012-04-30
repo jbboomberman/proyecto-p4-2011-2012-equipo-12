@@ -57,21 +57,22 @@ public class AccesoJugador {
 		// El que llame a este método tiene que comprobar que no recibe null
 	}
 
-	public static int getCodJugador(String nom) {
-		int cod = -1;
+	public static ArrayList<Integer> getCodJugador(String nom) {
+		ArrayList<Integer> codAlma= new ArrayList<Integer>();
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 					"SELECT * FROM JUGADOR WHERE NOM_JUG = ?;");
 			stat.setString(1, nom);
 			ResultSet rs = stat.executeQuery();
-			if (rs.next())
-				cod = rs.getInt(1);
+			while (rs.next()){
+				codAlma.add(rs.getInt(1));
+			}
 			rs.close();
 			stat.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return cod;
+		return codAlma;
 	}
 
 	public static Jugador getJugador(String nombre, String apellido,

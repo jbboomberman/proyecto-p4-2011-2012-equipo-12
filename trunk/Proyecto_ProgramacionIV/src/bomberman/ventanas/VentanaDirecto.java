@@ -138,11 +138,15 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 											.getSelectedItem()))) {
 						ControlPrincipal.getJugadorUno().setModo(
 								ModoJuego.Master);
+						ControlPrincipal.getJugadorUno().setNivel(
+								Integer.parseInt((String) jcbNivel
+										.getSelectedItem()));
 						ControlPrincipal.crearEscenario(AccesoMapa
 								.getCodMapa(Integer.parseInt((String) jcbNivel
 										.getSelectedItem())));
 						// Falta la contraseña
-						GestorVentana.hacerVisible(VentanaJuego.class, true);
+						GestorVentana.ocultarVentana(VentanaDirecto.class);
+						GestorVentana.hacerVisible(VentanaDatos.class, false);
 					} else {
 						JOptionPane.showMessageDialog(new JDialog(),
 								"La contraseña no es correcta", "Error",
