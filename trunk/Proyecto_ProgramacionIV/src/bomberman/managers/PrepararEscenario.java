@@ -1,9 +1,6 @@
 package bomberman.managers;
 
-import java.util.ArrayList;
-
 import bomberman.jugador.Jugador;
-import bomberman.protagonistas.Bomberman;
 import bomberman.protagonistas.BombermanBlanco;
 import bomberman.protagonistas.BombermanNegro;
 import bomberman.protagonistas.Dahl;
@@ -16,17 +13,39 @@ import bomberman.protagonistas.Valcom;
 import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaJuego;
 
+/**
+ * Clase que nos permite crear el escenario del
+ * juego. Crea los objetos del mapa en cada posición.
+ * @author David
+ * @version 1.0
+ */
 public class PrepararEscenario {
 	
+	/*
+	 * Tamaño estándar de casi todos los personajes.
+	 * También es el tamaño de cada columna y fila.
+	 */
 	private static final int CASILLA = 32;
 
+	/**
+	 * Método que se encarga de añadir los Sprites que
+	 * va leyendo en cada posición del array de caracteres
+	 * al ArrayList de Sprites de la ventana VentanaJuego.
+	 * @param esce - Escenario
+	 * @param arrayChar - Character[][]
+	 * @param jug - Jugador
+	 */
 	public static void ColocarMapa(Escenario esce, Character arrayChar[][],
 			Jugador jug) {
 
+		/*
+		 * Hacemos dos loops para leer todo el array
+		 */
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 20; j++) {
+				
+				//Un switch para identificar la letra
 				switch (arrayChar[i][j]) {
-
 				// Muro indestructible
 				case 'X':
 					esce.añadirSprite(new Muro(esce, (float) j * CASILLA,
