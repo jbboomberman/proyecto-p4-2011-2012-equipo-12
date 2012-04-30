@@ -25,8 +25,8 @@ import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
-import bomberman.outin.ConversorFecha;
 import bomberman.outin.LeerMapa;
+import bomberman.outin.ManipuladorFecha;
 import bomberman.protagonistas.Bomba;
 import bomberman.protagonistas.Bomberman;
 import bomberman.protagonistas.Dahl;
@@ -88,11 +88,17 @@ public class ControlPrincipal {
 					ventJuego.setSuperadoNivel(false);
 					ventJuego.borrarSprites();
 					if (jugadorUno.getModo() == ModoJuego.Historia) {
+						((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class))
+						.setJlNick(ControlPrincipal.getJugadorUno().getNick());
+						((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class))
+						.setJlNivel(String.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
+						((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class))
+						.setJlPuntuacion(String.valueOf(ControlPrincipal.getJugadorUno().getPuntuacion()));
 						GestorVentana
 								.hacerVisible(VentanaSuperado.class, false);
 						AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
 								.getNumPunt(), jugadorUno.getCodPart(),
-								jugadorUno.getPuntuNivel(), ConversorFecha.getFecha()
+								jugadorUno.getPuntuNivel(), ManipuladorFecha.getFecha()
 								, jugadorUno.getNivel()));
 					} else if (jugadorUno.getModo() == ModoJuego.Master) {
 
@@ -151,7 +157,7 @@ public class ControlPrincipal {
 						jugadorUno.getNombre(), jugadorUno.getApellidos(),
 						jugadorUno.getNick(), jugadorUno.getEmail()))
 						.getCod_jugador(), false, jugadorUno.getPuntuacion(),
-				ConversorFecha.getFecha(), 0);
+				ManipuladorFecha.getFecha(), 0);
 		AccesoPuntuGen.insertarPunt(tempGene);
 		ventJuego.borrarSprites();
 		GestorVentana.ocultarVentana(VentanaJuego.class);
@@ -206,6 +212,7 @@ public class ControlPrincipal {
 		GestorVentana.hacerVisible(VentanaJuego.class, true);
 	}
 	public static void crearEscenario(int numEsce) {
+		((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).borrarSprites();
 		Character array[][] = LeerMapa.LeerMapaJuego(numEsce);
 		PrepararEscenario.ColocarMapa(
 				(VentanaJuego) GestorVentana.getVentana(VentanaJuego.class),

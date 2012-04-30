@@ -7,24 +7,34 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import bomberman.managers.ControlPrincipal;
 
-import bomberman.jugador.Jugador;
-
+/**
+ * Esta clase nos permitirá enviar emails a correos electrónicos.
+ * @author David
+ * @version 1.0
+ */
 public class EnvioEmail {
 
+	//Contendrá las propiedades de la conexión
 	private Properties props;
+	//La conexión con el servidor de correo.
 	private Session session;
+	//El mensaje.
 	private MimeMessage message;
+	//Para enviar correos.
 	private Transport trans;
-	private Jugador jugador;
 
-	public EnvioEmail(Jugador jug) {
+	/**
+	 * Constructor principal de la clase EnvioEmail
+	 * @param jug - Jugador
+	 */
+	public EnvioEmail() {
 
 		this.props = new Properties();
 		this.session = Session.getDefaultInstance(props);
 		this.message = new MimeMessage(session);
-		this.jugador = jug;
-
+		
 		try {
 			trans = session.getTransport("smtp");
 		} catch (NoSuchProviderException e) {
@@ -41,12 +51,10 @@ public class EnvioEmail {
 		props.setProperty("mail.smtp.port", "587");
 
 		// Nombre del usuario
-		props.setProperty("mail.smtp.user", jugador.getNick());
+		props.setProperty("mail.smtp.user", ControlPrincipal.getJugadorUno().getNick());
 
 		// Si requiere o no usuario y password para conectarse.
 		props.setProperty("mail.smtp.auth", "true");
-
-		session.setDebug(true);
 	}
 
 	public void enviarMensaje() {
@@ -56,11 +64,14 @@ public class EnvioEmail {
 			message.setFrom(new InternetAddress("equipo12Bomberman@gmail.com"));
 			// A quien va dirigido
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-					jugador.getEmail()));
-
+					ControlPrincipal.getJugadorUno().getEmail()));
+			//El asunto del mensaje
 			message.setSubject("Puntuación Bomberman");
-			message.setText(EstructuraCorreo.getEstructura(jugador.getNombre()));
+			//El texto
+			message.setText(EstructuraCorreo.getEstructura(ControlPrincipal.getJugadorUno().getNombre()));
+			//Nos conectamos a nuetsro correo
 			trans.connect("ejemplo@gmail.com", "la password");
+			//Enviamos el mensaje
 			trans.sendMessage(message, message.getAllRecipients());
 			trans.close();
 		} catch (Exception e) {

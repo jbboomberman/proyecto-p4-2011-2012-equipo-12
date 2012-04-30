@@ -4,7 +4,7 @@ import javax.swing.JTextField;
 import javax.swing.text.*;
 
 /**
- * Clase LimitadorCaracters diseñada para no permitIr que los datos introducidos
+ * Clase LimitadorCaracters diseñada para no permitir que los datos introducidos
  * en un JTextField tengan más de un determinado número de caracteres. También
  * da la opción a elegir que tipo de caracteres quieres que se permitan. Hereda
  * de PlainDocument.

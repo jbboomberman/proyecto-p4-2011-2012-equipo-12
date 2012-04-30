@@ -100,6 +100,30 @@ public class VentanaNoSuperado extends JDialog {
 		}
 	}
 
+	public JLabel getJlNick() {
+		return jlNick;
+	}
+
+	public void setJlNick(JLabel jlNick) {
+		this.jlNick = jlNick;
+	}
+
+	public JLabel getJlNivel() {
+		return jlNivel;
+	}
+
+	public void setJlNivel(JLabel jlNivel) {
+		this.jlNivel = jlNivel;
+	}
+
+	public JLabel getJlPuntuacion() {
+		return jlPuntuacion;
+	}
+
+	public void setJlPuntuacion(JLabel jlPuntuacion) {
+		this.jlPuntuacion = jlPuntuacion;
+	}
+
 	public static void main(String[] args) {
 		VentanaNoSuperado prueba = new VentanaNoSuperado();
 		prueba.setVisible(true);

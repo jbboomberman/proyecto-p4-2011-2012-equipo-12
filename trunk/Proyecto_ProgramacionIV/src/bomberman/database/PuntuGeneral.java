@@ -2,8 +2,6 @@ package bomberman.database;
 
 import java.sql.Date;
 
-import bomberman.outin.ConversorFecha;
-
 public class PuntuGeneral implements Comparable<PuntuGeneral>{
 	/*
 	 * Esta clase representa la fila de la tabla PUNTUACION_GENERAL y por ese
@@ -69,7 +67,7 @@ public class PuntuGeneral implements Comparable<PuntuGeneral>{
 	}
 
 	public void setFecha_ulti_nivel(String fecha_ulti_nivel) {
-		this.fecha_ulti_nivel = ConversorFecha.parsearFecha(fecha_ulti_nivel);
+		this.fecha_ulti_nivel = fecha_ulti_nivel;
 	}
 
 	public int getVidas() {

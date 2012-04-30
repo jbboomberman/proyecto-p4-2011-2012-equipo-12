@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.managers.ControlPrincipal;
-import bomberman.outin.ConversorFecha;
+import bomberman.outin.ManipuladorFecha;
 
 public class VentanaSuperado extends JDialog implements ActionListener{
 
@@ -36,6 +36,7 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 	private JLabel jlNick;
 	private JLabel jlNivel;
 	private JLabel jlPuntuacion;
+	private JLabel jlPassword;
 
 	public VentanaSuperado() {
 		jbGuardarPart = new JButton("Guardar partida");
@@ -51,6 +52,7 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		jlNick = new JLabel();
 		jlNivel = new JLabel();
 		jlPuntuacion = new JLabel();
+		jlPassword = new JLabel();
 
 		// Layouts
 		pPrincipal.setLayout(new BorderLayout());
@@ -59,10 +61,10 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		pInfSur.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		// Añadir componentes
-		pSuperior.add(posicionaComp("Nick: "));
-		pSuperior.add(posicionaComp("Nivel: "));
-		pSuperior.add(posicionaComp("Puntuación: "));
-		pSuperior.add(posicionaComp("Password: "));
+		pSuperior.add(posicionaComp("Nick: ", jlNick));
+		pSuperior.add(posicionaComp("Nivel: ", jlNivel));
+		pSuperior.add(posicionaComp("Puntuación: ", jlPuntuacion));
+		pSuperior.add(posicionaComp("Password: ", jlPassword));
 		pInfNorte.add(jbGuardarPart);
 		pInfSur.add(jbPasarNivel);
 		pInfSur.add(jbVolverMenu);
@@ -108,11 +110,12 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 	 * @param componente
 	 *            - Component. Container donde hay que meter los componentes.
 	 */
-	private JPanel posicionaComp(String nombre) {
+	private JPanel posicionaComp(String nombre, JLabel jlDato) {
 		JPanel panelCompl = new JPanel();
 		// Queremos que este en el centro.
 		panelCompl.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panelCompl.add(new JLabel(nombre));
+		panelCompl.add(jlDato);
 		return panelCompl;
 	}
 
@@ -127,7 +130,7 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal.getJugadorUno().getCodPart(), 
 					ControlPrincipal.getJugadorUno().getCodJugador(), true, 
 					ControlPrincipal.getJugadorUno().getPuntuacion(),
-					ConversorFecha.getFecha()
+					ManipuladorFecha.getFecha()
 			, ControlPrincipal.getJugadorUno().getVidas()));
 			GestorVentana.ocultarVentana(VentanaSuperado.class);
 			GestorVentana.hacerVisible(VentanaSeguir.class, true);
@@ -149,16 +152,40 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		
 	}
 	
-	public void setVisible(boolean visible) {
-		super.setVisible(visible);
-		if (this.isVisible()){
-			System.out.println("Estoy visible");
-			jlNick.setText(ControlPrincipal.getJugadorUno().getNick());
-			jlNivel.setText(String.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
-			jlPuntuacion.setText(String.valueOf(ControlPrincipal.getJugadorUno().getPuntuacion()));
-		}
+	
+	public JLabel getJlNick() {
+		return jlNick;
+	}
+
+	public void setJlNick(String jlNick) {
+		this.jlNick.setText(jlNick);
+	}
+
+	public JLabel getJlNivel() {
+		return jlNivel;
+	}
+
+	public void setJlNivel(String jlNivel) {
+		System.out.println("Entre");
+		this.jlNivel.setText(jlNivel);
+	}
+
+	public JLabel getJlPuntuacion() {
+		return jlPuntuacion;
+	}
+
+	public void setJlPuntuacion(String jlPuntuacion) {
+		this.jlPuntuacion.setText(jlPuntuacion);
 	}
 	
+	public JLabel getJlPassword() {
+		return jlPassword;
+	}
+
+	public void setJlPassword(JLabel jlPassword) {
+		this.jlPassword = jlPassword;
+	}
+
 	public static void main(String[] args) {
 		VentanaSuperado prueba = new VentanaSuperado();
 		prueba.setVisible(true);
