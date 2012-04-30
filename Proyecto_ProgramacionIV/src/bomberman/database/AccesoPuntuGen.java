@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import bomberman.outin.ManipuladorFecha;
 import bomberman.outin.VerificadorFecha;
 
 public class AccesoPuntuGen {
@@ -137,7 +138,7 @@ public class AccesoPuntuGen {
 							.getCodJugador(nom);
 					for (Integer num : tempArray) {
 						stat.setInt(1, num);
-						stat.setString(2, fecha);
+						stat.setString(2, ManipuladorFecha.desParsearFecha(fecha));
 						ResultSet rs = stat.executeQuery();
 						while (rs.next()) {
 							// Si es 'true' es partida guardada.
@@ -154,7 +155,6 @@ public class AccesoPuntuGen {
 				 * En caso de que fecha sea igual a null.
 				 */
 			} else if (nom != null && fecha == null) {
-				System.out.println("Buscando en la BD");
 				stat = GestionBD.conectar().prepareStatement(
 						"SELECT * FROM PUNTUACION_GENERAL WHERE COD_JUG = ?;");
 				if (AccesoJugador.getCodJugador(nom) == null)
@@ -185,7 +185,7 @@ public class AccesoPuntuGen {
 								"SELECT * FROM PUNTUACION_GENERAL WHERE FECHA_ULTI_NIVEL = ?;");
 				if (!VerificadorFecha.comprobarFecha(fecha))
 					return null;
-				stat.setString(1, fecha);
+				stat.setString(1, ManipuladorFecha.desParsearFecha(fecha));
 				ResultSet rs = stat.executeQuery();
 				while (rs.next()) {
 					if (!rs.getBoolean(3))
@@ -244,5 +244,41 @@ public class AccesoPuntuGen {
 			e.printStackTrace();
 		}
 		return tempArray;
+	}
+	
+	public static int getCodJugador(int codPunt){
+		int codigo = -1;
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+					"SELECT * FROM PUNTUACION_GENERAL WHERE COD_PUNT = ?;");
+			stat.setInt(1, codPunt);
+			ResultSet rs = stat.executeQuery();
+			while (rs.next()) {
+				codigo = rs.getInt(2);
+			}
+			rs.close();
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return codigo;
+	}
+	
+	public static ArrayList<Integer> getCodPuntJug (int codJug){
+		ArrayList<Integer> arrayCodPunt = new ArrayList<Integer>();
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+					"SELECT * FROM PUNTUACION_GENERAL WHERE COD_JUG = ?;");
+			stat.setInt(1, codJug);
+			ResultSet rs = stat.executeQuery();
+			while (rs.next()) {
+				arrayCodPunt.add(rs.getInt(1));
+			}
+			rs.close();
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return arrayCodPunt;
 	}
 }

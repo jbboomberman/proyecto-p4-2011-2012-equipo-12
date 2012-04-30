@@ -184,9 +184,14 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 	public void setJlPassword(JLabel jlPassword) {
 		this.jlPassword = jlPassword;
 	}
+	
+	public void setBotonPasarEnabled(boolean estado){
+		this.jbPasarNivel.setEnabled(estado);
+	}
 
 	public static void main(String[] args) {
 		VentanaSuperado prueba = new VentanaSuperado();
+		prueba.setBotonPasarEnabled(false);
 		prueba.setVisible(true);
 	}
 }

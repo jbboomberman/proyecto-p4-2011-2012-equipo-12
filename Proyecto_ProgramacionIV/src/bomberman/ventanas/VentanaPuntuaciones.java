@@ -15,10 +15,11 @@ import java.util.Collections;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
+import bomberman.outin.*;
 import bomberman.database.AccesoMapa;
 import bomberman.database.AccesoPunEspe;
 import bomberman.database.AccesoPuntuGen;
+import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.managers.ControlPrincipal;
@@ -145,44 +146,69 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		if (botonPulsado == jbBuscar) {
 			new Thread(new Runnable() {
 				public void run() {
-					ArrayList<PuntuGeneral> tempArray = null;
-
+					ArrayList<PuntuGeneral> arrayGen;
+					ArrayList<PuntuEspe> arrayEsp;
 					/*
 					 * Si alguno de los JTextField es distinto de null.
 					 */
-					if (jtJuga.getText() != null || jtFecha.getText() != null) {
+					if (((jtJuga.getText() != null || jtFecha.getText() != null)&&jchTotal.isSelected())
+							|| !jchTotal.isSelected()) {
 						// Le pedimos las puntuaciones con esos datos.
 						if (jchTotal.isSelected()) {
-							tempArray = AccesoPuntuGen.getPuntDatos(
+							arrayGen = AccesoPuntuGen.getPuntDatos(
 									jtJuga.getText(), jtFecha.getText());
+							/*
+							 * En caso de que haya partidas con esas características
+							 * borramos datos anteriores y ponemos los nuevos.
+							 */
+							if (arrayGen != null) {
+								jtJuga.setBackground(Color.WHITE);
+								jtFecha.setBackground(Color.WHITE);
+								// Los ordenamos de mayor a menor.
+								Collections.sort(arrayGen,
+										Collections.reverseOrder());
+								tmPuntu.deleteAllRows();
+								for (PuntuGeneral punGen : arrayGen)
+									tmPuntu.añadirFila(punGen);
+								// En caso de que no haya resultados.
+							} else {
+								tmPuntu.deleteAllRows();
+								// Si había datos en Jugador lo ponemos en rojo.
+								if (jtJuga.getText() != null)
+									jtJuga.setBackground(Color.RED);
+								// Si había datos en fecha lo ponemos en rojo.
+								if (jtFecha.getText() != null)
+									jtFecha.setBackground(Color.RED);
+							}
 						} else {
-//							tempArray = AccesoPunEspe.getPuntDatos(jtJuga
-//									.getText(), jtFecha.getText(), Integer
-//									.parseInt((String) jcNivel
-//											.getSelectedItem()));
-						}
-						/*
-						 * En caso de que haya partidas con esas características
-						 * borramos datos anteriores y ponemos los nuevos.
-						 */
-						if (tempArray != null) {
-							jtJuga.setBackground(Color.WHITE);
-							jtFecha.setBackground(Color.WHITE);
-							// Los ordenamos de mayor a menor.
-							Collections.sort(tempArray,
-									Collections.reverseOrder());
-							tmPuntu.deleteAllRows();
-							for (PuntuGeneral punGen : tempArray)
-								tmPuntu.añadirFila(punGen);
-							// En caso de que no haya resultados.
-						} else {
-							tmPuntu.deleteAllRows();
-							// Si había datos en Jugador lo ponemos en rojo.
-							if (jtJuga.getText() != null)
-								jtJuga.setBackground(Color.RED);
-							// Si había datos en fecha lo ponemos en rojo.
-							if (jtFecha.getText() != null)
-								jtFecha.setBackground(Color.RED);
+							 arrayEsp = AccesoPunEspe.getPuntDatos(jtJuga
+									.getText(), jtFecha.getText(), Integer
+									.parseInt((String) jcNivel
+											.getSelectedItem()));
+							 /*
+								 * En caso de que haya partidas con esas características
+								 * borramos datos anteriores y ponemos los nuevos.
+								 */
+								if (arrayEsp != null) {
+									jtJuga.setBackground(Color.WHITE);
+									jtFecha.setBackground(Color.WHITE);
+									// Los ordenamos de mayor a menor.
+									Collections.sort(arrayEsp,
+											Collections.reverseOrder());
+									tmPuntu.deleteAllRows();
+									for (PuntuEspe punEsp : arrayEsp){
+										tmPuntu.añadirFila(punEsp);
+									}
+									// En caso de que no haya resultados.
+								} else {
+									tmPuntu.deleteAllRows();
+									// Si había datos en Jugador lo ponemos en rojo.
+									if (jtJuga.getText() != null)
+										jtJuga.setBackground(Color.RED);
+									// Si había datos en fecha lo ponemos en rojo.
+									if (jtFecha.getText() != null)
+										jtFecha.setBackground(Color.RED);
+								}
 						}
 					} else {
 						tmPuntu.deleteAllRows();

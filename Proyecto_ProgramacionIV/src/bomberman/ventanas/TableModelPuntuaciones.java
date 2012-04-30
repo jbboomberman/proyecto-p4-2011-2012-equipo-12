@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 
 import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoPunEspe;
+import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
 import bomberman.outin.ManipuladorFecha;
@@ -27,6 +28,19 @@ public class TableModelPuntuaciones extends DefaultTableModel {
 				punt.getPuntu(),
 				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()),
 				ManipuladorFecha.parsearFecha(punt.getFecha_ulti_nivel()) });
+	}
+	
+	public void añadirFila(PuntuEspe punt) {
+		this.addRow(new Object[] {
+				AccesoJugador.getJugador(AccesoPuntuGen
+						.getCodJugador(punt.getCod_puntu())).getNomJugador(),
+						AccesoJugador.getJugador(AccesoPuntuGen
+								.getCodJugador(punt.getCod_puntu())).getApellJugador(),
+								AccesoJugador.getJugador(AccesoPuntuGen
+										.getCodJugador(punt.getCod_puntu())).getNickJugador(),
+				punt.getPuntu_espe(),
+				punt.getNivel(),
+				ManipuladorFecha.parsearFecha(punt.getFecha()) });
 	}
 
 	public PuntuGeneral getFila(int row) {

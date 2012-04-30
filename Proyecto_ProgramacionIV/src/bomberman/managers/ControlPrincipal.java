@@ -94,6 +94,11 @@ public class ControlPrincipal {
 										.valueOf(ControlPrincipal
 												.getJugadorUno()
 												.getPuntuacion()));
+						//Si hemos llegado al nivel máximo se acaba el juego
+						if(jugadorUno.getNivel() == 10)
+							((VentanaSuperado)GestorVentana.
+									getVentana(VentanaSuperado.class)).setEnabled(false);
+							
 						// Hacemos que aparezca la ventana VentanaSuperado
 						GestorVentana
 								.hacerVisible(VentanaSuperado.class, false);
@@ -180,6 +185,7 @@ public class ControlPrincipal {
 			if (jugadorUno.getModo() == ModoJuego.Historia) {
 				// Creamos la puntuación general
 				PuntuGeneral tempGene = new PuntuGeneral(
+						//creando dos????BORRAR BD
 						AccesoPuntuGen.getNumPunt(),
 						((bomberman.database.Jugador) AccesoJugador.getJugador(
 								jugadorUno.getNombre(),
@@ -192,6 +198,7 @@ public class ControlPrincipal {
 				AccesoPuntuGen.insertarPunt(tempGene);
 			}
 			// Insertamos la puntuación específica.
+			//TODA PUNT ESPECÍFICA TIENE QUE TENER UNA PUNT_GENERAL
 			AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
 					.getNumPunt(), jugadorUno.getCodPart(),
 					jugadorUno.getPuntuNivel(), ManipuladorFecha
@@ -236,7 +243,6 @@ public class ControlPrincipal {
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 			// Ya la partida ha acabado
 			ventJuego.setAcabarPartida(false);
-			// Si estabamos jugando en modo Master
 		} 
 	}
 
@@ -250,7 +256,6 @@ public class ControlPrincipal {
 		// Cogemos al jugador que guardo la partida.
 		bomberman.database.Jugador partJug = AccesoJugador.getJugador(punt
 				.getCod_jug());
-
 		/*
 		 * Definimos el nuevo jugador que será el que guardó la partida
 		 * guardada.
@@ -278,17 +283,27 @@ public class ControlPrincipal {
 		// Creamos el escenario.
 		ControlPrincipal.crearEscenario(AccesoPunEspe.getNivelMasAlto(punt
 				.getCod_punt()) + 1);
+		//Ocultamos la ventana cargar
 		GestorVentana.ocultarVentana(VentanaCargar.class);
+		//Hacemos visible la ventana VentanaJuego
 		GestorVentana.hacerVisible(VentanaJuego.class, true);
 	}
 
+	/**
+	 * Se encarga de crear el escenario del juego cargando
+	 * todos los Sprites.
+	 * @param numEsce
+	 */
 	public static void crearEscenario(int numEsce) {
+		//Limpiamos el escenario
 		((VentanaJuego) GestorVentana.getVentana(VentanaJuego.class))
 				.borrarSprites();
-		Character array[][] = LeerMapa.LeerMapaJuego(numEsce);
+		//Leemos el mapa
+		Character arrayMapa[][] = LeerMapa.LeerMapaJuego(numEsce);
+		//Construimos el escenario
 		PrepararEscenario.ColocarMapa(
 				(VentanaJuego) GestorVentana.getVentana(VentanaJuego.class),
-				array, jugadorUno);
+				arrayMapa, jugadorUno);
 	}
 
 	public static Jugador getJugadorUno() {

@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import bomberman.database.AccesoPunEspe;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.managers.ControlPrincipal;
@@ -133,8 +134,10 @@ public class VentanaCargar extends JDialog implements ActionListener {
 			// Si se ha seleccionado alguna fila
 			if (fila != -1) {
 				seleccionada = tmModel.getFila(fila);
-				// Cargamos la partida
-				ControlPrincipal.cargarPartida(seleccionada);
+				//Solo cargamos si la partida tiene nivel inferior a 10.
+				if(!(AccesoPunEspe.getNivelMasAlto(seleccionada.getCod_punt()) < 10))
+					// Cargamos la partida
+					ControlPrincipal.cargarPartida(seleccionada);
 			} else {
 				JOptionPane.showMessageDialog(new JDialog(),
 						"No has seleccionado ninguna fila", "Error",

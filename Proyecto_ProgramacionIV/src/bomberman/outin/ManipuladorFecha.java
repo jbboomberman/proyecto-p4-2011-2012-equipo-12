@@ -30,6 +30,24 @@ public class ManipuladorFecha {
 
 		return tempString;
 	}
+	
+	/**
+	 * Convierte un String con formato 'YYYY/MM/DD' a un
+	 * String con formato 'YYYYMMDD'.
+	 * @param fecha - String
+	 * @return String
+	 */
+	public static String desParsearFecha(String fecha){
+		String tempString;
+		//Cogemos el año
+		tempString = fecha.substring(0, 4);
+		//Cogemos el mes
+		tempString = tempString.concat(fecha.substring(5, 7));
+		//Cogemos el dia
+		tempString = tempString.concat(fecha.substring(8));
+		
+		return tempString;
+	}
 
 	/**
 	 * Este método recibe un String con este formato 'HHmm' y nos devuelve un
