@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.UIManager;
 
+import bomberman.managers.ControlPrincipal;
 import bomberman.managers.ManagerSonido;
 
 /**
@@ -148,6 +149,7 @@ public class VentanaInicial extends JFrame implements ActionListener {
 			// } catch (Exception ex) {
 			// ex.printStackTrace();
 			// }
+			ControlPrincipal.setPararJuego(false);
 			GestorVentana.hacerVisible(VentanaSeleccion.class, false);
 		} else if (botonPulsado == jbBotonCargar) {
 			GestorVentana.hacerVisible(VentanaCargar.class, false);

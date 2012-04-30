@@ -25,6 +25,7 @@ import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
+import bomberman.outin.EnvioEmail;
 import bomberman.outin.LeerMapa;
 import bomberman.outin.ManipuladorFecha;
 import bomberman.protagonistas.Bomba;
@@ -47,17 +48,15 @@ import bomberman.ventanas.VentanaSuperado;
 import bomberman.ventanas.VentanaVidaMenos;
 
 public class ControlPrincipal {
-
 	private BufferStrategy image;
 	private VentanaJuego ventJuego;
 	private static Jugador jugadorUno;
 	private static Jugador jugadorDos;
-	private boolean pararJuego;
+	private static boolean pararJuego;
 	private final int PERIODO = 18;
-	long beforeTime, timeDiff, sleepTime;
+	private long beforeTime, timeDiff, sleepTime;
 
 	public ControlPrincipal() {
-
 		pararJuego = false;
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
 		jugadorUno = new Jugador();
@@ -84,7 +83,6 @@ public class ControlPrincipal {
 						&& (!ventJuego.getSuperadoNivel()))
 					paintWorld();
 				else if (ventJuego.getSuperadoNivel()) {
-					GestorVentana.ocultarVentana(VentanaJuego.class);
 					ventJuego.setSuperadoNivel(false);
 					ventJuego.borrarSprites();
 					if (jugadorUno.getModo() == ModoJuego.Historia) {
@@ -160,9 +158,16 @@ public class ControlPrincipal {
 				ManipuladorFecha.getFecha(), 0);
 		AccesoPuntuGen.insertarPunt(tempGene);
 		ventJuego.borrarSprites();
+		((VentanaNoSuperado)GestorVentana.getVentana(VentanaNoSuperado.class))
+		.setJlNick(String.valueOf(ControlPrincipal.getJugadorUno().getNick()));
+		((VentanaNoSuperado)GestorVentana.getVentana(VentanaNoSuperado.class))
+		.setJlNivel(String.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
+		((VentanaNoSuperado)GestorVentana.getVentana(VentanaNoSuperado.class))
+		.setJlPuntuacion(String.valueOf(ControlPrincipal.getJugadorUno().getPuntuacion()));
 		GestorVentana.ocultarVentana(VentanaJuego.class);
 		GestorVentana.hacerVisible(VentanaInicial.class, false);
 		GestorVentana.hacerVisible(VentanaNoSuperado.class, false);
+		EnvioEmail.enviarMensaje();
 		pararJuego = true;
 	}
 
@@ -233,5 +238,13 @@ public class ControlPrincipal {
 
 	public static void setJugadorDos(Jugador jug) {
 		jugadorDos = jug;
+	}
+
+	public static boolean isPararJuego() {
+		return pararJuego;
+	}
+
+	public static void setPararJuego(boolean pararJuego) {
+		ControlPrincipal.pararJuego = pararJuego;
 	}
 }

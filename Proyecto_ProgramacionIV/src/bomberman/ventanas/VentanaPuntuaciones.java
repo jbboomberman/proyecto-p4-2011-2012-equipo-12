@@ -98,7 +98,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		jpInferior.add(jbBuscar);
 		jpInferior.add(jbCancelar);
 		getContentPane().add(jpSuperior, BorderLayout.NORTH);
-		getContentPane().add(jsScroll, BorderLayout.CENTER);
+		getContentPane().add(jpCentro, BorderLayout.CENTER);
 		getContentPane().add(jpInferior, BorderLayout.SOUTH);
 
 		// Escuchadores

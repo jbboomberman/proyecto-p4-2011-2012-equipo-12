@@ -89,6 +89,7 @@ public class VentanaDatos extends JDialog implements ActionListener {
 		ape.setDocument(new LimitadorCaracteres(ape, 20, false));
 		// Con números
 		nic.setDocument(new LimitadorCaracteres(nic, 12, true));
+		email.setDocument(new LimitadorCaracteres(email, 30, true));
 
 		/*
 		 * Añadimos el panel al Contenedor principal.
@@ -137,6 +138,11 @@ public class VentanaDatos extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(this,
 						"No ha rellenado todos los campos", "Error",
 						JOptionPane.WARNING_MESSAGE);
+			//Si el formato del correo no es correcto
+			}else if(!CompCorreo.isEmail(email.getText())){
+				JOptionPane.showMessageDialog(this,
+						"El formato de email es incorrecto", "Error",
+						JOptionPane.WARNING_MESSAGE);
 			} else {
 				if(AccesoJugador.getJugador(nom.getText(), ape.getText(),
 						nic.getText(), email.getText()) == null){
@@ -163,8 +169,8 @@ public class VentanaDatos extends JDialog implements ActionListener {
 							AccesoExtras.getExtra("sonido"), AccesoExtras.getExtra("email"));
 					ControlPrincipal.setJugadorUno(tempJug);
 				}
+				GestorVentana.hacerVisible(VentanaJuego.class, true);
 			}
-			GestorVentana.hacerVisible(VentanaJuego.class, true);
 		} else if (botonPulsado == botonCancelar) {
 			GestorVentana.ocultarVentana(VentanaDatos.class);
 		}

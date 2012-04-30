@@ -30,6 +30,22 @@ public class ManipuladorFecha {
 	}
 	
 	/**
+	 * Este método recibe un String con este formato 'HHmm'
+	 * y nos devuelve un String con este formato 'HH:mm'.
+	 * @param hora - String
+	 * @return String
+	 */
+	public static String parsearHora(String hora){
+		String tempString;
+		//Cogemos la hora
+		tempString = hora.substring(0, 2) + ":";
+		//Cogemos los minutos
+		tempString = tempString.concat(hora.substring(2));
+		
+		return tempString;
+	}
+	
+	/**
 	 * Nos devuelve la fecha actual en este formato: 'YYYYMMDD'
 	 * @return String
 	 */
@@ -55,5 +71,32 @@ public class ManipuladorFecha {
 		return new String(
 				tempCalendar.get(Calendar.YEAR) + mes
 				+ dia);
+	}
+	
+	/**
+	 * Nos devuelve la hora actual en formato 'HHmm'
+	 * @return String
+	 */
+	public static String getHora(){
+		/*
+		 * Recibe un objeto calendario cuyos parámetros de tiempo
+		 * se han inicializados a la fecha actual.
+		 */
+		Calendar tempCalendar = Calendar.getInstance();
+		String hora, minuto;
+		//En caso de que el mes sea menor de 10 se le añade un '0'.
+		if (tempCalendar.get(Calendar.HOUR_OF_DAY) < 10)
+			//Se suma uno porque los mese empiezan por 0.
+			hora = "0" + (tempCalendar.get(Calendar.HOUR_OF_DAY));
+		else
+			hora = "" + (tempCalendar.get(Calendar.HOUR_OF_DAY));
+		//En caso de que el día sea menor de 10 se le añade un '0'.
+		if (tempCalendar.get(Calendar.MINUTE) < 10)
+			minuto = "0" + tempCalendar.get(Calendar.MINUTE);
+		else
+			minuto = "" + tempCalendar.get(Calendar.MINUTE);
+		
+		return new String(
+				hora + minuto);
 	}
 }

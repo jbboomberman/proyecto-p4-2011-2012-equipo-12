@@ -3,6 +3,7 @@ package bomberman.protagonistas;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import bomberman.enumeraciones.MirarLado;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 import bomberman.ventanas.GestorVentana;
@@ -42,6 +43,8 @@ public abstract class Bomberman extends SpriteDinamico {
 	protected int maxBomba;
 	//Alcance máximo de las bombas.
 	protected int alcanceMax;
+	//Nos dice a donde está mirando el Sprite
+	protected MirarLado mirando;
 
 	/**
 	 * Constructor principal de Bomberman.
@@ -95,18 +98,21 @@ public abstract class Bomberman extends SpriteDinamico {
 			 * entonces redondear para que este en la
 			 * intersección.
 			 */
-			if(posX  % CASILLA <= 4){
-				posX -= posX % CASILLA;
+			if(posX  % CASILLA > 26 && this.mirando == MirarLado.DERECHA){
+					posX += CASILLA - posX % CASILLA;
+			}else if(posX  % CASILLA < 6 && this.mirando == MirarLado.IZQUIERDA)
+					posX -= posX % CASILLA;
 			}
 			/*
 			 * Realmente del Bomberman sólo queremos
 			 * saber la parte de abajo del cuerpo ya que
 			 * su cabeza NO toca el suelo.
 			 */
-			if((posY + this.getAltura()/2) % CASILLA <= 4){
-				posY -= (posY + this.getAltura()/2) % CASILLA;
+			if((posY + this.getAltura()/2) % CASILLA > 26 && this.mirando == MirarLado.ABAJO){
+				posY += CASILLA - (posY + this.getAltura()/2) % CASILLA;
+			}else if((posY + this.getAltura()/2) % CASILLA < 6 && this.mirando == MirarLado.ARRIBA){
+				posY -= (posY + this.getAltura()/2) % CASILLA;	
 			}
-		}
 	}
 
 	/**

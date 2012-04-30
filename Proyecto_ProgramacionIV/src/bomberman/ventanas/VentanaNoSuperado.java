@@ -5,19 +5,23 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import bomberman.database.AccesoNivel;
 import bomberman.managers.ControlPrincipal;
 
-public class VentanaNoSuperado extends JDialog {
+public class VentanaNoSuperado extends JDialog implements ActionListener{
 
 	private JButton jbVolverMenu;
 	private JPanel pSuperior;
@@ -27,6 +31,7 @@ public class VentanaNoSuperado extends JDialog {
 	private JLabel jlNick;
 	private JLabel jlNivel;
 	private JLabel jlPuntuacion;
+	private JLabel jlPuntuacionNivel;
 
 	public VentanaNoSuperado() {
 		jbVolverMenu = new JButton("Volver al menú");
@@ -38,22 +43,30 @@ public class VentanaNoSuperado extends JDialog {
 		jlNick = new JLabel();
 		jlNivel = new JLabel();
 		jlPuntuacion = new JLabel();
+		jlPuntuacionNivel = new JLabel();
 
 		// Layouts
 		pPrincipal.setLayout(new BorderLayout());
 		pSuperior.setLayout(new BoxLayout(pSuperior, BoxLayout.Y_AXIS));
 		pInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+		
 		// Añadir componentes
 		pSuperior.add(posicionaComp("Nick: ", jlNick));
 		pSuperior.add(posicionaComp("Nivel: ", jlNivel));
 		pSuperior.add(posicionaComp("Puntuación: ", jlPuntuacion));
+		pSuperior.add(posicionaComp("Puntuación global: ", jlPuntuacionNivel));
 		pInferior.add(jbVolverMenu);
 		pPrincipal.add(pSuperior, BorderLayout.NORTH);
 		pPrincipal.add(jlMensaje, BorderLayout.CENTER);
 		pPrincipal.add(pInferior, BorderLayout.SOUTH);
+		pPrincipal.add(Box.createRigidArea(new Dimension(20, 200)), BorderLayout.WEST);
 		getContentPane().add(pPrincipal);
+		this.pack();
 
+		//Añadir escuchadores
+		jbVolverMenu.addActionListener(this);
+		
 		// Carcterísticas de la ventana
 		/*
 		 * Determinamos un tamaño mínimo de la ventana aunque dejamos que tenga
@@ -61,7 +74,7 @@ public class VentanaNoSuperado extends JDialog {
 		 * perfección en distintas resoluciones.
 		 */
 		this.setMinimumSize(new Dimension(200, 100));
-		this.setSize(350, 200);
+		this.setSize(350, 250);
 		this.setTitle("Nivel superado");
 		this.setModal(true);
 		// Para que el hilo de Swing acabe cuando cerremos la ventana.
@@ -70,10 +83,7 @@ public class VentanaNoSuperado extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 
-		Insets insets = this.getInsets();
-		pPrincipal.setBorder(BorderFactory.createEmptyBorder(insets.top,
-				((insets.left >= 2) ? insets.left - 2 : insets.left),
-				insets.bottom, insets.right));
+		
 	}
 
 	/**
@@ -91,6 +101,24 @@ public class VentanaNoSuperado extends JDialog {
 		return panelCompl;
 	}
 	
+	/**
+	 * Implementamos el método 'actionPerformed' del interface ActionListener.
+	 * 
+	 * @param e
+	 *            - ActionEvent. Que evento ha tenido lugar.
+	 */
+	public void actionPerformed(ActionEvent e) {
+		/*
+		 * Para saber dónde se originó el evento creamos un Object con la
+		 * dirección del generador del evento.
+		 */
+		Object botonPulsado = e.getSource();
+		
+		if(botonPulsado == jbVolverMenu){
+			GestorVentana.hacerVisible(VentanaInicial.class, true);
+		}
+	}
+	
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible){
@@ -104,24 +132,24 @@ public class VentanaNoSuperado extends JDialog {
 		return jlNick;
 	}
 
-	public void setJlNick(JLabel jlNick) {
-		this.jlNick = jlNick;
+	public void setJlNick(String jlNick) {
+		this.jlNick.setText(jlNick);
 	}
 
 	public JLabel getJlNivel() {
 		return jlNivel;
 	}
 
-	public void setJlNivel(JLabel jlNivel) {
-		this.jlNivel = jlNivel;
+	public void setJlNivel(String jlNivel) {
+		this.jlNivel.setText(jlNivel);
 	}
 
 	public JLabel getJlPuntuacion() {
 		return jlPuntuacion;
 	}
 
-	public void setJlPuntuacion(JLabel jlPuntuacion) {
-		this.jlPuntuacion = jlPuntuacion;
+	public void setJlPuntuacion(String jlPuntuacion) {
+		this.jlPuntuacion.setText(jlPuntuacion);
 	}
 
 	public static void main(String[] args) {
