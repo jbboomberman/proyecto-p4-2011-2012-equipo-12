@@ -191,6 +191,11 @@ public class VentanaDatos extends JDialog implements ActionListener {
 		} else if (botonPulsado == botonCancelar) {
 			GestorVentana.ocultarVentana(VentanaDatos.class);
 		}
+		//Limpiamos los datos
+		nom.setText("");
+		ape.setText("");
+		nic.setText("");
+		email.setText("");
 	}
 
 	/**

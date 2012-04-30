@@ -2,7 +2,7 @@ package bomberman.database;
 
 import java.sql.Date;
 
-public class PuntuEspe {
+public class PuntuEspe implements Comparable<PuntuEspe>{
 	/*
 	 * Esta clase representa la fila de la tabla PUNTU_NIV_ESPECI y por eso
 	 * tiene estos atributos: COD_PUNTU_ESPE, COD_PUNTU, PUNTU_ESPE y FECHA
@@ -69,5 +69,14 @@ public class PuntuEspe {
 
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
+	}
+	
+	public int compareTo(PuntuEspe tempGeneral) {
+		if (this.getPuntu_espe() > tempGeneral.getPuntu_espe())
+			return 1;
+		else if (this.getPuntu_espe() == tempGeneral.getPuntu_espe())
+			return 0;
+		else
+			return -1;
 	}
 }

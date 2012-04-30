@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bomberman.jugador.Jugador;
+import bomberman.outin.ManipuladorFecha;
 import bomberman.outin.VerificadorFecha;
 
 public class AccesoPunEspe {
@@ -84,7 +85,6 @@ public class AccesoPunEspe {
 				.listaPuntu(codPuntuGeneral);
 		for (PuntuEspe tempPuntuEspe : tempArrayPuntuEspe)
 			nivMax = Math.max(nivMax, tempPuntuEspe.getNivel());
-		System.out.println(nivMax);
 		return nivMax;
 	}
 
@@ -106,88 +106,108 @@ public class AccesoPunEspe {
 		return cont;
 	}
 
-	public static ArrayList<PuntuEspe> getPuntDatos(String nom,
-			String fecha, int nivel) {
-//		PreparedStatement stat = null;
+	public static ArrayList<PuntuEspe> getPuntDatos(String nom, String fecha,
+			int nivel) {
+		PreparedStatement stat = null;
 		ArrayList<PuntuEspe> tempPuntu = new ArrayList<PuntuEspe>();
-//		try {
-//			/*
-//			 * En caso de que tanto nombre como fecha sean distintos de null.
-//			 */
-//			if (nom != null && fecha != null) {
-//				stat = GestionBD
-//						.conectar()
-//						.prepareStatement(
-//								"SELECT * FROM PUNTUACION_GENERAL WHERE COD_JUG = ? AND FECHA_ULTI_NIVEL = ? AND COD_NIVEL_PUNTU = ?;");
-//				/*
-//				 * En caso de que no exista el código del Jugador o la fecha sea
-//				 * incorrecta se devuelve null.
-//				 */
-//				if (AccesoJugador.getCodJugador(nom) == null
-//						|| !VerificadorFecha.comprobarFecha(fecha))
-//					return null;
-//				else {
-//					stat.setInt(1, AccesoJugador.getCodJugador(nom));
-//					stat.setString(2, fecha);
-//					stat.setInt(3, nivel);
-//					ResultSet rs = stat.executeQuery();
-//					if (!rs.next())
-//						return null;
-//					while (rs.next()) {
-//						// Si es 'true' es partida guardada.
-//						if (!rs.getBoolean(3))
-//							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
-//									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-//									rs.getString(5), rs.getInt(6)));
-//					}
-//					return tempPuntu;
-//				}
-//				/*
-//				 * En caso de que fecha sea igual a null.
-//				 */
-//			} else if (nom != null && fecha == null) {
-//				stat = GestionBD
-//						.conectar()
-//						.prepareStatement(
-//								"SELECT * FROM PUNTUACION_GENERAL WHERE COD_JUG = ? AND COD_NIVEL_PUNTU = ?;");
-//				if (AccesoJugador.getCodJugador(nom) == -1)
-//					return null;
-//				else {
-//					stat.setInt(1, AccesoJugador.getCodJugador(nom));
-//					stat.setInt(2, nivel);
-//					ResultSet rs = stat.executeQuery();
-//					while (rs.next()) {
-//						if (!rs.getBoolean(3))
-//							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
-//									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-//									rs.getString(5), rs.getInt(6)));
-//					}
-//					return tempPuntu;
-//				}
-//				/*
-//				 * En caso de que nombre del Jugador sea igual a null.
-//				 */
-//			} else if (nom == null && fecha != null) {
-//				stat = GestionBD
-//						.conectar()
-//						.prepareStatement(
-//								"SELECT * FROM PUNTUACION_GENERAL WHERE FECHA_ULTI_NIVEL = ? AND COD_NIVEL_PUNTU = ?;");
-//				if (!VerificadorFecha.comprobarFecha(fecha))
-//					return null;
-//				stat.setString(1, fecha);
-//				stat.setInt(2, nivel);
-//				ResultSet rs = stat.executeQuery();
-//				while (rs.next()) {
-//					if (!rs.getBoolean(3))
-//						tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
-//								.getInt(2), rs.getBoolean(3), rs.getInt(4), rs
-//								.getString(5), rs.getInt(6)));
-//				}
-//				return tempPuntu;
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			/*
+			 * En caso de que tanto nombre como fecha sean distintos de null.
+			 */
+			if (nom != null && fecha != null) {
+				stat = GestionBD
+						.conectar()
+						.prepareStatement(
+								"SELECT * FROM PUNTU_NIV_ESPECI WHERE COD_PUNT = ? AND FECHA = ? AND COD_NIVEL_PUNTU = ?;");
+				ArrayList<Integer> codNom = AccesoJugador.getCodJugador(nom);
+				ArrayList<Integer> codPunt = new ArrayList<Integer>();
+				/*
+				 * En caso de que no exista el código del Jugador o la fecha sea
+				 * incorrecta se devuelve null.
+				 */
+				if (codNom == null || !VerificadorFecha.comprobarFecha(fecha))
+					return null;
+				else {
+					for (Integer codJug : codNom) {
+						codPunt = AccesoPuntuGen.getCodPuntJug(codJug);
+						for (Integer codPuntuacion : codPunt) {
+							stat.setInt(1, codPuntuacion);
+							stat.setString(2,
+									ManipuladorFecha.desParsearFecha(fecha));
+							stat.setInt(3, nivel);
+							ResultSet rs = stat.executeQuery();
+							while (rs.next()) {
+								tempPuntu.add(new PuntuEspe(rs.getInt(1), rs
+										.getInt(2), rs.getInt(3), rs
+										.getString(4), rs.getInt(5)));
+							}
+						}
+					}
+					return tempPuntu;
+				}
+				/*
+				 * En caso de que fecha sea igual a null.
+				 */
+			} else if (nom != null && fecha == null) {
+				stat = GestionBD
+						.conectar()
+						.prepareStatement(
+								"SELECT * FROM PUNTU_NIV_ESPECI WHERE COD_PUNT = ? AND COD_NIVEL_PUNTU = ?;");
+				ArrayList<Integer> codNom = AccesoJugador.getCodJugador(nom);
+				ArrayList<Integer> codPunt = new ArrayList<Integer>();
+				if (codNom == null)
+					return null;
+				else {
+					for (Integer codJug : codNom) {
+						codPunt = AccesoPuntuGen.getCodPuntJug(codJug);
+
+						for (Integer codPuntuacion : codPunt) {
+							stat.setInt(1, codPuntuacion);
+							stat.setInt(2, nivel);
+							ResultSet rs = stat.executeQuery();
+							while (rs.next()) {
+								tempPuntu.add(new PuntuEspe(rs.getInt(1), rs
+										.getInt(2), rs.getInt(3), rs
+										.getString(4), rs.getInt(5)));
+							}
+						}
+					}
+					return tempPuntu;
+				}
+				/*
+				 * En caso de que nombre del Jugador sea igual a null.
+				 */
+			} else if (nom == null && fecha != null) {
+				stat = GestionBD
+						.conectar()
+						.prepareStatement(
+								"SELECT * FROM PUNTU_NIV_ESPECI WHERE FECHA = ? AND COD_NIVEL_PUNTU = ?;");
+				if (!VerificadorFecha.comprobarFecha(fecha))
+					return null;
+				stat.setString(1, ManipuladorFecha.desParsearFecha(fecha));
+				stat.setInt(2, nivel);
+				ResultSet rs = stat.executeQuery();
+				while (rs.next()) {
+					tempPuntu.add(new PuntuEspe(rs.getInt(1), rs.getInt(2), rs
+							.getInt(3), rs.getString(4), rs.getInt(5)));
+				}
+				return tempPuntu;
+			} else {
+				stat = GestionBD
+						.conectar()
+						.prepareStatement(
+								"SELECT * FROM PUNTU_NIV_ESPECI WHERE COD_NIVEL_PUNTU = ?;");
+				stat.setInt(1, nivel);
+				ResultSet rs = stat.executeQuery();
+				while (rs.next()) {
+					tempPuntu.add(new PuntuEspe(rs.getInt(1), rs.getInt(2), rs
+							.getInt(3), rs.getString(4), rs.getInt(5)));
+				}
+				return tempPuntu;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return tempPuntu;
 	}
 }
