@@ -3,28 +3,33 @@ package bomberman.outin;
 import java.util.Observable;
 import java.util.TimerTask;
 import java.util.Timer;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.WindowConstants;
 
 //Mirar esta dirección: http://unpocodejava.wordpress.com/2010/02/03/patron-observer/
 /**
- * Esta clase implementará e reloj de cuenta atrás que aparece cuando estás
+ * Esta clase implementará el reloj de cuenta atrás que aparece cuando estás
  * jugando. Hereda de la clase Observable porque queremos conocer los cambios
  * que tienen lugar en esta clase para así saber cuando la hora del reloj a
  * decrementado.
  * 
  * @author David
+ * @version 1.0
  */
 public class CuentaAtras extends Observable {
 
+	//Tiempo del reloj
 	private int minutos, segundos;
-	private int recarga;
 	private boolean parado;
+	//Contador
 	private static Timer tiempo = null;
 	private JLabel reloj;
 
+	/**
+	 * Constructor principal de la clase CuentaAtras
+	 * @param m - int, minutos
+	 * @param s - int, segundos
+	 * @throws RelojException
+	 */
 	public CuentaAtras(int m, int s) throws RelojException {
 
 		reloj = new JLabel();
@@ -32,18 +37,29 @@ public class CuentaAtras extends Observable {
 		minutos = m;
 		segundos = s;
 
+		/*
+		 * En caso de que los minutos o segundos recibidos
+		 * no esten en un rango lógico se lanza excepción.
+		 */
 		if (m < 0 || m > 59)
 			throw new RelojException("Minutos fuera de rango");
 		if (s < 0 || s > 59)
 			throw new RelojException("Segundos fuera de rango");
-		recarga = 0;
 	}
 
+	/**
+	 * Este método activará el reloj.
+	 */
 	public void start() {
+		//Inicializamos el contador.
 		if (tiempo == null) {
 			tiempo = new Timer();
 		}
 		parado = false;
+		/*
+		 * Cada segundo deverá llamar al método tareasRun()
+		 * que se encargará de decrementar el reloj.
+		 */
 		tiempo.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
 				tareasRun();
@@ -51,8 +67,14 @@ public class CuentaAtras extends Observable {
 		}, 0, 1000);
 	}
 
+	/**
+	 * Se encargará de decrementar un segundo el reloj cuando se le
+	 * llame.
+	 */
 	protected void tareasRun() {
+		//Si no está parado se decrementa.
 		if (!parado) {
+			//Si segundos es distinto de cero se decrementa.
 			if (segundos != 0) {
 				segundos--;
 			} else {
@@ -60,12 +82,13 @@ public class CuentaAtras extends Observable {
 					minutos--;
 					segundos = 59;
 				} else {
-					// ACABAR
+					//Si segundos y minutos son cero hemos acabado.
 					minutos = 0;
 					segundos = 0;
 					parado = true;
 				}
 			}
+			//Ponemos la hora actual en el JLabel.
 			reloj.setText("<html><b>Tiempo:</b> " + minutos + " : " + segundos
 					+ "</html>");
 		}
@@ -75,15 +98,28 @@ public class CuentaAtras extends Observable {
 		// Avisa a sus observadores de que se han producido cambios. Este
 		// metodo ya llama a clearChanged().
 		this.notifyObservers();
-		// Evitamos números negativos
 	}
 
-	public void setStopped(boolean b) {
+	/**
+	 * Método para parar el reloj.
+	 * @param b - boolean
+	 */
+	public void setParado(boolean b) {
 		parado = b;
 	}
 
-	public void setTime(int m, int s) throws RelojException {
+	/**
+	 * Fija el tiempo del reloj.
+	 * @param m - int, minutos
+	 * @param s - int, segundos
+	 * @throws RelojException
+	 */
+	public void setTiempo(int m, int s) throws RelojException {
 
+		/*
+		 * En caso de que el tiempo sea ilógico se
+		 * lanza excepción.
+		 */
 		if (m < 0 || m > 59)
 			throw new RelojException("Minutos fuera de rango");
 		else
@@ -94,51 +130,43 @@ public class CuentaAtras extends Observable {
 			segundos = s;
 	}
 
-	public void recharge() {
-		int simul, resto;
-		simul = segundos + recarga;
-		resto = simul % 3600;
-		minutos += resto / 60;
-		segundos = resto % 60;
-	}
-
+	/**
+	 * Nos dice si se ha acabado el tiempo.
+	 * @return boolean
+	 */
 	public boolean isTimeFinished() {
 		return (minutos == 0 && segundos == 0);
 	}
 
-	public void setRecharge(int segs) {
-		recarga = segs;
-	}
-
-	public int getMinutes() {
+	/**
+	 * Nos devuelve ñps minutos del reloj. 
+	 * @return minutos - int
+	 */
+	public int getMinutos() {
 		return minutos;
 	}
 
-	public int getSeconds() {
+	/**
+	 * Nos devuelve los egundos del reloj.
+	 * @return segundos - int
+	 */
+	public int getSegundos() {
 		return segundos;
 	}
 
+	/**
+	 * Nos devuelve el JLabel del relog.
+	 * @return reloj - JLabel
+	 */
 	public JLabel getReloj() {
 		return reloj;
 	}
 
+	/**
+	 * Modificamos el JLabel del reloj.
+	 * @param reloj - JLabel
+	 */
 	public void setReloj(JLabel reloj) {
 		this.reloj = reloj;
-	}
-
-	public static void main(String[] args) {
-		try {
-			JFrame frame = new JFrame();
-			CuentaAtras prueba = new CuentaAtras(1, 10);
-			frame.add(prueba.getReloj());
-			prueba.start();
-
-			frame.setSize(200, 200);
-			frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			frame.setVisible(true);
-
-		} catch (RelojException e) {
-			e.printStackTrace();
-		}
 	}
 }

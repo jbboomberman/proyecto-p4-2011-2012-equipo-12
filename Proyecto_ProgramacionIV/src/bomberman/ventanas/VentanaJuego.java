@@ -233,7 +233,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	
 	public void setTiempoReloj(int min, int seg){
 		try{
-			tiempo.setTime(min, seg);
+			tiempo.setTiempo(min, seg);
 		}catch(RelojException e){
 			e.printStackTrace();
 		}

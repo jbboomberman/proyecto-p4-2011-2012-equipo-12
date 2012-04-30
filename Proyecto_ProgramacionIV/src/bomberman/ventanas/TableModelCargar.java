@@ -5,7 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoPunEspe;
 import bomberman.database.PuntuGeneral;
-import bomberman.outin.ConversorFecha;
+import bomberman.outin.ManipuladorFecha;
 
 public class TableModelCargar extends DefaultTableModel {
 	private static final long serialVersionUID = -7461719037402108362L;
@@ -22,7 +22,7 @@ public class TableModelCargar extends DefaultTableModel {
 				AccesoJugador.getJugador(punt.getCod_jug()).getNickJugador(),
 				punt.getPuntu(),
 				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()),
-				ConversorFecha.parsearFecha(punt.getFecha_ulti_nivel()),
+				ManipuladorFecha.parsearFecha(punt.getFecha_ulti_nivel()),
 				punt.getVidas()});
 	}
 
