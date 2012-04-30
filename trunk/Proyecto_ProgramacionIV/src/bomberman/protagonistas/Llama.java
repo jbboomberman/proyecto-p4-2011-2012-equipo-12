@@ -7,23 +7,30 @@ import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 
 /**
- * Esta clase representa las llamas que generan cuando
- * se produce una explosión de una bomba.
+ * Esta clase representa las llamas que generan cuando se produce una explosión
+ * de una bomba.
+ * 
  * @author David
  * @version 1.0
  */
 public class Llama extends SpriteDinamico {
 
-	//El tipo de llama.
+	// El tipo de llama.
 	private TiposLlama tipo;
 
 	/**
 	 * Constructor principal de la clase Llama.
-	 * @param esce - Escenario
-	 * @param x - float
-	 * @param y - float
-	 * @param jug - Jugador
-	 * @param tip - TipoLlama
+	 * 
+	 * @param esce
+	 *            - Escenario
+	 * @param x
+	 *            - float
+	 * @param y
+	 *            - float
+	 * @param jug
+	 *            - Jugador
+	 * @param tip
+	 *            - TipoLlama
 	 */
 	public Llama(Escenario esce, float x, float y, Jugador jug, TiposLlama tip) {
 		super(esce, x, y, jug);
@@ -32,8 +39,7 @@ public class Llama extends SpriteDinamico {
 		this.velocidadPic = 10;
 
 		/*
-		 * Dependiendo de la clase de Llama tendrá
-		 * diferentes imágenes.
+		 * Dependiendo de la clase de Llama tendrá diferentes imágenes.
 		 */
 		switch (tipo) {
 		// Centro
@@ -77,15 +83,15 @@ public class Llama extends SpriteDinamico {
 	}
 
 	/**
-	 * Sobreescribe el método mover() y si se choca
-	 * con algo determina que tiene que hacer.
+	 * Sobreescribe el método mover() y si se choca con algo determina que tiene
+	 * que hacer.
 	 */
 	public void mover() {
 		super.mover();
 		seChoca(this.getPosX(), this.getPosY());
 		/*
-		 * Si llegamos a la última imagen del
-		 * array entonces hay que acabar la llama.
+		 * Si llegamos a la última imagen del array entonces hay que acabar la
+		 * llama.
 		 */
 		if (imagActual == (spritesImag.length - 1))
 			this.destruir();
@@ -93,9 +99,10 @@ public class Llama extends SpriteDinamico {
 
 	/**
 	 * Determina que hacer en caso de choque.
-	 * @param spr - Sprite
-	 * @return boolean - Si se ha chocado con
-	 * algo o no.
+	 * 
+	 * @param spr
+	 *            - Sprite
+	 * @return boolean - Si se ha chocado con algo o no.
 	 */
 	public boolean determinarChoque(Sprite spr) {
 		if (spr instanceof Muro) {
@@ -103,9 +110,9 @@ public class Llama extends SpriteDinamico {
 				spr.procDestruccion();
 		} else if (spr instanceof Enemigo || spr instanceof Bomberman)
 			spr.procDestruccion();
-		else if (spr instanceof Puerta){
-			ArrayList<Sprite> tempArray = escenario
-			.buscarPersonajePos(Muro.class, spr);
+		else if (spr instanceof Puerta) {
+			ArrayList<Sprite> tempArray = escenario.buscarPersonajePos(
+					Muro.class, spr);
 			if (tempArray.size() > 0) {
 				tempArray.get(0).procDestruccion();
 				return true;

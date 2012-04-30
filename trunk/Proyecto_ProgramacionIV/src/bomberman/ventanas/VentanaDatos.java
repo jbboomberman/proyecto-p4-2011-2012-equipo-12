@@ -138,35 +138,52 @@ public class VentanaDatos extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(this,
 						"No ha rellenado todos los campos", "Error",
 						JOptionPane.WARNING_MESSAGE);
-			//Si el formato del correo no es correcto
-			}else if(!CompCorreo.isEmail(email.getText())){
+				// Si el formato del correo no es correcto
+			} else if (!CompCorreo.isEmail(email.getText())) {
 				JOptionPane.showMessageDialog(this,
 						"El formato de email es incorrecto", "Error",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
-				if(AccesoJugador.getJugador(nom.getText(), ape.getText(),
-						nic.getText(), email.getText()) == null){
-					bomberman.jugador.Jugador tempJug = new bomberman.jugador.Jugador(nom.getText(), ape.getText(), nic.getText()
-							, email.getText(), 3, 0, ControlPrincipal.getJugadorUno().getNivel(),
-							ControlPrincipal.getJugadorUno().getModo(), AccesoJugador.getNumJug()
-							, AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
-							AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
-							AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1),
-							AccesoExtras.getExtra("sonido"), AccesoExtras.getExtra("email"));
+				if (AccesoJugador.getJugador(nom.getText(), ape.getText(),
+						nic.getText(), email.getText()) == null) {
+					bomberman.jugador.Jugador tempJug = new bomberman.jugador.Jugador(
+							nom.getText(), ape.getText(), nic.getText(),
+							email.getText(), 3, 0, ControlPrincipal
+									.getJugadorUno().getNivel(),
+							ControlPrincipal.getJugadorUno().getModo(),
+							AccesoJugador.getNumJug(),
+							AccesoPuntuGen.getNumPunt(),
+							AccesoControles.getControl("DERECHA", 1),
+							AccesoControles.getControl("IZQUIERDA", 1),
+							AccesoControles.getControl("ARRIBA", 1),
+							AccesoControles.getControl("ABAJO", 1),
+							AccesoControles.getControl("BOMBA", 1),
+							AccesoExtras.getExtra("sonido"),
+							AccesoExtras.getExtra("email"));
 					ControlPrincipal.setJugadorUno(tempJug);
-					AccesoJugador.insertarJugador(new bomberman.database.Jugador(AccesoJugador.getNumJug()
-							, nom.getText(), ape.getText(), nic.getText(), email.getText()));
-				}else{
-					bomberman.database.Jugador jugBase = AccesoJugador.getJugador(nom.getText(), ape.getText(),
-							nic.getText(), email.getText());
-					bomberman.jugador.Jugador tempJug = new bomberman.jugador.Jugador(jugBase.getNomJugador()
-							, jugBase.getApellJugador(), jugBase.getNickJugador(), jugBase.getEmail()
-							, 3, 0, ControlPrincipal.getJugadorUno().getNivel(),
-							ControlPrincipal.getJugadorUno().getModo(), jugBase.getCod_jugador()
-							, AccesoPuntuGen.getNumPunt(), AccesoControles.getControl("DERECHA", 1),
-							AccesoControles.getControl("IZQUIERDA", 1), AccesoControles.getControl("ARRIBA", 1),
-							AccesoControles.getControl("ABAJO", 1), AccesoControles.getControl("BOMBA", 1),
-							AccesoExtras.getExtra("sonido"), AccesoExtras.getExtra("email"));
+					AccesoJugador
+							.insertarJugador(new bomberman.database.Jugador(
+									AccesoJugador.getNumJug(), nom.getText(),
+									ape.getText(), nic.getText(), email
+											.getText()));
+				} else {
+					bomberman.database.Jugador jugBase = AccesoJugador
+							.getJugador(nom.getText(), ape.getText(),
+									nic.getText(), email.getText());
+					bomberman.jugador.Jugador tempJug = new bomberman.jugador.Jugador(
+							jugBase.getNomJugador(), jugBase.getApellJugador(),
+							jugBase.getNickJugador(), jugBase.getEmail(), 3, 0,
+							ControlPrincipal.getJugadorUno().getNivel(),
+							ControlPrincipal.getJugadorUno().getModo(),
+							jugBase.getCod_jugador(),
+							AccesoPuntuGen.getNumPunt(),
+							AccesoControles.getControl("DERECHA", 1),
+							AccesoControles.getControl("IZQUIERDA", 1),
+							AccesoControles.getControl("ARRIBA", 1),
+							AccesoControles.getControl("ABAJO", 1),
+							AccesoControles.getControl("BOMBA", 1),
+							AccesoExtras.getExtra("sonido"),
+							AccesoExtras.getExtra("email"));
 					ControlPrincipal.setJugadorUno(tempJug);
 				}
 				GestorVentana.hacerVisible(VentanaJuego.class, true);

@@ -54,10 +54,10 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		canPintar.setSize(640, 640);
 		panelMarcador = new JPanel();
 		jugador = ControlPrincipal.getJugadorUno();
-		try{
-		parado = true;
-		tiempo = new CuentaAtras(0, 5);
-		}catch(RelojException e){
+		try {
+			parado = true;
+			tiempo = new CuentaAtras(0, 5);
+		} catch (RelojException e) {
 			e.printStackTrace();
 		}
 		jlText = new JLabel();
@@ -106,9 +106,9 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 *            - KeyEvent
 	 */
 	public void keyPressed(KeyEvent e) {
-		if(bomber1 != null)
+		if (bomber1 != null)
 			bomber1.teclaPulsada(e);
-		if(bomber2 != null)
+		if (bomber2 != null)
 			bomber2.teclaPulsada(e);
 	}
 
@@ -120,9 +120,9 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	 *            - KeyEvent
 	 */
 	public void keyReleased(KeyEvent e) {
-		if(bomber1 != null)
+		if (bomber1 != null)
 			bomber1.teclaSoltada(e);
-		if(bomber2 != null)
+		if (bomber2 != null)
 			bomber2.teclaSoltada(e);
 	}
 
@@ -140,8 +140,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	public Bomberman getBomberman() {
 		return bomber1;
 	}
-	
-	public Bomberman getBomberman2(){
+
+	public Bomberman getBomberman2() {
 		return bomber2;
 	}
 
@@ -150,8 +150,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		this.bomber1 = b;
 		añadirSprite(bomber1);
 	}
-	
-	public void setBomberman2(Bomberman b){
+
+	public void setBomberman2(Bomberman b) {
 		this.bomber2 = b;
 		añadirSprite(bomber2);
 	}
@@ -174,24 +174,25 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 			arLista.add(0, spr);
 		} else if (spr instanceof Bomberman) {
 			arLista.add(arLista.size(), spr);
-		}else if(spr instanceof Puerta){
-			if(arLista.size() == 0)
+		} else if (spr instanceof Puerta) {
+			if (arLista.size() == 0)
 				arLista.add(spr);
-			else{
+			else {
 				int cont = 0;
 				boolean encon = false;
-				while(!encon){
-					if(arLista.get(cont) instanceof Muro || arLista.get(cont) instanceof Bomberman){
+				while (!encon) {
+					if (arLista.get(cont) instanceof Muro
+							|| arLista.get(cont) instanceof Bomberman) {
 						encon = true;
-					}else{
+					} else {
 						cont++;
 					}
 				}
 				arLista.add(cont, spr);
 			}
-				
-		} else{
-			if(arLista.size() != 0)
+
+		} else {
+			if (arLista.size() != 0)
 				arLista.add(arLista.size() - 1, spr);
 			else
 				arLista.add(spr);
@@ -207,22 +208,28 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 		jlText.setText("<html><b>Vidas</b>: " + jugador.getVidas()
 				+ "&emsp;<b>Puntuación nivel:</b> " + jugador.getPuntuNivel()
 				+ "&emsp;<b>Puntuación total:</b> " + jugador.getPuntuacion()
-				+ "&emsp;<b>Enemigos restantes:</b> </html>");
+				+ "&emsp;<b>Enemigos restantes:</b>" + this.rivalesQuedan()
+				+ "</html>");
 		ControlPrincipal.getJugadorUno().setPuntuacion(jugador.getPuntuacion());
 		ControlPrincipal.getJugadorUno().setPuntuNivel(jugador.getPuntuNivel());
 	}
 
 	public void empezarReloj() {
 		if (parado)
-			tiempo.start();
+			tiempo.setParado(false);
 	}
 
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if (this.isVisible()){
+		if (this.isVisible()) {
 			this.setPuntuacion();
-			setTiempoReloj(AccesoNivel.getNivel(ControlPrincipal.getJugadorUno().getNivel()).getTiempo() / 60
-					, AccesoNivel.getNivel(ControlPrincipal.getJugadorUno().getNivel()).getTiempo() % 60);
+			setTiempoReloj(
+					AccesoNivel.getNivel(
+							ControlPrincipal.getJugadorUno().getNivel())
+							.getTiempo() / 60,
+					AccesoNivel.getNivel(
+							ControlPrincipal.getJugadorUno().getNivel())
+							.getTiempo() % 60);
 			this.empezarReloj();
 		}
 	}
@@ -230,58 +237,58 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	public CuentaAtras getReloj() {
 		return tiempo;
 	}
-	
-	public void setTiempoReloj(int min, int seg){
-		try{
+
+	public void setTiempoReloj(int min, int seg) {
+		try {
 			tiempo.setTiempo(min, seg);
-		}catch(RelojException e){
+		} catch (RelojException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setAcabarPartida(boolean acabar){
+
+	public void setAcabarPartida(boolean acabar) {
 		finalizar = acabar;
 	}
-	
-	public boolean getAcabarPartida(){
+
+	public boolean getAcabarPartida() {
 		return finalizar;
 	}
-	
-	public void setSuperadoNivel(boolean estado){
+
+	public void setSuperadoNivel(boolean estado) {
 		superadoNivel = estado;
 	}
-	
-	public boolean getSuperadoNivel(){
+
+	public boolean getSuperadoNivel() {
 		return superadoNivel;
 	}
-		
-	
+
 	/**
 	 * Borra todo menos los Bomberman
 	 */
-	public void borrarSprites(){
+	public void borrarSprites() {
 		arLista.clear();
 	}
-	
-	public int rivalesQuedan(){
+
+	public int rivalesQuedan() {
 		int cont = 0;
-		for(Sprite spr : arLista){
-			if(spr instanceof Enemigo)
+		for (Sprite spr : arLista) {
+			if (spr instanceof Enemigo)
 				cont++;
 		}
 		return cont;
 	}
-	
-	public ArrayList<Sprite> buscarPersonajePos(Class clase, Sprite spr){
-		ArrayList<Sprite>tempArray = new ArrayList<Sprite>();
-		for(Sprite sprtTemp : arLista){
-			if(sprtTemp.colision(spr) && (sprtTemp != spr) && sprtTemp.getClass().isAssignableFrom(clase)){
+
+	public ArrayList<Sprite> buscarPersonajePos(Class clase, Sprite spr) {
+		ArrayList<Sprite> tempArray = new ArrayList<Sprite>();
+		for (Sprite sprtTemp : arLista) {
+			if (sprtTemp.colision(spr) && (sprtTemp != spr)
+					&& sprtTemp.getClass().isAssignableFrom(clase)) {
 				tempArray.add(sprtTemp);
 			}
 		}
 		return tempArray;
 	}
-	
+
 	public static void main(String[] args) {
 		VentanaJuego juego = new VentanaJuego();
 		juego.setVisible(true);

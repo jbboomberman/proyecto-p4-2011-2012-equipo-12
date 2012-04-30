@@ -25,6 +25,7 @@ import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
+import bomberman.outin.CuentaAtras;
 import bomberman.outin.EnvioEmail;
 import bomberman.outin.LeerMapa;
 import bomberman.outin.ManipuladorFecha;
@@ -83,29 +84,41 @@ public class ControlPrincipal {
 						&& (!ventJuego.getSuperadoNivel()))
 					paintWorld();
 				else if (ventJuego.getSuperadoNivel()) {
+					((CuentaAtras) ventJuego.getReloj()).setParado(true);
 					ventJuego.setSuperadoNivel(false);
 					ventJuego.borrarSprites();
 					if (jugadorUno.getModo() == ModoJuego.Historia) {
-						((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class))
-						.setJlNick(ControlPrincipal.getJugadorUno().getNick());
-						((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class))
-						.setJlNivel(String.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
-						((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class))
-						.setJlPuntuacion(String.valueOf(ControlPrincipal.getJugadorUno().getPuntuacion()));
+						((VentanaSuperado) GestorVentana
+								.getVentana(VentanaSuperado.class))
+								.setJlNick(ControlPrincipal.getJugadorUno()
+										.getNick());
+						((VentanaSuperado) GestorVentana
+								.getVentana(VentanaSuperado.class))
+								.setJlNivel(String.valueOf(ControlPrincipal
+										.getJugadorUno().getNivel()));
+						((VentanaSuperado) GestorVentana
+								.getVentana(VentanaSuperado.class))
+								.setJlPuntuacion(String
+										.valueOf(ControlPrincipal
+												.getJugadorUno()
+												.getPuntuacion()));
 						GestorVentana
 								.hacerVisible(VentanaSuperado.class, false);
 						AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
 								.getNumPunt(), jugadorUno.getCodPart(),
-								jugadorUno.getPuntuNivel(), ManipuladorFecha.getFecha()
-								, jugadorUno.getNivel()));
+								jugadorUno.getPuntuNivel(), ManipuladorFecha
+										.getFecha(), jugadorUno.getNivel()));
 					} else if (jugadorUno.getModo() == ModoJuego.Master) {
 
 					} else {
 
 					}
 				} else {
+					((CuentaAtras) ventJuego.getReloj()).setParado(true);
 					jugadorUno.setVidas(jugadorUno.getVidas() - 1);
-					if (jugadorUno.getVidas() > 0 && (!jugadorUno.getModo().equals(ModoJuego.Multijugador))) {
+					if (jugadorUno.getVidas() > 0
+							&& (!jugadorUno.getModo().equals(
+									ModoJuego.Multijugador))) {
 						((VentanaJuego) GestorVentana
 								.getVentana(VentanaJuego.class))
 								.setPuntuacion();
@@ -150,38 +163,53 @@ public class ControlPrincipal {
 	}
 
 	public void terminarPartida() {
-		PuntuGeneral tempGene = new PuntuGeneral(AccesoPuntuGen.getNumPunt(),
-				((bomberman.database.Jugador) AccesoJugador.getJugador(
-						jugadorUno.getNombre(), jugadorUno.getApellidos(),
-						jugadorUno.getNick(), jugadorUno.getEmail()))
-						.getCod_jugador(), false, jugadorUno.getPuntuacion(),
-				ManipuladorFecha.getFecha(), 0);
-		AccesoPuntuGen.insertarPunt(tempGene);
-		ventJuego.borrarSprites();
-		((VentanaNoSuperado)GestorVentana.getVentana(VentanaNoSuperado.class))
-		.setJlNick(String.valueOf(ControlPrincipal.getJugadorUno().getNick()));
-		((VentanaNoSuperado)GestorVentana.getVentana(VentanaNoSuperado.class))
-		.setJlNivel(String.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
-		((VentanaNoSuperado)GestorVentana.getVentana(VentanaNoSuperado.class))
-		.setJlPuntuacion(String.valueOf(ControlPrincipal.getJugadorUno().getPuntuacion()));
-		GestorVentana.ocultarVentana(VentanaJuego.class);
-		GestorVentana.hacerVisible(VentanaInicial.class, false);
-		GestorVentana.hacerVisible(VentanaNoSuperado.class, false);
-		EnvioEmail.enviarMensaje();
-		pararJuego = true;
+		if (jugadorUno.getModo() == ModoJuego.Historia) {
+			PuntuGeneral tempGene = new PuntuGeneral(
+					AccesoPuntuGen.getNumPunt(),
+					((bomberman.database.Jugador) AccesoJugador.getJugador(
+							jugadorUno.getNombre(), jugadorUno.getApellidos(),
+							jugadorUno.getNick(), jugadorUno.getEmail()))
+							.getCod_jugador(), false,
+					jugadorUno.getPuntuacion(), ManipuladorFecha.getFecha(), 0);
+			AccesoPuntuGen.insertarPunt(tempGene);
+			ventJuego.borrarSprites();
+			((VentanaNoSuperado) GestorVentana
+					.getVentana(VentanaNoSuperado.class)).setJlNick(String
+					.valueOf(ControlPrincipal.getJugadorUno().getNick()));
+			((VentanaNoSuperado) GestorVentana
+					.getVentana(VentanaNoSuperado.class)).setJlNivel(String
+					.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
+			((VentanaNoSuperado) GestorVentana
+					.getVentana(VentanaNoSuperado.class))
+					.setJlPuntuacion(String.valueOf(ControlPrincipal
+							.getJugadorUno().getPuntuacion()));
+			GestorVentana.ocultarVentana(VentanaJuego.class);
+			GestorVentana.hacerVisible(VentanaInicial.class, false);
+			GestorVentana.hacerVisible(VentanaNoSuperado.class, false);
+			EnvioEmail.enviarMensaje();
+			pararJuego = true;
+		} else if (jugadorUno.getModo() == ModoJuego.Multijugador) {
+			GestorVentana.ocultarVentana(VentanaJuego.class);
+			GestorVentana.hacerVisible(VentanaInicial.class, true);
+		} else if (jugadorUno.getModo() == ModoJuego.Master) {
+			// Superado o no superado.
+		}
 	}
 
 	/**
 	 * Para cargar una partida que ha sido guardada.
-	 * @param punt - PuntGeneral
+	 * 
+	 * @param punt
+	 *            - PuntGeneral
 	 */
-	public static void cargarPartida(PuntuGeneral punt){
-		//Cogemos al jugador que guardo la partida.
-		bomberman.database.Jugador partJug = AccesoJugador.getJugador(punt.getCod_jug());
-		
+	public static void cargarPartida(PuntuGeneral punt) {
+		// Cogemos al jugador que guardo la partida.
+		bomberman.database.Jugador partJug = AccesoJugador.getJugador(punt
+				.getCod_jug());
+
 		/*
-		 * Definimos el nuevo jugador que será el que guardó
-		 * la partida guardada.
+		 * Definimos el nuevo jugador que será el que guardó la partida
+		 * guardada.
 		 */
 		jugadorUno.setNombre(partJug.getNomJugador());
 		jugadorUno.setApellidos(partJug.getApellJugador());
@@ -190,7 +218,8 @@ public class ControlPrincipal {
 		jugadorUno.setPuntuacion(punt.getPuntu());
 		jugadorUno.setPuntuNivel(0);
 		jugadorUno.setVidas(punt.getVidas());
-		jugadorUno.setNivel(AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()) + 1);
+		jugadorUno
+				.setNivel(AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()) + 1);
 		jugadorUno.setModo(ModoJuego.Historia);
 		jugadorUno.setCodJugador(punt.getCod_jug());
 		jugadorUno.setCodPart(punt.getCod_punt());
@@ -201,14 +230,17 @@ public class ControlPrincipal {
 		jugadorUno.setBomba(AccesoControles.getControl("BOMBA", 1));
 		jugadorUno.setSonido(AccesoExtras.getExtra("sonido"));
 		jugadorUno.setQuiereEmail(AccesoExtras.getExtra("email"));
-		
-		//Creamos el escenario.
-		ControlPrincipal.crearEscenario(AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()) + 1);
+
+		// Creamos el escenario.
+		ControlPrincipal.crearEscenario(AccesoPunEspe.getNivelMasAlto(punt
+				.getCod_punt()) + 1);
 		GestorVentana.ocultarVentana(VentanaCargar.class);
 		GestorVentana.hacerVisible(VentanaJuego.class, true);
 	}
+
 	public static void crearEscenario(int numEsce) {
-		((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).borrarSprites();
+		((VentanaJuego) GestorVentana.getVentana(VentanaJuego.class))
+				.borrarSprites();
 		Character array[][] = LeerMapa.LeerMapaJuego(numEsce);
 		PrepararEscenario.ColocarMapa(
 				(VentanaJuego) GestorVentana.getVentana(VentanaJuego.class),
@@ -222,7 +254,7 @@ public class ControlPrincipal {
 	public static void setJugadorUno(Jugador jug) {
 		jugadorUno = jug;
 	}
-	
+
 	public static Jugador getJugadorDos() {
 		return jugadorDos;
 	}
@@ -238,7 +270,7 @@ public class ControlPrincipal {
 	public static void setPararJuego(boolean pararJuego) {
 		ControlPrincipal.pararJuego = pararJuego;
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 			UIManager

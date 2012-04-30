@@ -10,8 +10,8 @@ public class Controles {
 	private String nom_accion;
 	private int cod_ascii_tecla;
 	private int tipo_jug;
-	
-	public Controles(int accion, String nom, int ascii, int tipo){
+
+	public Controles(int accion, String nom, int ascii, int tipo) {
 		this.cod_accion = accion;
 		this.nom_accion = nom;
 		this.cod_ascii_tecla = ascii;

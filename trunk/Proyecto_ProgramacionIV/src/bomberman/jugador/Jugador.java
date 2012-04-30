@@ -9,41 +9,40 @@ import bomberman.enumeraciones.ModoJuego;
  * @version 1.1
  */
 public class Jugador {
-	//Nombre
+	// Nombre
 	private String nombre = null;
-	//Apelidos
+	// Apelidos
 	private String apellidos = null;
-	//Nick
+	// Nick
 	private String nick = null;
-	//Email
+	// Email
 	private String email = null;
-	//Puntuación global
+	// Puntuación global
 	private int puntuacion;
-	//Puntuación del nivel
+	// Puntuación del nivel
 	private int puntuNivel;
-	//Vidas
+	// Vidas
 	private int vidas;
-	//Nivel
+	// Nivel
 	private int nivel;
-	//Modo de Juego
+	// Modo de Juego
 	private ModoJuego modo;
-	//Código de jugador
+	// Código de jugador
 	private int codJugador;
-	//Código de partida
+	// Código de partida
 	private int codPart;
 	/*
-	 * Guardamos el código ASCII de las teclas
-	 * que acción el personaje para no tener que
-	 * cogerlas todo el rato de la BD.
+	 * Guardamos el código ASCII de las teclas que acción el personaje para no
+	 * tener que cogerlas todo el rato de la BD.
 	 */
 	private int arriba;
 	private int abajo;
 	private int derecha;
 	private int izquierda;
 	private int bomba;
-	//Si queremos sonido
+	// Si queremos sonido
 	private boolean sonido;
-	//Si queremos envio de emails
+	// Si queremos envio de emails
 	private boolean quiereEmail;
 
 	/**
@@ -57,10 +56,15 @@ public class Jugador {
 
 	/**
 	 * Constructor más sofisticado de la clase Jugador.
-	 * @param nom - String
-	 * @param ape - String
-	 * @param ni - String
-	 * @param mail - String
+	 * 
+	 * @param nom
+	 *            - String
+	 * @param ape
+	 *            - String
+	 * @param ni
+	 *            - String
+	 * @param mail
+	 *            - String
 	 */
 	public Jugador(String nom, String ape, String ni, String mail) {
 		this.nombre = nom;
@@ -70,25 +74,43 @@ public class Jugador {
 	}
 
 	/**
-	 * Constructor complejo de la clase Jugador que
-	 * recibe todos los parámetros posibles.
-	 * @param nom - String
-	 * @param ape - String
-	 * @param ni - String
-	 * @param mail - String
-	 * @param vid - int
-	 * @param punt - int
-	 * @param niv - int
-	 * @param mode - ModoJuego
-	 * @param codJug - int
-	 * @param codPartida - int
-	 * @param der - int
-	 * @param izq - int
-	 * @param arr - int
-	 * @param abj - int
-	 * @param bom - int
-	 * @param son - boolean, sonido
-	 * @param em - boolean, email
+	 * Constructor complejo de la clase Jugador que recibe todos los parámetros
+	 * posibles.
+	 * 
+	 * @param nom
+	 *            - String
+	 * @param ape
+	 *            - String
+	 * @param ni
+	 *            - String
+	 * @param mail
+	 *            - String
+	 * @param vid
+	 *            - int
+	 * @param punt
+	 *            - int
+	 * @param niv
+	 *            - int
+	 * @param mode
+	 *            - ModoJuego
+	 * @param codJug
+	 *            - int
+	 * @param codPartida
+	 *            - int
+	 * @param der
+	 *            - int
+	 * @param izq
+	 *            - int
+	 * @param arr
+	 *            - int
+	 * @param abj
+	 *            - int
+	 * @param bom
+	 *            - int
+	 * @param son
+	 *            - boolean, sonido
+	 * @param em
+	 *            - boolean, email
 	 */
 	public Jugador(String nom, String ape, String ni, String mail, int vid,
 			int punt, int niv, ModoJuego mode, int codJug, int codPartida,
@@ -171,6 +193,7 @@ public class Jugador {
 
 	/**
 	 * Devuelve e email del jugador
+	 * 
 	 * @return email - String
 	 */
 	public String getEmail() {
@@ -179,7 +202,9 @@ public class Jugador {
 
 	/**
 	 * Modificamos el email del jugador
-	 * @param email - String
+	 * 
+	 * @param email
+	 *            - String
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -206,6 +231,7 @@ public class Jugador {
 
 	/**
 	 * Devuelve las vidas del jugador
+	 * 
 	 * @return vidas - int
 	 */
 	public int getVidas() {
@@ -214,15 +240,17 @@ public class Jugador {
 
 	/**
 	 * Modificamos las vidas del jugador
-	 * @param vidas - int
+	 * 
+	 * @param vidas
+	 *            - int
 	 */
 	public void setVidas(int vidas) {
 		this.vidas = vidas;
 	}
 
 	/**
-	 * Devuelve la puntuación del jugadr en el
-	 *  nivel en el que esta.
+	 * Devuelve la puntuación del jugadr en el nivel en el que esta.
+	 * 
 	 * @return - int
 	 */
 	public int getPuntuNivel() {
@@ -230,9 +258,10 @@ public class Jugador {
 	}
 
 	/**
-	 * Modificamos la puntuación del nivel
-	 * del jugador.
-	 * @param puntuNivel - int
+	 * Modificamos la puntuación del nivel del jugador.
+	 * 
+	 * @param puntuNivel
+	 *            - int
 	 */
 	public void setPuntuNivel(int puntuNivel) {
 		this.puntuNivel = puntuNivel;
@@ -240,6 +269,7 @@ public class Jugador {
 
 	/**
 	 * Devuelve el nivel en el que está el jugador.
+	 * 
 	 * @return nivel - int
 	 */
 	public int getNivel() {
@@ -247,9 +277,10 @@ public class Jugador {
 	}
 
 	/**
-	 * Modifica el nivel en el que está el
-	 * jugador.
-	 * @param nivel - int
+	 * Modifica el nivel en el que está el jugador.
+	 * 
+	 * @param nivel
+	 *            - int
 	 */
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
@@ -257,6 +288,7 @@ public class Jugador {
 
 	/**
 	 * Devuelve el ModoJuego del jugador.
+	 * 
 	 * @return modo - ModoJuego
 	 */
 	public ModoJuego getModo() {
@@ -265,7 +297,9 @@ public class Jugador {
 
 	/**
 	 * Modificamos el ModoJuego del jugador.
-	 * @param modo - ModoJuego
+	 * 
+	 * @param modo
+	 *            - ModoJuego
 	 */
 	public void setModo(ModoJuego modo) {
 		this.modo = modo;
@@ -273,6 +307,7 @@ public class Jugador {
 
 	/**
 	 * Devuelve el código de la partida
+	 * 
 	 * @return codPart - int
 	 */
 	public int getCodPart() {
@@ -280,17 +315,18 @@ public class Jugador {
 	}
 
 	/**
-	 * Modificamos el código de partida
-	 * del jugador.
-	 * @param codPart - int
+	 * Modificamos el código de partida del jugador.
+	 * 
+	 * @param codPart
+	 *            - int
 	 */
 	public void setCodPart(int codPart) {
 		this.codPart = codPart;
 	}
 
 	/**
-	 * Devuelve el código de jugador del
-	 * jugador.
+	 * Devuelve el código de jugador del jugador.
+	 * 
 	 * @return codJugador - int
 	 */
 	public int getCodJugador() {
@@ -298,8 +334,8 @@ public class Jugador {
 	}
 
 	/**
-	 * Modificamos el código de jugador
-	 * del jugador.
+	 * Modificamos el código de jugador del jugador.
+	 * 
 	 * @param codJugador
 	 */
 	public void setCodJugador(int codJugador) {
@@ -307,8 +343,8 @@ public class Jugador {
 	}
 
 	/**
-	 * Devuelve el código ASCII de la acción
-	 * ir para arriba.
+	 * Devuelve el código ASCII de la acción ir para arriba.
+	 * 
 	 * @return arriba - int
 	 */
 	public int getArriba() {
@@ -316,17 +352,18 @@ public class Jugador {
 	}
 
 	/**
-	 * Modifica el código ASCII de la acción ir
-	 * para arriba.
-	 * @param arriba - int
+	 * Modifica el código ASCII de la acción ir para arriba.
+	 * 
+	 * @param arriba
+	 *            - int
 	 */
 	public void setArriba(int arriba) {
 		this.arriba = arriba;
 	}
 
 	/**
-	 * Devuelve el código ASCII de la acción
-	 * ir para abajo.
+	 * Devuelve el código ASCII de la acción ir para abajo.
+	 * 
 	 * @return abajo - int
 	 */
 	public int getAbajo() {
@@ -334,17 +371,18 @@ public class Jugador {
 	}
 
 	/**
-	 * Modifica el código ASCII de la acción ir
-	 * para abajo.
-	 * @param abajo - int
+	 * Modifica el código ASCII de la acción ir para abajo.
+	 * 
+	 * @param abajo
+	 *            - int
 	 */
 	public void setAbajo(int abajo) {
 		this.abajo = abajo;
 	}
 
 	/**
-	 * Devuelve el código ASCII de la acción
-	 * ir para la derecha.
+	 * Devuelve el código ASCII de la acción ir para la derecha.
+	 * 
 	 * @return derecha - int
 	 */
 	public int getDerecha() {
@@ -352,17 +390,18 @@ public class Jugador {
 	}
 
 	/**
-	 * Modifica el código ASCII de la acción ir
-	 * para la derecha.
-	 * @param derecha - int
+	 * Modifica el código ASCII de la acción ir para la derecha.
+	 * 
+	 * @param derecha
+	 *            - int
 	 */
 	public void setDerecha(int derecha) {
 		this.derecha = derecha;
 	}
 
 	/**
-	 * Devuelve el código ASCII de la acción
-	 * ir para la izquierda.
+	 * Devuelve el código ASCII de la acción ir para la izquierda.
+	 * 
 	 * @return izquierda - int
 	 */
 	public int getIzquierda() {
@@ -370,17 +409,18 @@ public class Jugador {
 	}
 
 	/**
-	 * Modifica el código ASCII de la acción ir
-	 * para la izquierda.
-	 * @param izquierda - int
+	 * Modifica el código ASCII de la acción ir para la izquierda.
+	 * 
+	 * @param izquierda
+	 *            - int
 	 */
 	public void setIzquierda(int izquierda) {
 		this.izquierda = izquierda;
 	}
 
 	/**
-	 * Devuelve el código ASCII de la acción
-	 * tirar bomba.
+	 * Devuelve el código ASCII de la acción tirar bomba.
+	 * 
 	 * @return bomba - int
 	 */
 	public int getBomba() {
@@ -388,17 +428,18 @@ public class Jugador {
 	}
 
 	/**
-	 * Modifica el código ASCII de la acción 
-	 * tirar bomba.
-	 * @param bomba - int
+	 * Modifica el código ASCII de la acción tirar bomba.
+	 * 
+	 * @param bomba
+	 *            - int
 	 */
 	public void setBomba(int bomba) {
 		this.bomba = bomba;
 	}
 
 	/**
-	 * Devuelve si el jugador quiere
-	 * sonido o no.
+	 * Devuelve si el jugador quiere sonido o no.
+	 * 
 	 * @return sonido - boolean
 	 */
 	public boolean isSonido() {
@@ -407,15 +448,17 @@ public class Jugador {
 
 	/**
 	 * Modificamos el valor de sonido.
-	 * @param sonido - boolean
+	 * 
+	 * @param sonido
+	 *            - boolean
 	 */
 	public void setSonido(boolean sonido) {
 		this.sonido = sonido;
 	}
 
 	/**
-	 * Devuelve si el jugador quiere recibir
-	 * mensajes.
+	 * Devuelve si el jugador quiere recibir mensajes.
+	 * 
 	 * @return quiereEmail - boolean
 	 */
 	public boolean isQuiereEmail() {
@@ -423,9 +466,10 @@ public class Jugador {
 	}
 
 	/**
-	 * Modifica si el jugador quiere recibir
-	 * emails.
-	 * @param quiereEmail - boolean
+	 * Modifica si el jugador quiere recibir emails.
+	 * 
+	 * @param quiereEmail
+	 *            - boolean
 	 */
 	public void setQuiereEmail(boolean quiereEmail) {
 		this.quiereEmail = quiereEmail;

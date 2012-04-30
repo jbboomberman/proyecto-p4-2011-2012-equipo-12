@@ -17,17 +17,20 @@ import javax.swing.JLabel;
  */
 public class CuentaAtras extends Observable {
 
-	//Tiempo del reloj
+	// Tiempo del reloj
 	private int minutos, segundos;
 	private boolean parado;
-	//Contador
+	// Contador
 	private static Timer tiempo = null;
 	private JLabel reloj;
 
 	/**
 	 * Constructor principal de la clase CuentaAtras
-	 * @param m - int, minutos
-	 * @param s - int, segundos
+	 * 
+	 * @param m
+	 *            - int, minutos
+	 * @param s
+	 *            - int, segundos
 	 * @throws RelojException
 	 */
 	public CuentaAtras(int m, int s) throws RelojException {
@@ -36,10 +39,11 @@ public class CuentaAtras extends Observable {
 		parado = true;
 		minutos = m;
 		segundos = s;
-
+		// Llamamos al método para decrementar
+		start();
 		/*
-		 * En caso de que los minutos o segundos recibidos
-		 * no esten en un rango lógico se lanza excepción.
+		 * En caso de que los minutos o segundos recibidos no esten en un rango
+		 * lógico se lanza excepción.
 		 */
 		if (m < 0 || m > 59)
 			throw new RelojException("Minutos fuera de rango");
@@ -51,30 +55,29 @@ public class CuentaAtras extends Observable {
 	 * Este método activará el reloj.
 	 */
 	public void start() {
-		//Inicializamos el contador.
+		// Inicializamos el contador.
 		if (tiempo == null) {
 			tiempo = new Timer();
 		}
-		parado = false;
 		/*
-		 * Cada segundo deverá llamar al método tareasRun()
-		 * que se encargará de decrementar el reloj.
+		 * Cada segundo deverá llamar al método tareasRun() que se encargará de
+		 * decrementar el reloj.
 		 */
 		tiempo.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				tareasRun();
+				if (!parado)
+					tareasRun();
 			}
 		}, 0, 1000);
 	}
 
 	/**
-	 * Se encargará de decrementar un segundo el reloj cuando se le
-	 * llame.
+	 * Se encargará de decrementar un segundo el reloj cuando se le llame.
 	 */
 	protected void tareasRun() {
-		//Si no está parado se decrementa.
+		// Si no está parado se decrementa.
 		if (!parado) {
-			//Si segundos es distinto de cero se decrementa.
+			// Si segundos es distinto de cero se decrementa.
 			if (segundos != 0) {
 				segundos--;
 			} else {
@@ -82,13 +85,13 @@ public class CuentaAtras extends Observable {
 					minutos--;
 					segundos = 59;
 				} else {
-					//Si segundos y minutos son cero hemos acabado.
+					// Si segundos y minutos son cero hemos acabado.
 					minutos = 0;
 					segundos = 0;
 					parado = true;
 				}
 			}
-			//Ponemos la hora actual en el JLabel.
+			// Ponemos la hora actual en el JLabel.
 			reloj.setText("<html><b>Tiempo:</b> " + minutos + " : " + segundos
 					+ "</html>");
 		}
@@ -102,7 +105,9 @@ public class CuentaAtras extends Observable {
 
 	/**
 	 * Método para parar el reloj.
-	 * @param b - boolean
+	 * 
+	 * @param b
+	 *            - boolean
 	 */
 	public void setParado(boolean b) {
 		parado = b;
@@ -110,15 +115,17 @@ public class CuentaAtras extends Observable {
 
 	/**
 	 * Fija el tiempo del reloj.
-	 * @param m - int, minutos
-	 * @param s - int, segundos
+	 * 
+	 * @param m
+	 *            - int, minutos
+	 * @param s
+	 *            - int, segundos
 	 * @throws RelojException
 	 */
 	public void setTiempo(int m, int s) throws RelojException {
 
 		/*
-		 * En caso de que el tiempo sea ilógico se
-		 * lanza excepción.
+		 * En caso de que el tiempo sea ilógico se lanza excepción.
 		 */
 		if (m < 0 || m > 59)
 			throw new RelojException("Minutos fuera de rango");
@@ -132,6 +139,7 @@ public class CuentaAtras extends Observable {
 
 	/**
 	 * Nos dice si se ha acabado el tiempo.
+	 * 
 	 * @return boolean
 	 */
 	public boolean isTimeFinished() {
@@ -139,7 +147,8 @@ public class CuentaAtras extends Observable {
 	}
 
 	/**
-	 * Nos devuelve ñps minutos del reloj. 
+	 * Nos devuelve ñps minutos del reloj.
+	 * 
 	 * @return minutos - int
 	 */
 	public int getMinutos() {
@@ -148,6 +157,7 @@ public class CuentaAtras extends Observable {
 
 	/**
 	 * Nos devuelve los egundos del reloj.
+	 * 
 	 * @return segundos - int
 	 */
 	public int getSegundos() {
@@ -156,6 +166,7 @@ public class CuentaAtras extends Observable {
 
 	/**
 	 * Nos devuelve el JLabel del relog.
+	 * 
 	 * @return reloj - JLabel
 	 */
 	public JLabel getReloj() {
@@ -164,7 +175,9 @@ public class CuentaAtras extends Observable {
 
 	/**
 	 * Modificamos el JLabel del reloj.
-	 * @param reloj - JLabel
+	 * 
+	 * @param reloj
+	 *            - JLabel
 	 */
 	public void setReloj(JLabel reloj) {
 		this.reloj = reloj;

@@ -7,8 +7,8 @@ public class Jugador {
 	private String apellJugador;
 	private String nickJugador;
 	private String email;
-	
-	public Jugador(int cod, String nom, String apell, String nick, String mail){
+
+	public Jugador(int cod, String nom, String apell, String nick, String mail) {
 		this.cod_jugador = cod;
 		this.nomJugador = nom;
 		this.apellJugador = apell;

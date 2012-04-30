@@ -22,9 +22,9 @@ public class VerificadorFecha {
 	private static final String REGEX = "\\d{4}/\\d{2}/\\d{2}";
 
 	/**
-	 * Valida que la fecha es correcta. En cuanto
-	 * a números lógicos se refiere. Por ejemplo, no
-	 * dejar poner un 34 como mes.
+	 * Valida que la fecha es correcta. En cuanto a números lógicos se refiere.
+	 * Por ejemplo, no dejar poner un 34 como mes.
+	 * 
 	 * @param strDate
 	 *            - String
 	 * @return boolean
@@ -69,15 +69,14 @@ public class VerificadorFecha {
 	 */
 	public static boolean comprobarFecha(String fecha) {
 		/*
-		 * Para comprobar si la fecha cumple el
-		 * formato.
+		 * Para comprobar si la fecha cumple el formato.
 		 */
 		Pattern p = Pattern.compile(REGEX);
 		Matcher m = p.matcher(fecha);
 
 		/*
-		 * Si la fecha cumple el formato y los valores son
-		 * correctos entonces es correcta.
+		 * Si la fecha cumple el formato y los valores son correctos entonces es
+		 * correcta.
 		 */
 		if ((m.matches() == true) && validateDayMonth(fecha)) {
 			return true;

@@ -1,6 +1,8 @@
 package bomberman.enumeraciones;
+
 /**
  * Enumeración de tipos de llama.
+ * 
  * @author David
  * @version 1.0
  */

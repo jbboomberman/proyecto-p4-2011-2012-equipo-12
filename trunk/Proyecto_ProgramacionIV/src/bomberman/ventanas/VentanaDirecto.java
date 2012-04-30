@@ -61,8 +61,8 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 		jpMedio.add(posicionaLinea("Nivel: ", jcbNivel));
 		jpMedio.add(posicionaLinea("Contraseña: ", jtPass));
 		getContentPane().add(jpMedio);
-		
-		//Añadir escuchador
+
+		// Añadir escuchador
 		btAceptar.addActionListener(this);
 		btCancelar.addActionListener(this);
 
@@ -130,31 +130,33 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 		Object botonPulsado = e.getSource();
 
 		if (botonPulsado == btAceptar) {
-			new Thread(
-            		new Runnable() {
-            			public void run() {
-            				if(AccesoNivel.esCorrecto(new String(jtPass.getPassword())
-            						, Integer.parseInt((String)jcbNivel.getSelectedItem()))){
-            					ControlPrincipal.getJugadorUno().setModo(ModoJuego.Master);
-                				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(
-                						Integer.parseInt((String) jcbNivel.getSelectedItem())));
-                				//Falta la contraseña
-                				GestorVentana.hacerVisible(VentanaJuego.class, true);
-            				}else{
-            					JOptionPane.showMessageDialog(new JDialog(), "La contraseña no es correcta","Error",JOptionPane.ERROR_MESSAGE);
-            				}
-            			}
-            		}
-            ).start();
-		}else if(botonPulsado == btCancelar){
-			new Thread(
-            		new Runnable() {
-            			public void run() {
-            				GestorVentana.ocultarVentana(VentanaDirecto.class);
-            				GestorVentana.hacerVisible(VentanaInicial.class, true);
-            			}
-            		}
-            ).start();
+			new Thread(new Runnable() {
+				public void run() {
+					if (AccesoNivel.esCorrecto(
+							new String(jtPass.getPassword()), Integer
+									.parseInt((String) jcbNivel
+											.getSelectedItem()))) {
+						ControlPrincipal.getJugadorUno().setModo(
+								ModoJuego.Master);
+						ControlPrincipal.crearEscenario(AccesoMapa
+								.getCodMapa(Integer.parseInt((String) jcbNivel
+										.getSelectedItem())));
+						// Falta la contraseña
+						GestorVentana.hacerVisible(VentanaJuego.class, true);
+					} else {
+						JOptionPane.showMessageDialog(new JDialog(),
+								"La contraseña no es correcta", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}).start();
+		} else if (botonPulsado == btCancelar) {
+			new Thread(new Runnable() {
+				public void run() {
+					GestorVentana.ocultarVentana(VentanaDirecto.class);
+					GestorVentana.hacerVisible(VentanaInicial.class, true);
+				}
+			}).start();
 		}
 	}
 

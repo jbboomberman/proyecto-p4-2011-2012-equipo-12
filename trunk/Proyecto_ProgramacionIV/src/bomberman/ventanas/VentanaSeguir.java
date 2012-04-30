@@ -15,7 +15,7 @@ import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 
-public class VentanaSeguir extends JDialog implements ActionListener{
+public class VentanaSeguir extends JDialog implements ActionListener {
 	private JLabel texto;
 	private JButton jbSeguirNivel;
 	private JButton jbVolver;
@@ -47,7 +47,7 @@ public class VentanaSeguir extends JDialog implements ActionListener{
 		// Añadir escuchadores
 		jbSeguirNivel.addActionListener(this);
 		jbVolver.addActionListener(this);
-		
+
 		// Parámetros de la ventana.
 		/*
 		 * Determinamos un tamaño mínimo de la ventana aunque dejamos que tenga
@@ -64,7 +64,7 @@ public class VentanaSeguir extends JDialog implements ActionListener{
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
-	
+
 	public ModoJuego getModo() {
 		return modo;
 	}
@@ -88,24 +88,22 @@ public class VentanaSeguir extends JDialog implements ActionListener{
 
 		// Si el boton pulsado erá botonAceptar
 		if (botonPulsado == jbSeguirNivel) {
-			 new Thread(
-	            		new Runnable() {
-	            			public void run() {
-	            				ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno().getNivel() + 1);
-	            				ControlPrincipal.getJugadorUno().setNivel(ControlPrincipal.getJugadorUno().getNivel());
-	            				GestorVentana.hacerVisible(VentanaJuego.class, true);
-	            			}
-	            		}
-	            ).start();
+			new Thread(new Runnable() {
+				public void run() {
+					ControlPrincipal.crearEscenario(ControlPrincipal
+							.getJugadorUno().getNivel() + 1);
+					ControlPrincipal.getJugadorUno().setNivel(
+							ControlPrincipal.getJugadorUno().getNivel());
+					GestorVentana.hacerVisible(VentanaJuego.class, true);
+				}
+			}).start();
 
 		} else if (botonPulsado == jbVolver) {
-			new Thread(
-            		new Runnable() {
-            			public void run() {
-            				GestorVentana.hacerVisible(VentanaInicial.class, true);
-            			}
-            		}
-            ).start();
+			new Thread(new Runnable() {
+				public void run() {
+					GestorVentana.hacerVisible(VentanaInicial.class, true);
+				}
+			}).start();
 		}
 	}
 

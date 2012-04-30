@@ -23,12 +23,12 @@ public interface Escenario extends ImageObserver {
 	public ArrayList<Sprite> getLista();
 
 	public void setPuntuacion();
-	
+
 	public void setAcabarPartida(boolean acabar);
-	
+
 	public void setSuperadoNivel(boolean estado);
-	
+
 	public ArrayList<Sprite> buscarPersonajePos(Class clase, Sprite spr);
-	
+
 	public int rivalesQuedan();
 }

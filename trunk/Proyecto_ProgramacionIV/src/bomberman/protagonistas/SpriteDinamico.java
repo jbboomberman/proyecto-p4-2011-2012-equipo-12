@@ -5,41 +5,43 @@ import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 
 /**
- * Esta clase representa a los objetos que son capaces
- * de moverse a lo largo de la ventana. Es abastracta
- * ya que el método determinarChoque es abstracto.
+ * Esta clase representa a los objetos que son capaces de moverse a lo largo de
+ * la ventana. Es abastracta ya que el método determinarChoque es abstracto.
+ * 
  * @author David
  * @version 1.0
  */
 public abstract class SpriteDinamico extends Sprite {
 
-	//La velocidad horizontal
+	// La velocidad horizontal
 	protected int deltaX;
-	//La velocidad vertical
+	// La velocidad vertical
 	protected int deltaY;
-	//La velocidad en general
+	// La velocidad en general
 	protected int velocidad;
-	//Para saber si es la primera vez que se mueve
+	// Para saber si es la primera vez que se mueve
 	protected boolean primeraVezMover;
 	/*
-	 * Contendrá en todo momento el estado
-	 * de los alrededores del SpriteDinamico
-	 * si estan libre o no: arriba, abajo,
-	 * derecha e izquierda.
+	 * Contendrá en todo momento el estado de los alrededores del SpriteDinamico
+	 * si estan libre o no: arriba, abajo, derecha e izquierda.
 	 */
 	protected boolean[] lados;
 
 	/**
-	 * Contructor principal que recibe como parámetros
-	 * el escenario, la posición X, la posición Y y los
-	 * datos del jugador.
-	 * @param esce - Escenario
-	 * @param x - float
-	 * @param y - float
-	 * @param jug - Jugador
+	 * Contructor principal que recibe como parámetros el escenario, la posición
+	 * X, la posición Y y los datos del jugador.
+	 * 
+	 * @param esce
+	 *            - Escenario
+	 * @param x
+	 *            - float
+	 * @param y
+	 *            - float
+	 * @param jug
+	 *            - Jugador
 	 */
 	public SpriteDinamico(Escenario esce, float x, float y, Jugador jug) {
-		//Llamamos al constructor padre.
+		// Llamamos al constructor padre.
 		super(esce, jug);
 		this.posX = x;
 		this.posY = y;
@@ -47,10 +49,13 @@ public abstract class SpriteDinamico extends Sprite {
 	}
 
 	/**
-	 * Este método sirve según los datos que posición que recibimos
-	 * si se va a chocar con algún otro elemento de la pantalla.
-	 * @param x - float
-	 * @param y - float
+	 * Este método sirve según los datos que posición que recibimos si se va a
+	 * chocar con algún otro elemento de la pantalla.
+	 * 
+	 * @param x
+	 *            - float
+	 * @param y
+	 *            - float
 	 * @return boolean - TRUE, Si se choca. FALSE, si no
 	 */
 	protected boolean seChoca(float x, float y) {
@@ -79,7 +84,7 @@ public abstract class SpriteDinamico extends Sprite {
 
 				// En caso de que los dos se choquen
 				if (tempRect.intersects(tempRect2)) {
-						return this.determinarChoque(sprTemp);
+					return this.determinarChoque(sprTemp);
 				}
 			}
 		}
@@ -87,10 +92,10 @@ public abstract class SpriteDinamico extends Sprite {
 	}
 
 	/**
-	 * Para saber si el SpriteDinamico está en una
-	 * intersección. Por 'intersección' entendemos
-	 * que a posición de X y de Y sean múltiplos
-	 * de 32 que son el tamaño y anchura de los muros.
+	 * Para saber si el SpriteDinamico está en una intersección. Por
+	 * 'intersección' entendemos que a posición de X y de Y sean múltiplos de 32
+	 * que son el tamaño y anchura de los muros.
+	 * 
 	 * @return boolean - Si esté en una intersección
 	 */
 	public boolean estaInterseccion() {
@@ -102,9 +107,9 @@ public abstract class SpriteDinamico extends Sprite {
 	}
 
 	/**
-	 * Se supone que está en una intersección.
-	 * Nos devuelve si están ocupado los lados derecho, izquierdo, arriba
-	 * y abajo.
+	 * Se supone que está en una intersección. Nos devuelve si están ocupado los
+	 * lados derecho, izquierdo, arriba y abajo.
+	 * 
 	 * @return boolean[] - Derecha, izquierda, arriba, abajo.
 	 */
 	public boolean[] alLado() {
@@ -113,11 +118,11 @@ public abstract class SpriteDinamico extends Sprite {
 		Rectangle tempRect2;
 
 		/*
-		 * Tenemos que comprobar todos los sprites del juego
-		 * para saber si están al lado del personaje.
+		 * Tenemos que comprobar todos los sprites del juego para saber si están
+		 * al lado del personaje.
 		 */
-		for(int i = 0; i < escenario.getLista().size(); i++){
-			//Si el personaje no es él mismo.
+		for (int i = 0; i < escenario.getLista().size(); i++) {
+			// Si el personaje no es él mismo.
 			if (escenario.getLista().get(i) != this) {
 				tempRect2 = getRectangle(escenario.getLista().get(i));
 
@@ -154,10 +159,11 @@ public abstract class SpriteDinamico extends Sprite {
 	}
 
 	/**
-	 * Dependiendo del tipo de SpriteDinamico hará una
-	 * cosa u otra dependienedo de con que se haya
-	 * chocado.
-	 * @param spr - Sprite
+	 * Dependiendo del tipo de SpriteDinamico hará una cosa u otra dependienedo
+	 * de con que se haya chocado.
+	 * 
+	 * @param spr
+	 *            - Sprite
 	 * @return boolean - Si se ha chocado o no
 	 */
 	public abstract boolean determinarChoque(Sprite spr);

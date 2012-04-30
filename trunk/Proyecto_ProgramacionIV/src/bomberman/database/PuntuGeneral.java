@@ -2,7 +2,7 @@ package bomberman.database;
 
 import java.sql.Date;
 
-public class PuntuGeneral implements Comparable<PuntuGeneral>{
+public class PuntuGeneral implements Comparable<PuntuGeneral> {
 	/*
 	 * Esta clase representa la fila de la tabla PUNTUACION_GENERAL y por ese
 	 * motivo tendrá estos atributos: COD_PUNT (Código de la puntación), COD_JUG
@@ -78,10 +78,10 @@ public class PuntuGeneral implements Comparable<PuntuGeneral>{
 		this.vidas = vidas;
 	}
 
-	public int compareTo(PuntuGeneral tempGeneral) { 
-		if(this.getPuntu() > tempGeneral.getPuntu())
+	public int compareTo(PuntuGeneral tempGeneral) {
+		if (this.getPuntu() > tempGeneral.getPuntu())
 			return 1;
-		else if(this.getPuntu() == tempGeneral.getPuntu())
+		else if (this.getPuntu() == tempGeneral.getPuntu())
 			return 0;
 		else
 			return -1;

@@ -25,20 +25,21 @@ public class TableModelPuntuaciones extends DefaultTableModel {
 				AccesoJugador.getJugador(punt.getCod_jug()).getApellJugador(),
 				AccesoJugador.getJugador(punt.getCod_jug()).getNickJugador(),
 				punt.getPuntu(),
-				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()), 
-				ManipuladorFecha.parsearFecha(punt.getFecha_ulti_nivel())
-				 });
+				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()),
+				ManipuladorFecha.parsearFecha(punt.getFecha_ulti_nivel()) });
 	}
-	
-	public PuntuGeneral getFila(int row){
-		PuntuGeneral tempPunt = new PuntuGeneral((Integer)this.getValueAt(row, 0), (Integer)this.getValueAt(row, 1)
-				, (Boolean)this.getValueAt(row, 2), (Integer)this.getValueAt(row, 3),
-				(String)this.getValueAt(row, 4), (Integer)this.getValueAt(row, 5));
+
+	public PuntuGeneral getFila(int row) {
+		PuntuGeneral tempPunt = new PuntuGeneral((Integer) this.getValueAt(row,
+				0), (Integer) this.getValueAt(row, 1),
+				(Boolean) this.getValueAt(row, 2), (Integer) this.getValueAt(
+						row, 3), (String) this.getValueAt(row, 4),
+				(Integer) this.getValueAt(row, 5));
 		return tempPunt;
 	}
-	
-	public void deleteAllRows(){
-		while(this.getRowCount() > 0){
+
+	public void deleteAllRows() {
+		while (this.getRowCount() > 0) {
 			this.removeRow(0);
 		}
 	}

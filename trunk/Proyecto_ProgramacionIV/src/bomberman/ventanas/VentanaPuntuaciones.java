@@ -147,50 +147,49 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 				public void run() {
 					ArrayList<PuntuGeneral> tempArray = null;
 
-						/*
-						 * Si alguno de los JTextField es distinto de null.
-						 */
-						if (jtJuga.getText() != null
-								|| jtFecha.getText() != null) {
-							// Le pedimos las puntuaciones con esos datos.
-							if (jchTotal.isSelected()) {
+					/*
+					 * Si alguno de los JTextField es distinto de null.
+					 */
+					if (jtJuga.getText() != null || jtFecha.getText() != null) {
+						// Le pedimos las puntuaciones con esos datos.
+						if (jchTotal.isSelected()) {
 							tempArray = AccesoPuntuGen.getPuntDatos(
 									jtJuga.getText(), jtFecha.getText());
-							}else{
-								tempArray = AccesoPunEspe.getPuntDatos(
-										jtJuga.getText(), jtFecha.getText()
-										, Integer.parseInt((String)jcNivel.getSelectedItem()));
-							}
-							/*
-							 * En caso de que haya partidas con esas
-							 * características borramos datos anteriores y
-							 * ponemos los nuevos.
-							 */
-							if (tempArray != null) {
-								jtJuga.setBackground(Color.WHITE);
-								jtFecha.setBackground(Color.WHITE);
-								// Los ordenamos de mayor a menor.
-								Collections.sort(tempArray,
-										Collections.reverseOrder());
-								tmPuntu.deleteAllRows();
-								for (PuntuGeneral punGen : tempArray)
-									tmPuntu.añadirFila(punGen);
-							//En caso de que no haya resultados.
-							} else {
-								tmPuntu.deleteAllRows();
-								//Si había datos en Jugador lo ponemos en rojo.
-								if (jtJuga.getText() != null)
-									jtJuga.setBackground(Color.RED);
-								//Si había datos en fecha lo ponemos en rojo.
-								if (jtFecha.getText() != null)
-									jtFecha.setBackground(Color.RED);
-							}
+						} else {
+							tempArray = AccesoPunEspe.getPuntDatos(jtJuga
+									.getText(), jtFecha.getText(), Integer
+									.parseInt((String) jcNivel
+											.getSelectedItem()));
+						}
+						/*
+						 * En caso de que haya partidas con esas características
+						 * borramos datos anteriores y ponemos los nuevos.
+						 */
+						if (tempArray != null) {
+							jtJuga.setBackground(Color.WHITE);
+							jtFecha.setBackground(Color.WHITE);
+							// Los ordenamos de mayor a menor.
+							Collections.sort(tempArray,
+									Collections.reverseOrder());
+							tmPuntu.deleteAllRows();
+							for (PuntuGeneral punGen : tempArray)
+								tmPuntu.añadirFila(punGen);
+							// En caso de que no haya resultados.
 						} else {
 							tmPuntu.deleteAllRows();
-							jtJuga.setBackground(Color.RED);
-							jtFecha.setBackground(Color.RED);
+							// Si había datos en Jugador lo ponemos en rojo.
+							if (jtJuga.getText() != null)
+								jtJuga.setBackground(Color.RED);
+							// Si había datos en fecha lo ponemos en rojo.
+							if (jtFecha.getText() != null)
+								jtFecha.setBackground(Color.RED);
 						}
+					} else {
+						tmPuntu.deleteAllRows();
+						jtJuga.setBackground(Color.RED);
+						jtFecha.setBackground(Color.RED);
 					}
+				}
 			}).start();
 
 		} else if (botonPulsado == jbCancelar) {
@@ -200,12 +199,13 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 				public void run() {
 					ArrayList<PuntuGeneral> arrayTopTen = AccesoPuntuGen
 							.getTopTen();
-					if(arrayTopTen != null){
-					Collections.sort(arrayTopTen, Collections.reverseOrder());
-					tmPuntu.deleteAllRows();
-					for (PuntuGeneral punGen : arrayTopTen)
-						tmPuntu.añadirFila(punGen);
-					}else
+					if (arrayTopTen != null) {
+						Collections.sort(arrayTopTen,
+								Collections.reverseOrder());
+						tmPuntu.deleteAllRows();
+						for (PuntuGeneral punGen : arrayTopTen)
+							tmPuntu.añadirFila(punGen);
+					} else
 						tmPuntu.deleteAllRows();
 				}
 			}).start();

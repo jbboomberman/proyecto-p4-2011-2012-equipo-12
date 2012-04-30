@@ -22,8 +22,10 @@ public class AccesoPuntuGen {
 	 */
 	public static void insertarPunt(PuntuGeneral punt) {
 		try {
-			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-					"INSERT INTO PUNTUACION_GENERAL VALUES( ?, ?, ?, ?, ?, ?);");
+			PreparedStatement stat = GestionBD
+					.conectar()
+					.prepareStatement(
+							"INSERT INTO PUNTUACION_GENERAL VALUES( ?, ?, ?, ?, ?, ?);");
 			stat.setInt(1, punt.getCod_punt());
 			stat.setInt(2, punt.getCod_jug());
 			stat.setBoolean(3, punt.isGuardado());
@@ -85,7 +87,7 @@ public class AccesoPuntuGen {
 					tempArray.add(todasPunt.get(j));
 				}
 			}
-		}else{
+		} else {
 			return todasPunt;
 		}
 		return tempArray;
@@ -127,25 +129,27 @@ public class AccesoPuntuGen {
 				 * En caso de que no exista el código del Jugador o la fecha sea
 				 * incorrecta se devuelve null.
 				 */
-				if (AccesoJugador.getCodJugador(nom) == -1 || !VerificadorFecha.comprobarFecha(fecha))
+				if (AccesoJugador.getCodJugador(nom) == -1
+						|| !VerificadorFecha.comprobarFecha(fecha))
 					return null;
 				else {
-						stat.setInt(1, AccesoJugador.getCodJugador(nom));
-						stat.setString(2, fecha);
-						ResultSet rs = stat.executeQuery();
-						if(!rs.next())return null;
-						while (rs.next()) {
-							//Si es 'true' es partida guardada.
-							if (!rs.getBoolean(3))
-								tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
-										.getInt(2), rs.getBoolean(3), rs
-										.getInt(4), rs.getString(5), rs.getInt(6)));
-						}
-						return tempPuntu;
+					stat.setInt(1, AccesoJugador.getCodJugador(nom));
+					stat.setString(2, fecha);
+					ResultSet rs = stat.executeQuery();
+					if (!rs.next())
+						return null;
+					while (rs.next()) {
+						// Si es 'true' es partida guardada.
+						if (!rs.getBoolean(3))
+							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
+									.getInt(2), rs.getBoolean(3), rs.getInt(4),
+									rs.getString(5), rs.getInt(6)));
+					}
+					return tempPuntu;
 				}
-			/*
-			 * En caso de que fecha sea igual a null.
-			 */
+				/*
+				 * En caso de que fecha sea igual a null.
+				 */
 			} else if (nom != null && fecha == null) {
 				stat = GestionBD.conectar().prepareStatement(
 						"SELECT * FROM PUNTUACION_GENERAL WHERE COD_JUG = ?;");
@@ -162,25 +166,25 @@ public class AccesoPuntuGen {
 					}
 					return tempPuntu;
 				}
-			/*
-			 * En caso de que nombre del Jugador sea igual a null.
-			 */
+				/*
+				 * En caso de que nombre del Jugador sea igual a null.
+				 */
 			} else if (nom == null && fecha != null) {
 				stat = GestionBD
 						.conectar()
 						.prepareStatement(
 								"SELECT * FROM PUNTUACION_GENERAL WHERE FECHA_ULTI_NIVEL = ?;");
-					if (!VerificadorFecha.comprobarFecha(fecha))
-						return null;
-					stat.setString(1, fecha);
-					ResultSet rs = stat.executeQuery();
-					while (rs.next()) {
-						if (!rs.getBoolean(3))
-							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
-									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-									rs.getString(5), rs.getInt(6)));
-					}
-					return tempPuntu;
+				if (!VerificadorFecha.comprobarFecha(fecha))
+					return null;
+				stat.setString(1, fecha);
+				ResultSet rs = stat.executeQuery();
+				while (rs.next()) {
+					if (!rs.getBoolean(3))
+						tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
+								.getInt(2), rs.getBoolean(3), rs.getInt(4), rs
+								.getString(5), rs.getInt(6)));
+				}
+				return tempPuntu;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -197,11 +201,11 @@ public class AccesoPuntuGen {
 			ResultSet rs = stat.executeQuery();
 			while (rs.next()) {
 				tempGen = new PuntuGeneral(rs.getInt(1), rs.getInt(2),
-						rs.getBoolean(3), rs.getInt(4), rs.getString(5)
-						, rs.getInt(6));
+						rs.getBoolean(3), rs.getInt(4), rs.getString(5),
+						rs.getInt(6));
 				tempPuntu.add(tempGen);
 			}
-			
+
 			rs.close();
 			stat.close();
 
@@ -211,21 +215,21 @@ public class AccesoPuntuGen {
 		return tempPuntu;
 
 	}
-	
-	public static ArrayList<PuntuGeneral> getPartidasGuardadas(){
-		ArrayList<PuntuGeneral>tempArray = new ArrayList<PuntuGeneral>();
+
+	public static ArrayList<PuntuGeneral> getPartidasGuardadas() {
+		ArrayList<PuntuGeneral> tempArray = new ArrayList<PuntuGeneral>();
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 					"SELECT * FROM PUNTUACION_GENERAL WHERE GUARDADO = ?;");
 			stat.setBoolean(1, true);
 			ResultSet rs = stat.executeQuery();
 			while (rs.next()) {
-				tempArray.add(new PuntuGeneral(rs.getInt(1), rs.getInt(2),
-						rs.getBoolean(3), rs.getInt(4), rs.getString(5)
-						, rs.getInt(6)));
+				tempArray.add(new PuntuGeneral(rs.getInt(1), rs.getInt(2), rs
+						.getBoolean(3), rs.getInt(4), rs.getString(5), rs
+						.getInt(6)));
 			}
-			
-			rs.close();			
+
+			rs.close();
 			stat.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

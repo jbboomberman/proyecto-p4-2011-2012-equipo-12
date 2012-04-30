@@ -4,24 +4,30 @@ import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 
 /**
- * Clase que representa al objeto Muro.
- * Representa tanto al muro destructible
+ * Clase que representa al objeto Muro. Representa tanto al muro destructible
  * como el no destructible.
+ * 
  * @author David
  * @version 1.0
  */
 public class Muro extends SpriteEstatico {
 
-	//Para saber si es destructible o indestructible.
+	// Para saber si es destructible o indestructible.
 	private boolean destructible;
 
 	/**
 	 * Constructor principal de la clase Muro.
-	 * @param esce - Escenario
-	 * @param x - float
-	 * @param y - float
-	 * @param destruc - boolean
-	 * @param jug - Jugador
+	 * 
+	 * @param esce
+	 *            - Escenario
+	 * @param x
+	 *            - float
+	 * @param y
+	 *            - float
+	 * @param destruc
+	 *            - boolean
+	 * @param jug
+	 *            - Jugador
 	 */
 	public Muro(Escenario esce, float x, float y, boolean destruc, Jugador jug) {
 		super(esce, jug, x, y);
@@ -29,8 +35,8 @@ public class Muro extends SpriteEstatico {
 		this.posY = y;
 		this.destructible = destruc;
 		/*
-		 * Dependiendo de si es destructible o indestructible
-		 * tendrá diferentes imágenes.
+		 * Dependiendo de si es destructible o indestructible tendrá diferentes
+		 * imágenes.
 		 */
 		if (destructible) {
 			spritesImag = new String[] { "muro.jpg_1" };
@@ -46,6 +52,7 @@ public class Muro extends SpriteEstatico {
 
 	/**
 	 * Devuleve la variable destructible.
+	 * 
 	 * @return destructible - boolean
 	 */
 	public boolean isDestructible() {
@@ -54,7 +61,9 @@ public class Muro extends SpriteEstatico {
 
 	/**
 	 * Modifica la variable destructible.
-	 * @param destructible - boolean
+	 * 
+	 * @param destructible
+	 *            - boolean
 	 */
 	public void setDestructible(boolean destructible) {
 		this.destructible = destructible;
