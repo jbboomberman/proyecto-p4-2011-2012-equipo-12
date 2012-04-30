@@ -171,15 +171,6 @@ public class ControlPrincipal {
 		pararJuego = true;
 	}
 
-	public static void main(String[] args) {
-		try {
-			UIManager
-					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception e) {
-		}
-		ControlPrincipal prueba = new ControlPrincipal();
-	}
-
 	/**
 	 * Para cargar una partida que ha sido guardada.
 	 * @param punt - PuntGeneral
@@ -246,5 +237,14 @@ public class ControlPrincipal {
 
 	public static void setPararJuego(boolean pararJuego) {
 		ControlPrincipal.pararJuego = pararJuego;
+	}
+	
+	public static void main(String[] args) {
+		try {
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (Exception e) {
+		}
+		ControlPrincipal prueba = new ControlPrincipal();
 	}
 }
