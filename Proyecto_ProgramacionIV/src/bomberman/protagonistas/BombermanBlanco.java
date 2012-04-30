@@ -131,7 +131,6 @@ public class BombermanBlanco extends Bomberman {
 				|| e.getKeyCode() == ControlPrincipal.getJugadorUno().getIzquierda()
 				|| e.getKeyCode() == ControlPrincipal.getJugadorUno().getDerecha()) {
 			parado = true;
-			System.out.println("pARADO");
 		}
 		/*
 		 * Como es lógico en caso de que se suelte una tecla se deja de sumar o
