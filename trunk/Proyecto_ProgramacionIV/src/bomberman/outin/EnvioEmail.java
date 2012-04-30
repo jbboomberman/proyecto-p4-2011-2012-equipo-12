@@ -17,47 +17,49 @@ import bomberman.managers.ControlPrincipal;
 public class EnvioEmail {
 
 	//Contendrá las propiedades de la conexión
-	private Properties props;
+	private static Properties props = iniciarProperties();
 	//La conexión con el servidor de correo.
-	private Session session;
+	private static Session session = Session.getDefaultInstance(props);
 	//El mensaje.
-	private MimeMessage message;
+	private static MimeMessage message = new MimeMessage(session);
 	//Para enviar correos.
-	private Transport trans;
+	private static Transport trans = iniciarTransport(); 
+	//Password
+	private static String pass = "ZXNlYm9tYmVybWFuaGF5";
 
-	/**
-	 * Constructor principal de la clase EnvioEmail
-	 * @param jug - Jugador
-	 */
-	public EnvioEmail() {
 
-		this.props = new Properties();
-		this.session = Session.getDefaultInstance(props);
-		this.message = new MimeMessage(session);
-		
-		try {
-			trans = session.getTransport("smtp");
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		}
-
+	
+	private static Properties iniciarProperties(){
+		Properties tempProp = new Properties(); 
 		// Nombre del host de correo, es smtp.gmail.com
-		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+		tempProp.setProperty("mail.smtp.host", "smtp.gmail.com");
 
 		// TLS si está disponible
-		props.setProperty("mail.smtp.starttls.enable", "true");
+		tempProp.setProperty("mail.smtp.starttls.enable", "true");
 
 		// Puerto de gmail para envio de correos
-		props.setProperty("mail.smtp.port", "587");
+		tempProp.setProperty("mail.smtp.port", "587");
 
 		// Nombre del usuario
-		props.setProperty("mail.smtp.user", ControlPrincipal.getJugadorUno().getNick());
+		tempProp.setProperty("mail.smtp.user", ControlPrincipal.getJugadorUno().getNick());
 
 		// Si requiere o no usuario y password para conectarse.
-		props.setProperty("mail.smtp.auth", "true");
+		tempProp.setProperty("mail.smtp.auth", "true");
+		
+		return tempProp;
 	}
 
-	public void enviarMensaje() {
+	public static Transport iniciarTransport(){
+		Transport tempTrans = null;
+		try{
+			tempTrans = session.getTransport("smtp");
+		}catch(NoSuchProviderException e){
+			e.printStackTrace();
+		}
+		return tempTrans;
+	}
+	
+	public static void enviarMensaje() {
 
 		try {
 			// Quien envia el correo
@@ -70,7 +72,7 @@ public class EnvioEmail {
 			//El texto
 			message.setText(EstructuraCorreo.getEstructura(ControlPrincipal.getJugadorUno().getNombre()));
 			//Nos conectamos a nuetsro correo
-			trans.connect("ejemplo@gmail.com", "la password");
+			trans.connect("equipo12Bomberman@gmail.com", Base64.decodeString(pass));
 			//Enviamos el mensaje
 			trans.sendMessage(message, message.getAllRecipients());
 			trans.close();

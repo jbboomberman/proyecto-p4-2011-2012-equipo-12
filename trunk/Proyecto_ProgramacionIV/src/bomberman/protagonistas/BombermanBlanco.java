@@ -1,6 +1,8 @@
 package bomberman.protagonistas;
 
 import java.awt.event.KeyEvent;
+
+import bomberman.enumeraciones.MirarLado;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
@@ -45,6 +47,7 @@ public class BombermanBlanco extends Bomberman {
 		spritesDestLeft = new String[] { "bomber_dest.gif_2" };
 		setSpritesImag(spritesImagDown);
 		setSpriteDestruccion(spritesDestDown);
+		mirando = MirarLado.ABAJO;
 		this.altura = ManagerImagen.getImagen(spritesImagUp[0]).getWidth();
 		this.anchura = ManagerImagen.getImagen(spritesImagUp[0]).getHeight();
 	}
@@ -75,24 +78,28 @@ public class BombermanBlanco extends Bomberman {
 			deltaY = -Math.abs(velocidad);
 			setSpritesImag(spritesImagUp);
 			setSpriteDestruccion(spritesDestUp);
+			mirando = MirarLado.ARRIBA;
 		//Tecla abajo
 		}else if(ControlPrincipal.getJugadorUno().getAbajo() == e.getKeyCode()){
 			// Tenemos que aumentar posición en el eje Y.
 			deltaY = Math.abs(velocidad);
 			setSpritesImag(spritesImagDown);
 			setSpriteDestruccion(spritesDestDown);
+			mirando = MirarLado.ABAJO;
 		//Tecla izquierda
 		}else if(ControlPrincipal.getJugadorUno().getIzquierda() == e.getKeyCode()){
 			// Tenemos que restar posición en el eje X.
 			deltaX = -Math.abs(velocidad);
 			setSpritesImag(spritesImagLeft);
 			setSpriteDestruccion(spritesDestLeft);
+			mirando = MirarLado.IZQUIERDA;
 		//Tecla derecha
 		}else if(ControlPrincipal.getJugadorUno().getDerecha() == e.getKeyCode()){
 			// Tenemos que aumentar posición en el eje X.
 			deltaX = Math.abs(velocidad);
 			setSpritesImag(spritesImagRight);
 			setSpriteDestruccion(spritesDestRight);
+			mirando = MirarLado.DERECHA;
 		//Tecla bomba
 		}else if(ControlPrincipal.getJugadorUno().getBomba() == e.getKeyCode()){
 			if (this.getNumBomba() < this.getMaxBomba()) {
@@ -124,6 +131,7 @@ public class BombermanBlanco extends Bomberman {
 				|| e.getKeyCode() == ControlPrincipal.getJugadorUno().getIzquierda()
 				|| e.getKeyCode() == ControlPrincipal.getJugadorUno().getDerecha()) {
 			parado = true;
+			System.out.println("pARADO");
 		}
 		/*
 		 * Como es lógico en caso de que se suelte una tecla se deja de sumar o

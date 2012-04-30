@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.util.Calendar;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -73,6 +74,7 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		pPrincipal.add(pSuperior, BorderLayout.NORTH);
 		pPrincipal.add(jlMensaje, BorderLayout.CENTER);
 		pPrincipal.add(pInferior, BorderLayout.SOUTH);
+		pPrincipal.add(Box.createRigidArea(new Dimension(20, 200)), BorderLayout.WEST);
 		getContentPane().add(pPrincipal);
 
 		
@@ -127,13 +129,7 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		Object botonPulsado = e.getSource();
 		
 		if(botonPulsado == jbGuardarPart){
-			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal.getJugadorUno().getCodPart(), 
-					ControlPrincipal.getJugadorUno().getCodJugador(), true, 
-					ControlPrincipal.getJugadorUno().getPuntuacion(),
-					ManipuladorFecha.getFecha()
-			, ControlPrincipal.getJugadorUno().getVidas()));
-			GestorVentana.ocultarVentana(VentanaSuperado.class);
-			GestorVentana.hacerVisible(VentanaSeguir.class, true);
+			GestorVentana.hacerVisible(VentanaGuardado.class, false);
 		}else if (botonPulsado == jbPasarNivel){
 			ControlPrincipal.getJugadorUno().setNivel(ControlPrincipal.getJugadorUno().getNivel() + 1);
 			ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno().getNivel());
