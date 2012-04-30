@@ -129,40 +129,49 @@ public class AccesoPuntuGen {
 				 * En caso de que no exista el código del Jugador o la fecha sea
 				 * incorrecta se devuelve null.
 				 */
-				if (AccesoJugador.getCodJugador(nom) == -1
+				if (AccesoJugador.getCodJugador(nom) == null
 						|| !VerificadorFecha.comprobarFecha(fecha))
 					return null;
 				else {
-					stat.setInt(1, AccesoJugador.getCodJugador(nom));
-					stat.setString(2, fecha);
-					ResultSet rs = stat.executeQuery();
-					if (!rs.next())
-						return null;
-					while (rs.next()) {
-						// Si es 'true' es partida guardada.
-						if (!rs.getBoolean(3))
-							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
-									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-									rs.getString(5), rs.getInt(6)));
+					ArrayList<Integer> tempArray = AccesoJugador
+							.getCodJugador(nom);
+					for (Integer num : tempArray) {
+						stat.setInt(1, num);
+						stat.setString(2, fecha);
+						ResultSet rs = stat.executeQuery();
+						while (rs.next()) {
+							// Si es 'true' es partida guardada.
+							if (!rs.getBoolean(3))
+								tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
+										.getInt(2), rs.getBoolean(3), rs
+										.getInt(4), rs.getString(5), rs
+										.getInt(6)));
+						}
+						return tempPuntu;
 					}
-					return tempPuntu;
 				}
 				/*
 				 * En caso de que fecha sea igual a null.
 				 */
 			} else if (nom != null && fecha == null) {
+				System.out.println("Buscando en la BD");
 				stat = GestionBD.conectar().prepareStatement(
 						"SELECT * FROM PUNTUACION_GENERAL WHERE COD_JUG = ?;");
-				if (AccesoJugador.getCodJugador(nom) == -1)
+				if (AccesoJugador.getCodJugador(nom) == null)
 					return null;
 				else {
-					stat.setInt(1, AccesoJugador.getCodJugador(nom));
-					ResultSet rs = stat.executeQuery();
-					while (rs.next()) {
-						if (!rs.getBoolean(3))
-							tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
-									.getInt(2), rs.getBoolean(3), rs.getInt(4),
-									rs.getString(5), rs.getInt(6)));
+					ArrayList<Integer> tempArray = AccesoJugador
+							.getCodJugador(nom);
+					for (Integer num : tempArray) {
+						stat.setInt(1, num);
+						ResultSet rs = stat.executeQuery();
+						while (rs.next()) {
+							if (!rs.getBoolean(3))
+								tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
+										.getInt(2), rs.getBoolean(3), rs
+										.getInt(4), rs.getString(5), rs
+										.getInt(6)));
+						}
 					}
 					return tempPuntu;
 				}

@@ -94,6 +94,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		if (botonPulsado == jbHistoria) {
 			new Thread(new Runnable() {
 				public void run() {
+					ControlPrincipal.setJugadorUno(new Jugador());
 					ControlPrincipal.getJugadorUno().setNivel(1);
 					ControlPrincipal.getJugadorUno()
 							.setModo(ModoJuego.Historia);
@@ -107,6 +108,8 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		} else if (botonPulsado == jbMultijugador) {
 			new Thread(new Runnable() {
 				public void run() {
+					ControlPrincipal.setJugadorUno(new Jugador());
+					ControlPrincipal.setJugadorDos(new Jugador());
 					ControlPrincipal.getJugadorUno().setArriba(
 							AccesoControles.getControl("ARRIBA", 1));
 					ControlPrincipal.getJugadorUno().setAbajo(
@@ -139,6 +142,7 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		} else if (botonPulsado == jbMaster) {
 			new Thread(new Runnable() {
 				public void run() {
+					ControlPrincipal.setJugadorUno(new Jugador());
 					ControlPrincipal.getJugadorUno().setArriba(
 							AccesoControles.getControl("ARRIBA", 1));
 					ControlPrincipal.getJugadorUno().setAbajo(
@@ -149,7 +153,6 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 							AccesoControles.getControl("IZQUIERDA", 1));
 					ControlPrincipal.getJugadorUno().setBomba(
 							AccesoControles.getControl("BOMBA", 1));
-					ControlPrincipal.getJugadorUno().setModo(ModoJuego.Master);
 					GestorVentana.ocultarVentana(VentanaSeleccion.class);
 					GestorVentana.hacerVisible(VentanaDirecto.class, false);
 				}

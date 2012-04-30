@@ -1,26 +1,15 @@
 package bomberman.managers;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferStrategy;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.ConcurrentModificationException;
-
 import javax.swing.*;
-
 import bomberman.database.AccesoControles;
 import bomberman.database.AccesoExtras;
 import bomberman.database.AccesoJugador;
-import bomberman.database.AccesoMapa;
 import bomberman.database.AccesoPunEspe;
 import bomberman.database.AccesoPuntuGen;
-import bomberman.database.Mapa;
 import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
 import bomberman.enumeraciones.ModoJuego;
@@ -29,22 +18,12 @@ import bomberman.outin.CuentaAtras;
 import bomberman.outin.EnvioEmail;
 import bomberman.outin.LeerMapa;
 import bomberman.outin.ManipuladorFecha;
-import bomberman.protagonistas.Bomba;
-import bomberman.protagonistas.Bomberman;
-import bomberman.protagonistas.Dahl;
-import bomberman.protagonistas.Llama;
-import bomberman.protagonistas.Minvo;
-import bomberman.protagonistas.Muro;
-import bomberman.protagonistas.Pildora;
 import bomberman.protagonistas.Sprite;
-import bomberman.protagonistas.SpriteDinamico;
-import bomberman.protagonistas.Valcom;
 import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaCargar;
 import bomberman.ventanas.VentanaInicial;
 import bomberman.ventanas.VentanaJuego;
 import bomberman.ventanas.VentanaNoSuperado;
-import bomberman.ventanas.VentanaSeleccion;
 import bomberman.ventanas.VentanaSuperado;
 import bomberman.ventanas.VentanaVidaMenos;
 
@@ -83,48 +62,75 @@ public class ControlPrincipal {
 						&& !(ventJuego.getAcabarPartida())
 						&& (!ventJuego.getSuperadoNivel()))
 					paintWorld();
+				// En caso de que hayamos superado el nivel
 				else if (ventJuego.getSuperadoNivel()) {
+					// Paramos el reloj
 					((CuentaAtras) ventJuego.getReloj()).setParado(true);
+					/*
+					 * Ponemos superado a falso para que en el siguiente nivel
+					 * podamos jugar.
+					 */
 					ventJuego.setSuperadoNivel(false);
-					ventJuego.borrarSprites();
-					if (jugadorUno.getModo() == ModoJuego.Historia) {
+					/*
+					 * En caso de que estemos jugando en el modo historia.
+					 */
+					if (jugadorUno.getModo() == ModoJuego.Historia
+							|| jugadorUno.getModo() == ModoJuego.Master) {
+						// Hacemos que en la VentanaSuperado aparezca el nick.
 						((VentanaSuperado) GestorVentana
 								.getVentana(VentanaSuperado.class))
 								.setJlNick(ControlPrincipal.getJugadorUno()
 										.getNick());
+						// Hacemos que en la VentanaSuperado aparezca el nivel.
 						((VentanaSuperado) GestorVentana
 								.getVentana(VentanaSuperado.class))
 								.setJlNivel(String.valueOf(ControlPrincipal
 										.getJugadorUno().getNivel()));
+						// Hacemos que en la VentanaSuperado aparezca la
+						// puntuación.
 						((VentanaSuperado) GestorVentana
 								.getVentana(VentanaSuperado.class))
 								.setJlPuntuacion(String
 										.valueOf(ControlPrincipal
 												.getJugadorUno()
 												.getPuntuacion()));
+						// Hacemos que aparezca la ventana VentanaSuperado
 						GestorVentana
 								.hacerVisible(VentanaSuperado.class, false);
+						// Insertamos la puntuación específica.
 						AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
 								.getNumPunt(), jugadorUno.getCodPart(),
 								jugadorUno.getPuntuNivel(), ManipuladorFecha
 										.getFecha(), jugadorUno.getNivel()));
-					} else if (jugadorUno.getModo() == ModoJuego.Master) {
-
-					} else {
-
 					}
+					/*
+					 * En caso de que se haya acabado el tiempo o nos hayan
+					 * matado.
+					 */
 				} else {
+					// Paramos el reloj
 					((CuentaAtras) ventJuego.getReloj()).setParado(true);
+					// Restamos una vida al jugador.
 					jugadorUno.setVidas(jugadorUno.getVidas() - 1);
+					/*
+					 * En caso de que tengamos alguna vida y estemos jugando en
+					 * modo Historia.
+					 */
 					if (jugadorUno.getVidas() > 0
-							&& (!jugadorUno.getModo().equals(
-									ModoJuego.Multijugador))) {
+							&& (jugadorUno.getModo() == ModoJuego.Historia || jugadorUno
+									.getModo() == ModoJuego.Master)) {
+						// Actualizamos la puntuación
 						((VentanaJuego) GestorVentana
 								.getVentana(VentanaJuego.class))
 								.setPuntuacion();
+						// Hacemos visible la ventana VentanaVidaMenos
 						GestorVentana.hacerVisible(VentanaVidaMenos.class,
 								false);
+						/*
+						 * Si jugamos modo Multijugador sólo tiene una vida.
+						 */
 					} else
+						// Acabamos partida.
 						terminarPartida();
 				}
 
@@ -162,17 +168,35 @@ public class ControlPrincipal {
 		image.show();
 	}
 
+	/**
+	 * Método que se encarga de introducir las puntuaciones en la BD y todo lo
+	 * que tenga que hacer cuando hayamos acabado la partida.
+	 */
 	public void terminarPartida() {
-		if (jugadorUno.getModo() == ModoJuego.Historia) {
-			PuntuGeneral tempGene = new PuntuGeneral(
-					AccesoPuntuGen.getNumPunt(),
-					((bomberman.database.Jugador) AccesoJugador.getJugador(
-							jugadorUno.getNombre(), jugadorUno.getApellidos(),
-							jugadorUno.getNick(), jugadorUno.getEmail()))
-							.getCod_jugador(), false,
-					jugadorUno.getPuntuacion(), ManipuladorFecha.getFecha(), 0);
-			AccesoPuntuGen.insertarPunt(tempGene);
-			ventJuego.borrarSprites();
+		// Si estabamos jugando en modo Historia
+		if (jugadorUno.getModo() == ModoJuego.Historia
+				|| jugadorUno.getModo() == ModoJuego.Master) {
+			// Solo guardamos la puntuación general en caso de Historia
+			if (jugadorUno.getModo() == ModoJuego.Historia) {
+				// Creamos la puntuación general
+				PuntuGeneral tempGene = new PuntuGeneral(
+						AccesoPuntuGen.getNumPunt(),
+						((bomberman.database.Jugador) AccesoJugador.getJugador(
+								jugadorUno.getNombre(),
+								jugadorUno.getApellidos(),
+								jugadorUno.getNick(), jugadorUno.getEmail()))
+								.getCod_jugador(), false,
+						jugadorUno.getPuntuacion(),
+						ManipuladorFecha.getFecha(), 0);
+				// Introducimos la puntuación general
+				AccesoPuntuGen.insertarPunt(tempGene);
+			}
+			// Insertamos la puntuación específica.
+			AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
+					.getNumPunt(), jugadorUno.getCodPart(),
+					jugadorUno.getPuntuNivel(), ManipuladorFecha
+							.getFecha(), jugadorUno.getNivel()));
+			// Preparamos los datos de la ventana VentanaNoSuperado
 			((VentanaNoSuperado) GestorVentana
 					.getVentana(VentanaNoSuperado.class)).setJlNick(String
 					.valueOf(ControlPrincipal.getJugadorUno().getNick()));
@@ -183,24 +207,44 @@ public class ControlPrincipal {
 					.getVentana(VentanaNoSuperado.class))
 					.setJlPuntuacion(String.valueOf(ControlPrincipal
 							.getJugadorUno().getPuntuacion()));
+			// Ocultamos la ventana VentanaJuego
 			GestorVentana.ocultarVentana(VentanaJuego.class);
+			// Hacemos visible la ventana VentanaInicial
 			GestorVentana.hacerVisible(VentanaInicial.class, false);
+			// Hacemos visible la ventana VentanaNoSuperado
 			GestorVentana.hacerVisible(VentanaNoSuperado.class, false);
-			EnvioEmail.enviarMensaje();
-			pararJuego = true;
+			// Si el jugador quería email se lo enviamos y si estaba jugando modo Historia
+			if (AccesoExtras.getExtra("email") && jugadorUno.getModo() == ModoJuego.Historia)
+				EnvioEmail.enviarMensaje();
+			// Ya la partida ha acabado
+			ventJuego.setAcabarPartida(false);
+			// En caso de que estuvieramos jugando en modo Multijugador
 		} else if (jugadorUno.getModo() == ModoJuego.Multijugador) {
+			// Si se murio el Bomberman1 entonces ganó el 2
+			if (ventJuego.getBomberman().isSeDestruir()) {
+				JOptionPane.showMessageDialog(new JDialog(),
+						"¡Ha ganado el jugador 2!", "Ganador",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(new JDialog(),
+						"¡Ha ganado el jugador 1!", "Ganador",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			// Ocultamos la ventana VentanaJuego
 			GestorVentana.ocultarVentana(VentanaJuego.class);
+			// Hacemos visible la ventana VentanaInicial
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
-		} else if (jugadorUno.getModo() == ModoJuego.Master) {
-			// Superado o no superado.
-		}
+			// Ya la partida ha acabado
+			ventJuego.setAcabarPartida(false);
+			// Si estabamos jugando en modo Master
+		} 
 	}
 
 	/**
 	 * Para cargar una partida que ha sido guardada.
 	 * 
 	 * @param punt
-	 *            - PuntGeneral
+	 *            - PuntGeneral, la partida que queremos cargar
 	 */
 	public static void cargarPartida(PuntuGeneral punt) {
 		// Cogemos al jugador que guardo la partida.
