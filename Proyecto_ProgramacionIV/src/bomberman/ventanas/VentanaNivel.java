@@ -84,4 +84,3 @@ public class VentanaNivel extends JDialog {
 		prueba.setVisible(true);
 	}
 }
-

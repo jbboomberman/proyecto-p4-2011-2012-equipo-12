@@ -40,7 +40,7 @@ public class Sprite {
 	protected int imagActual;
 	// Velocidad a la que se cambiaran las imágenes
 	protected int velocidadPic;
-	//Para saber cuando cambiar de sprite.
+	// Para saber cuando cambiar de sprite.
 	protected int t;
 	// Tiempo transcurrido desde la última pintada
 	protected float tiempoTranscurrido;
@@ -50,7 +50,7 @@ public class Sprite {
 	protected boolean seDestruir;
 	// El jugador propietario del Sprite
 	protected Jugador jugador;
-	//El tamaño generañ de ancho y largo
+	// El tamaño generañ de ancho y largo
 	protected final int CASILLA = 32;
 
 	/**
@@ -191,7 +191,7 @@ public class Sprite {
 		anchura = 0;
 		for (int i = 0; i < spritesImag.length; i++) {
 			BufferedImage image = ManagerImagen.getImagen(spritesImag[i]);
-			if(image == null)
+			if (image == null)
 				System.out.println(spritesImag[i]);
 			altura = Math.max(altura, image.getHeight());
 			anchura = Math.max(anchura, image.getWidth());
@@ -360,10 +360,12 @@ public class Sprite {
 	 * Método que se encarga de eliminar el Sprite del escenario.
 	 */
 	public void destruir() {
+
 		for (Sprite sprTemp : escenario.getLista()) {
 			// El mismo objeto
 			if (sprTemp == this) {
 				escenario.getLista().remove(sprTemp);
+				escenario.setPuntuacion();
 				break;
 			}
 		}

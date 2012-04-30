@@ -25,7 +25,7 @@ public class Doria extends Enemigo {
 		aleatorizacion.add(velocidad);
 		aleatorizacion.add(-velocidad);
 	}
-	
+
 	public void mover() {
 		super.mover();
 
@@ -41,10 +41,10 @@ public class Doria extends Enemigo {
 			if (lados[0] && lados[1]) {
 				Collections.shuffle(aleatorizacion);
 				deltaX = aleatorizacion.get(0);
-			//Derecha
+				// Derecha
 			} else if (lados[0]) {
 				deltaX = velocidad;
-			//Izquierda
+				// Izquierda
 			} else if (lados[1]) {
 				deltaX = -velocidad;
 			} else {
@@ -54,10 +54,10 @@ public class Doria extends Enemigo {
 			if (lados[2] && lados[3]) {
 				Collections.shuffle(aleatorizacion);
 				deltaY = aleatorizacion.get(0);
-			//Arriba
+				// Arriba
 			} else if (lados[2]) {
 				deltaY = -velocidad;
-			//Abajo
+				// Abajo
 			} else if (lados[3]) {
 				deltaY = velocidad;
 			} else {
@@ -74,14 +74,14 @@ public class Doria extends Enemigo {
 			}
 		}
 	}
-	
+
 	public boolean determinarChoque(Sprite spr) {
 		if (spr instanceof Llama)
 			this.procDestruccion();
-		else if(spr instanceof Bomberman)
+		else if (spr instanceof Bomberman)
 			spr.procDestruccion();
-		else if(spr instanceof Muro){
-			if(((Muro)spr).isDestructible())
+		else if (spr instanceof Muro) {
+			if (((Muro) spr).isDestructible())
 				return false;
 		}
 		return true;

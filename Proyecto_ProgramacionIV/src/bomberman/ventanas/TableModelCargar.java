@@ -23,24 +23,24 @@ public class TableModelCargar extends DefaultTableModel {
 				punt.getPuntu(),
 				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()),
 				ManipuladorFecha.parsearFecha(punt.getFecha_ulti_nivel()),
-				punt.getVidas()});
+				punt.getVidas() });
 	}
 
-	public PuntuGeneral getFila(int row){
-		PuntuGeneral tempPunt = new PuntuGeneral((Integer)this.getValueAt(row, 0), 
-				(Integer)AccesoJugador.getCodJugador((String)this.getValueAt(row, 1))
-				, true, (Integer)this.getValueAt(row, 4), 
-				(String)this.getValueAt(row, 6),
-				(Integer)this.getValueAt(row, 7));
+	public PuntuGeneral getFila(int row) {
+		PuntuGeneral tempPunt = new PuntuGeneral((Integer) this.getValueAt(row,
+				0), (Integer) AccesoJugador.getCodJugador((String) this
+				.getValueAt(row, 1)), true, (Integer) this.getValueAt(row, 4),
+				(String) this.getValueAt(row, 6), (Integer) this.getValueAt(
+						row, 7));
 		return tempPunt;
 	}
 
-	public void deleteAllRows(){
-		while(this.getRowCount() > 0){
+	public void deleteAllRows() {
+		while (this.getRowCount() > 0) {
 			this.removeRow(0);
 		}
 	}
-	
+
 	/**
 	 * @override Sobreescribimos el método isCellEditable para así evitar que
 	 *           las celdas del JTable se puedan editar.

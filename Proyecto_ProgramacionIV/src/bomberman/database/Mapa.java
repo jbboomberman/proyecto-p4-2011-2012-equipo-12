@@ -5,12 +5,12 @@ public class Mapa {
 	 * Esta clase representa la fila de la tabla MAPA, tiene estos atributos:
 	 * COD_MAPA, COD_NIV.
 	 */
-	
+
 	private int cod_mapa;
 	private int cod_nivel;
 	private char[] charArray;
-	
-	public Mapa(int mapa, int nivel, char[]array){
+
+	public Mapa(int mapa, int nivel, char[] array) {
 		this.cod_mapa = mapa;
 		this.cod_nivel = nivel;
 		this.charArray = array;
@@ -32,7 +32,7 @@ public class Mapa {
 		this.cod_nivel = cod_nivel;
 	}
 
-	public char[]getCharArray() {
+	public char[] getCharArray() {
 		return charArray;
 	}
 

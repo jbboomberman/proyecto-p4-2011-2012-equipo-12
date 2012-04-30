@@ -25,7 +25,7 @@ import bomberman.database.PuntuGeneral;
 import bomberman.managers.ControlPrincipal;
 
 //Fig 11  Página 15.  Tiene una JTable.
-public class VentanaCargar extends JDialog implements ActionListener{
+public class VentanaCargar extends JDialog implements ActionListener {
 
 	private JTable jtPuntu;
 	private JLabel jlTexto;
@@ -37,34 +37,35 @@ public class VentanaCargar extends JDialog implements ActionListener{
 	private JScrollPane jsTabla;
 
 	public VentanaCargar() {
-		//Inicializamos las variables
+		// Inicializamos las variables
 		jlTexto = new JLabel("Partidas guardadas");
 		jbCargar = new JButton("Cargar partida");
 		jbCancelar = new JButton("Cancelar");
 		jpInferior = new JPanel();
 		tmModel = new TableModelCargar(0, 8);
-		tmModel.setColumnIdentifiers(new String[]{"Código", "Nombre", "Apellido", "Nick", "Puntu", "Nivel", "Fecha", "Vidas"});
+		tmModel.setColumnIdentifiers(new String[] { "Código", "Nombre",
+				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "Vidas" });
 		jtPuntu = new JTable(tmModel);
 		jsTabla = new JScrollPane(jtPuntu);
 
-		//Layouts
+		// Layouts
 		getContentPane().setLayout(new BorderLayout());
 		jpInferior.setLayout(new FlowLayout());
 		jlTexto.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		//Añadir componentes
+
+		// Añadir componentes
 		jpInferior.add(jbCargar);
 		jpInferior.add(jbCancelar);
 		getContentPane().add(jlTexto, BorderLayout.NORTH);
 		getContentPane().add(jsTabla, BorderLayout.CENTER);
 		getContentPane().add(jpInferior, BorderLayout.SOUTH);
 		jlTexto.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
-		
-		//Escuchadores
+
+		// Escuchadores
 		jbCargar.addActionListener(this);
 		jbCancelar.addActionListener(this);
-		
-		//Determinamos que tamaños tendrá cada columna
+
+		// Determinamos que tamaños tendrá cada columna
 		diseñarColumnas("Código", 150, 250);
 		diseñarColumnas("Nombre", 150, 250);
 		diseñarColumnas("Apellido", 100, 150);
@@ -73,8 +74,8 @@ public class VentanaCargar extends JDialog implements ActionListener{
 		diseñarColumnas("Nivel", 50, 75);
 		diseñarColumnas("Fecha", 150, 200);
 		diseñarColumnas("Vidas", 50, 75);
-		
-		//Parámetros
+
+		// Parámetros
 		jlTexto.setFont(new Font("sansserif", Font.BOLD, 20));
 		this.setSize(600, 400);
 		this.setResizable(false);
@@ -85,66 +86,76 @@ public class VentanaCargar extends JDialog implements ActionListener{
 		// Para que la ventana aparezca centrada en pantalla.
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
-		
+
 	}
-	
+
 	/**
 	 * Método diseñado para especificar el tamaño preferido y máximo de cada
 	 * columana del objeto JTable.
-	 * @param nom - String, nombre de la columna
-	 * @param prefTam - int, tamaño preferido
-	 * @param maxTam - int, tamaño máximo
+	 * 
+	 * @param nom
+	 *            - String, nombre de la columna
+	 * @param prefTam
+	 *            - int, tamaño preferido
+	 * @param maxTam
+	 *            - int, tamaño máximo
 	 */
-	private void diseñarColumnas(String nom, int prefTam, int maxTam)
-	{
+	private void diseñarColumnas(String nom, int prefTam, int maxTam) {
 		/*
-		 * Manejamos la excepción IllegalArgumentException ya que si
-		 * el parámetro nombre que se pasa a la entrada de la función
-		 * no es correcto se pueden generar problemas.
+		 * Manejamos la excepción IllegalArgumentException ya que si el
+		 * parámetro nombre que se pasa a la entrada de la función no es
+		 * correcto se pueden generar problemas.
 		 */
-		try{
+		try {
 			jtPuntu.getColumn(nom).setPreferredWidth(prefTam);
 			jtPuntu.getColumn(nom).setMaxWidth(maxTam);
-		}catch(IllegalArgumentException e){
-			JOptionPane.showMessageDialog(new JDialog(), "Error al intentar crear el JTable, el diseño no ha sido predeterminado","Error",JOptionPane.ERROR_MESSAGE);
+		} catch (IllegalArgumentException e) {
+			JOptionPane
+					.showMessageDialog(
+							new JDialog(),
+							"Error al intentar crear el JTable, el diseño no ha sido predeterminado",
+							"Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
 		 * dirección del generador del evento.
 		 */
 		Object botonPulsado = e.getSource();
-		
-		//En caso de que queramos cargar la partida seleccionada.
-		if(botonPulsado == jbCargar){
+
+		// En caso de que queramos cargar la partida seleccionada.
+		if (botonPulsado == jbCargar) {
 			int fila = jtPuntu.getSelectedRow();
 			PuntuGeneral seleccionada;
-			//Si se ha seleccionado alguna fila
-			if(fila != -1){
+			// Si se ha seleccionado alguna fila
+			if (fila != -1) {
 				seleccionada = tmModel.getFila(fila);
-				//Cargamos la partida
+				// Cargamos la partida
 				ControlPrincipal.cargarPartida(seleccionada);
-			}else{
-				JOptionPane.showMessageDialog(new JDialog(), "No has seleccionado ninguna fila","Error",JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(new JDialog(),
+						"No has seleccionado ninguna fila", "Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
-			
-		}else if(botonPulsado == jbCancelar){
+
+		} else if (botonPulsado == jbCancelar) {
 			GestorVentana.ocultarVentana(VentanaCargar.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
 	}
-	
-	public void setVisible(boolean estado){
+
+	public void setVisible(boolean estado) {
 		super.setVisible(estado);
 		tmModel.deleteAllRows();
-		ArrayList<PuntuGeneral>partGuardas = AccesoPuntuGen.getPartidasGuardadas();
-		for(PuntuGeneral tempPunt : partGuardas)
+		ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
+				.getPartidasGuardadas();
+		for (PuntuGeneral tempPunt : partGuardas)
 			tmModel.añadirFila(tempPunt);
 	}
-	
-	public static void main (String[]args){
+
+	public static void main(String[] args) {
 		VentanaCargar tempVent = new VentanaCargar();
 		tempVent.setVisible(true);
 	}

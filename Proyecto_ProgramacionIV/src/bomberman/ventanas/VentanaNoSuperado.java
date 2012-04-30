@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import bomberman.database.AccesoNivel;
 import bomberman.managers.ControlPrincipal;
 
-public class VentanaNoSuperado extends JDialog implements ActionListener{
+public class VentanaNoSuperado extends JDialog implements ActionListener {
 
 	private JButton jbVolverMenu;
 	private JPanel pSuperior;
@@ -50,7 +50,6 @@ public class VentanaNoSuperado extends JDialog implements ActionListener{
 		pSuperior.setLayout(new BoxLayout(pSuperior, BoxLayout.Y_AXIS));
 		pInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-		
 		// Añadir componentes
 		pSuperior.add(posicionaComp("Nick: ", jlNick));
 		pSuperior.add(posicionaComp("Nivel: ", jlNivel));
@@ -60,13 +59,14 @@ public class VentanaNoSuperado extends JDialog implements ActionListener{
 		pPrincipal.add(pSuperior, BorderLayout.NORTH);
 		pPrincipal.add(jlMensaje, BorderLayout.CENTER);
 		pPrincipal.add(pInferior, BorderLayout.SOUTH);
-		pPrincipal.add(Box.createRigidArea(new Dimension(20, 200)), BorderLayout.WEST);
+		pPrincipal.add(Box.createRigidArea(new Dimension(20, 200)),
+				BorderLayout.WEST);
 		getContentPane().add(pPrincipal);
 		this.pack();
 
-		//Añadir escuchadores
+		// Añadir escuchadores
 		jbVolverMenu.addActionListener(this);
-		
+
 		// Carcterísticas de la ventana
 		/*
 		 * Determinamos un tamaño mínimo de la ventana aunque dejamos que tenga
@@ -83,7 +83,6 @@ public class VentanaNoSuperado extends JDialog implements ActionListener{
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 
-		
 	}
 
 	/**
@@ -100,7 +99,7 @@ public class VentanaNoSuperado extends JDialog implements ActionListener{
 		panelCompl.add(texto);
 		return panelCompl;
 	}
-	
+
 	/**
 	 * Implementamos el método 'actionPerformed' del interface ActionListener.
 	 * 
@@ -113,18 +112,20 @@ public class VentanaNoSuperado extends JDialog implements ActionListener{
 		 * dirección del generador del evento.
 		 */
 		Object botonPulsado = e.getSource();
-		
-		if(botonPulsado == jbVolverMenu){
+
+		if (botonPulsado == jbVolverMenu) {
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
 	}
-	
+
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if (visible){
+		if (visible) {
 			jlNick.setText(ControlPrincipal.getJugadorUno().getNick());
-			jlNivel.setText(String.valueOf(ControlPrincipal.getJugadorUno().getNivel()));
-			jlPuntuacion.setText(String.valueOf(ControlPrincipal.getJugadorUno().getPuntuacion()));
+			jlNivel.setText(String.valueOf(ControlPrincipal.getJugadorUno()
+					.getNivel()));
+			jlPuntuacion.setText(String.valueOf(ControlPrincipal
+					.getJugadorUno().getPuntuacion()));
 		}
 	}
 

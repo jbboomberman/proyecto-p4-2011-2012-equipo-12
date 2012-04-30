@@ -21,7 +21,7 @@ public class AccesoControles {
 	public static void insertarControl(Controles control) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"INSERT INTO CONTROLES VALUES( ?, ?, ?, ?);");
+					"INSERT INTO CONTROLES VALUES( ?, ?, ?, ?);");
 			stat.setInt(1, control.getCod_accion());
 			stat.setString(2, control.getNom_accion());
 			stat.setInt(3, control.getCod_ascii_tecla());
@@ -37,7 +37,7 @@ public class AccesoControles {
 	public static void eliminarControl(int cod_accion) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"DELETE FROM CONTROLES WHERE COD_ACCION = ?;");
+					"DELETE FROM CONTROLES WHERE COD_ACCION = ?;");
 			stat.setInt(1, cod_accion);
 			stat.executeUpdate();
 			stat.close();
@@ -69,12 +69,14 @@ public class AccesoControles {
 		return Ac;
 
 	}
-	
-	public static int getControl(String nomAccion, int tipJug){
+
+	public static int getControl(String nomAccion, int tipJug) {
 		int cod = -1;
 		try {
-			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-					"SELECT * FROM CONTROLES WHERE NOM_ACCION = ? AND TIPO_JUG = ?;");
+			PreparedStatement stat = GestionBD
+					.conectar()
+					.prepareStatement(
+							"SELECT * FROM CONTROLES WHERE NOM_ACCION = ? AND TIPO_JUG = ?;");
 			stat.setString(1, nomAccion);
 			stat.setInt(2, tipJug);
 			ResultSet rs = stat.executeQuery();
@@ -86,11 +88,13 @@ public class AccesoControles {
 		}
 		return cod;
 	}
-	
-	public static void setControl(String nomAccion, int tipJug, int codAscii){
+
+	public static void setControl(String nomAccion, int tipJug, int codAscii) {
 		try {
-			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-					"UPDATE CONTROLES SET COD_ASCII_TECLA = ? WHERE NOM_ACCION = ? AND TIPO_JUG = ?;");
+			PreparedStatement stat = GestionBD
+					.conectar()
+					.prepareStatement(
+							"UPDATE CONTROLES SET COD_ASCII_TECLA = ? WHERE NOM_ACCION = ? AND TIPO_JUG = ?;");
 			stat.setInt(1, codAscii);
 			stat.setString(2, nomAccion);
 			stat.setInt(3, tipJug);
@@ -100,28 +104,25 @@ public class AccesoControles {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String args[])
-	{
-//		//Controles c1=new Controles(22,"arriba",11,345);
-//		Controles c2= new Controles(11,"abajo",22,435);
-//		//AccesoControles.InsertarControl(c1);
-//		//AccesoControles.InsertarControl(c2);
-//		ArrayList<String> a1 =AccesoControles.ListarControles();
-//		System.out.println("Lista de todos los controles");
-//		for(int i=0;i<a1.size();i++){
-//			System.out.println(a1.get(i));
-//		}
-//		System.out.println();
-//		System.out.println("Lista eliminando c2");
-//		AccesoControles.EliminarControl(c2.getCod_accion());
-//		ArrayList<String> a2 =AccesoControles.ListarControles();
-//		for(int i=0;i<a2.size();i++){
-//			System.out.println(a2.get(i));
-//		}
-		
-		
-		
+
+	public static void main(String args[]) {
+		// //Controles c1=new Controles(22,"arriba",11,345);
+		// Controles c2= new Controles(11,"abajo",22,435);
+		// //AccesoControles.InsertarControl(c1);
+		// //AccesoControles.InsertarControl(c2);
+		// ArrayList<String> a1 =AccesoControles.ListarControles();
+		// System.out.println("Lista de todos los controles");
+		// for(int i=0;i<a1.size();i++){
+		// System.out.println(a1.get(i));
+		// }
+		// System.out.println();
+		// System.out.println("Lista eliminando c2");
+		// AccesoControles.EliminarControl(c2.getCod_accion());
+		// ArrayList<String> a2 =AccesoControles.ListarControles();
+		// for(int i=0;i<a2.size();i++){
+		// System.out.println(a2.get(i));
+		// }
+
 	}
 
 }

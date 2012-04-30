@@ -92,57 +92,68 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 
 		// Si el boton pulsado erá botonAceptar
 		if (botonPulsado == jbHistoria) {
-			 new Thread(
-	            		new Runnable() {
-	            			public void run() {
-	            				ControlPrincipal.getJugadorUno().setNivel(1);
-	            				ControlPrincipal.getJugadorUno().setModo(ModoJuego.Historia);
-	            				GestorVentana.ocultarVentana(VentanaSeleccion.class);
-	            				GestorVentana.hacerVisible(VentanaDatos.class, false);
-	            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(1));
-//	        					GestorVentana.hacerVisible(VentanaJuego.class, true);
-	            			}
-	            		}
-	            ).start();
+			new Thread(new Runnable() {
+				public void run() {
+					ControlPrincipal.getJugadorUno().setNivel(1);
+					ControlPrincipal.getJugadorUno()
+							.setModo(ModoJuego.Historia);
+					GestorVentana.ocultarVentana(VentanaSeleccion.class);
+					GestorVentana.hacerVisible(VentanaDatos.class, false);
+					ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(1));
+					// GestorVentana.hacerVisible(VentanaJuego.class, true);
+				}
+			}).start();
 
 		} else if (botonPulsado == jbMultijugador) {
-			new Thread(
-            		new Runnable() {
-            			public void run() {
-            				ControlPrincipal.getJugadorUno().setArriba(AccesoControles.getControl("ARRIBA", 1));
-            				ControlPrincipal.getJugadorUno().setAbajo(AccesoControles.getControl("ABAJO", 1));
-            				ControlPrincipal.getJugadorUno().setDerecha(AccesoControles.getControl("DERECHA", 1));
-            				ControlPrincipal.getJugadorUno().setIzquierda(AccesoControles.getControl("IZQUIERDA", 1));
-            				ControlPrincipal.getJugadorUno().setBomba(AccesoControles.getControl("BOMBA", 1));
-            				ControlPrincipal.setJugadorDos(new Jugador());
-            				ControlPrincipal.getJugadorDos().setArriba(AccesoControles.getControl("ARRIBA", 2));
-            				ControlPrincipal.getJugadorDos().setAbajo(AccesoControles.getControl("ABAJO", 2));
-            				ControlPrincipal.getJugadorDos().setDerecha(AccesoControles.getControl("DERECHA", 2));
-            				ControlPrincipal.getJugadorDos().setIzquierda(AccesoControles.getControl("IZQUIERDA", 2));
-            				ControlPrincipal.getJugadorDos().setBomba(AccesoControles.getControl("BOMBA", 2));
-            				ControlPrincipal.getJugadorUno().setModo(ModoJuego.Multijugador);
-            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(11));
-            				GestorVentana.ocultarVentana(VentanaSeleccion.class);
-            				GestorVentana.hacerVisible(VentanaJuego.class, true);
-            			}
-            		}
-            ).start();
+			new Thread(new Runnable() {
+				public void run() {
+					ControlPrincipal.getJugadorUno().setArriba(
+							AccesoControles.getControl("ARRIBA", 1));
+					ControlPrincipal.getJugadorUno().setAbajo(
+							AccesoControles.getControl("ABAJO", 1));
+					ControlPrincipal.getJugadorUno().setDerecha(
+							AccesoControles.getControl("DERECHA", 1));
+					ControlPrincipal.getJugadorUno().setIzquierda(
+							AccesoControles.getControl("IZQUIERDA", 1));
+					ControlPrincipal.getJugadorUno().setBomba(
+							AccesoControles.getControl("BOMBA", 1));
+					ControlPrincipal.setJugadorDos(new Jugador());
+					ControlPrincipal.getJugadorDos().setArriba(
+							AccesoControles.getControl("ARRIBA", 2));
+					ControlPrincipal.getJugadorDos().setAbajo(
+							AccesoControles.getControl("ABAJO", 2));
+					ControlPrincipal.getJugadorDos().setDerecha(
+							AccesoControles.getControl("DERECHA", 2));
+					ControlPrincipal.getJugadorDos().setIzquierda(
+							AccesoControles.getControl("IZQUIERDA", 2));
+					ControlPrincipal.getJugadorDos().setBomba(
+							AccesoControles.getControl("BOMBA", 2));
+					ControlPrincipal.getJugadorUno().setModo(
+							ModoJuego.Multijugador);
+					ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(11));
+					GestorVentana.ocultarVentana(VentanaSeleccion.class);
+					GestorVentana.hacerVisible(VentanaJuego.class, true);
+				}
+			}).start();
 
 		} else if (botonPulsado == jbMaster) {
-			new Thread(
-            		new Runnable() {
-            			public void run() {
-            				ControlPrincipal.getJugadorUno().setArriba(AccesoControles.getControl("ARRIBA", 1));
-            				ControlPrincipal.getJugadorUno().setAbajo(AccesoControles.getControl("ABAJO", 1));
-            				ControlPrincipal.getJugadorUno().setDerecha(AccesoControles.getControl("DERECHA", 1));
-            				ControlPrincipal.getJugadorUno().setIzquierda(AccesoControles.getControl("IZQUIERDA", 1));
-            				ControlPrincipal.getJugadorUno().setBomba(AccesoControles.getControl("BOMBA", 1));
-            				ControlPrincipal.getJugadorUno().setModo(ModoJuego.Master);
-            				GestorVentana.ocultarVentana(VentanaSeleccion.class);
-            				GestorVentana.hacerVisible(VentanaDirecto.class, false);
-            			}
-            		}
-            ).start();
+			new Thread(new Runnable() {
+				public void run() {
+					ControlPrincipal.getJugadorUno().setArriba(
+							AccesoControles.getControl("ARRIBA", 1));
+					ControlPrincipal.getJugadorUno().setAbajo(
+							AccesoControles.getControl("ABAJO", 1));
+					ControlPrincipal.getJugadorUno().setDerecha(
+							AccesoControles.getControl("DERECHA", 1));
+					ControlPrincipal.getJugadorUno().setIzquierda(
+							AccesoControles.getControl("IZQUIERDA", 1));
+					ControlPrincipal.getJugadorUno().setBomba(
+							AccesoControles.getControl("BOMBA", 1));
+					ControlPrincipal.getJugadorUno().setModo(ModoJuego.Master);
+					GestorVentana.ocultarVentana(VentanaSeleccion.class);
+					GestorVentana.hacerVisible(VentanaDirecto.class, false);
+				}
+			}).start();
 		}
 	}
 

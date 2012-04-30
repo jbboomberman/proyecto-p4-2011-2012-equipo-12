@@ -19,7 +19,7 @@ public class AccesoNivel {
 	public static void insertarNivel(Nivel nivel) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"INSERT INTO NIVEL VALUES ( ?, ?, ?, ?);");
+					"INSERT INTO NIVEL VALUES ( ?, ?, ?, ?);");
 			stat.setInt(1, nivel.getCod_nivel());
 			stat.setString(2, nivel.getNom_nivel());
 			stat.setInt(3, nivel.getTiempo());
@@ -35,7 +35,7 @@ public class AccesoNivel {
 	public static void eliminaNivel(int cod_Nivel) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"DELETE FROM NIVEL WHERE COD_NIVEL = ?;");
+					"DELETE FROM NIVEL WHERE COD_NIVEL = ?;");
 			stat.setInt(1, cod_Nivel);
 			stat.executeUpdate();
 			stat.close();
@@ -64,18 +64,18 @@ public class AccesoNivel {
 		return Ac;
 
 	}
-	
-	public static boolean esCorrecto(String contr, int niv){
+
+	public static boolean esCorrecto(String contr, int niv) {
 		boolean correcto = false;
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"SELECT * FROM NIVEL WHERE COD_NIVEL = ?;");
+					"SELECT * FROM NIVEL WHERE COD_NIVEL = ?;");
 			stat.setInt(1, niv);
 			ResultSet rs = stat.executeQuery();
-			if(rs.next()){
-				if(rs.getString(4).equals(contr))
+			if (rs.next()) {
+				if (rs.getString(4).equals(contr))
 					correcto = true;
-			}	
+			}
 			stat.close();
 			GestionBD.desconectar();
 		} catch (SQLException e) {
@@ -83,16 +83,17 @@ public class AccesoNivel {
 		}
 		return correcto;
 	}
-	
-	public static Nivel getNivel (int codNivel){
-		Nivel tempNivel = null; 
+
+	public static Nivel getNivel(int codNivel) {
+		Nivel tempNivel = null;
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-			"SELECT * FROM NIVEL WHERE COD_NIVEL = ?;");
+					"SELECT * FROM NIVEL WHERE COD_NIVEL = ?;");
 			stat.setInt(1, codNivel);
 			ResultSet rs = stat.executeQuery();
-			if(rs.next()){
-				tempNivel = new Nivel(codNivel, rs.getString(2), rs.getInt(3), rs.getString(4));
+			if (rs.next()) {
+				tempNivel = new Nivel(codNivel, rs.getString(2), rs.getInt(3),
+						rs.getString(4));
 			}
 			rs.close();
 			stat.close();

@@ -6,15 +6,15 @@ import java.sql.SQLException;
 
 public class AccesoExtras {
 
-	public static void setExtra(String nom, boolean estado){
+	public static void setExtra(String nom, boolean estado) {
 		PreparedStatement stat;
 		try {
-			if(nom.equals("email"))
+			if (nom.equals("email"))
 				stat = GestionBD.conectar().prepareStatement(
-					"UPDATE EXTRAS SET EMAIL = ?;");
+						"UPDATE EXTRAS SET EMAIL = ?;");
 			else
 				stat = GestionBD.conectar().prepareStatement(
-				"UPDATE EXTRAS SET SONIDO = ?;");
+						"UPDATE EXTRAS SET SONIDO = ?;");
 			stat.setBoolean(1, estado);
 			stat.executeUpdate();
 			stat.close();
@@ -22,15 +22,15 @@ public class AccesoExtras {
 			e.printStackTrace();
 		}
 	}
-	
-	public static boolean getExtra(String nom){
+
+	public static boolean getExtra(String nom) {
 		PreparedStatement stat;
 		boolean esta = false;
 		try {
 			stat = GestionBD.conectar().prepareStatement(
-			"SELECT * FROM EXTRAS;");
+					"SELECT * FROM EXTRAS;");
 			ResultSet rs = stat.executeQuery();
-			if(nom.equals("email"))
+			if (nom.equals("email"))
 				esta = rs.getBoolean(3);
 			else
 				esta = rs.getBoolean(2);

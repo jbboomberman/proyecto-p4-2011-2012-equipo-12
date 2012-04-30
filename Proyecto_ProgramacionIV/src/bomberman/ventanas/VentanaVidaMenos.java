@@ -16,35 +16,35 @@ import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 
-public class VentanaVidaMenos extends JDialog implements ActionListener{
+public class VentanaVidaMenos extends JDialog implements ActionListener {
 
 	private JButton jbContinuar;
 	private JButton jbCancelar;
 	private JLabel jlTexto;
 	private JPanel jpInferior;
-	
-	public VentanaVidaMenos(){
+
+	public VentanaVidaMenos() {
 		jbContinuar = new JButton("Continuar");
 		jbCancelar = new JButton("Cancelar");
 		jlTexto = new JLabel("Has perdido una vida, ¿quieres continuar?");
 		jlTexto.setHorizontalAlignment(SwingConstants.CENTER);
 		jpInferior = new JPanel();
-		
-		//Layout
+
+		// Layout
 		jpInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
 		getContentPane().setLayout(new BorderLayout());
-		
-		//Añadir componentes
+
+		// Añadir componentes
 		jpInferior.add(jbContinuar);
 		jpInferior.add(jbCancelar);
 		getContentPane().add(jlTexto, BorderLayout.CENTER);
 		getContentPane().add(jpInferior, BorderLayout.SOUTH);
-		
-		//Listeners
+
+		// Listeners
 		jbContinuar.addActionListener(this);
 		jbCancelar.addActionListener(this);
-		
-		//Parámetros de la ventana
+
+		// Parámetros de la ventana
 		this.setSize(270, 100);
 		this.setResizable(false);
 		this.setTitle("¿Seguir jugando?");
@@ -55,36 +55,39 @@ public class VentanaVidaMenos extends JDialog implements ActionListener{
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
-	
-	public void actionPerformed(ActionEvent e){
+
+	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
 		 * dirección del generador del evento.
 		 */
 		Object botonPulsado = e.getSource();
-		
-		if(botonPulsado == jbContinuar){
-			new Thread(
-            		new Runnable() {
-            			public void run() {
-            				GestorVentana.ocultarVentana(VentanaJuego.class);
-            				GestorVentana.ocultarVentana(VentanaVidaMenos.class);
-            				ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(ControlPrincipal.getJugadorUno().getNivel()));
-            				((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).setAcabarPartida(false);
-        					GestorVentana.hacerVisible(VentanaJuego.class, true);
-            			}
-            		}
-            ).start();
-		}else if(botonPulsado == jbCancelar){
+
+		if (botonPulsado == jbContinuar) {
+			new Thread(new Runnable() {
+				public void run() {
+					GestorVentana.ocultarVentana(VentanaJuego.class);
+					GestorVentana.ocultarVentana(VentanaVidaMenos.class);
+					ControlPrincipal.crearEscenario(AccesoMapa
+							.getCodMapa(ControlPrincipal.getJugadorUno()
+									.getNivel()));
+					((VentanaJuego) GestorVentana
+							.getVentana(VentanaJuego.class))
+							.setAcabarPartida(false);
+					GestorVentana.hacerVisible(VentanaJuego.class, true);
+				}
+			}).start();
+		} else if (botonPulsado == jbCancelar) {
 			GestorVentana.ocultarVentana(VentanaVidaMenos.class);
 			GestorVentana.ocultarVentana(VentanaJuego.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
 	}
-	
-//	public static void main (String []args){
-//		VentanaVidaMenos prueba = new VentanaVidaMenos(new Jugador("David", "h", "h", "h", 3, 2, 1, ModoJuego.Historia, 1, 1));
-//		prueba.setVisible(true);
-//			
-//	}
+
+	// public static void main (String []args){
+	// VentanaVidaMenos prueba = new VentanaVidaMenos(new Jugador("David", "h",
+	// "h", "h", 3, 2, 1, ModoJuego.Historia, 1, 1));
+	// prueba.setVisible(true);
+	//
+	// }
 }

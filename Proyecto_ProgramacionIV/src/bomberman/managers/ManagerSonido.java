@@ -12,28 +12,29 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * Clase que tiene como objetivo manejar toda la parte de sonido del
- * videojuego.
+ * Clase que tiene como objetivo manejar toda la parte de sonido del videojuego.
  * 
  * @author David
  * @version 1.0
  */
 public class ManagerSonido {
 
-	//URL de la canción
+	// URL de la canción
 	private static URL url = null;
-	//Nombre de la canción
+	// Nombre de la canción
 	private static String nombre = null;
-	//Si queremos con bucle o no.
+	// Si queremos con bucle o no.
 	private static boolean bucle;
 	private static Clip clip;
 
 	/**
-	 * Método que se encarga de hacer sonar una canción.
-	 * Recibe como parámetro el nombre de la canción y
-	 * si queremos tocarla en bucle o no.
-	 * @param nom - String
-	 * @param loop - boolean
+	 * Método que se encarga de hacer sonar una canción. Recibe como parámetro
+	 * el nombre de la canción y si queremos tocarla en bucle o no.
+	 * 
+	 * @param nom
+	 *            - String
+	 * @param loop
+	 *            - boolean
 	 * @throws IOException
 	 * @throws UnsupportedAudioFileException
 	 * @throws LineUnavailableException
@@ -42,10 +43,11 @@ public class ManagerSonido {
 	public static void playClip(String nom, boolean loop) throws IOException,
 			UnsupportedAudioFileException, LineUnavailableException,
 			InterruptedException {
-		
+
 		/**
-		 * Esta clase se implementa para evitar errores
-		 * de que el sonido se pare cuando le de la gana.
+		 * Esta clase se implementa para evitar errores de que el sonido se pare
+		 * cuando le de la gana.
+		 * 
 		 * @author David
 		 * @version 1.0
 		 */
@@ -68,20 +70,20 @@ public class ManagerSonido {
 				}
 			}
 		}
-		
+
 		bucle = loop;
 		nombre = nom;
 		/*
-		 * Lo ejecutamos en un hilo aparte para que no
-		 * interfiera con los gráficos del juego. 
+		 * Lo ejecutamos en un hilo aparte para que no interfiera con los
+		 * gráficos del juego.
 		 */
 		new Thread(new Runnable() {
 			public void run() {
-				//Cargamos la canción
+				// Cargamos la canción
 				url = ManagerSonido.class.getClassLoader().getResource(
 						"bomberman/resources/" + nombre);
 				AudioListener listener = new AudioListener();
-				//Un stream de audio
+				// Un stream de audio
 				AudioInputStream audioInputStream = null;
 				try {
 					audioInputStream = AudioSystem.getAudioInputStream(url);
@@ -91,26 +93,26 @@ public class ManagerSonido {
 					e.printStackTrace();
 				}
 				try {
-					//Obtenemos el clip
+					// Obtenemos el clip
 					clip = AudioSystem.getClip();
 					clip.addLineListener(listener);
-					//Hacemos sonar el audio
+					// Hacemos sonar el audio
 					clip.open(audioInputStream);
 					try {
 						// FloatControl gainControl = (FloatControl)
 						// clip.getControl(FloatControl.Type.MASTER_GAIN);
 						// gainControl.setValue(6.0f);
-						//Si se quiere hacer sonar en bucle
+						// Si se quiere hacer sonar en bucle
 						if (bucle)
 							clip.loop(Clip.LOOP_CONTINUOUSLY);
 						else
 							clip.start();
-						//Hacer sonar hasta que acabe
+						// Hacer sonar hasta que acabe
 						listener.waitUntilDone();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} finally {
-						//Cerramos el clip
+						// Cerramos el clip
 						clip.close();
 					}
 				} catch (Exception e) {
@@ -127,8 +129,7 @@ public class ManagerSonido {
 	}
 
 	/**
-	 * Este método estático nos permite parar
-	 * un loop cuando queramos.
+	 * Este método estático nos permite parar un loop cuando queramos.
 	 */
 	public static void pararLoop() {
 		clip.stop();

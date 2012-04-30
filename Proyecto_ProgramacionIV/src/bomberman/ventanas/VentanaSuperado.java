@@ -22,7 +22,7 @@ import bomberman.database.PuntuGeneral;
 import bomberman.managers.ControlPrincipal;
 import bomberman.outin.ManipuladorFecha;
 
-public class VentanaSuperado extends JDialog implements ActionListener{
+public class VentanaSuperado extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = -7461719037402108362L;
 	private JButton jbGuardarPart;
@@ -74,16 +74,15 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		pPrincipal.add(pSuperior, BorderLayout.NORTH);
 		pPrincipal.add(jlMensaje, BorderLayout.CENTER);
 		pPrincipal.add(pInferior, BorderLayout.SOUTH);
-		pPrincipal.add(Box.createRigidArea(new Dimension(20, 200)), BorderLayout.WEST);
+		pPrincipal.add(Box.createRigidArea(new Dimension(20, 200)),
+				BorderLayout.WEST);
 		getContentPane().add(pPrincipal);
 
-		
-		//Escuchadores
+		// Escuchadores
 		jbGuardarPart.addActionListener(this);
 		jbPasarNivel.addActionListener(this);
 		jbVolverMenu.addActionListener(this);
-		
-		
+
 		// Carcterísticas de la ventana
 		/*
 		 * Determinamos un tamaño mínimo de la ventana aunque dejamos que tenga
@@ -127,28 +126,32 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 		 * dirección del generador del evento.
 		 */
 		Object botonPulsado = e.getSource();
-		
-		if(botonPulsado == jbGuardarPart){
+
+		if (botonPulsado == jbGuardarPart) {
 			GestorVentana.hacerVisible(VentanaGuardado.class, false);
-		}else if (botonPulsado == jbPasarNivel){
-			ControlPrincipal.getJugadorUno().setNivel(ControlPrincipal.getJugadorUno().getNivel() + 1);
-			ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno().getNivel());
+		} else if (botonPulsado == jbPasarNivel) {
+			ControlPrincipal.getJugadorUno().setNivel(
+					ControlPrincipal.getJugadorUno().getNivel() + 1);
+			ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno()
+					.getNivel());
 			GestorVentana.hacerVisible(VentanaJuego.class, true);
-		}else if(botonPulsado == jbVolverMenu){
+		} else if (botonPulsado == jbVolverMenu) {
 			Calendar tempCalendar = Calendar.getInstance();
-			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal.getJugadorUno().getCodPart(), 
-					ControlPrincipal.getJugadorUno().getCodJugador(), false, 
-					ControlPrincipal.getJugadorUno().getPuntuacion(),
-					new String(tempCalendar.get(Calendar.YEAR) + "" + tempCalendar.get(Calendar.MONTH)
-							+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH)),
-							ControlPrincipal.getJugadorUno().getVidas()));
+			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal
+					.getJugadorUno().getCodPart(), ControlPrincipal
+					.getJugadorUno().getCodJugador(), false, ControlPrincipal
+					.getJugadorUno().getPuntuacion(), new String(tempCalendar
+					.get(Calendar.YEAR)
+					+ ""
+					+ tempCalendar.get(Calendar.MONTH)
+					+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH)),
+					ControlPrincipal.getJugadorUno().getVidas()));
 			GestorVentana.ocultarVentana(VentanaSuperado.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
-		
+
 	}
-	
-	
+
 	public JLabel getJlNick() {
 		return jlNick;
 	}
@@ -173,7 +176,7 @@ public class VentanaSuperado extends JDialog implements ActionListener{
 	public void setJlPuntuacion(String jlPuntuacion) {
 		this.jlPuntuacion.setText(jlPuntuacion);
 	}
-	
+
 	public JLabel getJlPassword() {
 		return jlPassword;
 	}
