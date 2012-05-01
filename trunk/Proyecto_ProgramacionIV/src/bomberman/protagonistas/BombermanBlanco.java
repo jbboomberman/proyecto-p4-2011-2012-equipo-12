@@ -7,6 +7,7 @@ import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
+import bomberman.managers.ManagerSonido;
 
 /**
  * Clase para el personaje BombermanBlanco que hereda de Bomberman.
@@ -113,11 +114,11 @@ public class BombermanBlanco extends Bomberman {
 			if (this.getNumBomba() < this.getMaxBomba()) {
 				int tempX = ((((int) (this.getPosX() + (this.getAnchura() / 2))) / CASILLA) * CASILLA);
 				int tempY = ((((int) (this.getPosY() + (this.getAltura() / 2))) / CASILLA) * CASILLA);
-				// try {
-				// ManagerSonido.playClip("dejar.wav", false);
-				// } catch (Exception ex) {
-				// ex.printStackTrace();
-				// }
+				 try {
+				 ManagerSonido.playClip("dejar.wav", false);
+				 } catch (Exception ex) {
+				 ex.printStackTrace();
+				 }
 				escenario.añadirSprite(new Bomba(escenario, tempX, tempY, this,
 						jugador, alcanceMax));
 				this.setNumBomba(this.getNumBomba() + 1);
