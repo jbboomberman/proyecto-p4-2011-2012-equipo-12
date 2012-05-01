@@ -254,7 +254,7 @@ public class AccesoPuntuGen {
 					"SELECT * FROM PUNTUACION_GENERAL WHERE COD_PUNT = ?;");
 			stat.setInt(1, codPunt);
 			ResultSet rs = stat.executeQuery();
-			while (rs.next()) {
+			if (rs.next()) {
 				codigo = rs.getInt(2);
 			}
 			rs.close();

@@ -2,6 +2,7 @@ package bomberman.ventanas;
 
 import javax.swing.*;
 
+import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoNivel;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
@@ -10,6 +11,7 @@ import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
 import bomberman.managers.ManagerImagen;
 import bomberman.outin.CuentaAtras;
+import bomberman.outin.ManipuladorFecha;
 import bomberman.outin.RelojException;
 import bomberman.protagonistas.*;
 
@@ -93,7 +95,20 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				System.exit(0);
+				PuntuGeneral tempGene = new PuntuGeneral(
+						AccesoPuntuGen.getNumPunt(),
+						((bomberman.database.Jugador) AccesoJugador.getJugador(
+								ControlPrincipal.getJugadorUno().getNombre(),
+								ControlPrincipal.getJugadorUno().getApellidos(),
+								ControlPrincipal.getJugadorUno().getNick(),
+								ControlPrincipal.getJugadorUno().getEmail()))
+								.getCod_jugador(), false,
+								ControlPrincipal.getJugadorUno().getPuntuacion(),
+						ManipuladorFecha.getFecha(), 0, -1);
+				// Introducimos la puntuación general
+				AccesoPuntuGen.insertarPunt(tempGene);
+				GestorVentana.hacerVisible(VentanaInicial.class, true);
+				GestorVentana.ocultarVentana(VentanaJuego.class);
 			}
 		});
 	}
