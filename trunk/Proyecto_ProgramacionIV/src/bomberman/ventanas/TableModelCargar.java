@@ -4,6 +4,7 @@ import javax.swing.table.DefaultTableModel;
 
 import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoPunEspe;
+import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.outin.ManipuladorFecha;
 
@@ -21,9 +22,9 @@ public class TableModelCargar extends DefaultTableModel {
 				AccesoJugador.getJugador(punt.getCod_jug()).getApellJugador(),
 				AccesoJugador.getJugador(punt.getCod_jug()).getNickJugador(),
 				punt.getPuntu(),
-				AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()),
+				punt.getNiv_guar(),
 				ManipuladorFecha.parsearFecha(punt.getFecha_ulti_nivel()),
-				AccesoJugador.getJugador(punt.getCod_jug()),
+				AccesoJugador.getJugador(punt.getCod_jug()).getCod_jugador(),
 				punt.getVidas() });
 	}
 
@@ -31,7 +32,7 @@ public class TableModelCargar extends DefaultTableModel {
 		PuntuGeneral tempPunt = new PuntuGeneral((Integer) this.getValueAt(row,
 				0), (Integer)this.getValueAt(row, 7), true, (Integer) this.getValueAt(row, 4),
 				(String) this.getValueAt(row, 6), (Integer) this.getValueAt(
-						row, 8));
+						row, 8), AccesoPuntuGen.getCodNivel((Integer) this.getValueAt(row, 0)));
 		return tempPunt;
 	}
 

@@ -26,13 +26,14 @@ public class AccesoPuntuGen {
 			PreparedStatement stat = GestionBD
 					.conectar()
 					.prepareStatement(
-							"INSERT INTO PUNTUACION_GENERAL VALUES( ?, ?, ?, ?, ?, ?);");
+							"INSERT INTO PUNTUACION_GENERAL VALUES( ?, ?, ?, ?, ?, ?, ?);");
 			stat.setInt(1, punt.getCod_punt());
 			stat.setInt(2, punt.getCod_jug());
 			stat.setBoolean(3, punt.isGuardado());
 			stat.setInt(4, punt.getPuntu());
 			stat.setString(5, punt.getFecha_ulti_nivel());
 			stat.setInt(6, punt.getVidas());
+			stat.setInt(7, punt.getNiv_guar());
 			stat.executeUpdate();
 			stat.close();
 			GestionBD.desconectar();
@@ -146,7 +147,7 @@ public class AccesoPuntuGen {
 								tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 										.getInt(2), rs.getBoolean(3), rs
 										.getInt(4), rs.getString(5), rs
-										.getInt(6)));
+										.getInt(6), rs.getInt(7)));
 						}
 						return tempPuntu;
 					}
@@ -170,7 +171,7 @@ public class AccesoPuntuGen {
 								tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 										.getInt(2), rs.getBoolean(3), rs
 										.getInt(4), rs.getString(5), rs
-										.getInt(6)));
+										.getInt(6), rs.getInt(7)));
 						}
 					}
 					return tempPuntu;
@@ -191,7 +192,7 @@ public class AccesoPuntuGen {
 					if (!rs.getBoolean(3))
 						tempPuntu.add(new PuntuGeneral(rs.getInt(1), rs
 								.getInt(2), rs.getBoolean(3), rs.getInt(4), rs
-								.getString(5), rs.getInt(6)));
+								.getString(5), rs.getInt(6), rs.getInt(7)));
 				}
 				return tempPuntu;
 			}
@@ -211,7 +212,7 @@ public class AccesoPuntuGen {
 			while (rs.next()) {
 				tempGen = new PuntuGeneral(rs.getInt(1), rs.getInt(2),
 						rs.getBoolean(3), rs.getInt(4), rs.getString(5),
-						rs.getInt(6));
+						rs.getInt(6), rs.getInt(7));
 				tempPuntu.add(tempGen);
 			}
 
@@ -235,7 +236,7 @@ public class AccesoPuntuGen {
 			while (rs.next()) {
 				tempArray.add(new PuntuGeneral(rs.getInt(1), rs.getInt(2), rs
 						.getBoolean(3), rs.getInt(4), rs.getString(5), rs
-						.getInt(6)));
+						.getInt(6), rs.getInt(7)));
 			}
 
 			rs.close();
@@ -280,5 +281,23 @@ public class AccesoPuntuGen {
 			e.printStackTrace();
 		}
 		return arrayCodPunt;
+	}
+	
+	public static int getCodNivel(int codPunt){
+		int codNivel = -1;
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+					"SELECT * FROM PUNTUACION_GENERAL WHERE COD_PUNT = ?;");
+			stat.setInt(1, codPunt);
+			ResultSet rs = stat.executeQuery();
+			if (rs.next()) {
+				codNivel = rs.getInt(7);
+			}
+			rs.close();
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return codNivel;
 	}
 }

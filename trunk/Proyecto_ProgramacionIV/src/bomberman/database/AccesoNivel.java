@@ -103,5 +103,24 @@ public class AccesoNivel {
 		}
 		return tempNivel;
 	}
+	
+	public static String getPass(int codNivel){
+		String pass = null;
+		try {
+			PreparedStatement stat = GestionBD.conectar().prepareStatement(
+					"SELECT * FROM NIVEL WHERE COD_NIVEL = ?;");
+			stat.setInt(1, codNivel);
+			ResultSet rs = stat.executeQuery();
+			if (rs.next()) {
+				pass = rs.getString(4);
+			}
+			rs.close();
+			stat.close();
+			GestionBD.desconectar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pass;
+	}
 
 }

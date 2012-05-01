@@ -135,9 +135,10 @@ public class VentanaCargar extends JDialog implements ActionListener {
 			if (fila != -1) {
 				seleccionada = tmModel.getFila(fila);
 				//Solo cargamos si la partida tiene nivel inferior a 10.
-				if(!(AccesoPunEspe.getNivelMasAlto(seleccionada.getCod_punt()) < 10))
+				if(seleccionada.getNiv_guar() < 10)
 					// Cargamos la partida
 					ControlPrincipal.cargarPartida(seleccionada);
+					
 			} else {
 				JOptionPane.showMessageDialog(new JDialog(),
 						"No has seleccionado ninguna fila", "Error",

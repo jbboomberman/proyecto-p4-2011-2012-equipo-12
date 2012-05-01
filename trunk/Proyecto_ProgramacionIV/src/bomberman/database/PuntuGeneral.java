@@ -18,9 +18,10 @@ public class PuntuGeneral implements Comparable<PuntuGeneral> {
 	private int puntu;
 	private String fecha_ulti_nivel;
 	private int vidas;
+	private int niv_guar;
 
 	public PuntuGeneral(int cod_punt, int cod_jug, boolean guardado, int puntu,
-			String fecha_ulti_nivel, int vida) {
+			String fecha_ulti_nivel, int vida, int nivel) {
 		super();
 		this.cod_punt = cod_punt;
 		this.cod_jug = cod_jug;
@@ -28,6 +29,7 @@ public class PuntuGeneral implements Comparable<PuntuGeneral> {
 		this.puntu = puntu;
 		this.fecha_ulti_nivel = fecha_ulti_nivel;
 		this.vidas = vida;
+		this.niv_guar = nivel;
 	}
 
 	public int getCod_punt() {
@@ -76,6 +78,14 @@ public class PuntuGeneral implements Comparable<PuntuGeneral> {
 
 	public void setVidas(int vidas) {
 		this.vidas = vidas;
+	}
+
+	public int getNiv_guar() {
+		return niv_guar;
+	}
+
+	public void setNiv_guar(int niv_guar) {
+		this.niv_guar = niv_guar;
 	}
 
 	public int compareTo(PuntuGeneral tempGeneral) {

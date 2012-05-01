@@ -4,10 +4,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.ResourceBundle.Control;
+
 import javax.swing.*;
 import bomberman.database.AccesoControles;
 import bomberman.database.AccesoExtras;
 import bomberman.database.AccesoJugador;
+import bomberman.database.AccesoNivel;
 import bomberman.database.AccesoPunEspe;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuEspe;
@@ -98,15 +101,30 @@ public class ControlPrincipal {
 						if(jugadorUno.getNivel() == 10)
 							((VentanaSuperado)GestorVentana.
 									getVentana(VentanaSuperado.class)).setEnabled(false);
-							
+						int codPunt;
+						if(jugadorUno.getModo() == ModoJuego.Historia)
+							codPunt = jugadorUno.getCodPart();
+						else
+							codPunt = -jugadorUno.getCodJugador();
+						// Insertamos la puntuación específica.
+						AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
+								.getNumPunt(), codPunt,
+								jugadorUno.getPuntuNivel(), ManipuladorFecha
+										.getFecha(), jugadorUno.getNivel()));
+						
+						if(jugadorUno.getModo() == ModoJuego.Historia){
 						// Hacemos que aparezca la ventana VentanaSuperado
 						GestorVentana
 								.hacerVisible(VentanaSuperado.class, false);
-						// Insertamos la puntuación específica.
-						AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
-								.getNumPunt(), jugadorUno.getCodPart(),
-								jugadorUno.getPuntuNivel(), ManipuladorFecha
-										.getFecha(), jugadorUno.getNivel()));
+						}else{
+							((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class)).setBotonPasarEnabled(false);
+							((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class)).setBotonGuardarEnabled(false);
+							((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class)).
+							setJlPassword(AccesoNivel.getPass(jugadorUno.getNivel()));
+							GestorVentana.hacerVisible(VentanaSuperado.class, false);
+						}
+						
+						
 					}
 					/*
 					 * En caso de que se haya acabado el tiempo o nos hayan
@@ -185,7 +203,6 @@ public class ControlPrincipal {
 			if (jugadorUno.getModo() == ModoJuego.Historia) {
 				// Creamos la puntuación general
 				PuntuGeneral tempGene = new PuntuGeneral(
-						//creando dos????BORRAR BD
 						AccesoPuntuGen.getNumPunt(),
 						((bomberman.database.Jugador) AccesoJugador.getJugador(
 								jugadorUno.getNombre(),
@@ -193,14 +210,23 @@ public class ControlPrincipal {
 								jugadorUno.getNick(), jugadorUno.getEmail()))
 								.getCod_jugador(), false,
 						jugadorUno.getPuntuacion(),
-						ManipuladorFecha.getFecha(), 0);
+						ManipuladorFecha.getFecha(), 0, -1);
 				// Introducimos la puntuación general
 				AccesoPuntuGen.insertarPunt(tempGene);
 			}
+			/*
+			 * Esto lo hacemos porque cuando se juega un
+			 * nivel específico en modo Master no tienes
+			 * partida general.
+			 */
+			int codPunt;
+			if(jugadorUno.getModo() == ModoJuego.Historia)
+				codPunt = jugadorUno.getCodPart();
+			else
+				codPunt = -jugadorUno.getCodJugador();
 			// Insertamos la puntuación específica.
-			//TODA PUNT ESPECÍFICA TIENE QUE TENER UNA PUNT_GENERAL
 			AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
-					.getNumPunt(), jugadorUno.getCodPart(),
+					.getNumPunt(), codPunt,
 					jugadorUno.getPuntuNivel(), ManipuladorFecha
 							.getFecha(), jugadorUno.getNivel()));
 			// Preparamos los datos de la ventana VentanaNoSuperado
@@ -268,7 +294,7 @@ public class ControlPrincipal {
 		jugadorUno.setPuntuNivel(0);
 		jugadorUno.setVidas(punt.getVidas());
 		jugadorUno
-				.setNivel(AccesoPunEspe.getNivelMasAlto(punt.getCod_punt()) + 1);
+				.setNivel(punt.getNiv_guar() + 1);
 		jugadorUno.setModo(ModoJuego.Historia);
 		jugadorUno.setCodJugador(punt.getCod_jug());
 		jugadorUno.setCodPart(punt.getCod_punt());
@@ -281,8 +307,7 @@ public class ControlPrincipal {
 		jugadorUno.setQuiereEmail(AccesoExtras.getExtra("email"));
 
 		// Creamos el escenario.
-		ControlPrincipal.crearEscenario(AccesoPunEspe.getNivelMasAlto(punt
-				.getCod_punt()) + 1);
+		ControlPrincipal.crearEscenario(jugadorUno.getNivel());
 		//Ocultamos la ventana cargar
 		GestorVentana.ocultarVentana(VentanaCargar.class);
 		//Hacemos visible la ventana VentanaJuego
