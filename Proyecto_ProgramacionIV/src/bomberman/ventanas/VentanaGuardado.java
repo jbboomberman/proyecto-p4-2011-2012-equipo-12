@@ -147,10 +147,10 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 			if (fila != -1) {
 				seleccionada = tmModel.getFila(fila);
 				// Cargamos la partida
+				int codPart = seleccionada.getCod_punt();
 				AccesoPuntuGen.eliminarPunt(seleccionada.getCod_punt());
 				AccesoPuntuGen.insertarPunt(
-						(new PuntuGeneral(ControlPrincipal
-								.getJugadorUno().getCodPart(), ControlPrincipal
+						(new PuntuGeneral(codPart, ControlPrincipal
 								.getJugadorUno().getCodJugador(), true, ControlPrincipal
 								.getJugadorUno().getPuntuacion(), ManipuladorFecha
 								.getFecha(), ControlPrincipal.getJugadorUno().getVidas()
