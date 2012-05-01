@@ -43,7 +43,7 @@ public class ControlPrincipal {
 		pararJuego = false;
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
 		jugadorUno = new Jugador();
-
+		
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
 		// try {
@@ -56,14 +56,24 @@ public class ControlPrincipal {
 	}
 
 	public void game() {
+		boolean primeraVez = true;
 		while (!pararJuego) {
 			if (ventJuego.isVisible()) {
-				ventJuego.getPanel().createBufferStrategy(2);
-				image = ventJuego.getPanel().getBufferStrategy();
+				/*
+				 * Como indica este post:
+				 * http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
+				 * Sólo hay que crear el BufferStrategy una vez
+				 * y cuando la ventanaJuego este visible.
+				 */
+				if(primeraVez){
+					ventJuego.getPanel().createBufferStrategy(2);
+					image = ventJuego.getPanel().getBufferStrategy();
+					primeraVez = false;
+				}
 				beforeTime = System.currentTimeMillis();
 				if (!ventJuego.getReloj().isTimeFinished()
 						&& !(ventJuego.getAcabarPartida())
-						&& (!ventJuego.getSuperadoNivel()))
+						&& !(ventJuego.getSuperadoNivel()))
 					paintWorld();
 				// En caso de que hayamos superado el nivel
 				else if (ventJuego.getSuperadoNivel()) {
@@ -159,7 +169,7 @@ public class ControlPrincipal {
 
 				timeDiff = System.currentTimeMillis() - beforeTime;
 				sleepTime = PERIODO - timeDiff; // time left in this loop
-				// System.out.println(sleepTime);
+				System.out.println(sleepTime);
 				if (sleepTime <= 0) // update/render took longer than period
 					sleepTime = 5; // sleep a bit anyway
 				try {
@@ -185,8 +195,8 @@ public class ControlPrincipal {
 
 		// if (usedTime > 0)
 		// System.out.println(String.valueOf(1000 / usedTime) + " fps");
-		// if (timeDiff > 0)
-		// System.out.println(String.valueOf(1000 / timeDiff) + " fps");
+//		 if (timeDiff > 0)
+//		 System.out.println(String.valueOf(1000 / timeDiff) + " fps");
 
 		image.show();
 	}

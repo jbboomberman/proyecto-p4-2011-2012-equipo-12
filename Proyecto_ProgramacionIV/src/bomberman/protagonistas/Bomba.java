@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import bomberman.enumeraciones.TiposLlama;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
+import bomberman.managers.ManagerSonido;
 
 /**
  * Clase que Bomba que representa a la bombas que pone el personaje principal.
@@ -99,11 +100,11 @@ public class Bomba extends SpriteEstatico {
 	public void explotar() {
 		// Cancelamos el temporizador.
 		temporizador.cancel();
-		// try {
-		// ManagerSonido.playClip("explosion.wav", false);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		try {
+			ManagerSonido.playClip("explosion.wav", false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// Calculamos hasta dónde puede ir la llama en cada lado.
 		int[] maxLlama = calcularDistancias();
 		// Colocamos las llamas.

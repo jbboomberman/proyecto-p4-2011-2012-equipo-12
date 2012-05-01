@@ -79,6 +79,7 @@ public class PrepararEscenario {
 					esce.añadirSprite(new Minvo(esce, (float) j * CASILLA,
 							(float) i * CASILLA, jug));
 					break;
+				//Pontan
 				case 'O':
 					esce.añadirSprite(new Pontan(esce, (float) j * CASILLA,
 							(float) i * CASILLA, jug));
