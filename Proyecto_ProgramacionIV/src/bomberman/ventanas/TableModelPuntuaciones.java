@@ -31,16 +31,31 @@ public class TableModelPuntuaciones extends DefaultTableModel {
 	}
 	
 	public void añadirFila(PuntuEspe punt) {
-		this.addRow(new Object[] {
-				AccesoJugador.getJugador(AccesoPuntuGen
-						.getCodJugador(punt.getCod_puntu())).getNomJugador(),
-						AccesoJugador.getJugador(AccesoPuntuGen
-								.getCodJugador(punt.getCod_puntu())).getApellJugador(),
-								AccesoJugador.getJugador(AccesoPuntuGen
-										.getCodJugador(punt.getCod_puntu())).getNickJugador(),
-				punt.getPuntu_espe(),
-				punt.getNivel(),
-				ManipuladorFecha.parsearFecha(punt.getFecha()) });
+		if(punt.getCod_puntu() < 0){
+			this.addRow(new Object[] {
+					AccesoJugador.getJugador(Math.abs(punt.getCod_puntu())).getNomJugador(),
+							AccesoJugador.getJugador(Math.abs(punt.getCod_puntu()))
+							.getApellJugador(),
+									AccesoJugador.getJugador(Math.abs(punt.getCod_puntu()))
+									.getNickJugador(),
+					punt.getPuntu_espe(),
+					punt.getNivel(),
+					ManipuladorFecha.parsearFecha(punt.getFecha()) });
+		}else{
+			this.addRow(new Object[] {
+					AccesoJugador.getJugador(AccesoPuntuGen
+							.getCodJugador(punt.getCod_puntu())).getNomJugador(),
+							AccesoJugador.getJugador(AccesoPuntuGen
+									.getCodJugador(punt.getCod_puntu())).getApellJugador(),
+									AccesoJugador.getJugador(AccesoPuntuGen
+											.getCodJugador(punt.getCod_puntu())).getNickJugador(),
+					punt.getPuntu_espe(),
+					punt.getNivel(),
+					ManipuladorFecha.parsearFecha(punt.getFecha()) });
+		}
+
+			
+		
 	}
 
 	public PuntuGeneral getFila(int row) {
@@ -48,7 +63,8 @@ public class TableModelPuntuaciones extends DefaultTableModel {
 				0), (Integer) this.getValueAt(row, 1),
 				(Boolean) this.getValueAt(row, 2), (Integer) this.getValueAt(
 						row, 3), (String) this.getValueAt(row, 4),
-				(Integer) this.getValueAt(row, 5));
+				(Integer) this.getValueAt(row, 5), AccesoPuntuGen.
+				getCodNivel((Integer) this.getValueAt(row, 0)));
 		return tempPunt;
 	}
 

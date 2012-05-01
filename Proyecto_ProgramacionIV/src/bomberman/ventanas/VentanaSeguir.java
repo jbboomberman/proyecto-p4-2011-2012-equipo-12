@@ -93,7 +93,7 @@ public class VentanaSeguir extends JDialog implements ActionListener {
 					ControlPrincipal.crearEscenario(ControlPrincipal
 							.getJugadorUno().getNivel() + 1);
 					ControlPrincipal.getJugadorUno().setNivel(
-							ControlPrincipal.getJugadorUno().getNivel());
+							ControlPrincipal.getJugadorUno().getNivel() + 1);
 					GestorVentana.hacerVisible(VentanaJuego.class, true);
 				}
 			}).start();

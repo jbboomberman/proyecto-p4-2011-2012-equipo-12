@@ -214,7 +214,6 @@ public abstract class Bomberman extends SpriteDinamico {
 			if (((Bomba) spr).isPisada())
 				return false;
 		} else if (spr instanceof Puerta) {
-			System.out.println("Entro");
 			ArrayList<Sprite> tempArray = escenario.buscarPersonajePos(
 					Muro.class, spr);
 			if (escenario.rivalesQuedan() > 0)

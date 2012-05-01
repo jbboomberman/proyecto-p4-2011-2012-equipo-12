@@ -199,6 +199,7 @@ public class AccesoPunEspe {
 								"SELECT * FROM PUNTU_NIV_ESPECI WHERE COD_NIVEL_PUNTU = ?;");
 				stat.setInt(1, nivel);
 				ResultSet rs = stat.executeQuery();
+				System.out.println("eSTOY AQUI");
 				while (rs.next()) {
 					tempPuntu.add(new PuntuEspe(rs.getInt(1), rs.getInt(2), rs
 							.getInt(3), rs.getString(4), rs.getInt(5)));

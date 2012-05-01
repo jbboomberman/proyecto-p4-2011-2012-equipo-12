@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
+import bomberman.enumeraciones.ModoJuego;
 import bomberman.managers.ControlPrincipal;
 import bomberman.outin.ManipuladorFecha;
 
@@ -137,6 +138,7 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 			GestorVentana.hacerVisible(VentanaJuego.class, true);
 		} else if (botonPulsado == jbVolverMenu) {
 			Calendar tempCalendar = Calendar.getInstance();
+			if(ControlPrincipal.getJugadorUno().getModo() == ModoJuego.Historia){
 			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal
 					.getJugadorUno().getCodPart(), ControlPrincipal
 					.getJugadorUno().getCodJugador(), false, ControlPrincipal
@@ -145,7 +147,8 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 					+ ""
 					+ tempCalendar.get(Calendar.MONTH)
 					+ "" + tempCalendar.get(Calendar.DAY_OF_MONTH)),
-					ControlPrincipal.getJugadorUno().getVidas()));
+					ControlPrincipal.getJugadorUno().getVidas(), -1));
+			}
 			GestorVentana.ocultarVentana(VentanaSuperado.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
@@ -177,16 +180,22 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 		this.jlPuntuacion.setText(jlPuntuacion);
 	}
 
-	public JLabel getJlPassword() {
-		return jlPassword;
+	public String getJlPassword() {
+		return jlPassword.getText();
 	}
 
-	public void setJlPassword(JLabel jlPassword) {
-		this.jlPassword = jlPassword;
+	public void setJlPassword(String jlPassword) {
+		this.jlPassword.setText(jlPassword);
 	}
+	
+	
 	
 	public void setBotonPasarEnabled(boolean estado){
 		this.jbPasarNivel.setEnabled(estado);
+	}
+	
+	public void setBotonGuardarEnabled(boolean estado){
+		this.jbGuardarPart.setEnabled(estado);
 	}
 
 	public static void main(String[] args) {

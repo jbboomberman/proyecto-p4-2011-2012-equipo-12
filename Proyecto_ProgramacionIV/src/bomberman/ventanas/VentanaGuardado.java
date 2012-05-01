@@ -20,6 +20,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
+import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.outin.ManipuladorFecha;
 
@@ -45,7 +46,7 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 		jpInferior = new JPanel();
 		tmModel = new TableModelCargar(0, 8);
 		tmModel.setColumnIdentifiers(new String[] { "Código", "Nombre",
-				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "Vidas" });
+				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "CodJugador", "Vidas" });
 		jtPuntu = new JTable(tmModel);
 		jsTabla = new JScrollPane(jtPuntu);
 
@@ -76,6 +77,7 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 		diseñarColumnas("Puntu", 100, 150);
 		diseñarColumnas("Nivel", 50, 75);
 		diseñarColumnas("Fecha", 150, 200);
+		diseñarColumnas("CodJugador", 50, 75);
 		diseñarColumnas("Vidas", 50, 75);
 
 		// Parámetros
@@ -134,7 +136,8 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 					.getJugadorUno().getCodPart(), ControlPrincipal
 					.getJugadorUno().getCodJugador(), true, ControlPrincipal
 					.getJugadorUno().getPuntuacion(), ManipuladorFecha
-					.getFecha(), ControlPrincipal.getJugadorUno().getVidas()));
+					.getFecha(), ControlPrincipal.getJugadorUno().getVidas()
+			, ControlPrincipal.getJugadorUno().getNivel()));
 			GestorVentana.hacerVisible(VentanaSeguir.class, false);
 			GestorVentana.ocultarVentana(VentanaGuardado.class);
 		} else if (botonPulsado == jbSobreescribir) {
@@ -145,7 +148,15 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 				seleccionada = tmModel.getFila(fila);
 				// Cargamos la partida
 				AccesoPuntuGen.eliminarPunt(seleccionada.getCod_punt());
-				AccesoPuntuGen.insertarPunt(seleccionada);
+				AccesoPuntuGen.insertarPunt(
+						(new PuntuGeneral(ControlPrincipal
+								.getJugadorUno().getCodPart(), ControlPrincipal
+								.getJugadorUno().getCodJugador(), true, ControlPrincipal
+								.getJugadorUno().getPuntuacion(), ManipuladorFecha
+								.getFecha(), ControlPrincipal.getJugadorUno().getVidas()
+						, ControlPrincipal.getJugadorUno().getNivel())));
+				GestorVentana.hacerVisible(VentanaSeguir.class, false);
+				GestorVentana.ocultarVentana(VentanaGuardado.class);
 			} else {
 				JOptionPane.showMessageDialog(new JDialog(),
 						"No has seleccionado ninguna fila", "Error",
