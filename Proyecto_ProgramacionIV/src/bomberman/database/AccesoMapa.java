@@ -3,17 +3,19 @@ package bomberman.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
+/**
+ * Clase que gestiona el acceso a la tabla Mapa.
+ * @author David
+ * @version 1.0
+ */
 public class AccesoMapa {
-	/*
-	 * Representará el acceso a la tabla MAPA y tendrá tres métodos estáticos
-	 * insertarMapa(Mapa map) que insertará un mapa en la tabla,
-	 * eliminarMapa(Mapa map) que eliminará un mapa de la tabla y listaMapas()
-	 * que listará todos los mapas de la tabla.
-	 */
 
+	/**
+	 * Este método estático se encarga de insertar un
+	 * Mapa.
+	 * @param mapa - Mapa
+	 */
 	public static void insertarMapa(Mapa mapa) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
@@ -29,6 +31,12 @@ public class AccesoMapa {
 		}
 	}
 
+	/**
+	 * Se encarga de eliminar el Mapa que contenga el
+	 * mismo código que el recibido por parámetro de
+	 * entrada.
+	 * @param cod_Mapa - int
+	 */
 	public static void eliminarMapa(int cod_Mapa) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
@@ -42,6 +50,13 @@ public class AccesoMapa {
 		}
 	}
 
+	/**
+	 * Devuelve el mapa que tenga el mismo código
+	 * que el recibido por parámetro. Devuelve null
+	 * en caso de no haber ninguno.
+	 * @param cod_Mapa - int
+	 * @return Mapa
+	 */
 	public static Mapa getMapa(int cod_Mapa) {
 		Mapa temMapa = null;
 		try {
@@ -60,27 +75,10 @@ public class AccesoMapa {
 		return temMapa;
 	}
 
-	public static ArrayList<String> listarMapas() {
-		Statement stat;
-		ArrayList<String> Ac = new ArrayList<String>();
-		String control;
-		try {
-			stat = GestionBD.conectar().createStatement();
-			ResultSet rs = stat.executeQuery("select * from MAPA;");
-
-			while (rs.next()) {
-				control = Integer.toString(rs.getInt("COD_MAPA"));
-
-				Ac.add(control);
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		return Ac;
-	}
-
+	/**
+	 * Devuelve el número de mapas que hay en la tabla.
+	 * @return int
+	 */
 	public static int getNumMapa() {
 		// ResulSet no tiene contador
 		int cont = 0;
@@ -99,8 +97,14 @@ public class AccesoMapa {
 		return cont;
 	}
 
+	/**
+	 * Devuelve el código del mapa que pertenezca al
+	 * nivel que recibimos por parámetro.
+	 * @param nivel - int
+	 * @return int
+	 */
 	public static int getCodMapa(int nivel) {
-		int cod = 99;
+		int cod = -1;
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 					"SELECT * FROM MAPA WHERE COD_NIV = ?;");

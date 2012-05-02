@@ -1,30 +1,35 @@
 package bomberman.database;
 
-//Ben
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
-import bomberman.managers.ControlPrincipal;
-
+/**
+ * Clase que se utilizará para el acceso a la table Controles que contiene los controles
+ * de los personajes almacenados por tecla.
+ * @author David
+ * @version 1.0
+ */
 public class AccesoControles {
-	/*
-	 * Representará el acceso a la tabla CONTROLES y tendrá tres métodos
-	 * estáticos insertarControl(Control cont) que insertará un control en la
-	 * tabla, eliminarControl(Control cont) que eliminará un controlde la tabla
-	 * y listaControles() que listará todos los controles de la tabla.
-	 */
 
+	/**
+	 * Método estático que se encarga de insertar el objeto
+	 * Control en la BD. Este método solo será utilizado
+	 * por los programadores para diseñar la BD, nunca
+	 * será llamado en ejecución.
+	 * @param control - Controles
+	 */
 	public static void insertarControl(Controles control) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 					"INSERT INTO CONTROLES VALUES( ?, ?, ?, ?);");
+			//Código de la acción
 			stat.setInt(1, control.getCod_accion());
+			//Nombre de la acción
 			stat.setString(2, control.getNom_accion());
+			//Número ASCII de la tecla
 			stat.setInt(3, control.getCod_ascii_tecla());
+			//Tipo de jugador
 			stat.setInt(4, control.getTipo_jug());
 			stat.executeUpdate();
 			stat.close();
@@ -34,6 +39,12 @@ public class AccesoControles {
 		}
 	}
 
+	/**
+	 * Este método estático se encarga de eliminar
+	 * un control de la BD recibiendo como parámetro
+	 * el código de la acción.
+	 * @param cod_accion - int
+	 */
 	public static void eliminarControl(int cod_accion) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
@@ -47,29 +58,15 @@ public class AccesoControles {
 		}
 	}
 
-	public static ArrayList<String> listarControles() {
-		Statement stat;
-		ArrayList<String> Ac = new ArrayList<String>();
-		String control;
-		try {
-			stat = GestionBD.conectar().createStatement();
-			ResultSet rs = stat.executeQuery("select * from CONTROLES;");
-
-			while (rs.next()) {
-				control = Integer.toString(rs.getInt("COD_ASCII_TECLA"));
-
-				Ac.add(control);
-
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		return Ac;
-
-	}
-
+	/**
+	 * Este método se encarga de devolver el valor ASCII
+	 * de una tecla recibiendo como parámetros el nombre
+	 * de la acción y el tipo de jugador.
+	 * @param nomAccion - String
+	 * @param tipJug - int
+	 * @return int - cod ASCII, devuelve -1 en caso de que
+	 * no exista.
+	 */
 	public static int getControl(String nomAccion, int tipJug) {
 		int cod = -1;
 		try {
@@ -80,7 +77,9 @@ public class AccesoControles {
 			stat.setString(1, nomAccion);
 			stat.setInt(2, tipJug);
 			ResultSet rs = stat.executeQuery();
-			cod = rs.getInt(3);
+			if(rs.next())
+				//Código ASCII
+				cod = rs.getInt(3);
 			rs.close();
 			stat.close();
 		} catch (SQLException e) {
@@ -89,6 +88,12 @@ public class AccesoControles {
 		return cod;
 	}
 
+	/**
+	 * Cambia el código ASCII de un control.
+	 * @param nomAccion - String
+	 * @param tipJug - int
+	 * @param codAscii - int. Código ASCII nuevo.
+	 */
 	public static void setControl(String nomAccion, int tipJug, int codAscii) {
 		try {
 			PreparedStatement stat = GestionBD
@@ -104,25 +109,4 @@ public class AccesoControles {
 			e.printStackTrace();
 		}
 	}
-
-	public static void main(String args[]) {
-		// //Controles c1=new Controles(22,"arriba",11,345);
-		// Controles c2= new Controles(11,"abajo",22,435);
-		// //AccesoControles.InsertarControl(c1);
-		// //AccesoControles.InsertarControl(c2);
-		// ArrayList<String> a1 =AccesoControles.ListarControles();
-		// System.out.println("Lista de todos los controles");
-		// for(int i=0;i<a1.size();i++){
-		// System.out.println(a1.get(i));
-		// }
-		// System.out.println();
-		// System.out.println("Lista eliminando c2");
-		// AccesoControles.EliminarControl(c2.getCod_accion());
-		// ArrayList<String> a2 =AccesoControles.ListarControles();
-		// for(int i=0;i<a2.size();i++){
-		// System.out.println(a2.get(i));
-		// }
-
-	}
-
 }

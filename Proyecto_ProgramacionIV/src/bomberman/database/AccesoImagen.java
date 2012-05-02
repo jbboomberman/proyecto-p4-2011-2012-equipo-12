@@ -14,10 +14,23 @@ import javax.imageio.ImageIO;
 
 import bomberman.database.GestionBD;
 
+/**
+ * Esta clase encarga de gestionar la tabla Imagen.
+ * @author David
+ * @version 1.0
+ */
 public class AccesoImagen {
 
+	/**
+	 * Este método inserta la imagen que se recibe como parámetro
+	 * con su parámetro y el nombre que tendrá.
+	 * @param imagen - BufferedImage
+	 * @param nombre - String
+	 * @param formato - String
+	 */
 	public static void insertarImagen(BufferedImage imagen, String nombre, String formato) {
 		PreparedStatement stat;
+		//Array de bytes donde se pasará la imagen.
 		byte[] imageDatos;
 		try {
 			stat = GestionBD.conectar().prepareStatement("INSERT INTO IMAGEN VALUES(?, ?);");
@@ -25,8 +38,10 @@ public class AccesoImagen {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write( imagen, formato, baos );
 			baos.flush();
+			//La imagen ya está en el array.
 			imageDatos = baos.toByteArray();
 			baos.close();
+			//La pasamos a la tabla
 			stat.setString(1, nombre);
 			stat.setBytes(2, imageDatos);
 			stat.executeUpdate();
@@ -41,7 +56,14 @@ public class AccesoImagen {
 		}
 	}
 	
+	/**
+	 * Se encarga de devolver la imagen que se le ha
+	 * pedido por nombre.
+	 * @param nombre - String
+	 * @return BufferedImage
+	 */
 	public static BufferedImage getImagen(String nombre) {
+		//Array de bytes donde se pasará la imagen.
 		byte[] imageDatos;
 		BufferedImage bImageFromConvert = null;
 
@@ -57,6 +79,7 @@ public class AccesoImagen {
 				return null;
 			InputStream in = new ByteArrayInputStream(imageDatos);
 			try{
+				//Ya está en el BufferedImage
 				bImageFromConvert = ImageIO.read(in);
 			}catch(IOException e){
 				e.printStackTrace();
@@ -70,6 +93,11 @@ public class AccesoImagen {
 		return bImageFromConvert;
 	}
 	
+	/**
+	 * Eliminamos una imagen que especifiquemos por
+	 * su nombre bajo los parámetros de entrada.
+	 * @param nom - String
+	 */
 	public static void elimImagen(String nom){
 		try {
 			PreparedStatement stat = GestionBD.conectar()

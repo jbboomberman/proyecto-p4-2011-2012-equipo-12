@@ -3,26 +3,29 @@ package bomberman.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
+/**
+ * Esta clase se encarga de gestionar la tabla Nivel.
+ * @author David
+ * @version 1.0
+ */
 public class AccesoNivel {
-	/*
-	 * Representará el acceso a la tabla NIVEL y tendrá tres métodos estáticos
-	 * insertarNivel(Nivel niv) que insertará un nivel en la tabla,
-	 * eliminarNivel(Nivel niv) que eliminará un nivel de la tabla y listaNiv()
-	 * que listará todos los niveles de la tabla.
+
+	/**
+	 * Inserta un nivel en la tabla.
+	 * @param nivel - Nivel
 	 */
-
-	// COD_NIVEL, NOM_NIVEL, TIEMPO, PASS)
-
 	public static void insertarNivel(Nivel nivel) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 					"INSERT INTO NIVEL VALUES ( ?, ?, ?, ?);");
+			//Código del nivel
 			stat.setInt(1, nivel.getCod_nivel());
+			//Nombre del nivel
 			stat.setString(2, nivel.getNom_nivel());
+			//Tiempo del nivel
 			stat.setInt(3, nivel.getTiempo());
+			//Password del nivel
 			stat.setString(4, nivel.getPass());
 			stat.executeUpdate();
 			stat.close();
@@ -32,6 +35,11 @@ public class AccesoNivel {
 		}
 	}
 
+	/**
+	 * Elimina el nivel que tenga el mismo código
+	 * que el recibido por parámetro.
+	 * @param cod_Nivel - int
+	 */
 	public static void eliminaNivel(int cod_Nivel) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
@@ -45,26 +53,15 @@ public class AccesoNivel {
 		}
 	}
 
-	public static ArrayList<String> listarNiveles() {
-		Statement stat;
-		ArrayList<String> Ac = new ArrayList<String>();
-		String control;
-		try {
-			stat = GestionBD.conexion.createStatement();
-			ResultSet rs = stat.executeQuery("select * from NIVELES;");
-
-			while (rs.next()) {
-				// falta
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		return Ac;
-
-	}
-
+	/**
+	 * Se encarga de comprobar si el password y número de nivel
+	 * recibidos por parámetro concuerdan. Nos sirve para
+	 * comprobar si el usuario ha introducido correctamente
+	 * la contraseña.
+	 * @param contr - String
+	 * @param niv - int
+	 * @return boolean
+	 */
 	public static boolean esCorrecto(String contr, int niv) {
 		boolean correcto = false;
 		try {
@@ -73,6 +70,7 @@ public class AccesoNivel {
 			stat.setInt(1, niv);
 			ResultSet rs = stat.executeQuery();
 			if (rs.next()) {
+				//Si las contraseñas son las mismas -- true
 				if (rs.getString(4).equals(contr))
 					correcto = true;
 			}
@@ -84,6 +82,12 @@ public class AccesoNivel {
 		return correcto;
 	}
 
+	/**
+	 * Devuelve el nivel que tenga el mismo código que
+	 * el especificado por parámetro.
+	 * @param codNivel - int
+	 * @return Nivel
+	 */
 	public static Nivel getNivel(int codNivel) {
 		Nivel tempNivel = null;
 		try {
@@ -104,6 +108,14 @@ public class AccesoNivel {
 		return tempNivel;
 	}
 	
+	/**
+	 * Devuelve el password del nivel especificado
+	 * por código de nivel. Sirve para mostrar el
+	 * password al usuario cuando haya superado un
+	 * nivel.
+	 * @param codNivel - int
+	 * @return String
+	 */
 	public static String getPass(int codNivel){
 		String pass = null;
 		try {

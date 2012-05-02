@@ -4,6 +4,7 @@ import bomberman.jugador.Jugador;
 import bomberman.protagonistas.BombermanBlanco;
 import bomberman.protagonistas.BombermanNegro;
 import bomberman.protagonistas.Dahl;
+import bomberman.protagonistas.Doria;
 import bomberman.protagonistas.Minvo;
 import bomberman.protagonistas.Muro;
 import bomberman.protagonistas.Pildora;
@@ -86,7 +87,9 @@ public class PrepararEscenario {
 					break;
 				// Doria
 				case 'D':
-
+					esce.añadirSprite(new Doria(esce, (float) j * CASILLA,
+							(float) i * CASILLA, jug));
+					System.out.println("Creado");
 					break;
 				// BombermanBlanco
 				case 'B':
@@ -113,6 +116,10 @@ public class PrepararEscenario {
 							* CASILLA, (float) i * CASILLA, 1, esce
 							.getBomberman(), jug));
 					break;
+				case 'L':
+					esce.añadirSprite(new Pildora(esce, (float) (j - 1)
+							* CASILLA, (float) i * CASILLA, 6, esce
+							.getBomberman(), jug));
 				default:
 					break;
 				}

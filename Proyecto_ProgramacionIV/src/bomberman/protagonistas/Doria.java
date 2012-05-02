@@ -4,6 +4,8 @@ import java.util.Collections;
 
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
+import bomberman.ventanas.GestorVentana;
+import bomberman.ventanas.VentanaJuego;
 
 public class Doria extends Enemigo {
 
@@ -15,9 +17,9 @@ public class Doria extends Enemigo {
 		deltaX = 100;
 		deltaY = 100;
 		velocidad = 100;
-		spritesImag = new String[] { "pontan.png_1", "pontan.png_2",
-				"pontan.png_3" };
-		spritesImagDest = new String[] { "valcom_dest.gif_1",
+		spritesImag = new String[] { "doria.gif_1", "doria.gif_2",
+				"doria.gif_3" };
+		spritesImagDest = new String[] { "doria_dest.gif_1",
 				"destruccion.png_1", "destruccion.png_2", "destruccion.png_3",
 				"destruccion.png_4", "destruccion.png_5" };
 		this.anchura = CASILLA;
@@ -35,42 +37,72 @@ public class Doria extends Enemigo {
 			posY += deltaY * tiempoTranscurrido;
 		}
 
+		/*
+		 * En caso de que este en una intersección podemos cambiar el rumbo.
+		 */
 		if (estaInterseccion()) {
+			// Miramos que lados tenemos libres.
 			lados = this.alLado();
-
-			if (lados[0] && lados[1]) {
-				Collections.shuffle(aleatorizacion);
-				deltaX = aleatorizacion.get(0);
-				// Derecha
-			} else if (lados[0]) {
+			
+			float posRelaX = ((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).
+			getBomberman().getPosX() - this.posX;
+			float posRelaY = ((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).
+			getBomberman().getPosY() - this.posY;
+			
+			
+			//Izquierda
+			if(posRelaX <= 0 && lados[1]){
+				deltaX = - velocidad;
+			//Izquierda no poder
+			}else if(posRelaX <= 0 && !lados[1]){
+				if(!lados[2] && !lados[3]){
+					if(lados[0])
+						deltaX = velocidad;
+					else
+						deltaX = 0;
+				}
+			//Derecha
+			}else if(posRelaX > 0 && lados[0]){
 				deltaX = velocidad;
-				// Izquierda
-			} else if (lados[1]) {
-				deltaX = -velocidad;
-			} else {
-				deltaX = 0;
+			}else if(posRelaX > 0 && !lados[0]){
+				if(!lados[2] && !lados[3]){
+					if(lados[1])
+						deltaX = - velocidad;
+					else
+						deltaX = 0;
+				}
 			}
-
-			if (lados[2] && lados[3]) {
-				Collections.shuffle(aleatorizacion);
-				deltaY = aleatorizacion.get(0);
-				// Arriba
-			} else if (lados[2]) {
-				deltaY = -velocidad;
-				// Abajo
-			} else if (lados[3]) {
+			
+			
+			//Abajo
+			if(posRelaY >= 0 && lados[3]){
 				deltaY = velocidad;
-			} else {
-				deltaY = 0;
+			//Izquierda no poder
+			}else if(posRelaY >= 0 && !lados[3]){
+				if(!lados[0] && !lados[1]){
+					if(lados[2])
+						deltaY = - velocidad;
+					else
+						deltaY = 0;
+				}
+			//Arriba
+			}else if(posRelaY < 0 && lados[2]){
+				deltaY = - velocidad;
+			}else if(posRelaY < 0 && !lados[2]){
+				if(!lados[0] && !lados[1]){
+					if(lados[3])
+						deltaX = velocidad;
+					else
+						deltaX = 0;
+				}
 			}
-
-			if (deltaX != 0 && deltaY != 0) {
-				Collections.shuffle(aleatorizacion);
-				int tempNum = aleatorizacion.get(0);
-				if (tempNum > 0) {
-					deltaX = 0;
-				} else
+			
+			if(deltaX != 0 && deltaY != 0){
+				if(Math.abs(posRelaX) > Math.abs(posRelaY)){
 					deltaY = 0;
+				}else{
+					deltaX = 0;
+				}
 			}
 		}
 	}

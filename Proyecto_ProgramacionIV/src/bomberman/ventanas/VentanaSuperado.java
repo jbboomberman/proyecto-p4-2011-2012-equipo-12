@@ -77,6 +77,8 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 		pPrincipal.add(pInferior, BorderLayout.SOUTH);
 		pPrincipal.add(Box.createRigidArea(new Dimension(20, 200)),
 				BorderLayout.WEST);
+		pPrincipal.add(Box.createRigidArea(new Dimension(20, 200)),
+				BorderLayout.EAST);
 		getContentPane().add(pPrincipal);
 
 		// Escuchadores

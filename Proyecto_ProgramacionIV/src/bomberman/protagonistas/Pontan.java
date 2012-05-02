@@ -77,8 +77,6 @@ public class Pontan extends Enemigo {
 			float posRelaY = ((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).
 			getBomberman().getPosY() - this.posY;
 			
-			System.out.println(posRelaY);
-			
 			//Izquierda
 			if(posRelaX <= 0 && lados[1]){
 				deltaX = - velocidad;
