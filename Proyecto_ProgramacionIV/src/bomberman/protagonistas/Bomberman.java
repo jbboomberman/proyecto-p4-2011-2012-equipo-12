@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import bomberman.enumeraciones.MirarLado;
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
+import bomberman.managers.ManagerSonido;
 import bomberman.ventanas.GestorVentana;
+import bomberman.ventanas.VentanaControles;
 import bomberman.ventanas.VentanaJuego;
 
 /**
@@ -230,6 +232,14 @@ public abstract class Bomberman extends SpriteDinamico {
 	 * Acaba la partida en caso de que tenga que morir.
 	 */
 	public void procDestruccion() {
+		if (((VentanaControles) GestorVentana
+				.getVentana(VentanaControles.class)).getSonido()) {
+			try {
+				ManagerSonido.playClip("scream.wav", false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		seDestruir = true;
 		((VentanaJuego) GestorVentana.getVentana(VentanaJuego.class))
 				.setAcabarPartida(true);

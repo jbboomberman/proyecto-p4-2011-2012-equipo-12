@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -22,9 +24,10 @@ import javax.swing.border.TitledBorder;
 import bomberman.database.AccesoControles;
 import bomberman.database.AccesoExtras;
 import bomberman.managers.ControlPrincipal;
+import bomberman.managers.ManagerSonido;
 
 //Fig13a  Pag 18.
-public class VentanaControles extends JDialog implements ActionListener {
+public class VentanaControles extends JDialog implements ActionListener, ItemListener {
 
 	private JTabbedPane jtbPestañas;
 	private JPanel jpSuperior;
@@ -144,6 +147,7 @@ public class VentanaControles extends JDialog implements ActionListener {
 		// Escuchadores
 		jbGuardar.addActionListener(this);
 		jbCancelar.addActionListener(this);
+		jcSonido.addItemListener(this);
 
 		// Características de la ventana
 		this.setSize(550, 400);
@@ -246,6 +250,21 @@ public class VentanaControles extends JDialog implements ActionListener {
 		} else if (botonPulsado == jbCancelar) {
 			GestorVentana.ocultarVentana(VentanaControles.class);
 		}
+	}
+	
+	public void itemStateChanged(ItemEvent e){
+		
+		Object tempPul = e.getSource();
+		if(tempPul == jcSonido){
+			if(!jcSonido.isSelected()){
+				System.out.println("Quitando sonido");
+				ManagerSonido.pararLoop();
+			}
+		}
+	}
+	
+	public boolean getSonido(){
+		return jcSonido.isSelected();
 	}
 
 	public static void main(String[] args) {

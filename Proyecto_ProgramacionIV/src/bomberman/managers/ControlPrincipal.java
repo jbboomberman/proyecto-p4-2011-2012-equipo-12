@@ -24,6 +24,7 @@ import bomberman.outin.ManipuladorFecha;
 import bomberman.protagonistas.Sprite;
 import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaCargar;
+import bomberman.ventanas.VentanaControles;
 import bomberman.ventanas.VentanaInicial;
 import bomberman.ventanas.VentanaJuego;
 import bomberman.ventanas.VentanaNoSuperado;
@@ -43,14 +44,10 @@ public class ControlPrincipal {
 		pararJuego = false;
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
 		jugadorUno = new Jugador();
-		
+
 		// Hacer después de que la ventana este activa para que funcione.
 		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
-		// try {
-		// ManagerSonido.playClip("levelintrosong.wav", false);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+
 		GestorVentana.hacerVisible(VentanaInicial.class, true);
 		this.game();
 	}
@@ -61,11 +58,11 @@ public class ControlPrincipal {
 			if (ventJuego.isVisible()) {
 				/*
 				 * Como indica este post:
-				 * http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
-				 * Sólo hay que crear el BufferStrategy una vez
-				 * y cuando la ventanaJuego este visible.
+				 * http://www.gamedev.net/topic/261754-javalangillegalstateexception
+				 * -component-must-have-a-valid-peer/ Sólo hay que crear el
+				 * BufferStrategy una vez y cuando la ventanaJuego este visible.
 				 */
-				if(primeraVez){
+				if (primeraVez) {
 					ventJuego.getPanel().createBufferStrategy(2);
 					image = ventJuego.getPanel().getBufferStrategy();
 					primeraVez = false;
@@ -107,34 +104,41 @@ public class ControlPrincipal {
 										.valueOf(ControlPrincipal
 												.getJugadorUno()
 												.getPuntuacion()));
-						//Si hemos llegado al nivel máximo se acaba el juego
-						if(jugadorUno.getNivel() == 10)
-							((VentanaSuperado)GestorVentana.
-									getVentana(VentanaSuperado.class)).setEnabled(false);
+						// Si hemos llegado al nivel máximo se acaba el juego
+						if (jugadorUno.getNivel() == 10)
+							((VentanaSuperado) GestorVentana
+									.getVentana(VentanaSuperado.class))
+									.setEnabled(false);
 						int codPunt;
-						if(jugadorUno.getModo() == ModoJuego.Historia)
+						if (jugadorUno.getModo() == ModoJuego.Historia)
 							codPunt = jugadorUno.getCodPart();
 						else
 							codPunt = -jugadorUno.getCodJugador();
 						// Insertamos la puntuación específica.
 						AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
-								.getNumPunt(), codPunt,
-								jugadorUno.getPuntuNivel(), ManipuladorFecha
-										.getFecha(), jugadorUno.getNivel()));
-						
-						if(jugadorUno.getModo() == ModoJuego.Historia){
-						// Hacemos que aparezca la ventana VentanaSuperado
-						GestorVentana
-								.hacerVisible(VentanaSuperado.class, false);
-						}else{
-							((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class)).setBotonPasarEnabled(false);
-							((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class)).setBotonGuardarEnabled(false);
-							((VentanaSuperado)GestorVentana.getVentana(VentanaSuperado.class)).
-							setJlPassword(AccesoNivel.getPass(jugadorUno.getNivel()));
-							GestorVentana.hacerVisible(VentanaSuperado.class, false);
+								.getNumPunt(), codPunt, jugadorUno
+								.getPuntuNivel(), ManipuladorFecha.getFecha(),
+								jugadorUno.getNivel()));
+
+						if (jugadorUno.getModo() == ModoJuego.Historia) {
+							// Hacemos que aparezca la ventana VentanaSuperado
+							GestorVentana.hacerVisible(VentanaSuperado.class,
+									false);
+						} else {
+							((VentanaSuperado) GestorVentana
+									.getVentana(VentanaSuperado.class))
+									.setBotonPasarEnabled(false);
+							((VentanaSuperado) GestorVentana
+									.getVentana(VentanaSuperado.class))
+									.setBotonGuardarEnabled(false);
+							((VentanaSuperado) GestorVentana
+									.getVentana(VentanaSuperado.class))
+									.setJlPassword(AccesoNivel
+											.getPass(jugadorUno.getNivel()));
+							GestorVentana.hacerVisible(VentanaSuperado.class,
+									false);
 						}
-						
-						
+
 					}
 					/*
 					 * En caso de que se haya acabado el tiempo o nos hayan
@@ -169,7 +173,7 @@ public class ControlPrincipal {
 
 				timeDiff = System.currentTimeMillis() - beforeTime;
 				sleepTime = PERIODO - timeDiff; // time left in this loop
-				System.out.println(sleepTime);
+				// System.out.println(sleepTime);
 				if (sleepTime <= 0) // update/render took longer than period
 					sleepTime = 5; // sleep a bit anyway
 				try {
@@ -178,9 +182,9 @@ public class ControlPrincipal {
 					ex.printStackTrace();
 				}
 			}
-			try{
+			try {
 				Thread.sleep(1);
-			}catch(InterruptedException e){
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
@@ -200,8 +204,8 @@ public class ControlPrincipal {
 
 		// if (usedTime > 0)
 		// System.out.println(String.valueOf(1000 / usedTime) + " fps");
-//		 if (timeDiff > 0)
-//		 System.out.println(String.valueOf(1000 / timeDiff) + " fps");
+		// if (timeDiff > 0)
+		// System.out.println(String.valueOf(1000 / timeDiff) + " fps");
 
 		image.show();
 	}
@@ -230,20 +234,19 @@ public class ControlPrincipal {
 				AccesoPuntuGen.insertarPunt(tempGene);
 			}
 			/*
-			 * Esto lo hacemos porque cuando se juega un
-			 * nivel específico en modo Master no tienes
-			 * partida general.
+			 * Esto lo hacemos porque cuando se juega un nivel específico en
+			 * modo Master no tienes partida general.
 			 */
 			int codPunt;
-			if(jugadorUno.getModo() == ModoJuego.Historia)
+			if (jugadorUno.getModo() == ModoJuego.Historia)
 				codPunt = jugadorUno.getCodPart();
 			else
 				codPunt = -jugadorUno.getCodJugador();
 			// Insertamos la puntuación específica.
-			AccesoPunEspe.insertarPunt(new PuntuEspe(AccesoPunEspe
-					.getNumPunt(), codPunt,
-					jugadorUno.getPuntuNivel(), ManipuladorFecha
-							.getFecha(), jugadorUno.getNivel()));
+			AccesoPunEspe.insertarPunt(new PuntuEspe(
+					AccesoPunEspe.getNumPunt(), codPunt, jugadorUno
+							.getPuntuNivel(), ManipuladorFecha.getFecha(),
+					jugadorUno.getNivel()));
 			// Preparamos los datos de la ventana VentanaNoSuperado
 			((VentanaNoSuperado) GestorVentana
 					.getVentana(VentanaNoSuperado.class)).setJlNick(String
@@ -261,8 +264,10 @@ public class ControlPrincipal {
 			GestorVentana.hacerVisible(VentanaInicial.class, false);
 			// Hacemos visible la ventana VentanaNoSuperado
 			GestorVentana.hacerVisible(VentanaNoSuperado.class, false);
-			// Si el jugador quería email se lo enviamos y si estaba jugando modo Historia
-			if (AccesoExtras.getExtra("email") && jugadorUno.getModo() == ModoJuego.Historia)
+			// Si el jugador quería email se lo enviamos y si estaba jugando
+			// modo Historia
+			if (AccesoExtras.getExtra("email")
+					&& jugadorUno.getModo() == ModoJuego.Historia)
 				EnvioEmail.enviarMensaje();
 			// Ya la partida ha acabado
 			ventJuego.setAcabarPartida(false);
@@ -284,7 +289,7 @@ public class ControlPrincipal {
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 			// Ya la partida ha acabado
 			ventJuego.setAcabarPartida(false);
-		} 
+		}
 	}
 
 	/**
@@ -308,8 +313,7 @@ public class ControlPrincipal {
 		jugadorUno.setPuntuacion(punt.getPuntu());
 		jugadorUno.setPuntuNivel(0);
 		jugadorUno.setVidas(punt.getVidas());
-		jugadorUno
-				.setNivel(punt.getNiv_guar() + 1);
+		jugadorUno.setNivel(punt.getNiv_guar() + 1);
 		jugadorUno.setModo(ModoJuego.Historia);
 		jugadorUno.setCodJugador(punt.getCod_jug());
 		jugadorUno.setCodPart(punt.getCod_punt());
@@ -323,24 +327,24 @@ public class ControlPrincipal {
 
 		// Creamos el escenario.
 		ControlPrincipal.crearEscenario(jugadorUno.getNivel());
-		//Ocultamos la ventana cargar
+		// Ocultamos la ventana cargar
 		GestorVentana.ocultarVentana(VentanaCargar.class);
-		//Hacemos visible la ventana VentanaJuego
+		// Hacemos visible la ventana VentanaJuego
 		GestorVentana.hacerVisible(VentanaJuego.class, true);
 	}
 
 	/**
-	 * Se encarga de crear el escenario del juego cargando
-	 * todos los Sprites.
+	 * Se encarga de crear el escenario del juego cargando todos los Sprites.
+	 * 
 	 * @param numEsce
 	 */
 	public static void crearEscenario(int numEsce) {
-		//Limpiamos el escenario
+		// Limpiamos el escenario
 		((VentanaJuego) GestorVentana.getVentana(VentanaJuego.class))
 				.borrarSprites();
-		//Leemos el mapa
+		// Leemos el mapa
 		Character arrayMapa[][] = LeerMapa.LeerMapaJuego(numEsce);
-		//Construimos el escenario
+		// Construimos el escenario
 		PrepararEscenario.ColocarMapa(
 				(VentanaJuego) GestorVentana.getVentana(VentanaJuego.class),
 				arrayMapa, jugadorUno);

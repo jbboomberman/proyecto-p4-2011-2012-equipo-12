@@ -132,6 +132,7 @@ public class ManagerSonido {
 	 * Este método estático nos permite parar un loop cuando queramos.
 	 */
 	public static void pararLoop() {
-		clip.stop();
+		if(clip != null)
+			clip.stop();
 	}
 }

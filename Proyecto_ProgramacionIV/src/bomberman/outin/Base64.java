@@ -185,7 +185,7 @@ public class Base64 {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Base64.encodeString("esebombermanhay"));
+//		System.out.println(Base64.decodeString());
 	}
 
 } // end class Base64Coder
