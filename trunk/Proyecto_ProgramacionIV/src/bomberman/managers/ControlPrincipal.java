@@ -120,6 +120,10 @@ public class ControlPrincipal {
 								.getPuntuNivel(), ManipuladorFecha.getFecha(),
 								jugadorUno.getNivel()));
 
+						((VentanaSuperado) GestorVentana
+								.getVentana(VentanaSuperado.class))
+								.setJlPassword(AccesoNivel
+										.getPass(jugadorUno.getNivel()));
 						if (jugadorUno.getModo() == ModoJuego.Historia) {
 							// Hacemos que aparezca la ventana VentanaSuperado
 							GestorVentana.hacerVisible(VentanaSuperado.class,
@@ -131,10 +135,7 @@ public class ControlPrincipal {
 							((VentanaSuperado) GestorVentana
 									.getVentana(VentanaSuperado.class))
 									.setBotonGuardarEnabled(false);
-							((VentanaSuperado) GestorVentana
-									.getVentana(VentanaSuperado.class))
-									.setJlPassword(AccesoNivel
-											.getPass(jugadorUno.getNivel()));
+							
 							GestorVentana.hacerVisible(VentanaSuperado.class,
 									false);
 						}

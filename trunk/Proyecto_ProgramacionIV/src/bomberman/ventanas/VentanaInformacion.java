@@ -45,7 +45,14 @@ public class VentanaInformacion extends JDialog {
 				+ "<html>Desarrollador de interfaz de usuario: Álvaro Carmona Basanez<P>"
 				+ "<html>Desarrollador de lógica de negocio: Beñat Bravo Quintas<P>";
 		meterTexto(explipfDesa, pfDesarrolladores);
+		explipfHistoria = "<html><font color = red>Bomberman es un juego de estilo estratégico-laberínticos que corresponde a una franquicia de videojuegos desarrollados por Hudson Soft y que viene dando juego desde 1983 hasta hoy en día donde sigue dando juegos para las nuevas consolas que van saliendo al mercado. Esta franquicia tuvo su primera aparición en el año 1983 con el nombre de Eric and the Floaters en Europa y Estados Unidos, con el famoso nombre de Bomberman en Japón para los ZX Spectrum y los MSX.<P>"
+				+ "<html>En 1985 salió la versión para la NES con el nombre de Bomberman, juego que se considera como el origen del Bomberman tal como lo conocemos hoy día y que en un principio en Europa se dio a conocer con el nombre de Dynablaster.<P>"
+				+ "<html>En 1990 Hudson portó y mejoro el juego para la TurboGrafx-16 con una nueva imagen. La imagen actual de los Bomberman proviene de esta versión.<P>"
+				+ "<html>Posteriormente han salido versiones para la mayoría de consolas de videojuegos, ordenadores, recreativas y teléfonos móviles. También, debido a la simplicidad del juego, han salido decenas de copias no oficiales del juego.<P>";
+		meterTexto(explipfHistoria, pfHistoria);
 
+		explipfProp = "<html><font color = red>Este juego nace como consecuencia de un proyecto de Programación IV con el objetivo de desarrollar habilidades en la programación con Java<P>";
+		meterTexto(explipfProp, pfProposito);
 		// Añadimos cada fondo a la jtPestaña correspondiente.
 		jtPestaña.add("Historia", pfHistoria);
 		jtPestaña.add("Desarrolladores", pfDesarrolladores);
@@ -59,7 +66,7 @@ public class VentanaInformacion extends JDialog {
 		 * perfección en distintas resoluciones.
 		 */
 		this.setMinimumSize(new Dimension(350, 285));
-		this.setSize(389, 308);
+		this.setSize(389, 408);
 		this.setModal(true);
 		this.setTitle("Información");
 		/*

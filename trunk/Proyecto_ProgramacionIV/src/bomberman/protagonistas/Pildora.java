@@ -1,6 +1,7 @@
 package bomberman.protagonistas;
 
 import bomberman.jugador.Jugador;
+import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
 
 /**
@@ -45,6 +46,8 @@ public class Pildora extends SpriteEstatico {
 			break;
 		// Detonador
 		case 2:
+			spritesImag = new String[]{"pildora_patines.png_1"};
+			spritesImagDest = new String[] { "nada.png_1" };
 			break;
 		// Patines
 		case 3:
@@ -57,6 +60,8 @@ public class Pildora extends SpriteEstatico {
 			break;
 		// Vida
 		case 6:
+			spritesImag = new String[]{"pildora_vida.png_1"};
+			spritesImagDest = new String[] { "nada.png_1" };
 			break;
 		default:
 			System.out.println("Error, no existe ese tipo de píldora");
@@ -73,6 +78,11 @@ public class Pildora extends SpriteEstatico {
 	 */
 	public void procDestruccion() {
 		super.procDestruccion();
-		this.bomberman.setMaxBomba(this.bomberman.getMaxBomba() + 1);
+		if(tipo == 1)
+			this.bomberman.setMaxBomba(this.bomberman.getMaxBomba() + 1);
+		else if(tipo == 2)
+			this.bomberman.setVelocidad(this.bomberman.getVelocidad() + 20);
+		else if(tipo == 6)
+			ControlPrincipal.getJugadorUno().setVidas(ControlPrincipal.getJugadorUno().getVidas() + 1);
 	}
 }

@@ -48,6 +48,37 @@ public abstract class SpriteDinamico extends Sprite {
 		this.primeraVezMover = true;
 	}
 
+	
+	public int getDeltaX() {
+		return deltaX;
+	}
+
+
+	public void setDeltaX(int deltaX) {
+		this.deltaX = deltaX;
+	}
+
+
+	public int getDeltaY() {
+		return deltaY;
+	}
+
+
+	public void setDeltaY(int deltaY) {
+		this.deltaY = deltaY;
+	}
+
+
+	public int getVelocidad() {
+		return velocidad;
+	}
+
+
+	public void setVelocidad(int velocidad) {
+		this.velocidad = velocidad;
+	}
+
+
 	/**
 	 * Este método sirve según los datos que posición que recibimos si se va a
 	 * chocar con algún otro elemento de la pantalla.
