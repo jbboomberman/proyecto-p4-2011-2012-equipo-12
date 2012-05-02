@@ -2,7 +2,10 @@ package bomberman.protagonistas;
 
 import java.util.Collections;
 import bomberman.jugador.Jugador;
+import bomberman.managers.ControlPrincipal;
 import bomberman.managers.Escenario;
+import bomberman.ventanas.GestorVentana;
+import bomberman.ventanas.VentanaJuego;
 
 /**
  * Esta clase representa al enemigo Pontan.
@@ -68,54 +71,67 @@ public class Pontan extends Enemigo {
 		if (estaInterseccion()) {
 			// Miramos que lados tenemos libres.
 			lados = this.alLado();
-
-			// Si tenemos derecha o arriba libres.
-			if (lados[0] && lados[1]) {
-				/*
-				 * Elegimos al azar una velocidad (Positiva o negativa)
-				 */
-				Collections.shuffle(aleatorizacion);
-				deltaX = aleatorizacion.get(0);
-				// Si sólo tenemos la derecha libre
-			} else if (lados[0]) {
+			
+			float posRelaX = ((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).
+			getBomberman().getPosX() - this.posX;
+			float posRelaY = ((VentanaJuego)GestorVentana.getVentana(VentanaJuego.class)).
+			getBomberman().getPosY() - this.posY;
+			
+			System.out.println(posRelaY);
+			
+			//Izquierda
+			if(posRelaX <= 0 && lados[1]){
+				deltaX = - velocidad;
+			//Izquierda no poder
+			}else if(posRelaX <= 0 && !lados[1]){
+				if(!lados[2] && !lados[3]){
+					if(lados[0])
+						deltaX = velocidad;
+					else
+						deltaX = 0;
+				}
+			//Derecha
+			}else if(posRelaX > 0 && lados[0]){
 				deltaX = velocidad;
-				// Si sólo tenemos la izquierda libre.
-			} else if (lados[1]) {
-				deltaX = -velocidad;
-				// Si no tenemos ni derecha ni izquierda libre
-			} else {
-				deltaX = 0;
+			}else if(posRelaX > 0 && !lados[0]){
+				if(!lados[2] && !lados[3]){
+					if(lados[1])
+						deltaX = - velocidad;
+					else
+						deltaX = 0;
+				}
 			}
-
-			// Si tenemos arriba y abajo libres.
-			if (lados[2] && lados[3]) {
-				/*
-				 * Elegimos al azar una velocidad (Positiva o negativa)
-				 */
-				Collections.shuffle(aleatorizacion);
-				deltaY = aleatorizacion.get(0);
-				// Si sólo tenemos arriba libre
-			} else if (lados[2]) {
-				deltaY = -velocidad;
-				// Si sólo tenemos abajo libre.
-			} else if (lados[3]) {
+			
+			
+			//Abajo
+			if(posRelaY >= 0 && lados[3]){
 				deltaY = velocidad;
-				// Si no tenemos ninguna libre.
-			} else {
-				deltaY = 0;
+			//Izquierda no poder
+			}else if(posRelaY >= 0 && !lados[3]){
+				if(!lados[0] && !lados[1]){
+					if(lados[2])
+						deltaY = - velocidad;
+					else
+						deltaY = 0;
+				}
+			//Arriba
+			}else if(posRelaY < 0 && lados[2]){
+				deltaY = - velocidad;
+			}else if(posRelaY < 0 && !lados[2]){
+				if(!lados[0] && !lados[1]){
+					if(lados[3])
+						deltaX = velocidad;
+					else
+						deltaX = 0;
+				}
 			}
-
-			/*
-			 * En caso de que tengamos que elegir entre ir horizontalmente o
-			 * verticalmente lo elegimos al azar.
-			 */
-			if (deltaX != 0 && deltaY != 0) {
-				Collections.shuffle(aleatorizacion);
-				int tempNum = aleatorizacion.get(0);
-				if (tempNum > 0) {
-					deltaX = 0;
-				} else
+			
+			if(deltaX != 0 && deltaY != 0){
+				if(Math.abs(posRelaX) > Math.abs(posRelaY)){
 					deltaY = 0;
+				}else{
+					deltaX = 0;
+				}
 			}
 		}
 	}
