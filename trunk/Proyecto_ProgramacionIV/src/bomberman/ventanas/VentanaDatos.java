@@ -5,12 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 
 import bomberman.managers.ControlPrincipal;
+import bomberman.managers.ManagerSonido;
 import bomberman.outin.*;
 import bomberman.database.*;
-import bomberman.database.AccesoExtras;
-import bomberman.database.AccesoJugador;
-import bomberman.database.AccesoMapa;
-import bomberman.database.AccesoPuntuGen;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.*;
 
@@ -186,12 +183,28 @@ public class VentanaDatos extends JDialog implements ActionListener {
 							AccesoExtras.getExtra("email"));
 					ControlPrincipal.setJugadorUno(tempJug);
 				}
+				if (((VentanaControles) GestorVentana
+						.getVentana(VentanaControles.class)).getSonido()) {
+					try {
+						ManagerSonido.pararLoop();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
 				GestorVentana.hacerVisible(VentanaJuego.class, true);
 			}
 		} else if (botonPulsado == botonCancelar) {
+			if (((VentanaControles) GestorVentana
+					.getVentana(VentanaControles.class)).getSonido()) {
+				try {
+					ManagerSonido.pararLoop();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 			GestorVentana.ocultarVentana(VentanaDatos.class);
 		}
-		//Limpiamos los datos
+		// Limpiamos los datos
 		nom.setText("");
 		ape.setText("");
 		nic.setText("");

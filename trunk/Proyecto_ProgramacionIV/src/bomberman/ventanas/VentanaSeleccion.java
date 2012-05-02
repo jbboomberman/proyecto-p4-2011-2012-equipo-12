@@ -19,6 +19,7 @@ import bomberman.database.AccesoMapa;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
+import bomberman.managers.ManagerSonido;
 import bomberman.managers.PrepararEscenario;
 import bomberman.outin.LeerMapa;
 import bomberman.protagonistas.BombermanNegro;
@@ -89,6 +90,16 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		 * dirección del generador del evento.
 		 */
 		Object botonPulsado = e.getSource();
+		if (botonPulsado == jbHistoria
+				|| botonPulsado == jbMaster
+				&& ((VentanaControles) GestorVentana
+						.getVentana(VentanaControles.class)).getSonido()) {
+			try {
+				ManagerSonido.playClip("battle.wav", true);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 
 		// Si el boton pulsado erá botonAceptar
 		if (botonPulsado == jbHistoria) {

@@ -60,7 +60,6 @@ public class EnvioEmail {
 	}
 
 	public static void enviarMensaje() {
-
 		try {
 			// Quien envia el correo
 			message.setFrom(new InternetAddress("equipo12Bomberman@gmail.com"));
