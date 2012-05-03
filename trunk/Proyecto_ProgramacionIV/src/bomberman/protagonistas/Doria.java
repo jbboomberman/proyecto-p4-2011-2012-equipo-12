@@ -15,8 +15,8 @@ public class Doria extends Enemigo {
 		deltaX = 100;
 		deltaY = 100;
 		velocidad = 100;
-		spritesImag = new String[] { "doria.gif_1", "doria.gif_2",
-				"doria.gif_3" };
+		spritesImag = new String[] { "doria.gif_1",
+				"doria.gif_2", "doria.gif_3" };
 		spritesImagDest = new String[] { "doria_dest.gif_1",
 				"destruccion.png_1", "destruccion.png_2", "destruccion.png_3",
 				"destruccion.png_4", "destruccion.png_5" };
