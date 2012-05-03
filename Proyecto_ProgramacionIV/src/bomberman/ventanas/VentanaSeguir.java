@@ -4,25 +4,29 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import bomberman.database.AccesoMapa;
-import bomberman.enumeraciones.ModoJuego;
-import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 
+/**
+ * Ventana que nos preguntará si queremos seguir o no.
+ * @author David
+ * @version 1.0
+ */
 public class VentanaSeguir extends JDialog implements ActionListener {
+	
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JLabel texto;
 	private JButton jbSeguirNivel;
 	private JButton jbVolver;
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
-	private ModoJuego modo;
 
+	/**
+	 * Constructor principal de la clase VentanaSeguir.
+	 */
 	public VentanaSeguir() {
 
 		// Inicializamos las variables.
@@ -36,11 +40,11 @@ public class VentanaSeguir extends JDialog implements ActionListener {
 		panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
 		getContentPane().setLayout(new BorderLayout());
+		
 		// Añadir elementos a los paneles
 		panelSuperior.add(texto);
 		panelInferior.add(jbSeguirNivel);
 		panelInferior.add(jbVolver);
-
 		getContentPane().add(panelInferior, BorderLayout.SOUTH);
 		getContentPane().add(panelSuperior, BorderLayout.NORTH);
 
@@ -65,14 +69,6 @@ public class VentanaSeguir extends JDialog implements ActionListener {
 		this.setVisible(false);
 	}
 
-	public ModoJuego getModo() {
-		return modo;
-	}
-
-	public void setModo(ModoJuego modo) {
-		this.modo = modo;
-	}
-
 	/**
 	 * Implementamos el método 'actionPerformed' del interface ActionListener.
 	 * 
@@ -86,10 +82,11 @@ public class VentanaSeguir extends JDialog implements ActionListener {
 		 */
 		Object botonPulsado = e.getSource();
 
-		// Si el boton pulsado erá botonAceptar
+		// Si el boton pulsado erá jbSeguirNivel
 		if (botonPulsado == jbSeguirNivel) {
 			new Thread(new Runnable() {
 				public void run() {
+					//Aumentamos el nivel
 					ControlPrincipal.crearEscenario(ControlPrincipal
 							.getJugadorUno().getNivel() + 1);
 					ControlPrincipal.getJugadorUno().setNivel(
@@ -98,6 +95,7 @@ public class VentanaSeguir extends JDialog implements ActionListener {
 				}
 			}).start();
 
+		//Volvemos al menú inicial
 		} else if (botonPulsado == jbVolver) {
 			new Thread(new Runnable() {
 				public void run() {
@@ -105,10 +103,5 @@ public class VentanaSeguir extends JDialog implements ActionListener {
 				}
 			}).start();
 		}
-	}
-
-	public static void main(String[] args) {
-		VentanaSeleccion prueba = new VentanaSeleccion();
-		prueba.setVisible(true);
 	}
 }

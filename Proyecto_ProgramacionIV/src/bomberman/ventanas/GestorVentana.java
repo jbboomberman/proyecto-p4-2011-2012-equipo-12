@@ -3,10 +3,6 @@ package bomberman.ventanas;
 import java.util.*;
 import java.awt.*;
 
-import bomberman.database.AccesoControles;
-import bomberman.enumeraciones.ModoJuego;
-import bomberman.jugador.Jugador;
-
 /**
  * Clase que se encarga de gestionar las ventanas del programa. Muy útil y
  * además ayuda a que el código y el manejo del programa sea más claro y

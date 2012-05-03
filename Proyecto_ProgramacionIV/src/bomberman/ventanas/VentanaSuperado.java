@@ -6,9 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.util.Calendar;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -16,13 +14,17 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.managers.ControlPrincipal;
-import bomberman.outin.ManipuladorFecha;
 
+/**
+ * Clase que representa la ventana VentanaSuperado que aprecerá
+ * cuando superemos un nivel.
+ * @author David
+ * @version 1.0
+ */
 public class VentanaSuperado extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = -7461719037402108362L;
@@ -40,6 +42,9 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 	private JLabel jlPuntuacion;
 	private JLabel jlPassword;
 
+	/**
+	 * Constructor principal de la clase VentanaSuperado.
+	 */
 	public VentanaSuperado() {
 		jbGuardarPart = new JButton("Guardar partida");
 		jbPasarNivel = new JButton("Pasar al siguiente nivel");
@@ -123,6 +128,11 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 		return panelCompl;
 	}
 
+	/**
+	 * Implementamos el método 'actionPerformed' del interface ActionListener.
+	 * 
+	 * @param e - ActionEvent. Que evento ha tenido lugar.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
@@ -130,17 +140,21 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 		 */
 		Object botonPulsado = e.getSource();
 
+		//Guardar partida
 		if (botonPulsado == jbGuardarPart) {
 			GestorVentana.hacerVisible(VentanaGuardado.class, false);
+		//Pasar al siguiente nivel
 		} else if (botonPulsado == jbPasarNivel) {
 			ControlPrincipal.getJugadorUno().setNivel(
 					ControlPrincipal.getJugadorUno().getNivel() + 1);
 			ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno()
 					.getNivel());
 			GestorVentana.hacerVisible(VentanaJuego.class, true);
+		//Volver al menú
 		} else if (botonPulsado == jbVolverMenu) {
 			Calendar tempCalendar = Calendar.getInstance();
 			if(ControlPrincipal.getJugadorUno().getModo() == ModoJuego.Historia){
+			//Guardamos la puntuación general
 			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal
 					.getJugadorUno().getCodPart(), ControlPrincipal
 					.getJugadorUno().getCodJugador(), false, ControlPrincipal
@@ -157,52 +171,86 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Nos devuelve el JLabel del nick.
+	 * @return jlNick - JLabel
+	 */
 	public JLabel getJlNick() {
 		return jlNick;
 	}
 
+	/**
+	 * Modifica el JLabel del nick. Recibe como
+	 * parámetro un String.
+	 * @param jlNick - String
+	 */
 	public void setJlNick(String jlNick) {
 		this.jlNick.setText(jlNick);
 	}
 
+	/**
+	 * Devuelve el JLabel de nivel.
+	 * @return jlNivel - JLabel
+	 */
 	public JLabel getJlNivel() {
 		return jlNivel;
 	}
 
+	/**
+	 * Modifica el JLabel de nivel. Recibe un String
+	 * como parámetro.
+	 * @param jlNivel
+	 */
 	public void setJlNivel(String jlNivel) {
-		System.out.println("Entre");
 		this.jlNivel.setText(jlNivel);
 	}
 
+	/**
+	 * Devuelve el JLabel de la puntuación.
+	 * @return jlPuntuacion - JLabel
+	 */
 	public JLabel getJlPuntuacion() {
 		return jlPuntuacion;
 	}
 
+	/**
+	 * Modifica el JLabel de puntuaciones.
+	 * Recibe como parámetro un String.
+	 * @param jlPuntuacion - String
+	 */
 	public void setJlPuntuacion(String jlPuntuacion) {
 		this.jlPuntuacion.setText(jlPuntuacion);
 	}
 
+	/**
+	 * Devuelve el valor de el JTextField de password.
+	 * @return String - pass
+	 */
 	public String getJlPassword() {
 		return jlPassword.getText();
 	}
 
+	/**
+	 * Modifica el texto del JTextField de password.
+	 * @param jlPassword - String
+	 */
 	public void setJlPassword(String jlPassword) {
 		this.jlPassword.setText(jlPassword);
 	}
 	
-	
-	
+	/**
+	 * Habilita o deshabilita el botón 'Pasar'
+	 * @param estado - boolean
+	 */
 	public void setBotonPasarEnabled(boolean estado){
 		this.jbPasarNivel.setEnabled(estado);
 	}
 	
+	/**
+	 * Habilita o deshabilita el botón 'Guardar'
+	 * @param estado - boolean
+	 */
 	public void setBotonGuardarEnabled(boolean estado){
 		this.jbGuardarPart.setEnabled(estado);
-	}
-
-	public static void main(String[] args) {
-		VentanaSuperado prueba = new VentanaSuperado();
-		prueba.setBotonPasarEnabled(false);
-		prueba.setVisible(true);
 	}
 }

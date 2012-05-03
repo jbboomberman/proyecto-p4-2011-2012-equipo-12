@@ -4,25 +4,30 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import bomberman.database.AccesoMapa;
-import bomberman.enumeraciones.ModoJuego;
-import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 
+/**
+ * Clase que representa a la ventana que aparecerá cuando perdamos una vida.
+ * @author David
+ * @version 1.0
+ */
 public class VentanaVidaMenos extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JButton jbContinuar;
 	private JButton jbCancelar;
 	private JLabel jlTexto;
 	private JPanel jpInferior;
 
+	/**
+	 * Constructor principal de la clase VentanaVidaMenos
+	 */
 	public VentanaVidaMenos() {
 		jbContinuar = new JButton("Continuar");
 		jbCancelar = new JButton("Cancelar");
@@ -56,6 +61,11 @@ public class VentanaVidaMenos extends JDialog implements ActionListener {
 		this.setVisible(false);
 	}
 
+	/**
+	 * Implementamos el método 'actionPerformed' del interface ActionListener.
+	 * 
+	 * @param e - ActionEvent. Que evento ha tenido lugar.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
@@ -63,6 +73,7 @@ public class VentanaVidaMenos extends JDialog implements ActionListener {
 		 */
 		Object botonPulsado = e.getSource();
 
+		//Seguimos jugando
 		if (botonPulsado == jbContinuar) {
 			new Thread(new Runnable() {
 				public void run() {
@@ -77,17 +88,11 @@ public class VentanaVidaMenos extends JDialog implements ActionListener {
 					GestorVentana.hacerVisible(VentanaJuego.class, true);
 				}
 			}).start();
+		//Volvemos al menú
 		} else if (botonPulsado == jbCancelar) {
 			GestorVentana.ocultarVentana(VentanaVidaMenos.class);
 			GestorVentana.ocultarVentana(VentanaJuego.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
 	}
-
-	// public static void main (String []args){
-	// VentanaVidaMenos prueba = new VentanaVidaMenos(new Jugador("David", "h",
-	// "h", "h", 3, 2, 1, ModoJuego.Historia, 1, 1));
-	// prueba.setVisible(true);
-	//
-	// }
 }

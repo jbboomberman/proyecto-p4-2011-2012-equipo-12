@@ -1,31 +1,28 @@
 package bomberman.ventanas;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import bomberman.database.AccesoControles;
-import bomberman.database.AccesoJugador;
 import bomberman.database.AccesoMapa;
 import bomberman.enumeraciones.ModoJuego;
 import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.ManagerSonido;
-import bomberman.managers.PrepararEscenario;
-import bomberman.outin.LeerMapa;
-import bomberman.protagonistas.BombermanNegro;
 
+/**
+ * Ventana que nos ofrecerá elegir el modo de juego.
+ * @author David
+ * @version 1.0
+ */
 public class VentanaSeleccion extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JLabel texto;
 	private JButton jbHistoria;
 	private JButton jbMultijugador;
@@ -33,6 +30,9 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 	private JPanel panelInferior;
 	private JPanel panelSuperior;
 
+	/**
+	 * Constructor principal de la clase VentanaSeleccion
+	 */
 	public VentanaSeleccion() {
 
 		// Inicializamos las variables.
@@ -47,12 +47,12 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
 		getContentPane().setLayout(new BorderLayout());
+		
 		// Añadir elementos a los paneles
 		panelSuperior.add(texto);
 		panelInferior.add(jbHistoria);
 		panelInferior.add(jbMultijugador);
 		panelInferior.add(jbMaster);
-
 		getContentPane().add(panelInferior, BorderLayout.SOUTH);
 		getContentPane().add(panelSuperior, BorderLayout.NORTH);
 
@@ -90,6 +90,25 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		 * dirección del generador del evento.
 		 */
 		Object botonPulsado = e.getSource();
+		
+		if(botonPulsado == jbHistoria || botonPulsado == jbMaster
+				|| botonPulsado == jbMultijugador){
+			ControlPrincipal.setJugadorUno(new Jugador());
+			ControlPrincipal.getJugadorUno().setArriba(
+					AccesoControles.getControl("ARRIBA", 1));
+			ControlPrincipal.getJugadorUno().setAbajo(
+					AccesoControles.getControl("ABAJO", 1));
+			ControlPrincipal.getJugadorUno().setDerecha(
+					AccesoControles.getControl("DERECHA", 1));
+			ControlPrincipal.getJugadorUno().setIzquierda(
+					AccesoControles.getControl("IZQUIERDA", 1));
+			ControlPrincipal.getJugadorUno().setBomba(
+					AccesoControles.getControl("BOMBA", 1));
+		}
+		
+		/*
+		 * Hacemos sonar la música
+		 */
 		if (botonPulsado == jbHistoria
 				|| botonPulsado == jbMaster
 				&& ((VentanaControles) GestorVentana
@@ -101,36 +120,27 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 			}
 		}
 
-		// Si el boton pulsado erá botonAceptar
+		// Si el botón pulsado era jbHistoria
 		if (botonPulsado == jbHistoria) {
 			new Thread(new Runnable() {
 				public void run() {
-					ControlPrincipal.setJugadorUno(new Jugador());
+					//Actualizamos los parámetros del jugador
 					ControlPrincipal.getJugadorUno().setNivel(1);
 					ControlPrincipal.getJugadorUno()
 							.setModo(ModoJuego.Historia);
 					GestorVentana.ocultarVentana(VentanaSeleccion.class);
 					GestorVentana.hacerVisible(VentanaDatos.class, false);
 					ControlPrincipal.crearEscenario(AccesoMapa.getCodMapa(1));
-					// GestorVentana.hacerVisible(VentanaJuego.class, true);
 				}
 			}).start();
 
 		} else if (botonPulsado == jbMultijugador) {
 			new Thread(new Runnable() {
 				public void run() {
-					ControlPrincipal.setJugadorUno(new Jugador());
-					ControlPrincipal.setJugadorDos(new Jugador());
-					ControlPrincipal.getJugadorUno().setArriba(
-							AccesoControles.getControl("ARRIBA", 1));
-					ControlPrincipal.getJugadorUno().setAbajo(
-							AccesoControles.getControl("ABAJO", 1));
-					ControlPrincipal.getJugadorUno().setDerecha(
-							AccesoControles.getControl("DERECHA", 1));
-					ControlPrincipal.getJugadorUno().setIzquierda(
-							AccesoControles.getControl("IZQUIERDA", 1));
-					ControlPrincipal.getJugadorUno().setBomba(
-							AccesoControles.getControl("BOMBA", 1));
+					/*
+					 * Si es multijugador actualizamos al
+					 * jugador 2.
+					 */
 					ControlPrincipal.setJugadorDos(new Jugador());
 					ControlPrincipal.getJugadorDos().setArriba(
 							AccesoControles.getControl("ARRIBA", 2));
@@ -153,26 +163,10 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		} else if (botonPulsado == jbMaster) {
 			new Thread(new Runnable() {
 				public void run() {
-					ControlPrincipal.setJugadorUno(new Jugador());
-					ControlPrincipal.getJugadorUno().setArriba(
-							AccesoControles.getControl("ARRIBA", 1));
-					ControlPrincipal.getJugadorUno().setAbajo(
-							AccesoControles.getControl("ABAJO", 1));
-					ControlPrincipal.getJugadorUno().setDerecha(
-							AccesoControles.getControl("DERECHA", 1));
-					ControlPrincipal.getJugadorUno().setIzquierda(
-							AccesoControles.getControl("IZQUIERDA", 1));
-					ControlPrincipal.getJugadorUno().setBomba(
-							AccesoControles.getControl("BOMBA", 1));
 					GestorVentana.ocultarVentana(VentanaSeleccion.class);
 					GestorVentana.hacerVisible(VentanaDirecto.class, false);
 				}
 			}).start();
 		}
-	}
-
-	public static void main(String[] args) {
-		VentanaSeleccion prueba = new VentanaSeleccion();
-		prueba.setVisible(true);
 	}
 }

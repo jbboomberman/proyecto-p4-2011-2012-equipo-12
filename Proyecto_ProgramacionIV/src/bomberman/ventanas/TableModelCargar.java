@@ -1,20 +1,33 @@
 package bomberman.ventanas;
 
 import javax.swing.table.DefaultTableModel;
-
 import bomberman.database.AccesoJugador;
-import bomberman.database.AccesoPunEspe;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.outin.ManipuladorFecha;
 
+/**
+ * Nos servirá para las ventanas VentanaCargar y VentanaGuardar.
+ * Sera la clase para los JTable de estas ventanas.
+ * @author David
+ * @version 1.0
+ */
 public class TableModelCargar extends DefaultTableModel {
 	private static final long serialVersionUID = -7461719037402108362L;
 
+	/**
+	 * Constructor principal de la clase TableModelCargar
+	 * @param arg0 - int - Filas
+	 * @param arg1 - int - Columnas
+	 */
 	public TableModelCargar(int arg0, int arg1) {
 		super(arg0, arg1);
 	}
 
+	/**
+	 * Añade una fila a la tabla
+	 * @param punt - PuntuGeneral
+	 */
 	public void añadirFila(PuntuGeneral punt) {
 
 		this.addRow(new Object[] { punt.getCod_punt(),
@@ -28,6 +41,12 @@ public class TableModelCargar extends DefaultTableModel {
 				punt.getVidas() });
 	}
 
+	/**
+	 * Devuelve un objeto de la clase PuntuGeneral
+	 * que represente a una fila de la tabla.
+	 * @param row - int
+	 * @return PuntuGeneral
+	 */
 	public PuntuGeneral getFila(int row) {
 		PuntuGeneral tempPunt = new PuntuGeneral((Integer) this.getValueAt(row,
 				0), (Integer)this.getValueAt(row, 7), true, (Integer) this.getValueAt(row, 4),
@@ -36,6 +55,9 @@ public class TableModelCargar extends DefaultTableModel {
 		return tempPunt;
 	}
 
+	/**
+	 * Borra todas las filas de la tabla.
+	 */
 	public void deleteAllRows() {
 		while (this.getRowCount() > 0) {
 			this.removeRow(0);
