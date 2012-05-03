@@ -1,33 +1,37 @@
 package bomberman.database;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-
-import bomberman.jugador.Jugador;
 import bomberman.outin.ManipuladorFecha;
 import bomberman.outin.VerificadorFecha;
 
+/**
+ * Clase que representa el acceso a la tabla PUNTU_NIV_ESPECI
+ * @author David
+ * @version 1.0
+ */
 public class AccesoPunEspe {
-	/*
-	 * Representará el acceso a la tabla PUNTU_NIV_ESPECI y tendrá tres métodos
-	 * estáticos insertarPunt(PuntuEspe punt) que insertará una puntuación
-	 * específica en la tabla, eliminarPunt(PuntuEspe punt) que eliminará una
-	 * puntuación específica de la tabla y listaPunt() que listará todas las
-	 * puntuaciones específicas de tabla.
-	 */
 
+	/**
+	 * Método que nos servirá para insertar una puntuación
+	 * específica
+	 * @param punt - PuntuEspe
+	 */
 	public static void insertarPunt(PuntuEspe punt) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
 					"INSERT INTO PUNTU_NIV_ESPECI VALUES( ?, ?, ?, ?, ?);");
+			//Código de la puntuación específica
 			stat.setInt(1, punt.getCod_puntu_espe());
+			//Código de la puntuación
 			stat.setInt(2, punt.getCod_puntu());
+			//Puntuación específica
 			stat.setInt(3, punt.getPuntu_espe());
+			//Fecha
 			stat.setString(4, punt.getFecha());
+			//Nivel
 			stat.setInt(5, punt.getNivel());
 			stat.executeUpdate();
 			stat.close();
@@ -37,6 +41,11 @@ public class AccesoPunEspe {
 		}
 	}
 
+	/**
+	 * Elimina una puntuación específica. Recibe como
+	 * parámetro el código de la puntuación específica.
+	 * @param cod_punt_espe - int
+	 */
 	public static void eliminarPunt(int cod_punt_espe) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
@@ -50,6 +59,12 @@ public class AccesoPunEspe {
 		}
 	}
 
+	/**
+	 * Devuelve una ArrayList con todas las puntuaciones específicas
+	 * que tengan el mismo código de la puntuación general.
+	 * @param codPuntuGene - int
+	 * @return ArrayList<PuntuEspe>
+	 */
 	public static ArrayList<PuntuEspe> listaPuntu(int codPuntuGene) {
 		PuntuEspe tempJug = null;
 		ArrayList<PuntuEspe> tempPuntu = new ArrayList<PuntuEspe>();
@@ -76,7 +91,7 @@ public class AccesoPunEspe {
 	 * Método que nos devolverá hasta que nivel máximo se ha llegado en una
 	 * partida guardada o puntuación.
 	 * 
-	 * @param codPuntuGeneral
+	 * @param codPuntuGeneral - int
 	 * @return int - Número con el nivel más alto al que se ha llegado.
 	 */
 	public static int getNivelMasAlto(int codPuntuGeneral) {
@@ -88,6 +103,11 @@ public class AccesoPunEspe {
 		return nivMax;
 	}
 
+	/**
+	 * Nos devuelve el número de puntuaciones específicas que
+	 * hay en la tabla.
+	 * @return int
+	 */
 	public static int getNumPunt() {
 		// ResulSet no tiene contador
 		int cont = 0;
@@ -106,6 +126,16 @@ public class AccesoPunEspe {
 		return cont;
 	}
 
+	/**
+	 * Nos devuelve un ArrayList con todas las puntuaciones
+	 * específicas que cumplan los datos enviados por parámetro.
+	 * En caso de que algún parámetro tenga valor null no se
+	 * tendrá en cuenta a la hora de hacer la busqueda.
+	 * @param nom - String
+	 * @param fecha - String
+	 * @param nivel - int
+	 * @return ArrayList<PuntuEspe>
+	 */
 	public static ArrayList<PuntuEspe> getPuntDatos(String nom, String fecha,
 			int nivel) {
 		PreparedStatement stat = null;
@@ -129,6 +159,11 @@ public class AccesoPunEspe {
 					return null;
 				else {
 					for (Integer codJug : codNom) {
+						/*
+						 * Recogemos todas las puntuaciones que tengan
+						 * como propietario al jugador recibido por
+						 * parámetro.
+						 */
 						codPunt = AccesoPuntuGen.getCodPuntJug(codJug);
 						for (Integer codPuntuacion : codPunt) {
 							stat.setInt(1, codPuntuacion);
@@ -136,6 +171,7 @@ public class AccesoPunEspe {
 									ManipuladorFecha.desParsearFecha(fecha));
 							stat.setInt(3, nivel);
 							ResultSet rs = stat.executeQuery();
+							//Si hay linea
 							while (rs.next()) {
 								tempPuntu.add(new PuntuEspe(rs.getInt(1), rs
 										.getInt(2), rs.getInt(3), rs
@@ -162,6 +198,10 @@ public class AccesoPunEspe {
 						codPunt = AccesoPuntuGen.getCodPuntJug(codJug);
 
 						for (Integer codPuntuacion : codPunt) {
+							/*
+							 * Pedimos puntuaciones con el mismo
+							 * jugador y nivel.
+							 */
 							stat.setInt(1, codPuntuacion);
 							stat.setInt(2, nivel);
 							ResultSet rs = stat.executeQuery();
@@ -192,6 +232,7 @@ public class AccesoPunEspe {
 							.getInt(3), rs.getString(4), rs.getInt(5)));
 				}
 				return tempPuntu;
+			//En caso de que sea null tanto jugador como fecha
 			} else {
 				stat = GestionBD
 						.conectar()
@@ -199,7 +240,6 @@ public class AccesoPunEspe {
 								"SELECT * FROM PUNTU_NIV_ESPECI WHERE COD_NIVEL_PUNTU = ?;");
 				stat.setInt(1, nivel);
 				ResultSet rs = stat.executeQuery();
-				System.out.println("eSTOY AQUI");
 				while (rs.next()) {
 					tempPuntu.add(new PuntuEspe(rs.getInt(1), rs.getInt(2), rs
 							.getInt(3), rs.getString(4), rs.getInt(5)));

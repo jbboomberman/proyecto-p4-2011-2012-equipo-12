@@ -56,7 +56,9 @@ public class PuntuEspe implements Comparable<PuntuEspe>{
 
 	/**
 	 * Devuelve el código de la puntuación general
-	 * a la que pertenece.
+	 * a la que pertenece. Si no pertenece a ninguna
+	 * porque se ha jugado en modo Master tendrá
+	 * el código del jugador.
 	 * @return cod_puntu - int
 	 */
 	public int getCod_puntu() {

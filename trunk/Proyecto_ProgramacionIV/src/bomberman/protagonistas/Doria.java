@@ -1,7 +1,5 @@
 package bomberman.protagonistas;
 
-import java.util.Collections;
-
 import bomberman.jugador.Jugador;
 import bomberman.managers.Escenario;
 import bomberman.ventanas.GestorVentana;
