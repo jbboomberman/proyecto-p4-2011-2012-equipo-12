@@ -30,12 +30,12 @@ public class Pontan extends Enemigo {
 		this.puntos = 1000;
 		this.posX = x;
 		this.posY = y;
-		deltaX = 100;
-		deltaY = 100;
 		velocidad = 100;
+		deltaX = velocidad;
+		deltaY = velocidad;
 		spritesImag = new String[] { "pontan.png_1", "pontan.png_2",
 				"pontan.png_3" };
-		spritesImagDest = new String[] { "pontan_dest.gif_1",
+		spritesImagDest = new String[] { "pontan_dest.png_1",
 				"destruccion.png_1", "destruccion.png_2", "destruccion.png_3",
 				"destruccion.png_4", "destruccion.png_5" };
 		this.anchura = CASILLA;

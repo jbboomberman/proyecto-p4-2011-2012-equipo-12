@@ -120,6 +120,10 @@ public class PrepararEscenario {
 					esce.añadirSprite(new Pildora(esce, (float) (j - 1)
 							* CASILLA, (float) i * CASILLA, 6, esce
 							.getBomberman(), jug));
+				case 'S':
+					esce.añadirSprite(new Pildora(esce, (float) (j - 1)
+							* CASILLA, (float) i * CASILLA, 2, esce
+							.getBomberman(), jug));
 				default:
 					break;
 				}

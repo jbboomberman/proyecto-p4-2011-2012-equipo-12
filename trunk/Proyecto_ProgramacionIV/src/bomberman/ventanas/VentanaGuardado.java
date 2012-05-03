@@ -192,14 +192,20 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 	 */
 	public void setVisible(boolean estado) {
 		super.setVisible(estado);
-		if (estado) {
-			//Borramos las filas anteriores
-			tmModel.deleteAllRows();
-			//Cargamos las de ahora
-			ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
-					.getPartidasGuardadas();
-			for (PuntuGeneral tempPunt : partGuardas)
-				tmModel.añadirFila(tempPunt);
-		}
+		/*
+		 * Lo usamos en el EDT para no crear problemas.
+		 */
+			java.awt.EventQueue.invokeLater(new Runnable() {
+			    @Override
+			    public void run() {
+			    	//Borramos las filas anteriores
+					tmModel.deleteAllRows();
+					//Cargamos las de ahora
+					ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
+							.getPartidasGuardadas();
+					for (PuntuGeneral tempPunt : partGuardas)
+						tmModel.añadirFila(tempPunt);
+			    }
+			});
 	}
 }
