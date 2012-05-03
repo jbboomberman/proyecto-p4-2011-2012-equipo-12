@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import bomberman.database.AccesoPunEspe;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuEspe;
@@ -38,6 +41,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 	private JButton jbCancelar;
 	private TableModelPuntuaciones tmPuntu;
 	private JScrollPane jsScroll;
+	private TableRowSorter<TableModel> ordenarTabla;
 
 	/**
 	 * Constructor principal de la ventana VentanaPuntuaciones
@@ -83,6 +87,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		jbBuscar = new JButton("Buscar");
 		jbCancelar = new JButton("Cancelar");
 		tmPuntu = new TableModelPuntuaciones(0, 6);
+		ordenarTabla = new TableRowSorter<TableModel>(tmPuntu);
 		//Columnas
 		tmPuntu.setColumnIdentifiers(new String[] { "Nombre", "Apellidos",
 				"Nick", "Puntuación", "Nivel", "Fecha" });
@@ -115,7 +120,8 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		jbCancelar.addActionListener(this);
 		jbTen.addActionListener(this);
 		jchTotal.addItemListener(this);
-
+		//Añadimos la ordenación
+		jtPuntuacion.setRowSorter(ordenarTabla);
 		// Características de la ventana
 		this.setSize(550, 600);
 		this.setTitle("Mostrar puntuaciones");
