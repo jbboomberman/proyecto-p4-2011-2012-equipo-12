@@ -24,6 +24,7 @@ import bomberman.database.AccesoControles;
 import bomberman.database.AccesoExtras;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.ManagerSonido;
+import bomberman.outin.LimitadorCaracteres;
 
 /**
  * Ventana para modificar los controles de los personajes y
@@ -38,7 +39,6 @@ public class VentanaControles extends JDialog implements ActionListener, ItemLis
 	private JPanel jpSuperior;
 	private JPanel jpCentro;
 	private JPanel jpCenIzq;
-	//LIMITAR CARACTERES.
 	private JPanel jpCenDer;
 	private JPanel jpInferior;
 	private JButton jbGuardar;
@@ -89,6 +89,18 @@ public class VentanaControles extends JDialog implements ActionListener, ItemLis
 		jtBombaDos = new JTextField(1);
 		jcEmail = new JCheckBox();
 		jcSonido = new JCheckBox();
+		
+		//Ponemos limitador caracteres
+		jtArribaUno.setDocument(new LimitadorCaracteres(jtArribaUno, 1, true));
+		jtAbajoUno.setDocument(new LimitadorCaracteres(jtAbajoUno, 1, true));
+		jtDerechaUno.setDocument(new LimitadorCaracteres(jtDerechaUno, 1, true));
+		jtIzquierdaUno.setDocument(new LimitadorCaracteres(jtIzquierdaUno, 1, true));
+		jtBombaUno.setDocument(new LimitadorCaracteres(jtBombaUno, 1, true));
+		jtArribaDos.setDocument(new LimitadorCaracteres(jtArribaDos, 1, true));
+		jtAbajoDos.setDocument(new LimitadorCaracteres(jtAbajoDos, 1, true));
+		jtDerechaDos.setDocument(new LimitadorCaracteres(jtDerechaDos, 1, true));
+		jtIzquierdaDos.setDocument(new LimitadorCaracteres(jtIzquierdaDos, 1, true));
+		jtBombaDos.setDocument(new LimitadorCaracteres(jtBombaDos, 1, true));
 
 		// Metemos las letras que tiene
 		jtArribaUno.setText(Character.toString((char) AccesoControles

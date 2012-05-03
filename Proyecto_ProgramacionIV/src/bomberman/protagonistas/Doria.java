@@ -12,9 +12,9 @@ public class Doria extends Enemigo {
 		this.puntos = 2000;
 		this.posX = x;
 		this.posY = y;
-		deltaX = 100;
-		deltaY = 100;
-		velocidad = 100;
+		velocidad = 150;
+		deltaX = velocidad;
+		deltaY = velocidad;
 		spritesImag = new String[] { "doria.gif_1",
 				"doria.gif_2", "doria.gif_3" };
 		spritesImagDest = new String[] { "doria_dest.gif_1",

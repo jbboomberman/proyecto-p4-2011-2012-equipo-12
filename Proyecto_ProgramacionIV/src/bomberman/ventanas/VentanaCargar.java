@@ -165,12 +165,18 @@ public class VentanaCargar extends JDialog implements ActionListener {
 	 */
 	public void setVisible(boolean estado) {
 		super.setVisible(estado);
-		if (estado) {
-			tmModel.deleteAllRows();
-			ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
-					.getPartidasGuardadas();
-			for (PuntuGeneral tempPunt : partGuardas)
-				tmModel.añadirFila(tempPunt);
-		}
+		/*
+		 * Lo usamos en el EDT para no crear problemas.
+		 */
+			java.awt.EventQueue.invokeLater(new Runnable() {
+			    @Override
+			    public void run() {
+			    	tmModel.deleteAllRows();
+					ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
+							.getPartidasGuardadas();
+					for (PuntuGeneral tempPunt : partGuardas)
+						tmModel.añadirFila(tempPunt);
+			    }
+			});
 	}
 }

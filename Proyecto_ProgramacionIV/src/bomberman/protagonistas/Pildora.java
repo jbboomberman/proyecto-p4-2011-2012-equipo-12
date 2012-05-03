@@ -81,7 +81,7 @@ public class Pildora extends SpriteEstatico {
 		if(tipo == 1)
 			this.bomberman.setMaxBomba(this.bomberman.getMaxBomba() + 1);
 		else if(tipo == 2)
-			this.bomberman.setVelocidad(this.bomberman.getVelocidad() + 20);
+			this.bomberman.setVelocidad(this.bomberman.getVelocidad() + 100);
 		else if(tipo == 6)
 			ControlPrincipal.getJugadorUno().setVidas(ControlPrincipal.getJugadorUno().getVidas() + 1);
 	}

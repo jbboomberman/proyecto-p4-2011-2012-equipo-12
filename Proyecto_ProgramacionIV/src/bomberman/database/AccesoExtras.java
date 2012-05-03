@@ -14,20 +14,17 @@ public class AccesoExtras {
 
 	/**
 	 * Crea un nuevo extra.
-	 * @param cod - int
 	 * @param nombre - String
 	 * @param estado - boolean
 	 */
-	public static void insertarExtra(int cod, String nombre, boolean estado) {
+	public static void insertarExtra(String nombre, boolean estado) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-					"INSERT INTO EXTRAS VALUES( ?, ?, ?);");
-			//Código del extra
-			stat.setInt(1, cod);
+					"INSERT INTO EXTRAS VALUES( ?, ?);");
 			//Nombre del extra
-			stat.setString(2, nombre);
+			stat.setString(1, nombre);
 			//Estado del extra
-			stat.setBoolean(3, estado);
+			stat.setBoolean(2, estado);
 			stat.executeUpdate();
 			stat.close();
 			GestionBD.desconectar();
@@ -39,14 +36,14 @@ public class AccesoExtras {
 	/**
 	 * Este método estático se encarga de eliminar
 	 * un extra de la BD recibiendo como parámetro
-	 * el código del extra.
-	 * @param cod - int
+	 * el nombre del extra.
+	 * @param nom - String
 	 */
-	public static void eliminarControl(int cod) {
+	public static void eliminarControl(String nom) {
 		try {
 			PreparedStatement stat = GestionBD.conectar().prepareStatement(
-					"DELETE FROM EXTRAS WHERE CODIGO = ?;");
-			stat.setInt(1, cod);
+					"DELETE FROM EXTRAS WHERE NOMBRE = ?;");
+			stat.setString(1, nom);
 			stat.executeUpdate();
 			stat.close();
 			GestionBD.desconectar();
@@ -65,8 +62,9 @@ public class AccesoExtras {
 		PreparedStatement stat;
 		try {
 				stat = GestionBD.conectar().prepareStatement(
-						"UPDATE EXTRAS SET" + nom + " = ?;");
+						"UPDATE EXTRAS SET ESTADO = ? WHERE NOMBRE = ?;");
 			stat.setBoolean(1, estado);
+			stat.setString(2, nom);
 			stat.executeUpdate();
 			stat.close();
 		} catch (SQLException e) {
@@ -84,11 +82,10 @@ public class AccesoExtras {
 		boolean esta = false;
 		try {
 			stat = GestionBD.conectar().prepareStatement(
-					"SELECT * FROM EXTRAS;");
+					"SELECT * FROM EXTRAS WHERE NOMBRE = ?;");
+			stat.setString(1, nom);
 			ResultSet rs = stat.executeQuery();
-			if (nom.equals("email"))
-				esta = rs.getBoolean(3);
-			else
+			if(rs.next())
 				esta = rs.getBoolean(2);
 			stat.close();
 		} catch (SQLException e) {
