@@ -108,4 +108,29 @@ public class AccesoImagen {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Devuelve una imagen en formato array de bytes.
+	 * @param nombre - String
+	 * @return byte[]
+	 */
+	public static byte[] getImagenBytes(String nombre){
+		byte[] imageDatos = null;
+
+		try {
+			PreparedStatement stat = GestionBD.conectar()
+					.prepareStatement("SELECT * FROM IMAGEN WHERE NOMBRE = ?");
+			stat.setString(1, nombre);
+			ResultSet rs = stat.executeQuery();
+			if(rs.next()){
+				imageDatos = rs.getBytes(2);
+			}
+			rs.close();
+			stat.close();
+			GestionBD.desconectar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return imageDatos;
+	}
 }

@@ -3,13 +3,10 @@ package bomberman.ventanas;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
-
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.ManagerSonido;
 import bomberman.outin.*;
 import bomberman.database.*;
-import bomberman.enumeraciones.ModoJuego;
-import bomberman.jugador.*;
 
 /**
  * Clase VentanaDatos que hereda de JDialog y su proposito es dejar al usuario
@@ -141,8 +138,10 @@ public class VentanaDatos extends JDialog implements ActionListener {
 						"El formato de email es incorrecto", "Error",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
+				//Si ese jugador no está en la BD lo metemos
 				if (AccesoJugador.getJugador(nom.getText(), ape.getText(),
 						nic.getText(), email.getText()) == null) {
+					//Añadimos un Jugador a la BD.
 					bomberman.jugador.Jugador tempJug = new bomberman.jugador.Jugador(
 							nom.getText(), ape.getText(), nic.getText(),
 							email.getText(), 3, 0, ControlPrincipal
@@ -157,12 +156,17 @@ public class VentanaDatos extends JDialog implements ActionListener {
 							AccesoControles.getControl("BOMBA", 1),
 							AccesoExtras.getExtra("sonido"),
 							AccesoExtras.getExtra("email"));
+					/*
+					 * Actualizamos el Jugador al cual se le actualizará
+					 * la puntuación.
+					 */
 					ControlPrincipal.setJugadorUno(tempJug);
 					AccesoJugador
 							.insertarJugador(new bomberman.database.Jugador(
 									AccesoJugador.getNumJug(), nom.getText(),
 									ape.getText(), nic.getText(), email
 											.getText()));
+				//En caso de que el Jugador exista en la BD.
 				} else {
 					bomberman.database.Jugador jugBase = AccesoJugador
 							.getJugador(nom.getText(), ape.getText(),
@@ -181,8 +185,15 @@ public class VentanaDatos extends JDialog implements ActionListener {
 							AccesoControles.getControl("BOMBA", 1),
 							AccesoExtras.getExtra("sonido"),
 							AccesoExtras.getExtra("email"));
+					/*
+					 * Actualizamos el Jugador al cual se le actualizará
+					 * la puntuación.
+					 */
 					ControlPrincipal.setJugadorUno(tempJug);
 				}
+				/*
+				 * Durante el juego paramos la música de fondo.
+				 */
 				if (((VentanaControles) GestorVentana
 						.getVentana(VentanaControles.class)).getSonido()) {
 					try {

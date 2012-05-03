@@ -3,8 +3,6 @@ package bomberman.ventanas;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import javax.swing.UIManager;
-
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.ManagerSonido;
 
@@ -132,8 +130,7 @@ public class VentanaInicial extends JFrame implements ActionListener {
 	/**
 	 * Implementamos el método 'actionPerformed' del interface ActionListener.
 	 * 
-	 * @param e
-	 *            - ActionEvent. Que evento ha tenido lugar.
+	 * @param e - ActionEvent. Que evento ha tenido lugar.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		/*
@@ -186,20 +183,13 @@ public class VentanaInicial extends JFrame implements ActionListener {
 		pfFondo.add(tempPanel);
 	}
 
+	/**
+	 * Método que recibe un objeto de la clase JButton y
+	 * se encarga de angrandarlo.
+	 * @param boton - JButton
+	 */
 	public void agrandarBonton(JButton boton) {
 		boton.setPreferredSize(new Dimension(150, 40));
 		boton.setFont(new Font("SansSerif", 0, 16));
-	}
-
-	/**
-	 * Este es el método main que nos sirve para comprobar que la clase funciona
-	 * correctamente.
-	 * 
-	 * @param args
-	 *            No utilizados
-	 */
-	public static void main(String[] args) {
-		VentanaInicial ventana = new VentanaInicial();
-		ventana.setVisible(true);
 	}
 }

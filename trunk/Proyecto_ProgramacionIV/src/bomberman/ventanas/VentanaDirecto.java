@@ -2,14 +2,10 @@ package bomberman.ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,17 +14,21 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
 import bomberman.database.AccesoMapa;
 import bomberman.database.AccesoNivel;
 import bomberman.enumeraciones.ModoJuego;
-import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 
+/**
+ * Ventana que nos permitirá ir directamente al nivel
+ * que seleccionemos en caso de que escribamos la contraseña
+ * correctamente.
+ * @author David
+ * @version 1.0
+ */
 public class VentanaDirecto extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JComboBox jcbNivel;
 	private JPasswordField jtPass;
 	private JLabel jlTexto;
@@ -37,6 +37,9 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 	private JPanel jpMedio;
 	private JPanel jpInferior;
 
+	/**
+	 * Constructor principal de la clase VentanaDirecto
+	 */
 	public VentanaDirecto() {
 		String[] arrayCombo = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
 				"10" };
@@ -65,8 +68,6 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 		// Añadir escuchador
 		btAceptar.addActionListener(this);
 		btCancelar.addActionListener(this);
-
-		// btAceptar.setBorder( BorderFactory.createEmptyBorder( 3, 3, 3, 3 ) );
 
 		// Determinamos las características de la ventana.
 		this.setSize(280, 200);
@@ -122,6 +123,12 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 		return tempPanel;
 	}
 
+	/**
+	 * Implementamos el método 'actionPerformed' del interface ActionListener.
+	 * 
+	 * @param e
+	 *            - ActionEvent. El evento que se ha producido.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
@@ -129,9 +136,16 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 		 */
 		Object botonPulsado = e.getSource();
 
+		//Si pulsamos el botón Aceptar
 		if (botonPulsado == btAceptar) {
+			/*
+			 * Creamos un nuevo Thread para que el bóton
+			 * y Swing no se queden paralizados mientras
+			 * hacemos las operaciones.
+			 */
 			new Thread(new Runnable() {
 				public void run() {
+					//Si el password es correcto se deja pasar
 					if (AccesoNivel.esCorrecto(
 							new String(jtPass.getPassword()), Integer
 									.parseInt((String) jcbNivel
@@ -144,9 +158,9 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 						ControlPrincipal.crearEscenario(AccesoMapa
 								.getCodMapa(Integer.parseInt((String) jcbNivel
 										.getSelectedItem())));
-						// Falta la contraseña
 						GestorVentana.ocultarVentana(VentanaDirecto.class);
 						GestorVentana.hacerVisible(VentanaDatos.class, false);
+					//Si no es correcto mensaje error
 					} else {
 						JOptionPane.showMessageDialog(new JDialog(),
 								"La contraseña no es correcta", "Error",
@@ -154,6 +168,7 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 					}
 				}
 			}).start();
+		//Volvemos al menú
 		} else if (botonPulsado == btCancelar) {
 			new Thread(new Runnable() {
 				public void run() {
@@ -162,10 +177,5 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 				}
 			}).start();
 		}
-	}
-
-	public static void main(String[] args) {
-		VentanaDirecto prueba = new VentanaDirecto();
-		prueba.setVisible(true);
 	}
 }

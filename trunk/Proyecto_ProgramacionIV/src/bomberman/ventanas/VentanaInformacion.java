@@ -4,8 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * La clase VentanaInformación está diseñada para mostrar información varia
- * sobre el pfJuego. Hereda de JDialog.
+ * La clase VentanaInformación está diseñada para mostrar información.
  * 
  * @author David
  * @version 1.0
@@ -95,12 +94,5 @@ public class VentanaInformacion extends JDialog {
 		// Esto hará espacio entre el borde de la ventana y el texto.
 		fondo.add(Box.createRigidArea(new Dimension(20, 5)), BorderLayout.WEST);
 		fondo.add(Box.createRigidArea(new Dimension(20, 5)), BorderLayout.EAST);
-	}
-
-	public static void main(String[] args) {
-		// Creamos la ventana VentanaInformacion.
-		VentanaInformacion ventana = new VentanaInformacion();
-		// La hacemos visible.
-		ventana.setVisible(true);
 	}
 }

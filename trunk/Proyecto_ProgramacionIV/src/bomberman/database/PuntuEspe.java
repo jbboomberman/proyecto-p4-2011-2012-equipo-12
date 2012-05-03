@@ -1,21 +1,35 @@
 package bomberman.database;
 
-import java.sql.Date;
-
+/**
+ * Representa una fila de la tabla PUNTU_NIV_ESPECI.
+ * Implementa la interfaz Comparable porque queremos
+ * poder comparar puntuaciones.
+ * @author David
+ * @version 1.0
+ */
 public class PuntuEspe implements Comparable<PuntuEspe>{
-	/*
-	 * Esta clase representa la fila de la tabla PUNTU_NIV_ESPECI y por eso
-	 * tiene estos atributos: COD_PUNTU_ESPE, COD_PUNTU, PUNTU_ESPE y FECHA
-	 */
+	
+	//Código de la puntuación específica
 	private int cod_puntu_espe;
+	//Código de la puntuación
 	private int cod_puntu;
+	//Puntuación especial
 	private int puntu_espe;
+	//Fecha
 	private String fecha;
+	//Nivel
 	private int nivel;
 
+	/**
+	 * Constructor principal de la clase PuntuEspe.
+	 * @param codPuntuEspe - int
+	 * @param codPuntu - int
+	 * @param puntuEspe - int
+	 * @param date - String
+	 * @param niv - int
+	 */
 	public PuntuEspe(int codPuntuEspe, int codPuntu, int puntuEspe,
 			String date, int niv) {
-		super();
 		this.cod_puntu_espe = codPuntuEspe;
 		this.cod_puntu = codPuntu;
 		this.puntu_espe = puntuEspe;
@@ -23,54 +37,97 @@ public class PuntuEspe implements Comparable<PuntuEspe>{
 		this.nivel = niv;
 	}
 
-	public int getCodPuntuEspe() {
-		return cod_puntu_espe;
-	}
-
-	public void setCodPuntuEspe(int codPuntuEs) {
-		this.cod_puntu_espe = codPuntuEs;
-	}
-
+	
+	/**
+	 * Devuelve el código de la puntuación específica
+	 * @return cod_puntu_espe - int
+	 */
 	public int getCod_puntu_espe() {
 		return cod_puntu_espe;
 	}
 
+	/**
+	 * Modifica el código de la puntuación específica
+	 * @param cod_puntu_espe - int
+	 */
 	public void setCod_puntu_espe(int cod_puntu_espe) {
 		this.cod_puntu_espe = cod_puntu_espe;
 	}
 
+	/**
+	 * Devuelve el código de la puntuación general
+	 * a la que pertenece.
+	 * @return cod_puntu - int
+	 */
 	public int getCod_puntu() {
 		return cod_puntu;
 	}
 
+	/**
+	 * Modifica el código de la puntuación general
+	 * @param cod_puntu - int
+	 */
 	public void setCod_puntu(int cod_puntu) {
 		this.cod_puntu = cod_puntu;
 	}
 
+	/**
+	 * Devuelve la puntuación específica
+	 * @return puntu_espe - int
+	 */
 	public int getPuntu_espe() {
 		return puntu_espe;
 	}
 
+	/**
+	 * Modifica la puntuación específica
+	 * @param puntu_espe - int
+	 */
 	public void setPuntu_espe(int puntu_espe) {
 		this.puntu_espe = puntu_espe;
 	}
 
+	/**
+	 * Devuelve la fecha en la que se consiguio la puntuación
+	 * @return fecha - String
+	 */
 	public String getFecha() {
 		return fecha;
 	}
 
+	/**
+	 * Modifica la fecha en la que se consiguio la puntuación
+	 * @param fecha - String
+	 */
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
+	/**
+	 * Devuelve el nivel en el que se consiguio
+	 * la puntuación
+	 * @return nivel - int
+	 */
 	public int getNivel() {
 		return nivel;
 	}
 
+	/**
+	 * Modifica el nivel en el que se consiguio
+	 *  la puntuación.
+	 * @param nivel - int
+	 */
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
 	}
 	
+	/**
+	 * Método de la interfaz Comparable.
+	 * Devuelve 1 si la PuntuEspe recibida
+	 * por parámetro es menor, 0 si es igual y
+	 * 1 si es mayor.
+	 * @param tempGeneral - PuntuEspe
+	 */
 	public int compareTo(PuntuEspe tempGeneral) {
 		if (this.getPuntu_espe() > tempGeneral.getPuntu_espe())
 			return 1;

@@ -16,17 +16,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
-import bomberman.jugador.Jugador;
 import bomberman.managers.ControlPrincipal;
 import bomberman.outin.ManipuladorFecha;
 
-//Fig 11  Página 15.  Tiene una JTable.
+/**
+ * Ventana que nos servirá para guardar las partidas.
+ * 
+ * @author David
+ * @version 1.0
+ */
 public class VentanaGuardado extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JTable jtPuntu;
 	private JLabel jlTexto;
 	private JButton jbGuardar;
@@ -34,9 +37,11 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 	private JButton jbCancelar;
 	private JPanel jpInferior;
 	private TableModelCargar tmModel;
-	private TableRowSorter<TableModel> ordenarTabla;
 	private JScrollPane jsTabla;
 
+	/**
+	 * Constructor principal de la clase VentanaGuardado
+	 */
 	public VentanaGuardado() {
 		// Inicializamos las variables
 		jlTexto = new JLabel("Partidas guardadas");
@@ -46,7 +51,8 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 		jpInferior = new JPanel();
 		tmModel = new TableModelCargar(0, 8);
 		tmModel.setColumnIdentifiers(new String[] { "Código", "Nombre",
-				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "CodJugador", "Vidas" });
+				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "CodJugador",
+				"Vidas" });
 		jtPuntu = new JTable(tmModel);
 		jsTabla = new JScrollPane(jtPuntu);
 
@@ -123,6 +129,12 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Implementamos el método 'actionPerformed' del interface ActionListener.
+	 * 
+	 * @param e
+	 *            - ActionEvent. Que evento ha tenido lugar.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
@@ -130,31 +142,35 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 		 */
 		Object botonPulsado = e.getSource();
 
-		// En caso de que queramos cargar la partida seleccionada.
+		// En caso de que queramos guardar la partida seleccionada.
 		if (botonPulsado == jbGuardar) {
 			AccesoPuntuGen.insertarPunt(new PuntuGeneral(ControlPrincipal
 					.getJugadorUno().getCodPart(), ControlPrincipal
 					.getJugadorUno().getCodJugador(), true, ControlPrincipal
 					.getJugadorUno().getPuntuacion(), ManipuladorFecha
-					.getFecha(), ControlPrincipal.getJugadorUno().getVidas()
-			, ControlPrincipal.getJugadorUno().getNivel()));
+					.getFecha(), ControlPrincipal.getJugadorUno().getVidas(),
+					ControlPrincipal.getJugadorUno().getNivel()));
 			GestorVentana.hacerVisible(VentanaSeguir.class, false);
 			GestorVentana.ocultarVentana(VentanaGuardado.class);
+			// Sobreescibir una partida
 		} else if (botonPulsado == jbSobreescribir) {
 			int fila = jtPuntu.getSelectedRow();
 			PuntuGeneral seleccionada;
 			// Si se ha seleccionado alguna fila
 			if (fila != -1) {
+				// Obtenemos la fila seleccionada
 				seleccionada = tmModel.getFila(fila);
-				// Cargamos la partida
+				// Guardamos el código de la partida a eliminar
 				int codPart = seleccionada.getCod_punt();
+				// Eliminamos la puntuación anterior
 				AccesoPuntuGen.eliminarPunt(seleccionada.getCod_punt());
-				AccesoPuntuGen.insertarPunt(
-						(new PuntuGeneral(codPart, ControlPrincipal
-								.getJugadorUno().getCodJugador(), true, ControlPrincipal
-								.getJugadorUno().getPuntuacion(), ManipuladorFecha
-								.getFecha(), ControlPrincipal.getJugadorUno().getVidas()
-						, ControlPrincipal.getJugadorUno().getNivel())));
+				// Insertamos la nueva puntuación con el mismo código
+				AccesoPuntuGen.insertarPunt((new PuntuGeneral(codPart,
+						ControlPrincipal.getJugadorUno().getCodJugador(), true,
+						ControlPrincipal.getJugadorUno().getPuntuacion(),
+						ManipuladorFecha.getFecha(), ControlPrincipal
+								.getJugadorUno().getVidas(), ControlPrincipal
+								.getJugadorUno().getNivel())));
 				GestorVentana.hacerVisible(VentanaSeguir.class, false);
 				GestorVentana.ocultarVentana(VentanaGuardado.class);
 			} else {
@@ -162,18 +178,28 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 						"No has seleccionado ninguna fila", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
+			// Volver al menú
 		} else if (botonPulsado == jbCancelar) {
 			GestorVentana.ocultarVentana(VentanaCargar.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
 	}
 
+	/**
+	 * Sobrescribimos el método visible que borrará
+	 * las filas anteriores y actualizará el contenido
+	 * actual.
+	 */
 	public void setVisible(boolean estado) {
 		super.setVisible(estado);
-		tmModel.deleteAllRows();
-		ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
-				.getPartidasGuardadas();
-		for (PuntuGeneral tempPunt : partGuardas)
-			tmModel.añadirFila(tempPunt);
+		if (estado) {
+			//Borramos las filas anteriores
+			tmModel.deleteAllRows();
+			//Cargamos las de ahora
+			ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
+					.getPartidasGuardadas();
+			for (PuntuGeneral tempPunt : partGuardas)
+				tmModel.añadirFila(tempPunt);
+		}
 	}
 }

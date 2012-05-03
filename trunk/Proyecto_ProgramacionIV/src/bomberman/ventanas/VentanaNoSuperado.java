@@ -1,26 +1,24 @@
 package bomberman.ventanas;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-
-import bomberman.database.AccesoNivel;
 import bomberman.managers.ControlPrincipal;
 
+/**
+ * Ventana que nos aparecerá cuando no hayamos conseguido superar el nivel.
+ * 
+ * @author David
+ * @version 1.0
+ */
 public class VentanaNoSuperado extends JDialog implements ActionListener {
 
 	private JButton jbVolverMenu;
@@ -33,6 +31,9 @@ public class VentanaNoSuperado extends JDialog implements ActionListener {
 	private JLabel jlPuntuacion;
 	private JLabel jlPuntuacionNivel;
 
+	/**
+	 * Constructor principal de la clase VentanaNoSuperado
+	 */
 	public VentanaNoSuperado() {
 		jbVolverMenu = new JButton("Volver al menú");
 		pSuperior = new JPanel();
@@ -118,43 +119,73 @@ public class VentanaNoSuperado extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Sobreescribimos el método setVisible() porque queremos que cada vez que
+	 * se actualice también se hagan visibles los cambios.
+	 */
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if (visible) {
-			jlNick.setText(ControlPrincipal.getJugadorUno().getNick());
-			jlNivel.setText(String.valueOf(ControlPrincipal.getJugadorUno()
-					.getNivel()));
-			jlPuntuacion.setText(String.valueOf(ControlPrincipal
-					.getJugadorUno().getPuntuacion()));
-		}
+//		jlNick.setText(ControlPrincipal.getJugadorUno().getNick());
+//		jlNivel.setText(String.valueOf(ControlPrincipal.getJugadorUno()
+//				.getNivel()));
+//		jlPuntuacion.setText(String.valueOf(ControlPrincipal.getJugadorUno()
+//				.getPuntuacion()));
 	}
 
+	/**
+	 * Nos devuelve el contenido del JTextField que contiene el nick.
+	 * 
+	 * @return jlNick - JLabel
+	 */
 	public JLabel getJlNick() {
 		return jlNick;
 	}
 
+	/**
+	 * Modificamos el contenido del JTextField nick, como parámetro un String.
+	 * 
+	 * @param jlNick
+	 *            - String
+	 */
 	public void setJlNick(String jlNick) {
 		this.jlNick.setText(jlNick);
 	}
 
+	/**
+	 * Nos devuelve el contenido del JTextField que contiene el nivel.
+	 * 
+	 * @return jlNivel - JLabel
+	 */
 	public JLabel getJlNivel() {
 		return jlNivel;
 	}
 
+	/**
+	 * Modificamos el contenido del JTextField de nivel.
+	 * 
+	 * @param jlNivel
+	 *            - String
+	 */
 	public void setJlNivel(String jlNivel) {
 		this.jlNivel.setText(jlNivel);
 	}
 
+	/**
+	 * Nos devuelve el contenido del JTextField puntuación.
+	 * 
+	 * @return jlPuntuacion
+	 */
 	public JLabel getJlPuntuacion() {
 		return jlPuntuacion;
 	}
 
+	/**
+	 * Modificamos el contenido del JTextField de puntuación.
+	 * 
+	 * @param jlPuntuacion
+	 *            - String
+	 */
 	public void setJlPuntuacion(String jlPuntuacion) {
 		this.jlPuntuacion.setText(jlPuntuacion);
-	}
-
-	public static void main(String[] args) {
-		VentanaNoSuperado prueba = new VentanaNoSuperado();
-		prueba.setVisible(true);
 	}
 }

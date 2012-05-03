@@ -2,7 +2,6 @@ package bomberman.ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -26,13 +25,20 @@ import bomberman.database.AccesoExtras;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.ManagerSonido;
 
-//Fig13a  Pag 18.
+/**
+ * Ventana para modificar los controles de los personajes y
+ * la opción de recibir email o escuchar el sonido.
+ * @author David
+ * @version 1.0
+ */
 public class VentanaControles extends JDialog implements ActionListener, ItemListener {
 
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JTabbedPane jtbPestañas;
 	private JPanel jpSuperior;
 	private JPanel jpCentro;
 	private JPanel jpCenIzq;
+	//LIMITAR CARACTERES.
 	private JPanel jpCenDer;
 	private JPanel jpInferior;
 	private JButton jbGuardar;
@@ -54,6 +60,9 @@ public class VentanaControles extends JDialog implements ActionListener, ItemLis
 	private JCheckBox jcEmail;
 	private JCheckBox jcSonido;
 
+	/**
+	 * Constructor principal de la clase VenatanControles.
+	 */
 	public VentanaControles() {
 		// Inicializamos variables
 		jpSuperior = new JPanel();
@@ -163,6 +172,12 @@ public class VentanaControles extends JDialog implements ActionListener, ItemLis
 		this.setVisible(false);
 	}
 
+	/**
+	 * Para meter una tecla en la ventana.
+	 * @param nom - String - String, texto al lado
+	 * @param cont - Container
+	 * @param jtText - JTextField
+	 */
 	private void meterTecla(String nom, Container cont, JTextField jtText) {
 		JLabel tempLabel = new JLabel(nom);
 		/*
@@ -176,6 +191,12 @@ public class VentanaControles extends JDialog implements ActionListener, ItemLis
 		cont.add(tempPanel);
 	}
 
+	/**
+	 * Para meter los checkbox en la ventana.
+	 * @param texto - String, texto al lado del JCheckBox
+	 * @param cont - Container
+	 * @param jcCheck - JCheckBox
+	 */
 	private void meterCheckBox(String texto, Container cont, JCheckBox jcCheck) {
 		JLabel tempLabel = new JLabel(texto);
 		JPanel tempPanel = new JPanel();
@@ -184,6 +205,9 @@ public class VentanaControles extends JDialog implements ActionListener, ItemLis
 		cont.add(tempPanel);
 	}
 
+	/**
+	 * Método de la interfaz ActionListener.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
@@ -252,23 +276,26 @@ public class VentanaControles extends JDialog implements ActionListener, ItemLis
 		}
 	}
 	
+	/**
+	 * Método obligado implementar por la interfaz ItemListener.
+	 * Cada vez que cambiemos un JCheckBox.
+	 */
 	public void itemStateChanged(ItemEvent e){
 		
 		Object tempPul = e.getSource();
+		//Si cambiamos el JCheckBox de sonido
 		if(tempPul == jcSonido){
 			if(!jcSonido.isSelected()){
-				System.out.println("Quitando sonido");
 				ManagerSonido.pararLoop();
 			}
 		}
 	}
 	
+	/**
+	 * Nos devuelve el estado del JCheckBox de sonido.
+	 * @return boolean, activado o no
+	 */
 	public boolean getSonido(){
 		return jcSonido.isSelected();
-	}
-
-	public static void main(String[] args) {
-		VentanaControles prueba = new VentanaControles();
-		prueba.setVisible(true);
 	}
 }

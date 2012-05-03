@@ -7,7 +7,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,15 +18,19 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
-import bomberman.database.AccesoPunEspe;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.managers.ControlPrincipal;
 
-//Fig 11  Página 15.  Tiene una JTable.
+/**
+ * Esta clase representa la ventana que ofrecerá las partidas a cargar.
+ * 
+ * @author David
+ * @version 1.0
+ */
 public class VentanaCargar extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JTable jtPuntu;
 	private JLabel jlTexto;
 	private JButton jbCargar;
@@ -37,6 +40,9 @@ public class VentanaCargar extends JDialog implements ActionListener {
 	private TableRowSorter<TableModel> ordenarTabla;
 	private JScrollPane jsTabla;
 
+	/**
+	 * Constructor principal de la VentanaCargar
+	 */
 	public VentanaCargar() {
 		// Inicializamos las variables
 		jlTexto = new JLabel("Partidas guardadas");
@@ -44,8 +50,10 @@ public class VentanaCargar extends JDialog implements ActionListener {
 		jbCancelar = new JButton("Cancelar");
 		jpInferior = new JPanel();
 		tmModel = new TableModelCargar(0, 8);
+		// Columnas que habrá
 		tmModel.setColumnIdentifiers(new String[] { "Código", "Nombre",
-				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "CodJugador", "Vidas" });
+				"Apellido", "Nick", "Puntu", "Nivel", "Fecha", "CodJugador",
+				"Vidas" });
 		jtPuntu = new JTable(tmModel);
 		jsTabla = new JScrollPane(jtPuntu);
 
@@ -60,6 +68,7 @@ public class VentanaCargar extends JDialog implements ActionListener {
 		getContentPane().add(jlTexto, BorderLayout.NORTH);
 		getContentPane().add(jsTabla, BorderLayout.CENTER);
 		getContentPane().add(jpInferior, BorderLayout.SOUTH);
+		// Para mantener márgenes
 		jlTexto.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
 
 		// Escuchadores
@@ -77,7 +86,7 @@ public class VentanaCargar extends JDialog implements ActionListener {
 		diseñarColumnas("CodJugador", 50, 75);
 		diseñarColumnas("Vidas", 50, 75);
 
-		// Parámetros
+		// Parámetros de la ventana.
 		jlTexto.setFont(new Font("sansserif", Font.BOLD, 20));
 		this.setSize(600, 400);
 		this.setResizable(false);
@@ -88,12 +97,11 @@ public class VentanaCargar extends JDialog implements ActionListener {
 		// Para que la ventana aparezca centrada en pantalla.
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
-
 	}
 
 	/**
 	 * Método diseñado para especificar el tamaño preferido y máximo de cada
-	 * columana del objeto JTable.
+	 * columna del objeto JTable.
 	 * 
 	 * @param nom
 	 *            - String, nombre de la columna
@@ -120,6 +128,9 @@ public class VentanaCargar extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Método de la interfaz ActionListener.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
@@ -134,34 +145,35 @@ public class VentanaCargar extends JDialog implements ActionListener {
 			// Si se ha seleccionado alguna fila
 			if (fila != -1) {
 				seleccionada = tmModel.getFila(fila);
-				//Solo cargamos si la partida tiene nivel inferior a 10.
-				if(seleccionada.getNiv_guar() < 10)
+				// Solo cargamos si la partida tiene nivel inferior a 10.
+				if (seleccionada.getNiv_guar() < 10)
 					// Cargamos la partida
 					ControlPrincipal.cargarPartida(seleccionada);
-					
+
 			} else {
 				JOptionPane.showMessageDialog(new JDialog(),
 						"No has seleccionado ninguna fila", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
-
+			// Si pulsas el botón cancelar.
 		} else if (botonPulsado == jbCancelar) {
 			GestorVentana.ocultarVentana(VentanaCargar.class);
 			GestorVentana.hacerVisible(VentanaInicial.class, true);
 		}
 	}
 
+	/**
+	 * Cada vez que hagamos visible la ventana actualizamos las
+	 * lineas con partidas cargadas.
+	 */
 	public void setVisible(boolean estado) {
 		super.setVisible(estado);
-		tmModel.deleteAllRows();
-		ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
-				.getPartidasGuardadas();
-		for (PuntuGeneral tempPunt : partGuardas)
-			tmModel.añadirFila(tempPunt);
-	}
-
-	public static void main(String[] args) {
-		VentanaCargar tempVent = new VentanaCargar();
-		tempVent.setVisible(true);
+		if (estado) {
+			tmModel.deleteAllRows();
+			ArrayList<PuntuGeneral> partGuardas = AccesoPuntuGen
+					.getPartidasGuardadas();
+			for (PuntuGeneral tempPunt : partGuardas)
+				tmModel.añadirFila(tempPunt);
+		}
 	}
 }

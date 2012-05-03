@@ -2,7 +2,6 @@ package bomberman.ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -12,23 +11,20 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import bomberman.outin.*;
-import bomberman.database.AccesoMapa;
 import bomberman.database.AccesoPunEspe;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
-import bomberman.enumeraciones.ModoJuego;
-import bomberman.managers.ControlPrincipal;
-import bomberman.outin.VerificadorFecha;
 
-//Fig 12 Página 17
+/*
+ * Esta ventana se encargará de enseñar las puntuaciones.
+ */
 public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		ItemListener {
 
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JTable jtPuntuacion;
 	private JPanel jpSuperior;
 	private JPanel jpInferior;
@@ -43,12 +39,20 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 	private TableModelPuntuaciones tmPuntu;
 	private JScrollPane jsScroll;
 
+	/**
+	 * Constructor principal de la ventana VentanaPuntuaciones
+	 */
 	public VentanaPuntuaciones() {
 		// Inicializamos variables
 		jpSuperior = new JPanel();
 		jpInferior = new JPanel();
 		jpCentro = new JPanel();
+		/*
+		 * Para que devuelva null en caso de que no
+		 * se haya escrito nada.
+		 */
 		jtJuga = new JTextField(12) {
+			private static final long serialVersionUID = -7461719037402108362L;
 			public String getText() {
 				String tempString = super.getText();
 				if (tempString.equals(""))
@@ -58,6 +62,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 			}
 		};
 		jtFecha = new JTextField(10) {
+			private static final long serialVersionUID = -7461719037402108362L;
 			public String getText() {
 				String tempString = super.getText();
 				if (tempString.equals(""))
@@ -66,6 +71,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 					return tempString;
 			}
 		};
+		//Los niveles que hay
 		String[] arrayCombo = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
 				"10" };
 		jcNivel = new JComboBox(arrayCombo);
@@ -77,11 +83,13 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		jbBuscar = new JButton("Buscar");
 		jbCancelar = new JButton("Cancelar");
 		tmPuntu = new TableModelPuntuaciones(0, 6);
+		//Columnas
 		tmPuntu.setColumnIdentifiers(new String[] { "Nombre", "Apellidos",
 				"Nick", "Puntuación", "Nivel", "Fecha" });
 		jtPuntuacion = new JTable(tmPuntu);
 		jsScroll = new JScrollPane(jtPuntuacion);
 		jpCentro.add(jsScroll);
+		//Márgenes
 		jpCentro.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
 		jpSuperior.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
 
@@ -122,6 +130,15 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		this.setVisible(false);
 	}
 
+	/**
+	 * Se encarga de añadir un String y un componente en
+	 * el mismo contenedor y devuelve ese contenedor.
+	 * @param nom - String
+	 * @param comp - JComponent
+	 * @param orden - boolean, true - primero texto luego componente
+	 * false - primero componente luego texto
+	 * @return JPanel
+	 */
 	private JPanel meterComponente(String nom, JComponent comp, boolean orden) {
 		JLabel tempLabel = new JLabel(nom);
 		JPanel tempPanel = new JPanel();
@@ -136,6 +153,9 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		return tempPanel;
 	}
 
+	/**
+	 * Método que es necesario implementar por la interfaz ActionListener
+	 */
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Para saber dónde se originó el evento creamos un Object con la
@@ -144,6 +164,10 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		Object botonPulsado = e.getSource();
 
 		if (botonPulsado == jbBuscar) {
+			/*
+			 * Todo esto en un Thread para no paralizar temporalmente
+			 * el pintado de ventanas.
+			 */
 			new Thread(new Runnable() {
 				public void run() {
 					ArrayList<PuntuGeneral> arrayGen;
@@ -159,7 +183,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 									jtJuga.getText(), jtFecha.getText());
 							/*
 							 * En caso de que haya partidas con esas características
-							 * borramos datos anteriores y ponemos los nuevos.
+							 * borramos datos anteriores y ponemos las nuevas.
 							 */
 							if (arrayGen != null) {
 								jtJuga.setBackground(Color.WHITE);
@@ -180,12 +204,16 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 								if (jtFecha.getText() != null)
 									jtFecha.setBackground(Color.RED);
 							}
+						/*
+						 * En caso de que sólo queramos puntuación de
+						 * niveles específicos.
+						 */
 						} else {
 							 arrayEsp = AccesoPunEspe.getPuntDatos(jtJuga
 									.getText(), jtFecha.getText(), Integer
 									.parseInt((String) jcNivel
 											.getSelectedItem()));
-							 /*
+							 	/*
 								 * En caso de que haya partidas con esas características
 								 * borramos datos anteriores y ponemos los nuevos.
 								 */
@@ -210,6 +238,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 										jtFecha.setBackground(Color.RED);
 								}
 						}
+					//Si el usuario no ha escrito nada.
 					} else {
 						tmPuntu.deleteAllRows();
 						jtJuga.setBackground(Color.RED);
@@ -220,17 +249,25 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 
 		} else if (botonPulsado == jbCancelar) {
 			GestorVentana.ocultarVentana(VentanaPuntuaciones.class);
+		//Top - ten de las puntuaciones.
 		} else if (botonPulsado == jbTen) {
+			/*
+			 * Todo esto en un Thread para no paralizar temporalmente
+			 * el pintado de ventanas.
+			 */
 			new Thread(new Runnable() {
 				public void run() {
 					ArrayList<PuntuGeneral> arrayTopTen = AccesoPuntuGen
 							.getTopTen();
+					//Si hay resultados
 					if (arrayTopTen != null) {
 						Collections.sort(arrayTopTen,
 								Collections.reverseOrder());
+						//Borramos todas las filas
 						tmPuntu.deleteAllRows();
 						for (PuntuGeneral punGen : arrayTopTen)
 							tmPuntu.añadirFila(punGen);
+					//Si no hay
 					} else
 						tmPuntu.deleteAllRows();
 				}
@@ -239,19 +276,21 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		}
 	}
 
+	/**
+	 * Método para implementar la interfaz ItemListener
+	 */
 	public void itemStateChanged(ItemEvent e) {
 		Object itemChanged = e.getSource();
-
+		
+		/*
+		 * Si marcamos el JCheckBox de total no
+		 * permitimos elegir nivel
+		 */
 		if (itemChanged == jchTotal) {
 			if (e.getStateChange() == ItemEvent.SELECTED)
 				jcNivel.setEnabled(false);
 			else
 				jcNivel.setEnabled(true);
 		}
-	}
-
-	public static void main(String[] args) {
-		VentanaPuntuaciones v = new VentanaPuntuaciones();
-		v.setVisible(true);
 	}
 }
