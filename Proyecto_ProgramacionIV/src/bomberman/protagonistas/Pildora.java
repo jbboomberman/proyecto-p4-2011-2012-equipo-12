@@ -46,7 +46,7 @@ public class Pildora extends SpriteEstatico {
 			break;
 		// Detonador
 		case 2:
-			spritesImag = new String[]{"pildora_patines.png_1"};
+			spritesImag = new String[]{"pildora_patines.gif_1"};
 			spritesImagDest = new String[] { "nada.png_1" };
 			break;
 		// Patines
@@ -60,7 +60,7 @@ public class Pildora extends SpriteEstatico {
 			break;
 		// Vida
 		case 6:
-			spritesImag = new String[]{"pildora_vida.png_1"};
+			spritesImag = new String[]{"pildora_vida.gif_1"};
 			spritesImagDest = new String[] { "nada.png_1" };
 			break;
 		default:
