@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import bomberman.managers.ControlPrincipal;
 
 /**
  * Ventana que nos aparecerá cuando no hayamos conseguido superar el nivel.
@@ -21,6 +20,7 @@ import bomberman.managers.ControlPrincipal;
  */
 public class VentanaNoSuperado extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -7461719037402108362L;
 	private JButton jbVolverMenu;
 	private JPanel pSuperior;
 	private JPanel pInferior;

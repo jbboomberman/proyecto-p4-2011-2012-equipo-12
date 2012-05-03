@@ -16,8 +16,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuGeneral;
 import bomberman.managers.ControlPrincipal;
@@ -37,7 +35,6 @@ public class VentanaCargar extends JDialog implements ActionListener {
 	private JButton jbCancelar;
 	private JPanel jpInferior;
 	private TableModelCargar tmModel;
-	private TableRowSorter<TableModel> ordenarTabla;
 	private JScrollPane jsTabla;
 
 	/**
