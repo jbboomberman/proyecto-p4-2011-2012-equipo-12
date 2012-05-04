@@ -82,6 +82,7 @@ public class AccesoControles {
 				cod = rs.getInt(3);
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -105,6 +106,7 @@ public class AccesoControles {
 			stat.setInt(3, tipJug);
 			stat.executeUpdate();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

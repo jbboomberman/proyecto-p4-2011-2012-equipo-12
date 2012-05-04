@@ -36,7 +36,8 @@ public class GestionBD {
 	 */
 	public static void desconectar() {
 		try {
-			conexion.close();
+			if(conexion != null)
+				conexion.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

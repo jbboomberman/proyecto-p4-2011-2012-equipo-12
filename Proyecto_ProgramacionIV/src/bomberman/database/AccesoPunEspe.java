@@ -80,7 +80,7 @@ public class AccesoPunEspe {
 			}
 			rs.close();
 			stat.close();
-
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -120,6 +120,7 @@ public class AccesoPunEspe {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -177,6 +178,8 @@ public class AccesoPunEspe {
 										.getInt(2), rs.getInt(3), rs
 										.getString(4), rs.getInt(5)));
 							}
+							rs.close();
+							GestionBD.desconectar();
 						}
 					}
 					return tempPuntu;
@@ -210,6 +213,8 @@ public class AccesoPunEspe {
 										.getInt(2), rs.getInt(3), rs
 										.getString(4), rs.getInt(5)));
 							}
+							rs.close();
+							GestionBD.desconectar();
 						}
 					}
 					return tempPuntu;
@@ -231,6 +236,8 @@ public class AccesoPunEspe {
 					tempPuntu.add(new PuntuEspe(rs.getInt(1), rs.getInt(2), rs
 							.getInt(3), rs.getString(4), rs.getInt(5)));
 				}
+				rs.close();
+				GestionBD.desconectar();
 				return tempPuntu;
 			//En caso de que sea null tanto jugador como fecha
 			} else {
@@ -244,6 +251,8 @@ public class AccesoPunEspe {
 					tempPuntu.add(new PuntuEspe(rs.getInt(1), rs.getInt(2), rs
 							.getInt(3), rs.getString(4), rs.getInt(5)));
 				}
+				rs.close();
+				GestionBD.desconectar();
 				return tempPuntu;
 			}
 		} catch (SQLException e) {

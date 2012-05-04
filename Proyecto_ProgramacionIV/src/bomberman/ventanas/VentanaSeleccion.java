@@ -109,12 +109,12 @@ public class VentanaSeleccion extends JDialog implements ActionListener {
 		/*
 		 * Hacemos sonar la música
 		 */
-		if (botonPulsado == jbHistoria
-				|| botonPulsado == jbMaster
+		if ((botonPulsado == jbHistoria
+				|| botonPulsado == jbMaster)
 				&& ((VentanaControles) GestorVentana
 						.getVentana(VentanaControles.class)).getSonido()) {
 			try {
-				ManagerSonido.playClip("battle.wav", true);
+				ManagerSonido.playClip("levelintrosong.wav", false);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

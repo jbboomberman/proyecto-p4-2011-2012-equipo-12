@@ -67,6 +67,7 @@ public class AccesoExtras {
 			stat.setString(2, nom);
 			stat.executeUpdate();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -88,6 +89,7 @@ public class AccesoExtras {
 			if(rs.next())
 				esta = rs.getBoolean(2);
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -160,6 +160,7 @@ public class VentanaDirecto extends JDialog implements ActionListener {
 										.getSelectedItem())));
 						GestorVentana.ocultarVentana(VentanaDirecto.class);
 						GestorVentana.hacerVisible(VentanaDatos.class, false);
+						jtPass.setText("");
 					//Si no es correcto mensaje error
 					} else {
 						JOptionPane.showMessageDialog(new JDialog(),

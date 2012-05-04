@@ -6,8 +6,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-import bomberman.database.AccesoImagen;
-
 /**
  * Ventana que nos mostrará las instrucciones del juego.
  * @author David
@@ -121,29 +119,6 @@ public class VentanaInstrucciones extends JDialog{
 			panelTexto2.getStyledDocument().insertString(panelTexto2.getStyledDocument().getLength(), textPuerta, normal);
 			panelTexto3.getStyledDocument().insertString(panelTexto3.getStyledDocument().getLength(), textReglas, normal);
 			panelTexto4.getStyledDocument().insertString(panelTexto4.getStyledDocument().getLength(), textObjetivos, normal);
-//			
-//			//Nos colocamos en la última posición.
-//			paneltexto.setCaretPosition(paneltexto.getStyledDocument().getLength());
-//			
-//			//Metemos ImageIcons en el JTextPane.
-//			meterImagen("misil.gif", imgProt);
-//			meterImagen("avion_pequeño.gif", imgProt);
-//			meterImagen("avion_grande.gif", imgProt);
-//			meterImagen("heroe.gif", imgProt);
-//			
-//			//Seguimos metiendo texto.
-//			paneltexto.getStyledDocument().insertString(paneltexto.getStyledDocument().getLength(), apartado2, apartado);
-//			paneltexto.getStyledDocument().insertString(paneltexto.getStyledDocument().getLength(), texto3, normal);
-//			paneltexto.getStyledDocument().insertString(paneltexto.getStyledDocument().getLength(), apartado3, apartado);
-//			paneltexto.getStyledDocument().insertString(paneltexto.getStyledDocument().getLength(), texto4, normal);
-//			paneltexto.setCaretPosition(paneltexto.getStyledDocument().getLength());
-//			paneltexto.setCaretPosition(paneltexto.getStyledDocument().getLength());
-//			
-//			//Metemos imagen.
-//			meterImagen("teclas.jpg", imgProt);
-//			paneltexto.getStyledDocument().insertString(paneltexto.getStyledDocument().getLength() + 1, texto5, normal);
-//			paneltexto.setCaretPosition(paneltexto.getStyledDocument().getLength());
-//			meterImagen("barra.jpg", imgProt);
 			
 			//No queremos que el texto se pueda editar.
 			panelTexto1.setEditable(false);
@@ -182,7 +157,7 @@ public class VentanaInstrucciones extends JDialog{
 		 * a la perfección en distintas resoluciones.
 		 */
 		this.setMinimumSize(new Dimension(450, 200));
-		this.setSize(500, 500);
+		this.setSize(500, 400);
 		this.setModal(true);
 		this.setTitle("Instrucciones");
 		/*
@@ -195,20 +170,4 @@ public class VentanaInstrucciones extends JDialog{
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
-	
-	/**
-	 * Método que nos inserta las imagenes en el objeto JTextPane.
-	 * @param nom - String, nombre de la imagen y formato
-	 * @param miURL - Objeto URL para utilizar.
-	 */
-	private void meterImagen(String nom)
-	{
-		panelTexto1.insertIcon(new ImageIcon(AccesoImagen.getImagenBytes(nom)));
-	}
-
-	public static void main(String[] args) {
-		VentanaInstrucciones v = new VentanaInstrucciones();
-		v.setVisible(true);
-	}
-
 }

@@ -66,7 +66,7 @@ public class ManagerImagen {
 	/**
 	 * Devuelve la imagen se solicita por parámetro.
 	 * @param nombre - String
-	 * @return
+	 * @return BufferedImage
 	 */
 	public static BufferedImage getImagen(String nombre) {
 		BufferedImage tempImag = (BufferedImage) sprites.get(nombre);

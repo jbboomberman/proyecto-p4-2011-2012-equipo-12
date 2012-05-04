@@ -89,7 +89,6 @@ public class PrepararEscenario {
 				case 'D':
 					esce.añadirSprite(new Doria(esce, (float) j * CASILLA,
 							(float) i * CASILLA, jug));
-					System.out.println("Creado");
 					break;
 				// BombermanBlanco
 				case 'B':
@@ -121,11 +120,13 @@ public class PrepararEscenario {
 					esce.añadirSprite(new Pildora(esce, (float) (j - 1)
 							* CASILLA, (float) i * CASILLA, 6, esce
 							.getBomberman(), jug));
+					break;
 				//Pildora - patines
 				case 'S':
 					esce.añadirSprite(new Pildora(esce, (float) (j - 1)
 							* CASILLA, (float) i * CASILLA, 2, esce
 							.getBomberman(), jug));
+					break;
 				default:
 					break;
 				}

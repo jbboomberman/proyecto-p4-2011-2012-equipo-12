@@ -85,6 +85,7 @@ public class AccesoPuntuGen {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -244,6 +245,8 @@ public class AccesoPuntuGen {
 								.getInt(2), rs.getBoolean(3), rs.getInt(4), rs
 								.getString(5), rs.getInt(6), rs.getInt(7)));
 				}
+				rs.close();
+				GestionBD.desconectar();
 				return tempPuntu;
 			}
 		} catch (SQLException e) {
@@ -273,7 +276,7 @@ public class AccesoPuntuGen {
 
 			rs.close();
 			stat.close();
-
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -301,6 +304,7 @@ public class AccesoPuntuGen {
 
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -326,6 +330,7 @@ public class AccesoPuntuGen {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -352,6 +357,7 @@ public class AccesoPuntuGen {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -377,6 +383,7 @@ public class AccesoPuntuGen {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
