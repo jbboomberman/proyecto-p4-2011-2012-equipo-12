@@ -96,7 +96,7 @@ public class AccesoNivel {
 			stat.setInt(1, codNivel);
 			ResultSet rs = stat.executeQuery();
 			if (rs.next()) {
-				tempNivel = new Nivel(codNivel, rs.getString(2), rs.getInt(3),
+				tempNivel = new Nivel(rs.getInt(1), rs.getString(2), rs.getInt(3),
 						rs.getString(4));
 			}
 			rs.close();
@@ -125,6 +125,7 @@ public class AccesoNivel {
 			ResultSet rs = stat.executeQuery();
 			if (rs.next()) {
 				pass = rs.getString(4);
+				System.out.println("eNTRO");
 			}
 			rs.close();
 			stat.close();

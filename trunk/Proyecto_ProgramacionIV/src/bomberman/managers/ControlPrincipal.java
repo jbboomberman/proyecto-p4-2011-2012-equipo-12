@@ -60,6 +60,7 @@ public class ControlPrincipal {
 		//Creamos al jugador uno
 		jugadorUno = new Jugador();
 		GestorVentana.hacerVisible(VentanaInicial.class, true);
+		this.game();
 	}
 
 	public void game() {
@@ -177,6 +178,7 @@ public class ControlPrincipal {
 					((CuentaAtras) ventJuego.getReloj()).setParado(true);
 					// Restamos una vida al jugador.
 					jugadorUno.setVidas(jugadorUno.getVidas() - 1);
+					jugadorUno.setPuntuNivel(0);
 					/*
 					 * En caso de que tengamos alguna vida y estemos jugando en
 					 * modo Historia.

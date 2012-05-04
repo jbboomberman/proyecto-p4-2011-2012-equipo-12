@@ -30,15 +30,6 @@ public class VentanaDatos extends JDialog implements ActionListener {
 
 	/**
 	 * Constructor principal de la clase VentanaDatos.
-	 * 
-	 * @param jugador
-	 *            - Jugador. Para meterle los datos que nos den por pantalla.
-	 * @param juego
-	 *            - VentanaJuego. Para pasar a esta ventana cuando recibamos los
-	 *            datos.
-	 * @param inicial
-	 *            - VentanaInicial. La ventana a la que volver cuando acabemos
-	 *            de jugar.
 	 */
 	public VentanaDatos() {
 		// Inicializamos los objetos.
@@ -190,17 +181,11 @@ public class VentanaDatos extends JDialog implements ActionListener {
 					 * la puntuación.
 					 */
 					ControlPrincipal.setJugadorUno(tempJug);
-				}
-				/*
-				 * Durante el juego paramos la música de fondo.
-				 */
-				if (((VentanaControles) GestorVentana
-						.getVentana(VentanaControles.class)).getSonido()) {
-					try {
-						ManagerSonido.pararLoop();
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
+					// Limpiamos los datos
+					nom.setText("");
+					ape.setText("");
+					nic.setText("");
+					email.setText("");
 				}
 				GestorVentana.hacerVisible(VentanaJuego.class, true);
 			}
@@ -215,11 +200,6 @@ public class VentanaDatos extends JDialog implements ActionListener {
 			}
 			GestorVentana.ocultarVentana(VentanaDatos.class);
 		}
-		// Limpiamos los datos
-		nom.setText("");
-		ape.setText("");
-		nic.setText("");
-		email.setText("");
 	}
 
 	/**

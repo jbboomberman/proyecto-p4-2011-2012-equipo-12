@@ -14,36 +14,33 @@ import java.awt.*;
 public class GestorVentana {
 
 	private static final long serialVersionUID = -7461719037402108362L;
-	private static Vector<Window> vectorVentanas = iniciar();
+	private static ArrayList<Window> vectorVentanas = iniciar();
 
 	/**
 	 * Inicializamos el Vector y le añadimos todas las ventanas, las cuales
 	 * serán las que se mostrarán en el programa.
-	 * 
-	 * @param jug
-	 *            - Jugador
 	 */
-	public static Vector<Window> iniciar() {
-		// Inicializamos el vector
-		Vector<Window> vector = new Vector<Window>();
+	public static ArrayList<Window> iniciar() {
+		// Inicializamos la lista
+		ArrayList<Window> lista = new ArrayList<Window>();
 		// Se incializan todas las ventanas.
-		vector.add(new VentanaInicial());
-		vector.add(new VentanaDatos());
-		vector.add(new VentanaSeleccion());
-		vector.add(new VentanaJuego());
-		vector.add(new VentanaInstrucciones());
-		vector.add(new VentanaInformacion());
-		vector.add(new VentanaVidaMenos());
-		vector.add(new VentanaDirecto());
-		vector.add(new VentanaCargar());
-		vector.add(new VentanaPuntuaciones());
-		vector.add(new VentanaControles());
-		vector.add(new VentanaSuperado());
-		vector.add(new VentanaSeguir());
-		vector.add(new VentanaNoSuperado());
-		vector.add(new VentanaGuardado());
-		// Se devuelve el vector con las ventanas
-		return vector;
+		lista.add(new VentanaInicial());
+		lista.add(new VentanaDatos());
+		lista.add(new VentanaSeleccion());
+		lista.add(new VentanaJuego());
+		lista.add(new VentanaInstrucciones());
+		lista.add(new VentanaInformacion());
+		lista.add(new VentanaVidaMenos());
+		lista.add(new VentanaDirecto());
+		lista.add(new VentanaCargar());
+		lista.add(new VentanaPuntuaciones());
+		lista.add(new VentanaControles());
+		lista.add(new VentanaSuperado());
+		lista.add(new VentanaSeguir());
+		lista.add(new VentanaNoSuperado());
+		lista.add(new VentanaGuardado());
+		// Se devuelve la lista con las ventanas
+		return lista;
 	}
 
 	/**

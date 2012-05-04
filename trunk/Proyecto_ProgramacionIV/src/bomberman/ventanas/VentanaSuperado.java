@@ -147,6 +147,7 @@ public class VentanaSuperado extends JDialog implements ActionListener {
 		} else if (botonPulsado == jbPasarNivel) {
 			ControlPrincipal.getJugadorUno().setNivel(
 					ControlPrincipal.getJugadorUno().getNivel() + 1);
+					ControlPrincipal.getJugadorUno().setPuntuNivel(0);
 			ControlPrincipal.crearEscenario(ControlPrincipal.getJugadorUno()
 					.getNivel());
 			GestorVentana.hacerVisible(VentanaJuego.class, true);

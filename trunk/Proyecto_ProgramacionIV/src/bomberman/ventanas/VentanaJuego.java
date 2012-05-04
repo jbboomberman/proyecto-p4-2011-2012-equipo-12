@@ -263,11 +263,11 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 			// El resto Sprites
 		} else {
 			if (arLista.size() != 0) {
-				//Si las lista es mayor que 1
+				// Si las lista es mayor que 1
 				if (arLista.size() > 1) {
 					/*
-					 * Si el segundo por la cola es de tipo
-					 * Bomberman significa que hay 2 Bomberman.
+					 * Si el segundo por la cola es de tipo Bomberman significa
+					 * que hay 2 Bomberman.
 					 */
 					if (arLista.get(arLista.size() - 2) instanceof Bomberman)
 						arLista.add(arLista.size() - 2, spr);
@@ -282,8 +282,8 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	/**
-	 * Devuelve un ArrayList con todos los
-	 * Sprites.
+	 * Devuelve un ArrayList con todos los Sprites.
+	 * 
 	 * @return srLista - ArrayList<Sprite>
 	 */
 	public ArrayList<Sprite> getLista() {
@@ -313,26 +313,36 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	/**
-	 * Sobrescribimos el método setVisible para
-	 * arrancar la puntuación cuando se haga visible.
+	 * Sobrescribimos el método setVisible para arrancar la puntuación cuando se
+	 * haga visible.
 	 */
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (this.isVisible()) {
-			this.setPuntuacion();
-			setTiempoReloj(
-					AccesoNivel.getNivel(
-							ControlPrincipal.getJugadorUno().getNivel())
-							.getTiempo() / 60,
-					AccesoNivel.getNivel(
-							ControlPrincipal.getJugadorUno().getNivel())
-							.getTiempo() % 60);
-			this.empezarReloj();
+			java.awt.EventQueue.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					((VentanaJuego) GestorVentana
+							.getVentana(VentanaJuego.class)).setPuntuacion();
+					setTiempoReloj(
+							AccesoNivel
+									.getNivel(
+											ControlPrincipal.getJugadorUno()
+													.getNivel()).getTiempo() / 60,
+							AccesoNivel
+									.getNivel(
+											ControlPrincipal.getJugadorUno()
+													.getNivel()).getTiempo() % 60);
+					((VentanaJuego) GestorVentana
+							.getVentana(VentanaJuego.class)).empezarReloj();
+				}
+			});
 		}
 	}
 
 	/**
 	 * Devuelve el reloj de la ventana.
+	 * 
 	 * @return tiempo - CuentaAtras
 	 */
 	public CuentaAtras getReloj() {
@@ -341,8 +351,11 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	/**
 	 * Modifica el tiempo del reloj de la ventana.
-	 * @param min - int
-	 * @param seg - int
+	 * 
+	 * @param min
+	 *            - int
+	 * @param seg
+	 *            - int
 	 */
 	public void setTiempoReloj(int min, int seg) {
 		try {
@@ -361,6 +374,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	/**
 	 * Recibe si la partida está acabada o no.
+	 * 
 	 * @return finalizar - boolean
 	 */
 	public boolean getAcabarPartida() {
@@ -376,6 +390,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	/**
 	 * Devuelve si el nivel actual ha sido superado.
+	 * 
 	 * @return superadoNivel - boolean
 	 */
 	public boolean getSuperadoNivel() {
@@ -391,6 +406,7 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 
 	/**
 	 * Devuelve el número de rivales que quedan en este nivel
+	 * 
 	 * @return int - Nñumero de rivales
 	 */
 	public int rivalesQuedan() {
@@ -403,11 +419,11 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	}
 
 	/**
-	 * Busca a un personaje que este en la misma posición
-	 * que el personaje por parámetro. Sirve para que la
-	 * puerta sepa si tiene un muro encima o no.
-	 * Devuelve los personajes que esten colisionando con
-	 * el personaje enviado por parámetro.
+	 * Busca a un personaje que este en la misma posición que el personaje por
+	 * parámetro. Sirve para que la puerta sepa si tiene un muro encima o no.
+	 * Devuelve los personajes que esten colisionando con el personaje enviado
+	 * por parámetro.
+	 * 
 	 * @return tempArray - ArrayList<Sprite>
 	 */
 	public ArrayList<Sprite> buscarPersonajePos(Class clase, Sprite spr) {

@@ -80,6 +80,7 @@ public class AccesoJugador {
 					rs.getString(3), rs.getString(4), rs.getString(5));
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -107,6 +108,7 @@ public class AccesoJugador {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -145,6 +147,7 @@ public class AccesoJugador {
 						rs.getString(3), rs.getString(4), rs.getString(5));
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -169,6 +172,7 @@ public class AccesoJugador {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -192,6 +196,7 @@ public class AccesoJugador {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

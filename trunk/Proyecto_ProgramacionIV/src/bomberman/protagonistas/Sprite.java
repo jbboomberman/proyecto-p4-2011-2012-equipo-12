@@ -182,7 +182,7 @@ public class Sprite {
 	 * anchura y altura del Sprite según las medidas más grandes de las
 	 * imagenes.
 	 * 
-	 * @param spritesImag
+	 * @param nom
 	 *            - String[]
 	 */
 	public void setSpritesImag(String[] nom) {

@@ -154,6 +154,7 @@ public class VentanaInicial extends JFrame implements ActionListener {
 
 		if (botonPulsado == jbBotonJugar) {
 			ControlPrincipal.setPararJuego(false);
+			
 			GestorVentana.hacerVisible(VentanaSeleccion.class, false);
 		} else if (botonPulsado == jbBotonCargar) {
 			GestorVentana.hacerVisible(VentanaCargar.class, false);

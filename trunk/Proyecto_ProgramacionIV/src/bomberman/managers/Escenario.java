@@ -29,7 +29,7 @@ public interface Escenario extends ImageObserver {
 
 	/**
 	 * Devuelve el bomberman del juego
-	 * @return
+	 * @return Bomberman
 	 */
 	public Bomberman getBomberman();
 

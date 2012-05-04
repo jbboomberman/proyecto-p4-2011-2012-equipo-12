@@ -100,11 +100,17 @@ public class Bomba extends SpriteEstatico {
 	public void explotar() {
 		// Cancelamos el temporizador.
 		temporizador.cancel();
+		new Thread(
+        		new Runnable() {
+        			public void run() {
 		try {
 			ManagerSonido.playClip("explosion.wav", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        			}
+        		}
+        ).start();
 		// Calculamos hasta dónde puede ir la llama en cada lado.
 		int[] maxLlama = calcularDistancias();
 		// Colocamos las llamas.

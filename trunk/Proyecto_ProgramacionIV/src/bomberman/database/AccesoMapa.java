@@ -91,6 +91,7 @@ public class AccesoMapa {
 			}
 			rs.close();
 			stat.close();
+			GestionBD.desconectar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

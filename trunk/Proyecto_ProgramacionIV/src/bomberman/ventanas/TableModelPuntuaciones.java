@@ -108,8 +108,8 @@ public class TableModelPuntuaciones extends DefaultTableModel {
 	}
 
 	/**
-	 * @override Sobreescribimos el método isCellEditable para así evitar que
-	 *           las celdas del JTable se puedan editar.
+	 * Sobreescribimos el método isCellEditable para así evitar que
+	 * las celdas del JTable se puedan editar.
 	 */
 	public boolean isCellEditable(int row, int column) {
 		return false;

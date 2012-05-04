@@ -104,6 +104,7 @@ public class AccesoImagen {
 					.prepareStatement("DELETE FROM IMAGEN WHERE NOMBRE = ?");
 			stat.setString(1, nom);
 			stat.executeUpdate();
+			GestionBD.desconectar();
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
