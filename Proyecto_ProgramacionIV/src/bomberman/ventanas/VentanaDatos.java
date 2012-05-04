@@ -181,11 +181,6 @@ public class VentanaDatos extends JDialog implements ActionListener {
 					 * la puntuación.
 					 */
 					ControlPrincipal.setJugadorUno(tempJug);
-					// Limpiamos los datos
-					nom.setText("");
-					ape.setText("");
-					nic.setText("");
-					email.setText("");
 				}
 				GestorVentana.hacerVisible(VentanaJuego.class, true);
 			}
@@ -200,6 +195,11 @@ public class VentanaDatos extends JDialog implements ActionListener {
 			}
 			GestorVentana.ocultarVentana(VentanaDatos.class);
 		}
+		// Limpiamos los datos
+		nom.setText("");
+		ape.setText("");
+		nic.setText("");
+		email.setText("");
 	}
 
 	/**
