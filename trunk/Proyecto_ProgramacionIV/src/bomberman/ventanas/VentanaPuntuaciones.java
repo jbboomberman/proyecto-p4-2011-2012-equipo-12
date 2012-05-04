@@ -191,7 +191,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 							 * En caso de que haya partidas con esas características
 							 * borramos datos anteriores y ponemos las nuevas.
 							 */
-							if (arrayGen != null) {
+							if (arrayGen != null && !arrayGen.isEmpty()) {
 								jtJuga.setBackground(Color.WHITE);
 								jtFecha.setBackground(Color.WHITE);
 								// Los ordenamos de mayor a menor.
@@ -223,7 +223,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 								 * En caso de que haya partidas con esas características
 								 * borramos datos anteriores y ponemos los nuevos.
 								 */
-								if (arrayEsp != null) {
+								if (arrayEsp != null && !arrayEsp.isEmpty()) {
 									jtJuga.setBackground(Color.WHITE);
 									jtFecha.setBackground(Color.WHITE);
 									// Los ordenamos de mayor a menor.
@@ -266,7 +266,7 @@ public class VentanaPuntuaciones extends JFrame implements ActionListener,
 					ArrayList<PuntuGeneral> arrayTopTen = AccesoPuntuGen
 							.getTopTen();
 					//Si hay resultados
-					if (arrayTopTen != null) {
+					if (arrayTopTen != null && !arrayTopTen.isEmpty()) {
 						Collections.sort(arrayTopTen,
 								Collections.reverseOrder());
 						//Borramos todas las filas
