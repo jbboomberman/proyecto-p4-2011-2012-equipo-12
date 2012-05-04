@@ -195,9 +195,7 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 		/*
 		 * Lo usamos en el EDT para no crear problemas.
 		 */
-			java.awt.EventQueue.invokeLater(new Runnable() {
-			    @Override
-			    public void run() {
+			if(estado){
 			    	//Borramos las filas anteriores
 					tmModel.deleteAllRows();
 					//Cargamos las de ahora
@@ -206,6 +204,5 @@ public class VentanaGuardado extends JDialog implements ActionListener {
 					for (PuntuGeneral tempPunt : partGuardas)
 						tmModel.añadirFila(tempPunt);
 			    }
-			});
 	}
 }

@@ -319,9 +319,6 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (this.isVisible()) {
-			java.awt.EventQueue.invokeLater(new Runnable() {
-				@Override
-				public void run() {
 					((VentanaJuego) GestorVentana
 							.getVentana(VentanaJuego.class)).setPuntuacion();
 					setTiempoReloj(
@@ -336,8 +333,6 @@ public class VentanaJuego extends JFrame implements KeyListener, Escenario {
 					((VentanaJuego) GestorVentana
 							.getVentana(VentanaJuego.class)).empezarReloj();
 				}
-			});
-		}
 	}
 
 	/**
