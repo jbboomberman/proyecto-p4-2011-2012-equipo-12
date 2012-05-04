@@ -116,10 +116,12 @@ public class PrepararEscenario {
 							* CASILLA, (float) i * CASILLA, 1, esce
 							.getBomberman(), jug));
 					break;
+				//Pildora-vida
 				case 'L':
 					esce.añadirSprite(new Pildora(esce, (float) (j - 1)
 							* CASILLA, (float) i * CASILLA, 6, esce
 							.getBomberman(), jug));
+				//Pildora - patines
 				case 'S':
 					esce.añadirSprite(new Pildora(esce, (float) (j - 1)
 							* CASILLA, (float) i * CASILLA, 2, esce

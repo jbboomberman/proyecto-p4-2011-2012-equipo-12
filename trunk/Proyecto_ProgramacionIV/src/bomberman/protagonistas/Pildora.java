@@ -39,17 +39,22 @@ public class Pildora extends SpriteEstatico {
 		this.tipo = tip;
 		this.bomberman = bomber;
 		switch (tipo) {
+		/*
+		 * NOTA: No ha habido tiempo para implementar
+		 * más píldoras. Es lo único que no nos ha dado
+		 * tiempo.
+		 */
 		// Multibomba
 		case 1:
 			spritesImag = new String[] { "pildora_bomba.png_1" };
 			spritesImagDest = new String[] { "nada.png_1" };
 			break;
-		// Detonador
+		// Patines
 		case 2:
 			spritesImag = new String[]{"pildora_patines.gif_1"};
 			spritesImagDest = new String[] { "nada.png_1" };
 			break;
-		// Patines
+		// Detonador
 		case 3:
 			break;
 		// Wall-walker

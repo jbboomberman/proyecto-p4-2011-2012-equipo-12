@@ -21,8 +21,11 @@ import bomberman.database.AccesoPuntuGen;
 import bomberman.database.PuntuEspe;
 import bomberman.database.PuntuGeneral;
 
-/*
- * Esta ventana se encargará de enseñar las puntuaciones.
+/**
+ * Esta ventana se encargará de enseñar las puntuaciones
+ * que se han logrado en el juego.
+ * @author David
+ * @version 1.0
  */
 public class VentanaPuntuaciones extends JFrame implements ActionListener,
 		ItemListener {

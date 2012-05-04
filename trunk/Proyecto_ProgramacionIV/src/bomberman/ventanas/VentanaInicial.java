@@ -3,6 +3,8 @@ package bomberman.ventanas;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+
+import bomberman.database.AccesoImagen;
 import bomberman.managers.ControlPrincipal;
 import bomberman.managers.ManagerSonido;
 
@@ -32,8 +34,7 @@ public class VentanaInicial extends JFrame implements ActionListener {
 	 */
 	public VentanaInicial() {
 		strPath = "bomberman.jpg";
-		jlTitulo = new JLabel(new ImageIcon(getClass().getClassLoader()
-				.getResource("bomberman/resources/letras_bomber.png")));
+		jlTitulo = new JLabel(new ImageIcon(AccesoImagen.getImagen("letras_bomber.png")));
 		jbBotonJugar = new JButton("Jugar");
 		jbBotonCargar = new JButton("Cargar partida");
 		jbBotonPuntu = new JButton("Puntuaciones");

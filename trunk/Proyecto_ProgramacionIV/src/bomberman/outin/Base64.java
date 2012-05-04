@@ -1,32 +1,10 @@
 package bomberman.outin;
 
 /**
- * A Base64 Encoder/Decoder.
- * 
- * <p>
- * This class is used to encode and decode data in Base64 format as described in
- * RFC 1521.
- * 
- * <p>
- * Home page: <a href="http://www.source-code.biz">www.source-code.biz</a><br>
- * Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
- * Multi-licensed: EPL/LGPL/AL/BSD.
- * 
- * <p>
- * Version history:<br>
- * 2003-07-22 Christian d'Heureuse (chdh): Module created.<br>
- * 2005-08-11 chdh: Lincense changed from GPL to LGPL.<br>
- * 2006-11-21 chdh:<br>
- * &nbsp; Method encode(String) renamed to encodeString(String).<br>
- * &nbsp; Method decode(String) renamed to decodeString(String).<br>
- * &nbsp; New method encode(byte[],int) added.<br>
- * &nbsp; New method decode(String) added.<br>
- * 2009-07-16: Additional licenses (EPL/AL) added.<br>
- * 2009-09-16: Additional license (BSD) added.<br>
- * 2009-09-16: Additional license (BSD) added.<br>
- * 2010-01-27: Package name added.<br>
+ * Esta clase se encarga de codificar y descodificar en Base64
+ * @author David
+ * @version 1.0
  */
-
 public class Base64 {
 
 	// Mapping table from 6-bit nibbles to Base64 characters.
@@ -183,10 +161,5 @@ public class Base64 {
 		}
 		return out;
 	}
-
-	public static void main(String[] args) {
-//		System.out.println(Base64.decodeString());
-	}
-
-} // end class Base64Coder
+} 
 
