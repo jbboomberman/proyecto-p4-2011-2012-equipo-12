@@ -1,8 +1,9 @@
 package bomberman.ventanas;
 
 import java.awt.*;
-import java.net.*;
 import javax.swing.*;
+
+import bomberman.database.AccesoImagen;
 
 /**
  * Este JPanel modificado tiene como objetivo pintar una imagen en el fondo del
@@ -15,7 +16,6 @@ public class PanelFondo extends JPanel {
 
 	private static final long serialVersionUID = -7461719037402108362L;
 	private ImageIcon imagen;
-	private URL directorio;
 	private Container container;
 
 	/**
@@ -29,9 +29,8 @@ public class PanelFondo extends JPanel {
 	 *            la imagen en todo momento.
 	 */
 	public PanelFondo(String path, Container con) {
-		directorio = getClass().getClassLoader().getResource(
-				"bomberman/resources/" + path);
-		imagen = new ImageIcon(directorio);
+		
+		imagen = new ImageIcon(AccesoImagen.getImagenBytes(path));
 		container = con;
 	}
 

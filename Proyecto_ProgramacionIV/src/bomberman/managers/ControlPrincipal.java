@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
-import java.util.ResourceBundle.Control;
-
 import javax.swing.*;
 import bomberman.database.AccesoControles;
 import bomberman.database.AccesoExtras;
@@ -24,32 +22,44 @@ import bomberman.outin.ManipuladorFecha;
 import bomberman.protagonistas.Sprite;
 import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaCargar;
-import bomberman.ventanas.VentanaControles;
 import bomberman.ventanas.VentanaInicial;
 import bomberman.ventanas.VentanaJuego;
 import bomberman.ventanas.VentanaNoSuperado;
 import bomberman.ventanas.VentanaSuperado;
 import bomberman.ventanas.VentanaVidaMenos;
 
+/**
+ * Clase que se encargará de controlor todo el juego. Desde esta clase se inicia
+ * el juego y es aquí donde está el GameLoop.
+ * @author David
+ * @version 1.0
+ */
 public class ControlPrincipal {
+	//BufferStrategy para hace doble buffer
 	private BufferStrategy image;
+	//La ventana donde se pintará
 	private VentanaJuego ventJuego;
+	//El primer jugadir
 	private static Jugador jugadorUno;
+	//El segundo jugador
 	private static Jugador jugadorDos;
+	//Variable para parar el juego
 	private static boolean pararJuego;
+	//Periodo que queremos que dure cada bucle
 	private final int PERIODO = 18;
+	//Varias mediciones de tiempo
 	private long beforeTime, timeDiff, sleepTime;
 
+	/**
+	 * Constructor principal de la clase ControlPrincipal
+	 */
 	public ControlPrincipal() {
 		pararJuego = false;
+		//Recibimos la ventana
 		ventJuego = (VentanaJuego) GestorVentana.getVentana(VentanaJuego.class);
+		//Creamos al jugador uno
 		jugadorUno = new Jugador();
-
-		// Hacer después de que la ventana este activa para que funcione.
-		// http://www.gamedev.net/topic/261754-javalangillegalstateexception-component-must-have-a-valid-peer/
-
 		GestorVentana.hacerVisible(VentanaInicial.class, true);
-		this.game();
 	}
 
 	public void game() {
@@ -67,7 +77,13 @@ public class ControlPrincipal {
 					image = ventJuego.getPanel().getBufferStrategy();
 					primeraVez = false;
 				}
+				//Calculamos el tiempo desde que empieza el bucle
 				beforeTime = System.currentTimeMillis();
+				/*
+				 * En caso de que el reloj no haya acabado, la partida
+				 * no haya acabado y no se haya superado el nivel
+				 * seguimos pintando la pantalla.
+				 */
 				if (!ventJuego.getReloj().isTimeFinished()
 						&& !(ventJuego.getAcabarPartida())
 						&& !(ventJuego.getSuperadoNivel()))
@@ -104,11 +120,26 @@ public class ControlPrincipal {
 										.valueOf(ControlPrincipal
 												.getJugadorUno()
 												.getPuntuacion()));
+						//Hacemos visible el password
+						((VentanaSuperado) GestorVentana
+								.getVentana(VentanaSuperado.class))
+								.setJlPassword(AccesoNivel
+										.getPass(jugadorUno.getNivel()));
 						// Si hemos llegado al nivel máximo se acaba el juego
-						if (jugadorUno.getNivel() == 10)
+						if (jugadorUno.getNivel() == 10){
 							((VentanaSuperado) GestorVentana
 									.getVentana(VentanaSuperado.class))
-									.setEnabled(false);
+									.setBotonGuardarEnabled(false);
+							((VentanaSuperado) GestorVentana
+									.getVentana(VentanaSuperado.class))
+									.setBotonPasarEnabled(false);
+						}
+						/*
+						 * Como hemos comentado anteiormente si es puntación
+						 * específica jugada en modo Master no tendrá Puntuación
+						 * General por lo que apuntaremos el código del jugador
+						 * y no el de la PuntuaciónGeneral.
+						 */
 						int codPunt;
 						if (jugadorUno.getModo() == ModoJuego.Historia)
 							codPunt = jugadorUno.getCodPart();
@@ -120,10 +151,6 @@ public class ControlPrincipal {
 								.getPuntuNivel(), ManipuladorFecha.getFecha(),
 								jugadorUno.getNivel()));
 
-						((VentanaSuperado) GestorVentana
-								.getVentana(VentanaSuperado.class))
-								.setJlPassword(AccesoNivel
-										.getPass(jugadorUno.getNivel()));
 						if (jugadorUno.getModo() == ModoJuego.Historia) {
 							// Hacemos que aparezca la ventana VentanaSuperado
 							GestorVentana.hacerVisible(VentanaSuperado.class,
@@ -172,17 +199,26 @@ public class ControlPrincipal {
 						terminarPartida();
 				}
 
+				/*
+				 * Calculamos el tiempo que ha durado el bucle.
+				 */
 				timeDiff = System.currentTimeMillis() - beforeTime;
-				sleepTime = PERIODO - timeDiff; // time left in this loop
-				// System.out.println(sleepTime);
-				if (sleepTime <= 0) // update/render took longer than period
-					sleepTime = 5; // sleep a bit anyway
+				//Miramos si ha tardado más o menos que la diferencia
+				sleepTime = PERIODO - timeDiff; 
+				//Si ha tardado más entonces descansamos 5 ms
+				if (sleepTime <= 0) 
+					sleepTime = 5; 
+				//Si no lo que nos haya sobrado
 				try {
 					Thread.sleep(sleepTime); // in ms
 				} catch (InterruptedException ex) {
 					ex.printStackTrace();
 				}
 			}
+			/*
+			 * Si no entra en el GameLoop descansamos 1 ms para
+			 * no machacar el procesador.
+			 */
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -191,23 +227,32 @@ public class ControlPrincipal {
 		}
 	}
 
+	/**
+	 * Pinta toda la pantalla del videojuego con los
+	 * gráficos.
+	 */
 	public void paintWorld() {
+		//Obtenemos los gráficos
 		Graphics g = image.getDrawGraphics();
+		//El fondo lo pintamos del mismo color.
 		g.setColor(ventJuego.getBackground());
 		g.fillRect(0, 0, ventJuego.getWidth(), ventJuego.getHeight());
 
+		/*
+		 * Vamos pintando uno a uno todos los personajes.
+		 * No lo hacemos con un for-each porque en caso de
+		 * que borremos un personajes mientras estamos
+		 * iterando nos puede dar error.
+		 */
 		ArrayList<Sprite> tempLista = ventJuego.getLista();
 		for (int i = 0; i < tempLista.size(); i++) {
 			Sprite tempSpr = tempLista.get(i);
+			//Movemos
 			tempSpr.mover();
+			//Pintamos
 			tempSpr.paint((Graphics2D) g);
 		}
-
-		// if (usedTime > 0)
-		// System.out.println(String.valueOf(1000 / usedTime) + " fps");
-		// if (timeDiff > 0)
-		// System.out.println(String.valueOf(1000 / timeDiff) + " fps");
-
+		//Pintamos todo
 		image.show();
 	}
 
@@ -351,30 +396,58 @@ public class ControlPrincipal {
 				arrayMapa, jugadorUno);
 	}
 
+	/**
+	 * Devuelve el primer jugador
+	 * @return jugadorUno - Jugador
+	 */
 	public static Jugador getJugadorUno() {
 		return jugadorUno;
 	}
 
+	/**
+	 * Modificia el primer jugador
+	 * @param jug - Jugador
+	 */
 	public static void setJugadorUno(Jugador jug) {
 		jugadorUno = jug;
 	}
 
+	/**
+	 * Devuelve el segundo jugador
+	 * @return jugadorDos - Jugador
+	 */
 	public static Jugador getJugadorDos() {
 		return jugadorDos;
 	}
 
+	/**
+	 * Modifica el segundo jugador.
+	 * @param jug - Jugador
+	 */
 	public static void setJugadorDos(Jugador jug) {
 		jugadorDos = jug;
 	}
 
+	/**
+	 * Devuelve el valor de la variable pararJuego
+	 * @return pararJuego
+	 */
 	public static boolean isPararJuego() {
 		return pararJuego;
 	}
-
+	
+	/**
+	 * Modifica el valor de pararJuego
+	 * @param pararJuego - boolean
+	 */
 	public static void setPararJuego(boolean pararJuego) {
 		ControlPrincipal.pararJuego = pararJuego;
 	}
 
+	/**
+	 * Main donde se  arranca el juego.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try {
 			UIManager

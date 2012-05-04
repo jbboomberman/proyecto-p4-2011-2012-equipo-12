@@ -5,8 +5,21 @@ import bomberman.managers.Escenario;
 import bomberman.ventanas.GestorVentana;
 import bomberman.ventanas.VentanaJuego;
 
+/**
+ * Clase del tipo Doria que representa al enemigo
+ * Doria.
+ * @author David
+ * @version 1.0
+ */
 public class Doria extends Enemigo {
 
+	/**
+	 * Constructor principal de la clase Doria.
+	 * @param esce - Escenario
+	 * @param x - float
+	 * @param y - float
+	 * @param jug - Jugador
+	 */
 	public Doria(Escenario esce, float x, float y, Jugador jug) {
 		super(esce, x, y, jug);
 		this.puntos = 2000;
@@ -26,6 +39,10 @@ public class Doria extends Enemigo {
 		aleatorizacion.add(-velocidad);
 	}
 
+	/**
+	 * Sobrescribimos mover el cual inetntará acercarse al
+	 * rival.
+	 */
 	public void mover() {
 		super.mover();
 
@@ -105,6 +122,10 @@ public class Doria extends Enemigo {
 		}
 	}
 
+	/**
+	 * Sobrescribimos el método dertminarChoque para que
+	 * pueda traspasar los muros.
+	 */
 	public boolean determinarChoque(Sprite spr) {
 		if (spr instanceof Llama)
 			this.procDestruccion();

@@ -7,8 +7,14 @@ import bomberman.protagonistas.Bomberman;
 import bomberman.protagonistas.Sprite;
 
 /**
- * Interfaz que definirá los métodos comunes de
+ * Interfaz que definirá los métodos comunes
  * para la gestión del juego.
+ * Este interfaz tiene como objetivo dar la información de
+ * lo que está pasando en la ventana VentanaJuego, aunque
+ * parezca que no tiene mucho sentido ya que se podría
+ * utilizar la clase VentanaJuego directamente la verdad
+ * es que de este modo conseguimos separar las funcionalidades
+ * en clases para que así el código sea más reutilizable.
  * @author David
  * @version 1.0
  */
